@@ -25,8 +25,12 @@ module.exports = function(sequelize, DataTypes) {
             {
               as: 'Categoria',
               foreignKey: 'co_tag'
-            }
-          );
+            });
+          Tag.belongsToMany(models.Indicador, {
+            as: 'Indicadores',
+            through: 'tb_indicador_tag',
+            foreignKey: 'co_tag',
+            otherKey: 'co_indicador' });
         }
     },
     schema: 'dbesusgestor',

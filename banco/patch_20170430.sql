@@ -178,3 +178,8 @@ insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'SAMU');
 insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Controle do Câncer');
 insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Controle do Tabagismo');
 insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'HumanizaSUS');
+
+-- Incluir dados para timestamp
+
+alter table dbesusgestor.tb_indicador add column dt_inclusao timestamp without time zone;
+alter table dbesusgestor.tb_indicador add column dt_atualizacao timestamp without time zone;

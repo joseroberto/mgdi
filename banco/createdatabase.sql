@@ -92,6 +92,8 @@ CREATE TABLE dbesusgestor.tb_indicador
   st_privado boolean,
   st_acumulativo boolean,
   st_ativo boolean,
+  dt_inclusao timestamp without time zone,
+  dt_atualizacao timestamp without time zone,
   co_secretaria integer not null, -- Código identificador da área responsável
   CONSTRAINT pk_indicador PRIMARY KEY (co_indicador),
   CONSTRAINT fk_periodicidade_indicador FOREIGN KEY (co_periodicidade)

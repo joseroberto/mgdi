@@ -100,14 +100,15 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       $('.tags').on('change', (e) => {
         this.indicador.tags=[];
         jQuery(e.target).val().forEach(
-        obj=>{
-          console.log('item_obj', obj);
-          console.log('item_tag', this.colecaoTag.find(item=> item.codigo==obj));
-          this.indicador.tags.push(this.colecaoTag.find(item=> item.codigo==obj));
-        }
-      )
-    });
-
+          obj=>{
+            console.log('item_obj', obj);
+            //console.log('item_tag', this.colecaoTag.find(item=> item.codigo==obj));
+            //this.indicador.tags.push(this.colecaoTag.find(item=> item.codigo==obj));
+            this.indicador.tags.push(obj);
+          }
+        )
+      });
+      $('.tags').val([1,2]).trigger('change');
   }
 
   ngOnDestroy() {

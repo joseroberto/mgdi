@@ -2,20 +2,21 @@ var models  = require('../models');
 
 module.exports = {
   getIndicadores: (req, res)=>{
-    models.Indicador.findAll({ 
+    models.Indicador.findAll({
     }).then(function(lista) {
-      console.log(lista);
+      //console.log(lista);
       res.json({indicadores: lista});
     });
   },
   createIndicador: (req,res)=>{
-    console.log('Cria', req.body);
     models.Indicador.create(req.body).then((indicador)=> {
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     });
   },
   getIndicador: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=> {
+    models.Indicador.findById(req.swagger.params.codigo.value,
+      { include: [ { model: models.Tag, as: 'Tags' } ] }
+    ).then((indicador)=> {
       res.json(indicador);
     });
   },
@@ -26,9 +27,11 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
-    console.log('Atualiza', req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-      res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
+      models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+        item.setTags(req.body.tags);
+        res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
+      });
     })
   },
   updateConceituacao: (req,res)=>{
