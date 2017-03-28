@@ -1,10 +1,10 @@
-import { SgiPage } from './app.po';
+import { WebPage } from './app.po';
 
-describe('sgi App', () => {
-  let page: SgiPage;
+describe('web App', () => {
+  let page: WebPage;
 
   beforeEach(() => {
-    page = new SgiPage();
+    page = new WebPage();
   });
 
   it('should display message saying app works', () => {
