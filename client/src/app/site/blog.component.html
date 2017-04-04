@@ -1,0 +1,281 @@
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs icon="fa-bookmark" [items]="['Indicadores', 'RIPSA']" icon="paragraph" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="well padding-10">
+        <div class="row">
+          <div class="col-md-4">
+
+            <div>
+              <div class="widget-body no-padding">
+                <sa-morris-graph [data]="getData()"
+                                 type="bar"
+                                 [options]="{
+                                xkey: 'x',
+                                ykeys: ['y', 'z', 'a'],
+                                labels: ['Y', 'Z', 'A']
+
+                }"></sa-morris-graph>
+
+              </div>
+            </div>
+
+            <ul class="list-inline padding-10">
+              <li>
+                <i class="fa fa-calendar"></i>
+                <a (click)="(null)"> Março 12, 2017 </a>
+              </li>
+              <li>
+                <i class="fa fa-comments"></i>
+                <a (click)="(null)"> 38 Comentários </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-8 padding-left-0">
+            <h3 class="margin-top-0"><a (click)="(null)"> Taxa de crescimento da população </a><br><small class="font-xs"><i>Fonte: <a (click)="(null)">IBGE</a></i></small></h3>
+            <p>
+              Percentual de incremento médio anual da população residente em determinado espaço geográfico, no período considerado.
+n O valor da taxa refere-se à média anual obtida para um período de anos compreendido entre dois momentos, em geral correspondentes aos censos demográficos
+            </p>
+            <a class="btn btn-primary" routerLink="/item"> Leia mais </a>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="widget-body no-padding">
+
+              <sa-morris-graph [data]="getData2()"
+                               type="bar"
+                               [options]="{
+                              xkey: 'x',
+                              ykeys: ['y', 'z', 'a'],
+                              labels: ['Y', 'Z', 'A'],
+                              staked: true
+
+              }"></sa-morris-graph>
+
+            </div>
+            <ul class="list-inline padding-10">
+              <li>
+                <i class="fa fa-calendar"></i>
+                <a (click)="(null)"> Março 12, 2016 </a>
+              </li>
+              <li>
+                <i class="fa fa-comments"></i>
+                <a (click)="(null)"> 38 Comentários </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-8 padding-left-0">
+            <h3 class="margin-top-0"><a (click)="(null)"> Grau de urbanização </a><br><small class="font-xs"><i>Publicado pelo <a (click)="(null)">Ministério da Saúde</a></i></small></h3>
+            <p>
+              Percentual da população residente em áreas urbanas, em determinado espaço geográfico, no ano considerado.
+              <br><br>
+              Indica a proporção da população total que reside em áreas urbanas, segundo a divisão político-administrativa
+estabelecida pelas administrações municipais.
+              <br><br>
+              Serve para acompanhar o processo de urbanização da população brasileira, em diferentes espaços geográficos.
+n e subsidiar processos de planejamento, gestão e avaliação de políticas públicas, para adequação e funcionamento
+da rede de serviços sociais e da infra-estrutura urbana.
+            </p>
+            <a class="btn btn-primary" routerLink="/item"> Leia mais </a>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="widget-body no-padding">
+              <sa-morris-graph [data]="getData3()"
+                               type="line"
+                               [options]="{
+                              xkey: 'period',
+                              ykeys: ['licensed', 'sorned'],
+                              labels: ['Licensed', 'SORN']
+              }"></sa-morris-graph>
+
+            </div>
+            <ul class="list-inline padding-10">
+              <li>
+                <i class="fa fa-calendar"></i>
+                <a (click)="(null)"> Março 12, 2017 </a>
+              </li>
+              <li>
+                <i class="fa fa-comments"></i>
+                <a (click)="(null)"> 38 Comentários </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-8 padding-left-0">
+            <h3 class="margin-top-0"><a (click)="(null)"> Taxa de mortalidade neonatal precoce </a><br><small class="font-xs"><i>Publicado pelo <a (click)="(null)">Ministério da Saúde/SVS</a></i></small></h3>
+            <p>
+              Estima o risco de um nascido vivo morrer durante a primeira semana de vida e reflete, de maneira geral, as condições socioeconômicas e de saúde da mãe, bem como a inadequada assistência
+pré-natal, ao parto e ao recém-nascido.<br><br>
+            </p>
+            <a class="btn btn-primary" routerLink="/item"> Leia mais </a>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="widget-body no-padding">
+              <sa-morris-graph [data]="getData4()"
+                               type="donut"
+                               [options]="{
+                              formater: percentageFormat
+              }"></sa-morris-graph>
+
+            </div>
+            <ul class="list-inline padding-10">
+              <li>
+                <i class="fa fa-calendar"></i>
+                <a (click)="(null)"> Março 12, 2017 </a>
+              </li>
+              <li>
+                <i class="fa fa-comments"></i>
+                <a (click)="(null)"> 38 Comentários </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-8 padding-left-0">
+            <h3 class="margin-top-0"><a (click)="(null)"> Taxa de mortalidade neonatal tardia </a><br><small class="font-xs"><i>Publicado pelo <a (click)="(null)">Ministério da Saúde/SIM</a></i></small></h3>
+            <p>
+              Número de óbitos de 7 a 27 dias de vida completos, por mil nascidos vivos, na população residente em determinado
+espaço geográfico, no ano considerado.<br><br>Estima o risco de um nascido vivo morrer dos 7 aos 27 dias de vida.
+n Reflete, de maneira geral, as condições socioeconômicas e de saúde da mãe, bem como a inadequada assistência
+pré-natal, ao parto e ao recém-nascido.
+              <br><br>
+            </p>
+            <a class="btn btn-primary" routerLink="/item"> Leia mais </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-search"></i> Busca dados...</h5>
+        <div class="input-group">
+          <input type="text" class="form-control">
+          <span class="input-group-btn">
+									<button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button> </span>
+        </div>
+        <!-- /input-group -->
+      </div>
+      <!-- /well -->
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-tags"></i> Tags populares:</h5>
+        <div class="row">
+          <div class="col-lg-6">
+            <ul class="list-unstyled">
+              <li>
+                <a href=""><span class="badge badge-info">Demográficos</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Socioeconômicos</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Morbidade</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Fatores de Risco</span></a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-6">
+            <ul class="list-unstyled">
+              <li>
+                <a href=""><span class="badge badge-info">Recursos</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Cobertura</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Resultado</span></a>
+              </li>
+              <li>
+                <a href=""><span class="badge badge-info">Qualidade</span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /well -->
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-thumbs-o-up"></i> Compartilhe</h5>
+        <ul class="no-padding no-margin">
+          <p class="no-margin">
+            <a title="Facebook" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-facebook fa-stack-1x"></i></span></a>
+            <a title="Twitter" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-twitter fa-stack-1x"></i></span></a>
+            <a title="Google+" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-google-plus fa-stack-1x"></i></span></a>
+            <a title="Linkedin" href=""><span class="fa-stack fa-lg"><i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-linkedin fa-stack-1x"></i></span></a>
+        </p>
+        </ul>
+      </div>
+      <!-- /well -->
+      <!-- /well -->
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-fire"></i> Mais consultados:</h5>
+        <ul class="no-padding list-unstyled">
+          <li>
+            <a (click)="(null)" class="margin-top-0">Taxa de mortalidade perinatal</a>
+          </li>
+          <li>
+            <a (click)="(null)" class="padding-top-5 display-block">Grau de urbanização</a>
+          </li>
+          <li>
+            <a (click)="(null)" class="margin-top-5">Índice de envelhecimento</a>
+          </li>
+          <li>
+            <a (click)="(null)" class="margin-top-5">Taxa de fecundidade total</a>
+          </li>
+          <li>
+            <a (click)="(null)" class="margin-top-5">Taxa bruta de mortali</a>
+          </li>
+          <li>
+            <a (click)="(null)" class="margin-top-5">Esperança de vida ao nascer</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /well -->
+      <!-- /well -->
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-exclamation-circle"></i> Por responsabilidade:</h5>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="list-group no-margin">
+              <li class="list-group-item">
+                <a href=""> <span class="badge pull-right">15</span> SVS </a>
+              </li>
+              <li class="list-group-item">
+                <a href=""> <span class="badge pull-right">30</span> SAS </a>
+              </li>
+              <li class="list-group-item">
+                <a href=""> <span class="badge pull-right">9</span> SGTES </a>
+              </li>
+              <li class="list-group-item">
+                <a href=""> <span class="badge pull-right">4</span> SESAI </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /well -->
+    </div>
+  </div>
+</div>
+<footer>
+<div class="row">
+  <div class="col-lg-6">
+
+      <p>
+        <a href="http://portalsaude.saude.gov.br/index.php?option=com_content&amp;view=category&amp;layout=faq&amp;id=285&amp;Itemid=529">
+          <img src="assets/img/site/logo_136.png" alt="Logo Disque Saúde 136 Ouvidoria Geral do SUS" title="Disque Saúde 136 Ouvidoria Geral do SUS"></a></p>
+      <p>Ministério da Saúde<br> Esplanada dos Ministérios Bloco G<br> Brasília-DF / CEP: 70058-900 <br> Telefone: (61) 3315-2425</p>
+
+    </div>
+</div>
+  </footer>
