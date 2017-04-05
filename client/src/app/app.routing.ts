@@ -12,6 +12,11 @@ export const routes: Routes = [
   { path: '', component: EmptyLayoutComponent, loadChildren: 'app/site/site.module#SiteModule'},
   { path: 'admin', component: MainLayoutComponent, loadChildren: 'app/admin/admin.module#AdminModule'},
   { path: 'login', component: AuthLayoutComponent, loadChildren: 'app/login/auth.module#AuthModule'},
+  {
+    path: 'forms',
+    loadChildren: 'app/+forms/forms-showcase.module#FormsShowcaseModule',
+    data: {pageTitle: 'Forms'}
+  },
   {path: '**', redirectTo: ''}
 //
 ];

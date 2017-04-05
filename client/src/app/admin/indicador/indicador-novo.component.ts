@@ -7,6 +7,7 @@ import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
   templateUrl: './indicador-novo.component.html',
 })
 export class IndicadorNovoComponent implements OnInit {
+  private currenttab = 't1';
 
   constructor() {}
 

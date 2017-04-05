@@ -8,6 +8,8 @@ import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {GeneralElementsComponent} from "./teste/general-elements.component";
+import { BootstrapEditorsComponent } from './editor/bootstrap-editors.component';
+
 export const homeRoutes: Routes = [
     {
         path: '',
@@ -38,12 +40,16 @@ export const homeRoutes: Routes = [
     path: 'grafico',
     component: FlotChartsComponent,
     data: {pageTitle: 'Gráfico Indicadores'}
-    }
-    ,
+    },
     {
     path: 'grafico2',
     component: MorrisChartsComponent,
     data: {pageTitle: 'Gráfico Indicadores'}
+  },
+  {
+      path: 'editors',
+      component: BootstrapEditorsComponent,
+      data: {pageTitle: 'Gráfico Indicadores'}
     }
 ];
 
