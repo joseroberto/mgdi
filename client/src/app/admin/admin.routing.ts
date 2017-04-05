@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import {ModuleWithProviders} from "@angular/core";
 
 import {PainelComponent} from "./painel/painel.component";
-import {IndicadorListComponent} from './indicador/indicador-list.component';
-import {FormElementsComponent} from "./indicador/form-elements.component";
+import {IndicadorListaComponent} from './indicador/indicador-lista.component';
+import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {GeneralElementsComponent} from "./teste/general-elements.component";
@@ -20,13 +20,13 @@ export const homeRoutes: Routes = [
     data: {pageTitle: 'Painel'}
     },
     {
-    path: 'novoindicador',
-    component: FormElementsComponent,
+    path: 'indicadornovo',
+    component: IndicadorNovoComponent,
     data: {pageTitle: 'Novo indicador'}
     },
     {
-    path: 'indicadorlist',
-    component: IndicadorListComponent,
+    path: 'indicadorlista',
+    component: IndicadorListaComponent,
     data: {pageTitle: 'Lista Indicadores'}
     },
     {
