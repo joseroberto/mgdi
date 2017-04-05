@@ -12,7 +12,7 @@ import {FlotChartModule} from "../shared/graphs/flot-chart/flot-chart.module";
 import {PainelComponent} from "./painel/painel.component";
 import {GeneralElementsComponent} from "./teste/general-elements.component";
 
-import {ProjectsListComponent} from './indicador/projects-list.component';
+import {IndicadorListComponent} from './indicador/indicador-list.component';
 import {FormElementsComponent} from "./indicador/form-elements.component";
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
@@ -34,7 +34,7 @@ import {AccordionModule, CarouselModule} from "ng2-bootstrap";
     CarouselModule.forRoot()
 
   ],
-  declarations: [PainelComponent, ProjectsListComponent, FormElementsComponent,
+  declarations: [PainelComponent, IndicadorListComponent, FormElementsComponent,
     FlotChartsComponent, MorrisChartsComponent, GeneralElementsComponent ]
 })
 

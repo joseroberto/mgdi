@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {ModuleWithProviders} from "@angular/core";
 
 import {PainelComponent} from "./painel/painel.component";
-import {ProjectsListComponent} from './indicador/projects-list.component';
+import {IndicadorListComponent} from './indicador/indicador-list.component';
 import {FormElementsComponent} from "./indicador/form-elements.component";
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
@@ -26,7 +26,7 @@ export const homeRoutes: Routes = [
     },
     {
     path: 'indicadorlist',
-    component: ProjectsListComponent,
+    component: IndicadorListComponent,
     data: {pageTitle: 'Lista Indicadores'}
     },
     {
