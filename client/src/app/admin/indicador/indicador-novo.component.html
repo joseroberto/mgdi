@@ -33,10 +33,14 @@
         <form class="form-horizontal">
           <fieldset>
               <legend>
-
                   [Novo Indicador]
-
               </legend>
+              <div class="form-group">
+                <label class="col-md-2 control-label">Código</label>
+                <div class="col-md-2">
+                  <input class="form-control" placeholder="Código" type="text" maxlength="10">
+                </div>
+              </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Título</label>
                 <div class="col-md-10">
@@ -66,6 +70,10 @@
                 <a (click)="currenttab = 't5'"><span
                   class="badge bg-color-greenLight txt-color-white">0</span> Limitações</a>
               </li>
+              <li [class.active]="currenttab=='t6'">
+                <a (click)="currenttab = 't6'"><span
+                  class="badge bg-color-greenLight txt-color-white">0</span> Indicadores Relacionados</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -79,9 +87,20 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">Tags</label>
                     <div class="col-md-10">
-                      <input class="form-control" placeholder="Tags" type="text">
+                      <select select2 multiple style="width:100%" class="select2">
+                        <optgroup label="Coordenações">
+                          <option value="AK">CGGIE</option>
+                          <option value="HI">CGMA</option>
+                        </optgroup>
+                        <optgroup label="Programas/Área Temática">
+                          <option value="CA">Crack</option>
+                          <option value="NV" selected="selected">Saúde da Família</option>
+                          <option value="CA">Saúde da Mulher</option>
+                        </optgroup>
+                      </select>
                     </div>
                   </div>
+
                   <div class="form-group">
                    <label class="col-md-2 control-label" for="select-1">Classificação</label>
                    <div class="col-md-10">
@@ -95,6 +114,59 @@
 
                    </div>
                  </div>
+                 <div class="form-group">
+                  <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+                  <div class="col-md-4">
+                    <select class="form-control" id="select-1">
+                      <option>(%) Percentual</option>
+                      <option>Itens</option>
+                      <option>Mortes/habitante</option>
+                    </select>
+                  </div>
+                  <label class="col-md-2 control-label">Contexto</label>
+                  <div class="col-md-4">
+                    <label class="checkbox-inline">
+                      <input type="radio">
+                      BR </label>
+                    <label class="checkbox-inline">
+                      <input type="radio">
+                      UF </label>
+                    <label class="checkbox-inline">
+                      <input type="radio">
+                      Município</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-2">&nbsp;</div>
+                  <div class="col-md-4">
+
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st2">
+                      <label class="onoffswitch-label" for="st2">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Acumulativo</label>
+
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st1">
+                      <label class="onoffswitch-label" for="st1">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Ativo</label>
+                  </div>
+                </div>
+
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't2'">
@@ -112,6 +184,9 @@
               <tab [active]="currenttab == 't5'">
                 <div class="summernote" [summernote]="{height: 180}" id='t5'>
                 </div>
+              </tab>
+              <tab [active]="currenttab == 't6'">
+                Indicadores relacionados
               </tab>
             </tabset>
 

@@ -10,6 +10,7 @@ import {SmartadminWidgetsModule} from "../shared/widgets/smartadmin-widgets.modu
 import {FlotChartModule} from "../shared/graphs/flot-chart/flot-chart.module";
 import {SmartadminEditorsModule} from "../shared/forms/editors/smartadmin-editors.module";
 
+
 import {PainelComponent} from "./painel/painel.component";
 import {GeneralElementsComponent} from "./teste/general-elements.component";
 
@@ -20,6 +21,7 @@ import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 import {AccordionModule, CarouselModule} from "ng2-bootstrap";
 import { BootstrapEditorsComponent } from './editor/bootstrap-editors.component';
+
 
 @NgModule({
   imports: [
