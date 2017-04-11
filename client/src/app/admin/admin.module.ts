@@ -20,7 +20,6 @@ import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 import {AccordionModule, CarouselModule} from "ng2-bootstrap";
-import { BootstrapEditorsComponent } from './editor/bootstrap-editors.component';
 
 
 @NgModule({
@@ -40,7 +39,7 @@ import { BootstrapEditorsComponent } from './editor/bootstrap-editors.component'
 
   ],
   declarations: [PainelComponent, IndicadorListaComponent, IndicadorNovoComponent,
-    FlotChartsComponent, MorrisChartsComponent, GeneralElementsComponent,BootstrapEditorsComponent ]
+    FlotChartsComponent, MorrisChartsComponent, GeneralElementsComponent ]
 })
 
 export class AdminModule { }

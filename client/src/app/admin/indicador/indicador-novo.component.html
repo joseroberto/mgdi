@@ -49,7 +49,7 @@
               </div>
           </fieldset>
 
-            <ul class="nav nav-tabs bordered" id="demo-pill-nav">
+            <ul class="nav nav-tabs" id="dados-indicador">
               <li [class.active]="currenttab=='t1'" class="active">
                 <a (click)="currenttab = 't1'"><span class="badge bg-color-blue txt-color-white">12</span>
                   Dados Gerais </a>
@@ -74,6 +74,14 @@
                 <a (click)="currenttab = 't6'"><span
                   class="badge bg-color-greenLight txt-color-white">0</span> Indicadores Relacionados</a>
               </li>
+              <li [class.active]="currenttab=='t7'">
+                <a (click)="currenttab = 't7'"><span
+                  class="badge bg-color-greenLight txt-color-white">0</span> Eventos Relacionados</a>
+              </li>
+              <li [class.active]="currenttab=='t8'">
+                <a (click)="currenttab = 't8'"><span
+                  class="badge bg-color-greenLight txt-color-white">0</span> Categoria análise</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -82,6 +90,18 @@
                     <label class="col-md-2 control-label">Descrição</label>
                     <div class="col-md-10">
                       <textarea class="form-control" placeholder="Descrição" rows="4"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Método de Cálculo</label>
+                    <div class="col-md-10">
+                      <textarea class="form-control" placeholder="Metodologia para cálculo" rows="3"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Fonte</label>
+                    <div class="col-md-10">
+                      <textarea class="form-control" placeholder="Fonte dos ddados" rows="2"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -103,13 +123,34 @@
 
                   <div class="form-group">
                    <label class="col-md-2 control-label" for="select-1">Classificação</label>
-                   <div class="col-md-10">
+                   <div class="col-md-2">
 
                      <select class="form-control" id="select-1">
                        <option>Processo</option>
                        <option>Produto</option>
                        <option>Resultado</option>
                        <option>Impacto</option>
+                     </select>
+
+                   </div>
+                   <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
+                   <div class="col-md-2">
+
+                     <select class="form-control" id="select-1">
+                       <option>Mensal</option>
+                       <option>Semanal</option>
+                       <option>Trimestral</option>
+                       <option>Quadrimestral</option>
+                     </select>
+
+                   </div>
+                   <label class="col-md-2 control-label" for="select-1">Secretaria Responsável</label>
+                   <div class="col-md-2">
+
+                     <select class="form-control" id="select-1">
+                       <option>SVS</option>
+                       <option>SAS</option>
+                       <option>SCTIE</option>
                      </select>
 
                    </div>
@@ -186,7 +227,89 @@
                 </div>
               </tab>
               <tab [active]="currenttab == 't6'">
-                Indicadores relacionados
+                <fieldset>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Nome do Indicador</label>
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="Código ou partes do nome do indicador..." type="text" list="list">
+                      <datalist id="list">
+                        <option value="NCPH">[NCPH] - Número de consultas médicas (SUS) por habitante</option>
+                        <option value="PRCTG">[PRCTG] - Proporção da população que refere ter consultado médico nos últimos 12 meses</option>
+                        <option value="PPRRUC">[PPRRUC] - Proporção da população que refere ter realizado a última consulta odontológica há menos de 1 ano</option>
+
+                      </datalist>
+                      <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
+                    </div>
+                  </div>
+                  <div class="table-responsive col-md-10">
+
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Sigla</th>
+                        <th>Indicador</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>PPBMD</td>
+                        <td>Proporção da população feminina de 25 a 64 anos que refere nunca ter realizado exame preventivo do câncer do colo do útero</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>PPCPS</td>
+                        <td>Proporção da população coberta por planos de saúde</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't7'">
+                <div class="summernote" [summernote]="{height: 180}" id='t7'>
+                </div>
+              </tab>
+              <tab [active]="currenttab == 't8'">
+                <fieldset>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Categoria Relacionada</label>
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="Categorias que podem ser relacionadas no estudo do indicador..." type="text" list="listacat">
+                      <datalist id="listacat">
+                        <option value="1">Unidade geográfica: Brasil, grandes regiões, estados, Distrito Federal, regiões metropolitanas</option>
+                        <option value="2">Faixa etária: De 0 a 9 anos, 10 a 19 anos, 20 a 39 anos, 40 a 59 anos e 60 anos ou mais.</option>
+                        <option value="3">Sexo: masculino e feminino</option>
+
+                      </datalist>
+                      <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
+                    </div>
+                  </div>
+                  <div class="table-responsive col-md-10">
+
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Categoria</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Forma de financiamento: SUS e não SUS (a partir de 2008)</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Situação: urbano e rural.</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </fieldset>
               </tab>
             </tabset>
 
