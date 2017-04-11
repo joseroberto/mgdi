@@ -115,6 +115,8 @@ paths:
     # our controller name
     x-swagger-router-controller: movie
     get:
+      security:
+        - Bearer: []
       description: get a movie
       # define the type of response for Success "200" and Error
       parameters:
