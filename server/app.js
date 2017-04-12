@@ -5,7 +5,8 @@ var app = require('express')();
 module.exports = app; // for testing
 
 var config = {
-  appRoot: __dirname // required config
+  appRoot: __dirname, // required config
+  securityHandlers: require('./api/helpers/security')
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
@@ -13,22 +14,6 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   // install middleware
   swaggerExpress.register(app);
-
-  /*
-  var options = { Bearer:
-    function (req, authOrSecDef, scopesOrApiKey, callback) {
-      ...
-      callback();
-    }
-  };
-  swaggerExpress.runner.swaggerTools.swaggerSecurity(options);
-  */
-  swaggerExpress.runner.swaggerTools.swaggerSecurity({
-    Bearer:
-    function (req, authOrSecDef, scopesOrApiKey, callback) {
-      console.log('Opa. Passei aqui!!!');
-      callback();
-    }});
   var port = process.env.PORT || 8000;
   app.listen(port);
 

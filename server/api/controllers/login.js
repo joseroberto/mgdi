@@ -5,6 +5,7 @@ const yaml   = require('js-yaml');
 const fs   = require('fs');
 const soap = require('soap');
 const crypto = require('crypto');
+const util = require('util');
 
 module.exports = {
   authenticate: (req, res)=>{
@@ -18,19 +19,34 @@ module.exports = {
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: doc.config.system}},
               function(err, result) {
-                console.log('Err:', err);
-                console.log(result.respostaBuscaPerfilUsuario.usuario);
-                console.log(result.respostaBuscaPerfilUsuario.perfis.perfil[0].perfil.sigla,
-                  result.respostaBuscaPerfilUsuario.perfis.perfil[0].esferas.esferasPerfil[0].configuracao);
+                if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
+                  var perfis = {}
+                  result.respostaBuscaPerfilUsuario.perfis.perfil.forEach((item)=>{
+                    var esferas = [];
+                    item.esferas.esferasPerfil.forEach((esfera)=>{
+                        esferas.push(esfera.configuracao);
+                    });
+                    perfis[item.perfil.sigla]=esferas;
+                  });
+                  var temp = {
+                      cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
+                      nome: result.respostaBuscaPerfilUsuario.usuario.nome,
+                      email: result.respostaBuscaPerfilUsuario.usuario.email,
+                      perfis: perfis
+                  };
+                  console.log(temp); //TODO: Retirar isso
+                  var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
+                  res.json({token: util.format('Bearer: %s', token)});
+                }else{
+                  res.status(403).send(err);
+                }
               });
         });
-
-      console.log();
     } catch (e) {
       console.log(e);
+      res.status(500).send(e);
     }
 
-    var token = jwt.sign(user, '12345678');
-    res.json({token:token});
+
   }
 };

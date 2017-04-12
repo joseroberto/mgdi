@@ -38,3 +38,4 @@ swagger:
 config:
   wsdl: http://srvjddf72.saude.gov:10380/datasus-scpa-ws/ScpaServiceImpl?wsdl
   system: SAGE
+  secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89E=
