@@ -6,13 +6,11 @@ module.exports = app; // for testing
 
 var config = {
   appRoot: __dirname, // required config
-  securityHandlers: require('./api/helpers/security')
+  swaggerSecurityHandlers: require('./api/helpers/security')
 };
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
-
-  // install middleware
   swaggerExpress.register(app);
   var port = process.env.PORT || 8000;
   app.listen(port);
