@@ -35,3 +35,6 @@ swagger:
       name: swagger_raw
 
 # any other values in this file are just loaded into the config for application access...
+config:
+  wsdl: http://srvjddf72.saude.gov:10380/datasus-scpa-ws/ScpaServiceImpl?wsdl
+  system: SAGE
