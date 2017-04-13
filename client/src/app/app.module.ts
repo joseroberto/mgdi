@@ -16,6 +16,8 @@ import { AppState, InternalStateType } from './app.service';
 import {CoreModule} from "./core/core.module";
 import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
+import {LoginComponent} from './auth/login.component'
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -34,13 +36,12 @@ type StoreType = {
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
-    AppComponent,
+    AppComponent,LoginComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     HttpModule,
-
     CoreModule,
     SmartadminLayoutModule,
     routing

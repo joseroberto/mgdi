@@ -9,8 +9,13 @@ var config = {
   swaggerSecurityHandlers: require('./api/helpers/security')
 };
 
+
+
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
+
+  app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
+
   swaggerExpress.register(app);
   var port = process.env.PORT || 8000;
   app.listen(port);
