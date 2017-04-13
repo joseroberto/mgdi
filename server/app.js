@@ -6,20 +6,17 @@ module.exports = app; // for testing
 
 var config = {
   appRoot: __dirname, // required config
-  swaggerSecurityHandlers: {
-    Bearer: function (req, authOrSecDef, scopesOrApiKey, cb) {
-      console.log('Opa. Passei aqui!!!', scopesOrApiKey);
-      cb(null);
-    }
-  }
+  swaggerSecurityHandlers: require('./api/helpers/security')
 };
+
+
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
-  // install middleware
-  swaggerExpress.register(app);
+  app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
+<<<<<<< HEAD
   /*
   var options = { Bearer:
     function (req, authOrSecDef, scopesOrApiKey, callback) {
@@ -30,6 +27,9 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   swaggerExpress.runner.swaggerTools.swaggerSecurity(options);
   */
 
+=======
+  swaggerExpress.register(app);
+>>>>>>> 439085e86890a19a233ea2babb4e67f6e90c6aca
   var port = process.env.PORT || 8000;
   app.listen(port);
 
