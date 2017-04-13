@@ -14,18 +14,12 @@ export class AuthenticationService extends REST{
     }
 
     login(email: string, senha: string) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this.http.post(super.getURL('/login'),
-          `{"email": ${email},"password": ${senha}}`,
-          new RequestOptions({ headers: headers })).map((response: Response) => {
-                /*let user = response.json();
-                if (user && user.access_token) {
-                    user.username= username;
-                    console.log(user);
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }*/
-            });
+        return this.http.post(super.getURL('/login'), {email: email,password: senha}, super.jwt()).map(
+          (response: Response) => {
+            console.log('login:', response);
+            return response.json();
+          }
+        );
     }
 
     getProfile(){

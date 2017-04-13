@@ -18,6 +18,9 @@ import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
 import {LoginComponent} from './auth/login.component'
 
+// Servicos
+import { AuthenticationService } from './services/index';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -50,7 +53,8 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     // ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AuthenticationService
   ]
 })
 export class AppModule {

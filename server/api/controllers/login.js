@@ -36,7 +36,7 @@ module.exports = {
                   };
                   console.log(temp); //TODO: Retirar isso
                   var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
-                  res.json({token: util.format('Bearer %s', token)});
+                  res.json({token: util.format('Bearer %s', token), user: temp});
                 }else{
                   res.status(403).send(err);
                 }

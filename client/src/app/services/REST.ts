@@ -8,19 +8,19 @@ export class REST{
   }
 
   protected getURL(url){
-    return `${environment.url}/${environment.context}${url}`;
+    return `${environment.url}${url}`;
   }
 
   protected jwt() {
       // create authorization header with jwt token
-      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      //let currentUser = JSON.parse(localStorage.getItem('currentUser'));
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json' );
 
-      if (currentUser && currentUser.token) {
+      //if (currentUser && currentUser.token) {
           //headers.append('Authorization', 'Bearer ' + currentUser.access_token);
-      }
+      //}
 
       return new RequestOptions({ headers: headers });
   }
