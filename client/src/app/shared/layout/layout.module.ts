@@ -24,7 +24,6 @@ import {UtilsModule} from "../utils/utils.module";
     NavigationModule,
     FormsModule,
     RouterModule,
-
     UtilsModule,
 
 

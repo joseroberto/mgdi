@@ -13,23 +13,9 @@ var config = {
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
-
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
-
-<<<<<<< HEAD
-  /*
-  var options = { Bearer:
-    function (req, authOrSecDef, scopesOrApiKey, callback) {
-      ...
-      callback();
-    }
-  };
-  swaggerExpress.runner.swaggerTools.swaggerSecurity(options);
-  */
-
-=======
   swaggerExpress.register(app);
->>>>>>> 439085e86890a19a233ea2babb4e67f6e90c6aca
+
   var port = process.env.PORT || 8000;
   app.listen(port);
 
