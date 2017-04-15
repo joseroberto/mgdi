@@ -38,6 +38,7 @@ module.exports = {
                   var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
                   res.json({token: util.format('Bearer %s', token), user: temp});
                 }else{
+                  console.log(err);
                   res.status(403).send(err);
                 }
               });

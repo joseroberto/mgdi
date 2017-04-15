@@ -15,10 +15,7 @@ export class AuthenticationService extends REST{
 
     login(email: string, senha: string) {
         return this.http.post(super.getURL('/login'), {email: email,password: senha}, super.jwt()).map(
-          (response: Response) => {
-            console.log('login:', response);
-            return response.json();
-          }
+          (response: Response) => response.json()
         );
     }
 
