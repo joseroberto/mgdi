@@ -3,7 +3,7 @@ CREATE SCHEMA dbesusgestor;
 CREATE TABLE dbesusgestor.tb_unidade_medida
 (
   co_unidade_medida integer NOT NULL,
-  ds_unidade_medida character varying(300),
+  ds_unidade_medida character varying(300) not null,
   CONSTRAINT tb_unidade_medida_pkey PRIMARY KEY (co_unidade_medida)
 );
 COMMENT ON COLUMN dbesusgestor.tb_unidade_medida.co_unidade_medida IS 'Código unidade de medida';
@@ -13,7 +13,7 @@ COMMENT ON COLUMN dbesusgestor.tb_unidade_medida.ds_unidade_medida IS 'Descriç�
 CREATE TABLE dbesusgestor.tb_indicador_classificacao
 (
   co_indicador_classificacao integer NOT NULL, -- Código Identificador da Classificação do Indicador
-  ds_indicador_classificacao character varying(255), -- Descrição da Classificação do Indicador
+  ds_indicador_classificacao character varying(255) not null, -- Descrição da Classificação do Indicador
   CONSTRAINT tb_indicador_classificacao_pkey PRIMARY KEY (co_indicador_classificacao)
 );
 COMMENT ON COLUMN dbesusgestor.tb_indicador_classificacao.co_indicador_classificacao IS 'Código da Classificação do Indicador';
@@ -23,8 +23,8 @@ COMMENT ON COLUMN dbesusgestor.tb_indicador_classificacao.ds_indicador_classific
 CREATE TABLE dbesusgestor.tb_area_responsavel
 (
   co_area_responsavel integer NOT NULL, -- Código Identificador da Área Responsável pelo informações do Indicador
-  ds_area_responsavel character varying(255), -- Descrição da Área Responsável pelo informações do Indicador
-  sg_area_responsavel character varying(255), -- Sigla da Área Responsável pelo informações do Indicador
+  ds_area_responsavel character varying(255) not null, -- Descrição da Área Responsável pelo informações do Indicador
+  sg_area_responsavel character varying(255) not null, -- Sigla da Área Responsável pelo informações do Indicador
   CONSTRAINT tb_area_responsavel_pkey PRIMARY KEY (co_area_responsavel)
 );
 COMMENT ON COLUMN dbesusgestor.tb_area_responsavel.co_area_responsavel IS 'Código Identificador da Área Responsável pelo informações do Indicador';
@@ -35,7 +35,7 @@ COMMENT ON COLUMN dbesusgestor.tb_area_responsavel.sg_area_responsavel IS 'Sigla
 CREATE TABLE dbesusgestor.tb_periodicidade
 (
   co_periodicidade integer NOT NULL,
-  ds_periodicidade character varying(300),
+  ds_periodicidade character varying(300) not null,
   CONSTRAINT tb_periodicidade_pkey PRIMARY KEY (co_periodicidade)
 );
 COMMENT ON COLUMN dbesusgestor.tb_periodicidade.co_periodicidade IS 'Código da periodicidade';
@@ -49,10 +49,10 @@ COMMENT ON COLUMN dbesusgestor.tb_periodicidade.ds_periodicidade IS 'Descrição
 
 CREATE TABLE dbesusgestor.tb_indicador
 (
-  co_indicador character varying(8), -- Código do Indicador TODO: Trocar para co_indicador_principal->co_indicador e a coluna co_indicador->ds_mnemonico
-  ds_indicador character varying(200), -- Nome do Indicador
-  co_periodicidade integer, -- Código da Periodicidade do Indicador
-  co_unidade_medida integer, -- Código identificador da Unidade de Medida do Indicador
+  co_indicador character varying(8) not null, -- Código do Indicador 
+  ds_indicador character varying(200) not null, -- Nome do Indicador
+  co_periodicidade integer not null, -- Código da Periodicidade do Indicador
+  co_unidade_medida integer not null, -- Código identificador da Unidade de Medida do Indicador
   ds_metodo_calculo text, -- Descrição do Método de Cálculo
   ds_conceituacao text, -- Descrição da Conceituação
   ds_interpretacao text, -- Descrição da Interpretação
