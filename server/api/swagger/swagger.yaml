@@ -75,19 +75,18 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/GetVersion"
-  /movie:
+  /periodicidade:
     # our controller name
-    x-swagger-router-controller: movie
+    x-swagger-router-controller: periodicidade
     get:
-      security:
-        - Bearer: []
-      description: get the movies list
+      description: lista de periodicidades
+      operationId: list
       # define the type of response for Success "200" and Error
       responses:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/GetMoviesListResponse"
+            $ref: "#/definitions/GetPeriodicidadeListResponse"
         default:
           description: Error
           schema:
@@ -178,22 +177,19 @@ definitions:
         type: string
       title: 
         type: string
-  GetMoviesListResponse:
+  GetPeriodicidadeListResponse:
     required:
-      - movies
+      - periodicidades
     properties:
-      # The array of movies
-      movies:
+      periodicidades:
         type: array
         items:
           type: object
           properties:
-            id:
-              type: string
-            title:
-              type: string
-            year:
+            codigo:
               type: number
+            descricao:
+              type: string
   GetMovieResponse:
     required:
       - id
