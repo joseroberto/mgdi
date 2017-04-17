@@ -3,16 +3,19 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../services/index';
 import {NotificationService} from "../shared/utils/notification.service";
+import { environment } from '../../environments/environment';
 
 @Component({
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-
+  env: any = environment;
+  
   constructor(private router: Router, private auth: AuthenticationService, private notificationService:NotificationService) { }
 
   ngOnInit() {
+    this.auth.logout();
   }
 
   login(){

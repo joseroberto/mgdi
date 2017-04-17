@@ -5,7 +5,7 @@
     <span id="logo"> <img src="assets/img/logo.png" alt="SmartAdmin"> </span>
   </div>
 
-  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Não tem uma conta?</span> <a routerLink="/login/register" class="btn btn-danger">Cria uma conta</a> </span>
+  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Não tem uma conta?</span> <a [href]="env.urlNewUser" class="btn btn-danger">Cria uma conta</a> </span>
 
 </header>
 <div id="main" role="main" class="animated fadeInDown">
@@ -48,7 +48,7 @@
                     sua senha</b> </label>
 
                 <div class="note">
-                  <a routerLink="/auth/forgot-password">Esqueceu a senha?</a>
+                  <a [href]="env.urlForgetPassword">Esqueceu a senha?</a>
                 </div>
               </section>
               <section>
