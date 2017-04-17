@@ -47,5 +47,14 @@ module.exports = {
       console.log(e);
       res.status(500).send(e);
     }
+  },
+  version: (req,res)=>{
+    try {
+      var doc = yaml.safeLoad(fs.readFileSync('api/swagger/swagger.yaml', 'utf8'));
+      res.json(doc.info);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send(e);
+    }
   }
 };
