@@ -16,13 +16,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    console.log('Login', this.model);
     this.auth.login(this.model.email, this.model.senha).subscribe(resp =>{
-      console.log("Status",resp);
+      console.log("Sucesso no login",resp);
       //TODO: Armazena o token
-      this.router.navigate(['/admin?q=login']);
+      this.router.navigate(['/admin'], {queryParams: {q:'login'}});
     },err =>{
-      console.log(err);
+      console.log("Erro no login", err);
       if (err.status == 403){
         this.notificationService.smallBox({
           title: "Erro",

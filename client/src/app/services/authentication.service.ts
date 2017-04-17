@@ -9,14 +9,24 @@ import 'rxjs/Rx';
 @Injectable()
 export class AuthenticationService extends REST{
 
+    token: string='';
+
     constructor(private http: Http) {
       super();
     }
 
     login(email: string, senha: string) {
         return this.http.post(super.getURL('/login'), {email: email,password: senha}, super.jwt()).map(
-          (response: Response) => response.json()
+          (response: Response) => {
+            let resp = response.json();
+            this.token = resp.token;
+            return resp;
+          }
         );
+    }
+
+    logout(){
+      this.token='';
     }
 
     getProfile(){
