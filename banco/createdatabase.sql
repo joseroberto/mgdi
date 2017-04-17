@@ -1,3 +1,5 @@
+CREATE SCHEMA dbesusgestor;
+
 CREATE TABLE dbesusgestor.tb_unidade_medida
 (
   co_unidade_medida integer NOT NULL,
