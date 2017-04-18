@@ -21,7 +21,11 @@ var config = {
   swaggerSecurityHandlers: require('./api/helpers/security')
 };
 
-
+process.on('SIGINT', function() {
+   db.stop(function(err) {
+     process.exit(err ? 1 : 0);
+   });
+});
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
