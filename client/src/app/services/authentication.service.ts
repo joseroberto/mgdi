@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { REST } from './REST';
@@ -7,7 +8,7 @@ import { environment } from '../../environments/environment';
 import 'rxjs/Rx';
 
 @Injectable()
-export class AuthenticationService extends REST{
+export class AuthenticationService extends REST implements CanActivate{
 
     constructor(private http: Http) {
       super();
@@ -24,6 +25,9 @@ export class AuthenticationService extends REST{
         );
     }
 
+    canActivate() {
+        return 'token' in localStorage;
+      }
 
     getProfile(){
         return this.http.get(super.getURL('/profile'), super.jwt()).map((response: Response) => response.json());
