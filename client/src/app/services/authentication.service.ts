@@ -10,12 +10,12 @@ import 'rxjs/Rx';
 @Injectable()
 export class AuthenticationService extends REST implements CanActivate{
 
-    constructor(private http: Http) {
-      super();
+    constructor(http: Http) {
+      super(http);
     }
 
     login(email: string, senha: string) {
-        return this.http.post(super.getURL('/login'), {email: email,password: senha}, super.jwt()).map(
+        return this.gethttp().post(super.getURL('/login'), {email: email,password: senha}, super.jwt()).map(
           (response: Response) => {
             let resp = response.json();
             localStorage.setItem('token', resp.token);
@@ -30,7 +30,7 @@ export class AuthenticationService extends REST implements CanActivate{
       }
 
     getProfile(){
-        return this.http.get(super.getURL('/profile'), super.jwt()).map((response: Response) => response.json());
+        return this.getURL('/profile');
     }
 
     logout() {

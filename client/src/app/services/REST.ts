@@ -1,14 +1,24 @@
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { environment } from '../../environments/environment';
 
 export class REST{
 
-  constructor(){
+  constructor(private http: Http){
   }
 
   protected getURL(url){
     return `${environment.url}${url}`;
+  }
+
+  protected get(path:string){
+    return this.http.get(this.getURL(path), this.jwt()).map(
+      (response: Response) => response.json());
+  }
+
+  protected gethttp(){
+      return this.http;
   }
 
   protected jwt() {
