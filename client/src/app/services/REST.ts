@@ -8,8 +8,11 @@ export class REST{
   constructor(private http: Http){
   }
 
-  protected getURL(url){
-    return `${environment.url}${url}`;
+  protected getURL(url, useprefix:boolean = true){
+    if(useprefix)
+      return `${environment.url}${environment.API_URL}${url}`;
+    else
+      return `${environment.url}${url}`;
   }
 
   protected get(path:string){

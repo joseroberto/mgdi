@@ -126,10 +126,7 @@
                    <div class="col-md-2">
 
                      <select class="form-control" id="select-1">
-                       <option>Processo</option>
-                       <option>Produto</option>
-                       <option>Resultado</option>
-                       <option>Impacto</option>
+                       <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                      </select>
 
                    </div>
@@ -137,10 +134,7 @@
                    <div class="col-md-2">
 
                      <select class="form-control" id="select-1">
-                       <option>Mensal</option>
-                       <option>Semanal</option>
-                       <option>Trimestral</option>
-                       <option>Quadrimestral</option>
+                       <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade" [value]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                      </select>
 
                    </div>
@@ -159,9 +153,7 @@
                   <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
                   <div class="col-md-4">
                     <select class="form-control" id="select-1">
-                      <option>(%) Percentual</option>
-                      <option>Itens</option>
-                      <option>Mortes/habitante</option>
+                      <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [value]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                     </select>
                   </div>
                   <label class="col-md-2 control-label">Contexto</label>

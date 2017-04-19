@@ -19,7 +19,8 @@ import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 import {LoginComponent} from './auth/login.component'
 
 // Servicos
-import { AuthenticationService } from './services/index';
+import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeService, AreaService,
+  UnidadeMedidaService, IndicadorService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -54,7 +55,12 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     // ENV_PROVIDERS,
     APP_PROVIDERS,
-    AuthenticationService
+    AuthenticationService,
+    ClassificacaoIndicadorService,
+    PeriodicidadeService,
+    AreaService,
+    UnidadeMedidaService,
+    IndicadorService
   ]
 })
 export class AppModule {
