@@ -167,14 +167,14 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-  /api/indicador/{id}:
+  /api/indicador/{codigo}:
     # our controller name
     x-swagger-router-controller: indicador
     get:
       description: Le um registro de indicador
       operationId: getIndicador
       parameters:
-        - name: id
+        - name: codigo
           type: string
           in: path
           required: true
@@ -193,7 +193,7 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: id
+        - name: codigo
           type: string
           in: path
           required: true
@@ -212,10 +212,15 @@ paths:
       security:
         - Bearer: []      
       parameters:
-        - name: id
+        - name: codigo
           type: string
           in: path
           required: true
+        - name: indicador
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Indicador'
       responses:
         "200":
           description: Success

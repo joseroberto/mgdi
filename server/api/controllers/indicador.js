@@ -8,18 +8,25 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
-    console.log(req);
-    //models.Indicador.create()
+    models.Indicador.create(req.body).then((indicador)=> {
+      res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+    });
   },
   getIndicador: (req,res)=>{
-    res.json(models.Indicador.findById(req.params.id));
+    console.log(req.swagger.params.codigo.value);
+    models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=> {
+      res.json(indicador);
+    });
   },
   deleteIndicador: (req,res)=>{
-    models.Indicador.findById(req.params.id).destroy();
+    models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=>{
+      indicador.destroy();
+      res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+    });
   },
   editaIndicador: (req,res)=>{
-    models.Indicador.update({ codigo: req.params.id}, req.body).then(() => {
-      res.json({msg:'Ok'});
+    models.Indicador.update({ codigo: req.swagger.params.codigo.value}, req.body).then(() => {
+      res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
     })
   }
 }
