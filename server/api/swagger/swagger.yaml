@@ -72,7 +72,7 @@ paths:
       operationId: version
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
   /api/periodicidade:
@@ -82,11 +82,11 @@ paths:
       operationId: getPeriodicidades
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetPeriodicidadeListResponse"
         default:
-          description: Error
+          description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
   /api/classificacao:
@@ -96,11 +96,11 @@ paths:
       operationId: getClassificacoes
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetClassificacaoResponse"
         default:
-          description: Error
+          description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
   /api/unidade-medida:
@@ -110,11 +110,11 @@ paths:
       operationId: getUnidadesMedida
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetUnidadeMedidaResponse"
         default:
-          description: Error
+          description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
   /api/area:
@@ -124,7 +124,7 @@ paths:
       operationId: getAreas
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetAreaResponse"
         default:
@@ -138,23 +138,79 @@ paths:
       operationId: getIndicadores
       responses:
         "200":
-          description: Success
+          description: Sucesso
           schema:
             $ref: "#/definitions/GetIndicadorResponse"
         default:
-          description: Error
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria um novo indicador
+      operationId: createIndicador
+      security:
+        - Bearer: []
+      parameters:
+        - name: indicador
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Indicador'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-  /movie/{id}:
+  /api/indicador/{id}:
     # our controller name
-    x-swagger-router-controller: movie
+    x-swagger-router-controller: indicador
     get:
+      description: Le um registro de indicador
+      operationId: getIndicador
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Indicador"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga um registro de indicador
+      operationId: deleteIndicador
       security:
         - Bearer: []
-      description: get a movie
-      # define the type of response for Success "200" and Error
+      parameters:
+        - name: id
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Atualiza um registro de indicador
+      operationId: editaIndicador
+      security:
+        - Bearer: []      
       parameters:
         - name: id
           type: string
@@ -170,9 +226,16 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-
-# complex objects have schema definitions
 definitions:
+  Indicador:
+    description: Objeto indicador
+    properties:
+      codigo:
+        type: string
+        description: mnemonico do indicador
+      descricao:
+        type: string
+        description: Nome do Indicador
   Login:
     type: object
     properties:
@@ -190,8 +253,10 @@ definitions:
     properties:
       message:
         type: string
+        description: Retorna uma mensagem de sucesso
       error:
         type: string
+        description: Retorna o código de erro. Zero se deu certo.
   GetVersion:
     type: object
     properties:
@@ -260,12 +325,7 @@ definitions:
       indicadores:
         type: array
         items:
-          type: object
-          properties:
-            codigo:
-              type: string
-            descricao:
-              type: string
+          $ref: "#/definitions/Indicador"
   GetMovieResponse:
     required:
       - id
@@ -278,7 +338,15 @@ definitions:
         type: string
       year:
         type: number
-
+  SuccessResponse:
+    required:
+      - codret
+      - mensagem
+    properties:
+      codret:
+        type: number
+      mensagem:
+        type: string
   ErrorResponse:
     required:
       - message

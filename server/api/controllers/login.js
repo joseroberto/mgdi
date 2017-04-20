@@ -14,7 +14,8 @@ module.exports = {
 
     try {
       var doc = yaml.safeLoad(fs.readFileSync('config/default.yaml', 'utf8'));
-      soap.createClient(doc.config.wsdl, function(err, client) {
+      if(doc.environment.production){
+        soap.createClient(doc.config.wsdl, function(err, client) {
             //console.log('Erro:',err, client );
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: doc.config.system}},
@@ -43,6 +44,17 @@ module.exports = {
                 }
               });
         });
+      }else{
+        var temp = {
+            cpf: '11111111',
+            nome: 'Usuário Fake',
+            email: 'teste@teste.com',
+            perfis: []
+        };
+        console.log('Usuario fake:', temp); //TODO: Retirar isso
+        var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
+        res.json({token: util.format('Bearer %s', token), user: temp});
+      }
     } catch (e) {
       console.log(e);
       res.status(500).send(e);
