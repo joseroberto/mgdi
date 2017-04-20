@@ -25,7 +25,7 @@ export class AuthenticationService extends REST implements CanActivate{
               }
             );
         }else{
-          return Observable.interval(1000).map( v=>{
+          return Observable.range(1,1).map( v=>{
             let resp = {token:'APXXPTO', user:{
                       cpf: '11111111111',
                       nome: 'usuario fake',

@@ -32,9 +32,7 @@
       <div class="widget-body no-padding">
         <form class="form-horizontal">
           <fieldset>
-              <legend>
-                  [Novo Indicador]
-              </legend>
+              <legend>&nbsp;&nbsp;[Novo Indicador] </legend>
               <div class="form-group">
                 <label class="col-md-2 control-label">Código</label>
                 <div class="col-md-2">
@@ -169,11 +167,12 @@
                       Município</label>
                   </div>
                 </div>
-
+              </fieldset>
+              <fieldset>
+                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
                 <div class="form-group">
                   <div class="col-md-2">&nbsp;</div>
-                  <div class="col-md-4">
-
+                  <div class="col-md-3">
                     <span class="onoffswitch">
                       <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
                              id="st2">
@@ -185,7 +184,8 @@
                       </label>
                     </span>
                     <label class="control-label">Acumulativo</label>
-
+                  </div>
+                  <div class="col-md-3">
                     <span class="onoffswitch">
                       <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
                              id="st1">
@@ -197,6 +197,19 @@
                       </label>
                     </span>
                     <label class="control-label">Ativo</label>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st1">
+                      <label class="onoffswitch-label" for="st1">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Público</label>
                   </div>
                 </div>
 
@@ -304,7 +317,19 @@
                 </fieldset>
               </tab>
             </tabset>
-
+            <div class="form-actions">
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="btn btn-default" type="submit">
+                    Cancela
+                  </button>
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-save"></i>
+                    Grava
+                  </button>
+                </div>
+              </div>
+            </div>
         </form>
       </div>
       <!-- end widget content -->
