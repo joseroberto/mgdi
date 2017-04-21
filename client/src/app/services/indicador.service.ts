@@ -23,7 +23,7 @@ export class IndicadorService extends REST {
     return this.put(`/indicador/${codigo}`, indicador);
   }
 
-  delete(codigo:string){
+  erase(codigo:string){
     return this.delete(`/indicador/${codigo}`);
   }
 }

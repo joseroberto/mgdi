@@ -25,6 +25,7 @@ export class DatatableComponent implements OnInit {
   @Input() public tableClass: string;
   @Input() public width: string = '100%';
 
+_dataTable;
   constructor(private el: ElementRef) {
   }
 
@@ -33,8 +34,12 @@ export class DatatableComponent implements OnInit {
       System.import('script-loader!smartadmin-plugins/datatables-bundle/datatables.min.js'),
     ]).then(()=>{
       this.render()
-
     })
+  }
+
+  refresh(){
+    console.log('Refrescando', this._dataTable);
+    this._dataTable.ajax.reload();
   }
 
   render() {
@@ -73,12 +78,11 @@ export class DatatableComponent implements OnInit {
       }
     });
 
-    const _dataTable = element.DataTable(options);
-
+    this._dataTable = element.DataTable(options);
     if (this.filter) {
       // Apply the filter
       element.on('keyup change', 'thead th input[type=text]', function () {
-        _dataTable
+        this._dataTable
           .column($(this).parent().index() + ':visible')
           .search(this.value)
           .draw();
@@ -93,9 +97,10 @@ export class DatatableComponent implements OnInit {
 
     if(this.detailsFormat){
       let format = this.detailsFormat
+      let data = this._dataTable;
       element.on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
-        var row = _dataTable.row( tr );
+        var row = data.row( tr );
         if ( row.child.isShown() ) {
           row.child.hide();
           tr.removeClass('shown');

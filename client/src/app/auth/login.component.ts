@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../services/index';
+import { AuthenticationService, UtilService } from '../services/index';
 import {NotificationService} from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
 
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
   env: any = environment;
 
-  constructor(private router: Router, private auth: AuthenticationService, private notificationService:NotificationService) { }
+  constructor(private router: Router, private auth: AuthenticationService, private util:UtilService) { }
 
   ngOnInit() {
     this.auth.logout();
@@ -25,21 +25,9 @@ export class LoginComponent implements OnInit {
       },err =>{
         console.log("Erro no login", err);
         if (err.status == 403){
-          this.notificationService.smallBox({
-            title: "Erro",
-            content: "Login negado por email ou senha inválida.",
-            color: "#C46A69",
-            iconSmall: "fa fa-warning shake animated",
-            timeout: 4000
-          });
+          this.util.msgErro("Login negado por email ou senha inválida.");
         }else{
-          this.notificationService.smallBox({
-            title: "Erro",
-            content: "Erro no acesso ao login. Tente mais tarde!",
-            color: "#C79121",
-            iconSmall: "fa fa-shield fadeInLeft animated",
-            timeout: 4000
-          });
+          this.util.msgErroInfra("Erro no acesso ao login. Tente mais tarde!");
         }
       });
   }
