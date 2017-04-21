@@ -15,7 +15,7 @@ export class ExemploListaComponent implements OnInit {
   }
 
   public options = {
-  "ajax": 'assets/api/project-list.json',
+  "ajax": 'http://localhost:4200/assets/api/project-list.json',
   "iDisplayLength": 15,
   "columns": [
     {

@@ -25,7 +25,7 @@ import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
 // Itens de planos
 import {ExemploListaComponent} from './plano/exemplo-lista.component';
 
-
+import {WindowRef} from './indicador/WindowRef';
 
 @NgModule({
   imports: [
@@ -45,13 +45,14 @@ import {ExemploListaComponent} from './plano/exemplo-lista.component';
 
   ],
   declarations: [PainelComponent,
-    FlotChartsComponent, 
+    FlotChartsComponent,
     MorrisChartsComponent,
     GeneralElementsComponent,
     IndicadorListaComponent,
     IndicadorNovoComponent,
     ExemploListaComponent
-     ]
+  ],
+  providers:[WindowRef]
 })
 
 export class AdminModule { }
