@@ -3,11 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import {ModuleWithProviders} from "@angular/core";
 
 import {PainelComponent} from "./painel/painel.component";
-import {IndicadorListaComponent} from './indicador/indicador-lista.component';
-import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
+
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {GeneralElementsComponent} from "./teste/general-elements.component";
+
+// Itens de indicadores
+import {IndicadorListaComponent} from './indicador/indicador-lista.component';
+import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
+
+// Itens de planos
+import {ExemploListaComponent} from './plano/exemplo-lista.component';
 
 export const homeRoutes: Routes = [
     {
@@ -29,6 +35,11 @@ export const homeRoutes: Routes = [
     path: 'indicadorlista',
     component: IndicadorListaComponent,
     data: {pageTitle: 'Lista Indicadores'}
+    },
+    {
+    path: 'exemplo',
+    component: ExemploListaComponent,
+    data: {pageTitle: 'Exemplo de lista de planos'}
     },
     {
     path: 'importa',

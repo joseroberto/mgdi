@@ -9,18 +9,23 @@ import {StatsModule} from "../shared/stats/stats.module";
 import {SmartadminWidgetsModule} from "../shared/widgets/smartadmin-widgets.module";
 import {FlotChartModule} from "../shared/graphs/flot-chart/flot-chart.module";
 import {SmartadminEditorsModule} from "../shared/forms/editors/smartadmin-editors.module";
-
-
-import {PainelComponent} from "./painel/painel.component";
-import {GeneralElementsComponent} from "./teste/general-elements.component";
-
-import {IndicadorListaComponent} from './indicador/indicador-lista.component';
-import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 import {AccordionModule, CarouselModule} from "ng2-bootstrap";
 import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-validation.module";
+
+import {PainelComponent} from "./painel/painel.component";
+import {GeneralElementsComponent} from "./teste/general-elements.component";
+
+// Itens de indicadores
+import {IndicadorListaComponent} from './indicador/indicador-lista.component';
+import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
+
+// Itens de planos
+import {ExemploListaComponent} from './plano/exemplo-lista.component';
+
+
 
 @NgModule({
   imports: [
@@ -39,8 +44,14 @@ import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-
     CarouselModule.forRoot()
 
   ],
-  declarations: [PainelComponent, IndicadorListaComponent, IndicadorNovoComponent,
-    FlotChartsComponent, MorrisChartsComponent, GeneralElementsComponent ]
+  declarations: [PainelComponent,
+    FlotChartsComponent, 
+    MorrisChartsComponent,
+    GeneralElementsComponent,
+    IndicadorListaComponent,
+    IndicadorNovoComponent,
+    ExemploListaComponent
+     ]
 })
 
 export class AdminModule { }
