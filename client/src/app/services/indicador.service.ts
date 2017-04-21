@@ -7,7 +7,23 @@ export class IndicadorService extends REST {
   constructor(http:Http) {
     super(http);
   }
-  getAll(){
+  _getAll(){
     return this.get('/indicador');
+  }
+
+  get(codigo:string){
+    return this.get(`/indicador/${codigo}`);
+  }
+
+  create(indicador:any){
+    return this.post('/indicador', indicador);
+  }
+
+  update(codigo:string, indicador:any){
+    return this.put(`/indicador/${codigo}`, indicador);
+  }
+
+  delete(codigo:string){
+    return this.delete(`/indicador/${codigo}`);
   }
 }

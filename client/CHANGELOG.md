@@ -7,6 +7,10 @@ Sistema de gestão de indicadores do Ministério da Saúde.
 
 ## Evoluções
 
+# 0.0.3
+  * Formulário de indicadores com validação e uso de interface REST
+  * Formulário de planos/metas com validação e uso de interface REST
+
 # 0.0.2
   * integração com validação de senha do SCPA
 

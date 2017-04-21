@@ -20,13 +20,14 @@ import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 import {AccordionModule, CarouselModule} from "ng2-bootstrap";
-
+import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-validation.module";
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRouting,
     SmartadminModule,
+    SmartadminValidationModule,
     SmartadminLayoutModule,
     StatsModule,
     SmartadminDatatableModule,

@@ -6,6 +6,7 @@ const fs   = require('fs');
 const soap = require('soap');
 const crypto = require('crypto');
 const util = require('util');
+const filename  = (process.env.NODE_ENV == 'production')? 'config/default.production.yaml':'config/default.yaml';
 
 module.exports = {
   authenticate: (req, res)=>{

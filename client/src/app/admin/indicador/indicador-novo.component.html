@@ -21,7 +21,6 @@
     -->
     <header>
       <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-
       <h2>Novo Indicador </h2>
     </header>
 
@@ -30,19 +29,31 @@
 
       <!-- widget content -->
       <div class="widget-body no-padding">
-        <form class="form-horizontal">
+        <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
+          novalidate="novalidate" saBootstrapValidator
+          class="form-horizontal"
+          data-bv-message="O valor é inválido"
+          data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
           <fieldset>
               <legend>&nbsp;&nbsp;[Novo Indicador] </legend>
               <div class="form-group">
                 <label class="col-md-2 control-label">Código</label>
                 <div class="col-md-2">
-                  <input class="form-control" placeholder="Código" type="text" maxlength="10">
+                  <input id="codigo" class="form-control"
+                    placeholder="Código" type="text" maxlength="10" ngModel name="codigo" #codigo
+                    (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="O código do indicador é obrigatório">
+
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-2 control-label">Título</label>
                 <div class="col-md-10">
-                  <input class="form-control" placeholder="Título do indicador" type="text">
+                  <input id="descricao" class="form-control"
+                    placeholder="Título do indicador" type="text" ngModel name="descricao" required>
                 </div>
               </div>
           </fieldset>
@@ -320,8 +331,9 @@
             <div class="form-actions">
               <div class="row">
                 <div class="col-md-12">
-                  <button class="btn btn-default" type="submit">
-                    Cancela
+                  <button class="btn btn-default" type="reset">
+                    <i class="fa fa-bullseye"></i>
+                    Limpa
                   </button>
                   <button class="btn btn-primary" type="submit">
                     <i class="fa fa-save"></i>

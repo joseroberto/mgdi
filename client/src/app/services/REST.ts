@@ -20,20 +20,35 @@ export class REST{
       (response: Response) => response.json());
   }
 
+  protected post(path:string, objeto:any){
+    return this.http.post(this.getURL(path), objeto, this.jwt()).map(
+      (response: Response) => response.json());
+  }
+
+  protected put(path:string, objeto:any){
+    return this.http.put(this.getURL(path), objeto, this.jwt()).map(
+      (response: Response) => response.json());
+  }
+
+  protected delete(path:string){
+    return this.http.delete(this.getURL(path), this.jwt()).map(
+      (response: Response) => response.json());
+  }
+
   protected gethttp(){
       return this.http;
   }
 
   protected jwt() {
       // create authorization header with jwt token
-      //let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      let currentToken = localStorage.getItem('token');
       let headers = new Headers();
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json' );
 
-      //if (currentUser && currentUser.token) {
-          //headers.append('Authorization', 'Bearer ' + currentUser.access_token);
-      //}
+      if (currentToken) {
+          headers.append('Authorization', currentToken);
+      }
 
       return new RequestOptions({ headers: headers });
   }
