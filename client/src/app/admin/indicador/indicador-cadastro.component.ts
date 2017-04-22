@@ -5,9 +5,9 @@ import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService, 
 @FadeInTop()
 @Component({
   selector: 'sa-form-elements',
-  templateUrl: './indicador-novo.component.html',
+  templateUrl: './indicador-cadastro.component.html',
 })
-export class IndicadorNovoComponent implements OnInit {
+export class IndicadorCadastroComponent implements OnInit {
   private currenttab = 't1';
 
   colecaoClassificacao:any[] = [];

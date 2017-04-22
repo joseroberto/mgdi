@@ -10,9 +10,10 @@ import {GeneralElementsComponent} from "./teste/general-elements.component";
 
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
-import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
+import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 
 // Itens de planos
+import {PlanoComponent} from './plano/plano.component';
 import {ExemploListaComponent} from './plano/exemplo-lista.component';
 
 export const homeRoutes: Routes = [
@@ -28,13 +29,18 @@ export const homeRoutes: Routes = [
     },
     {
     path: 'indicadornovo',
-    component: IndicadorNovoComponent,
+    component: IndicadorCadastroComponent,
     data: {pageTitle: 'Novo indicador'}
     },
     {
     path: 'indicadorlista',
     component: IndicadorListaComponent,
     data: {pageTitle: 'Lista Indicadores'}
+    },
+    {
+    path: 'plano',
+    component: PlanoComponent,
+    data: {pageTitle: 'Exemplo de lista de planos'}
     },
     {
     path: 'exemplo',

@@ -61,7 +61,7 @@ export class IndicadorListaComponent {
 
   editaIndicador(codigo:string){
 
-      this.router.navigate(['/admin/indicadornovo',codigo]);
+      this.router.navigate(['/admin/indicadornovo']);
   }
 
   public detailsFormat(d) {

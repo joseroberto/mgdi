@@ -14,16 +14,18 @@ import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 import {AccordionModule, CarouselModule} from "ng2-bootstrap";
 import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-validation.module";
+import {TreeViewModule} from "../shared/ui/tree-view/tree-view.module";
 
 import {PainelComponent} from "./painel/painel.component";
 import {GeneralElementsComponent} from "./teste/general-elements.component";
 
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
-import {IndicadorNovoComponent} from "./indicador/indicador-novo.component";
+import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 
 // Itens de planos
 import {ExemploListaComponent} from './plano/exemplo-lista.component';
+import {PlanoComponent} from './plano/plano.component';
 
 import {WindowRef} from './indicador/WindowRef';
 
@@ -41,16 +43,17 @@ import {WindowRef} from './indicador/WindowRef';
     FlotChartModule,
     SmartadminEditorsModule,
     AccordionModule.forRoot(),
-    CarouselModule.forRoot()
-
+    CarouselModule.forRoot(),
+    TreeViewModule
   ],
   declarations: [PainelComponent,
     FlotChartsComponent,
     MorrisChartsComponent,
     GeneralElementsComponent,
     IndicadorListaComponent,
-    IndicadorNovoComponent,
-    ExemploListaComponent
+    IndicadorCadastroComponent,
+    ExemploListaComponent,
+    PlanoComponent
   ],
   providers:[WindowRef]
 })

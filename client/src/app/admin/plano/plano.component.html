@@ -1,0 +1,68 @@
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="['Planos/Metas', 'Cadastra Plano']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-stats></sa-stats>
+  </div>
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <!-- row -->
+    <div class="row">
+      <!-- NEW WIDGET START -->
+      <article class="col-sm-12 col-md-12 col-lg-9">
+        <!-- Widget ID (each widget will need unique ID)-->
+        <sa-widget [colorbutton]="false" [editbutton]="false" [sortable]="false" [fullscreenbutton]="false" [custombutton]="false" color="orange">
+          <!-- widget options:
+          usage: <sa-widget id="wid-id-0" [editbutton]="false">
+          [colorbutton]="false"
+          [editbutton]="false"
+          [togglebutton]="false"
+          [deletebutton]="false"
+          [fullscreenbutton]="false"
+          [custombutton]="false"
+          [collapsed]="true"
+          [sortable]="false"
+          -->
+          <header>
+            <span class="widget-icon"> <i class="fa fa-lg fa-calendar"></i> </span>
+            <h2>Planos </h2>
+          </header>
+          <!-- widget div-->
+          <div>            <!-- widget content -->
+            <div class="widget-body">
+              <div class="widget-body-toolbar bg-color-white">
+                <form class="form-inline" role="form">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-10">
+                      <div class="form-group">
+                        <label class="sr-only">Sigla do Plano</label>
+                        <input name="sigla" class="form-control input-sm" placeholder="Sigla">
+                      </div>
+                      <div class="form-group">
+                      <label class="sr-only">Título</label>
+                      <input name="titulo" class="form-control input-sm" placeholder="Título">
+                    </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 text-align-right">
+                      <button (click)="add()" class="btn btn-warning btn-xs">
+                        <i class="fa fa-plus"></i> Novo
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div >
+                <sa-tree-view [items]="demo1" (change)="changeLstener($event)" ></sa-tree-view>
+              </div>
+            </div>
+            <!-- end widget content -->
+          </div>
+          <!-- end widget div -->
+        </sa-widget>
+        <!-- end widget -->
+      </article>
+      <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+  </sa-widgets-grid>
+  <!-- end widget grid -->
+</div>
