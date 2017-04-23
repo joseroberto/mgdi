@@ -28,9 +28,14 @@ export const homeRoutes: Routes = [
     data: {pageTitle: 'Painel'}
     },
     {
-    path: 'indicadornovo',
+    path: 'indicador',
     component: IndicadorCadastroComponent,
     data: {pageTitle: 'Novo indicador'}
+    },
+    {
+    path: 'indicador/:codigo',
+    component: IndicadorCadastroComponent,
+    data: {pageTitle: 'Edita indicador'}
     },
     {
     path: 'indicadorlista',

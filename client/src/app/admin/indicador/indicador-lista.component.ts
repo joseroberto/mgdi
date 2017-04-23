@@ -4,6 +4,7 @@ import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
 import { IndicadorService, UtilService } from '../../services/index';
 import {WindowRef} from './WindowRef';
+import { environment } from '../../../environments/environment';
 
 @FadeInTop()
 @Component({
@@ -32,7 +33,7 @@ export class IndicadorListaComponent {
 
 
   public options = {
-  "ajax": {"url": 'http://localhost:8000/api/indicador', "dataSrc":'indicadores'},
+  "ajax": {"url": `${environment.url}/api/indicador`, "dataSrc":'indicadores'},
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
   "columns": [
@@ -49,7 +50,7 @@ export class IndicadorListaComponent {
 }
 
   apagaIndicador(codigo:string){
-      this.indicadorService.erase(codigo).subscribe(resp=>{
+      this.indicadorService.delete(codigo).subscribe(resp=>{
         console.log(resp);
         if(!resp.codret){
           this.util.msgSucessoDelete(resp.mensagem);
@@ -60,8 +61,7 @@ export class IndicadorListaComponent {
   }
 
   editaIndicador(codigo:string){
-
-      this.router.navigate(['/admin/indicadornovo']);
+      this.router.navigate(['/admin/indicador', codigo]);
   }
 
   public detailsFormat(d) {

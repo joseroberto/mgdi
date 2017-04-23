@@ -13,7 +13,6 @@ module.exports = {
     });
   },
   getIndicador: (req,res)=>{
-    console.log(req.swagger.params.codigo.value);
     models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=> {
       res.json(indicador);
     });
@@ -25,7 +24,8 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
-    models.Indicador.update({ codigo: req.swagger.params.codigo.value}, req.body).then(() => {
+    console.log(req.body);
+    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
     })
   }

@@ -28,7 +28,7 @@ process.on('SIGINT', function() {
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
-  swaggerExpress.register(app);
+
 
   var port = process.env.PORT || 8000;
   app.use((request, response, next) => {
@@ -38,6 +38,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
         response.header('Access-Control-Allow-Credentials', 'true');
         next();
     });
+  swaggerExpress.register(app);
   app.listen(port);
 
 });
