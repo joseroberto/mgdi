@@ -1,7 +1,7 @@
 <!-- MAIN CONTENT -->
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Indicador', 'Novo']" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="breadcrumb" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
 
   <sa-widget [colorbutton]="false" [editbutton]="false" [fullscreenbutton]="false" [custombutton]="false"
@@ -37,15 +37,15 @@
           data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
           data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
           <fieldset>
-              <legend>&nbsp;&nbsp;[Novo Indicador] </legend>
-              <div class="form-group">
+              <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
+              <div class="form-group" *ngIf="!indicador.codigo">
                 <label class="col-md-2 control-label">Código</label>
                 <div class="col-md-2">
                   <input id="codigo" class="form-control"
-                    placeholder="Código" type="text" maxlength="10" ngModel name="codigo" #codigo
+                    placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo" #codigo
                     (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
                     data-bv-notempty="true"
-                    data-bv-notempty-message="O código do indicador é obrigatório">
+                    data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
 
                 </div>
               </div>
@@ -53,7 +53,7 @@
                 <label class="col-md-2 control-label">Título</label>
                 <div class="col-md-10">
                   <input id="descricao" class="form-control"
-                    placeholder="Título do indicador" type="text" ngModel name="descricao" required>
+                    placeholder="Título do indicador" type="text" [ngModel]="indicador.descricao" name="descricao" required maxlength="200">
                 </div>
               </div>
           </fieldset>

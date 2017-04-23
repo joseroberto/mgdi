@@ -45,4 +45,14 @@ export class UtilService {
       timeout: 4000
     });
   }
+
+  msgSucessoEdicao(mensagem:string){
+    this.notificationService.smallBox({
+      title: "Registro Atualizado",
+      content: mensagem,
+      color: "#002E70",
+      iconSmall: "fa fa-warning fadeInLeft animated",
+      timeout: 4000
+    });
+  }
 }

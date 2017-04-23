@@ -225,7 +225,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/GetMovieResponse"
+            $ref: "#/definitions/SuccessResponse"
         default:
           description: Error
           schema:
@@ -331,18 +331,6 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Indicador"
-  GetMovieResponse:
-    required:
-      - id
-      - title
-      - year
-    properties:
-      id:
-        type: string
-      title:
-        type: string
-      year:
-        type: number
   SuccessResponse:
     required:
       - codret

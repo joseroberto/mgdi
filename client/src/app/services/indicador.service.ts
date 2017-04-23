@@ -8,22 +8,22 @@ export class IndicadorService extends REST {
     super(http);
   }
   _getAll(){
-    return this.get('/indicador');
+    return super.get('/indicador');
   }
 
   get(codigo:string){
-    return this.get(`/indicador/${codigo}`);
+    return super.get(`/indicador/${codigo}`);
   }
 
   create(indicador:any){
-    return this.post('/indicador', indicador);
+    return super.post('/indicador', indicador);
   }
 
-  update(codigo:string, indicador:any){
-    return this.put(`/indicador/${codigo}`, indicador);
+  update(indicador:any){
+    return super.put(`/indicador/${indicador.codigo}`, indicador);
   }
 
-  erase(codigo:string){
-    return this.delete(`/indicador/${codigo}`);
+  delete(codigo:string){
+    return super.delete(`/indicador/${codigo}`);
   }
 }
