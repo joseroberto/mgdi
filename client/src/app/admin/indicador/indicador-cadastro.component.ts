@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService, PeriodicidadeService, AreaService, UtilService } from '../../services/index';
 import { ActivatedRoute } from '@angular/router';
+declare var $: any;
 
 @FadeInTop()
 @Component({
@@ -17,12 +18,14 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private sub: any;
   private flag_update:boolean = false;
   private indicador = {
-      codigo: '', descricao: ''
+      codigo: '', descricao: '', metodo_calculo:'', conceituacao:''
   };
 
   colecaoClassificacao:any[] = [];
   colecaoPeriodicidade:any[] = [];
   colecaoUnidadeMedida:any[] = [];
+
+  @ViewChild('conceituacao') conceituacao;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
@@ -59,11 +62,14 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
     }, err => this.trataErro(err));
   }
 
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
+
   onSubmit(form){
+    console.log('Valor do campo conceituacao', this.conceituacao);
       if(this.flag_update){
         this.indicador = Object.assign(this.indicador, form.value)
         console.log(form.value, this.indicador);

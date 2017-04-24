@@ -63,10 +63,6 @@
                 <a (click)="currenttab = 't1'"><span class="badge bg-color-blue txt-color-white">12</span>
                   Dados Gerais </a>
               </li>
-              <li [class.active]="currenttab=='t2'">
-                <a (click)="currenttab = 't2'"><span
-                  class="badge bg-color-blueDark txt-color-white">3</span> Conceituação</a>
-              </li>
               <li [class.active]="currenttab=='t3'">
                 <a (click)="currenttab = 't3'"><span
                   class="badge bg-color-greenLight txt-color-white">0</span> Interpretação</a>
@@ -95,16 +91,54 @@
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
                 <fieldset>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">Descrição</label>
-                    <div class="col-md-10">
-                      <textarea class="form-control" placeholder="Descrição" rows="4"></textarea>
-                    </div>
+                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
+                <div class="form-group">
+                  <div class="col-md-2">&nbsp;</div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st2">
+                      <label class="onoffswitch-label" for="st2">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Acumulativo</label>
                   </div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st1">
+                      <label class="onoffswitch-label" for="st1">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Ativo</label>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st3">
+                      <label class="onoffswitch-label" for="st3">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Público</label>
+                  </div>
+                </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">Método de Cálculo</label>
                     <div class="col-md-10">
-                      <textarea class="form-control" placeholder="Metodologia para cálculo" rows="3"></textarea>
+                      <textarea id="metodo_calculo" name="metodo_calculo" [ngModel]="indicador.metodo_calculo" class="form-control" placeholder="Metodologia para cálculo" rows="3" >
+                      </textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -180,55 +214,16 @@
                 </div>
               </fieldset>
               <fieldset>
-                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
-                <div class="form-group">
-                  <div class="col-md-2">&nbsp;</div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st2">
-                      <label class="onoffswitch-label" for="st2">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Acumulativo</label>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st1">
-                      <label class="onoffswitch-label" for="st1">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Ativo</label>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st1">
-                      <label class="onoffswitch-label" for="st1">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Público</label>
-                  </div>
+                <legend>&nbsp;&nbsp;Conceituação
+                  <a class="btn btn-primary btn-sm icon black" summernoteAttach=".conceituacao"
+                    href="javascript:void(0);" title="Editar"><i class="fa fa-pencil "></i></a>
+                  <a class="btn btn-primary btn-sm icon black" summernoteDetach=".conceituacao"
+                      href="javascript:void(0);" title="Salvar"><i class="fa fa-pencil "></i></a>
+                </legend>
+                <div class="conceituacao" #conceituacao [summernote]="{height: 180}">
+                  {{ indicador.conceituacao }}
                 </div>
-
-                </fieldset>
-              </tab>
-              <tab [active]="currenttab == 't2'">
-                <div class="summernote" [summernote]="{height: 180}" id='t2'>
-                </div>
+              </fieldset>
               </tab>
               <tab [active]="currenttab == 't3'">
                 <div class="summernote" [summernote]="{height: 180}" id='t3'>

@@ -241,6 +241,12 @@ definitions:
       descricao:
         type: string
         description: Nome do Indicador
+      metodo_calculo:
+        type: [string,'null']
+        description: Metodologia de cálculo para o indicador
+      conceituacao:
+            type: [string,'null']
+            description: Conceituação do indicador
   Login:
     type: object
     properties:

@@ -8,6 +8,7 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
+    console.log('Cria', req.body);
     models.Indicador.create(req.body).then((indicador)=> {
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     });
@@ -24,7 +25,7 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
-    console.log(req.body);
+    console.log('Atualiza', req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
     })

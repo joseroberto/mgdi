@@ -49,8 +49,8 @@ COMMENT ON COLUMN dbesusgestor.tb_periodicidade.ds_periodicidade IS 'Descrição
 
 CREATE TABLE dbesusgestor.tb_indicador
 (
-  co_indicador character varying(8) not null, -- Código do Indicador 
-  ds_indicador character varying(200) not null, -- Nome do Indicador
+  co_indicador character varying(8) not null, -- Código do Indicador
+  ds_titulo character varying(200) not null, -- Titulo do Indicador
   co_periodicidade integer not null, -- Código da Periodicidade do Indicador
   co_unidade_medida integer not null, -- Código identificador da Unidade de Medida do Indicador
   ds_metodo_calculo text, -- Descrição do Método de Cálculo

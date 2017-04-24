@@ -22,7 +22,7 @@ var config = {
 };
 
 process.on('SIGINT', function() {
-     process.exit(err ? 1 : 0);
+     process.exit(0);
 });
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
