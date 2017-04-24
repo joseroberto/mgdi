@@ -12,6 +12,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private currenttab = 't1';
 
   private tituloForm = 'Novo Indicador';
+  private titulo = 'Novo Indicador';
   private breadcrumb = [];
   private sub: any;
   private flag_update:boolean = false;
@@ -40,6 +41,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
         if(this.indicador.codigo){
           this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
               this.tituloForm = this.indicador.codigo;
+              this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
               this.flag_update = true;
@@ -71,7 +73,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
           }else{
             this.trataErro(resp);
           }
-          form.reset();
         }, err=>this.trataErro(err));
       }else{
         form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
