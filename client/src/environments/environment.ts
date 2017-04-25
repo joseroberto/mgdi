@@ -4,5 +4,10 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //url: 'http://rest.demas.saude.gov', //
+  url: 'http://localhost:8000',
+  API_URL: "/api",
+  urlNewUser: "http://srvjddf72.saude.gov:10480/datasus-scpaweb-usuario/visao/login/login-sistema.jsf",
+  urlForgetPassword: "http://srvjddf72.saude.gov:10480/datasus-scpaweb-usuario/visao/login/gerar-senha.jsf"
 };

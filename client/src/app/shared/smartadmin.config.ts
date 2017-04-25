@@ -1,10 +1,8 @@
 export const config: any = {
 
-  version: "0.0.1",
+  version: "0.0.3",
   defaultLocale: "br",
-
-  API_URL: "assets/api",
-
+  API_URL: "assets/api", //Usado para carregar itens de API como languages
   menu_speed: 200,
 
   smartSkin: "smart-style-0",

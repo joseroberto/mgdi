@@ -1,0 +1,71 @@
+<div id="extr-page">
+<header id="header" class="animated fadeInDown">
+
+  <div id="logo-group">
+    <span id="logo"> <img src="assets/img/logo.png" alt="SmartAdmin"> </span>
+  </div>
+
+  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Não tem uma conta?</span> <a [href]="env.urlNewUser" class="btn btn-danger">Cria uma conta</a> </span>
+
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+        <h1 class="txt-color-red login-header-big">SGI - Sistema de Gestão de Indicadores</h1>
+
+        <div class="hero">
+          <div class="pull-left login-desc-box-l">
+            <h4 class="paragraph-header">Controle dos indicadores do Ministério da Saúde!</h4>
+          </div>
+          <img src="assets/img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
+        </div>
+
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+        <div class="well no-padding">
+          <form class="smart-form client-form" (ngSubmit)="login()" f="ngForm" novalidate>
+            <header>
+              Login
+            </header>
+            <fieldset>
+              <section>
+                <label class="label">Email</label>
+                <label class="input"> <i class="icon-append fa fa-user"></i>
+                  <input type="email" name="email" data-smart-validate-input=""
+                  data-required="" data-email="" data-message-required="Entre com seu email"
+                  data-message-email="Entre com um email válido" [(ngModel)]="model.email" #username="ngModel" [ngModelOptions]="{standalone: true}" required>
+                  <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
+                    Entre com Email/senha</b></label>
+              </section>
+              <section>
+                <label class="label">Senha</label>
+                <label class="input"> <i class="icon-append fa fa-lock"></i>
+                  <input type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Entre com uma senha"
+                  [(ngModel)]="model.senha" #username="ngModel" [ngModelOptions]="{standalone: true}" required>
+                  <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Entre
+                    sua senha</b> </label>
+
+                <div class="note">
+                  <a [href]="env.urlForgetPassword">Esqueceu a senha?</a>
+                </div>
+              </section>
+              <section>
+                <label class="checkbox">
+                  <input type="checkbox" name="remember" checked>
+                  <i></i>Lembre-se</label>
+              </section>
+            </fieldset>
+            <footer>
+              <button class="btn btn-primary">
+                Entrar
+              </button>
+            </footer>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

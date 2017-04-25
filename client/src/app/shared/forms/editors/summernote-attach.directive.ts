@@ -10,7 +10,7 @@ export class SummernoteAttachDirective implements OnInit{
   @Input() summernoteAttach: any;
   @HostListener('click') render(){
     $(this.summernoteAttach).summernote({
-      focus: true
+      focus: true, height: 100
     })
   }
 

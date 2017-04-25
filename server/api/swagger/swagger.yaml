@@ -1,0 +1,576 @@
+swagger: "2.0"
+info:
+  version: "0.0.2"
+  title: Indicadores
+# during dev, should point to your local machine
+host: localhost:8000
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+securityDefinitions:
+ Bearer:
+  description: |
+   O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no
+   campo 'Authorization'.
+
+
+   Um token JWT válido é gerado pela API e retornado na resposta a rota
+   /login uma vez que possua um email & senha válido.
+
+
+   A seguinte sintaxe deve ser utilizada no cabeçalho das requisições 'Authorization' :
+
+       Bearer: xxxxxx.yyyyyyy.zzzzzz
+  type: apiKey
+  name: Authorization
+  in: header
+paths:
+  /login:
+    x-swagger-router-controller: login
+    post:
+      operationId: authenticate
+      tags:
+        - auth
+      description: |
+        Permite ao usuário logar e receber um token uma vez valida a requisição
+      parameters:
+        -
+         in: body
+         name: body
+         description: Informação de email/senha
+         required: true
+         schema:
+          $ref: '#/definitions/Login'
+      responses:
+        '200':
+         description: Login Success
+         schema:
+          $ref: '#/definitions/Token'
+        '400':
+         description: Quando o usuário não é encontrado.
+         schema:
+          $ref: '#/definitions/Error'
+        '403':
+         description: >-
+          Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
+         schema:
+          $ref: '#/definitions/Error'
+  /api/version:
+    x-swagger-router-controller: login
+    get:
+      description: versão e título da API
+      operationId: version
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetVersion"
+  /api/periodicidade:
+    x-swagger-router-controller: periodicidade
+    get:
+      description: Retorna a lista de periodicidades
+      operationId: getPeriodicidades
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetPeriodicidadeListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/classificacao:
+    x-swagger-router-controller: classificacao-indicador
+    get:
+      description: Retorna a classificacao possivel para os indicadores
+      operationId: getClassificacoes
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetClassificacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade-medida:
+    x-swagger-router-controller: unidade-medida
+    get:
+      description: Retorna as unidades de medida possiveis para os indicadores
+      operationId: getUnidadesMedida
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetUnidadeMedidaResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/area:
+    x-swagger-router-controller: area
+    get:
+      description: Retorna as areas responsáveis pelos os indicadores
+      operationId: getAreas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetAreaResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/indicador:
+    x-swagger-router-controller: indicador
+    get:
+      description: Retorna os indicadores cadastrados no sistema
+      operationId: getIndicadores
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetIndicadorResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria um novo indicador
+      operationId: createIndicador
+      parameters:
+        - name: indicador
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/IndicadorAtualizacao'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+  /api/indicador/{codigo}:
+    x-swagger-router-controller: indicador
+    get:
+      description: Le um registro de indicador
+      operationId: getIndicador
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Indicador"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga um registro de indicador
+      operationId: deleteIndicador
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Atualiza um registro de indicador
+      operationId: editaIndicador
+      security:
+        - Bearer: []      
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: indicador
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/IndicadorAtualizacao'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /api/indicador/{codigo}/conceituacao:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza conceituação de um indicador
+      operationId: updateConceituacao
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: conceituacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Conceituacao'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"     
+  /api/indicador/{codigo}/interpretacao:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza a interpretação de um indicador
+      operationId: updateInterpretacao
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: interpretacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Interpretacao'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+  /api/indicador/{codigo}/uso:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza a interpretação de um indicador
+      operationId: updateUso
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: interpretacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Uso'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+  /api/indicador/{codigo}/limitacao:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza as limitações de um indicador
+      operationId: updateLimitacao
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: limitacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Limitacao'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+  /api/indicador/{codigo}/nota:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza as Notas de um indicador
+      operationId: updateNota
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: nota
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Nota'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+  /api/indicador/{codigo}/observacao:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza as Observações de um indicador
+      operationId: updateObservacao
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: observacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Observacao'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+definitions:
+  Indicador:
+    description: Objeto indicador
+    properties:
+      codigo:
+        type: string
+        description: mnemonico do indicador
+      titulo:
+        type: string
+        description: Nome do Indicador
+      periodicidade:
+        type: number
+        description: Código da periodicidade
+      unidade_medida:
+        type: number
+        description: Código da unidade de medida
+      metodo_calculo:
+        type: [string,'null']
+        description: Metodologia de cálculo para o indicador
+      conceituacao:
+        type: [string,'null']
+        description: Conceituação de um indicador
+      interpretacao:
+        type: [string,'null']
+        description: Intepretação de um indicador
+      limitacoes:
+        type: [string,'null']
+        description: Limitação de um indicador
+      usos:
+        type: [string,'null']
+        description: Usos de um indicador
+      notas:
+        type: [string,'null']
+        description: Notas sobre um indicador
+      observacoes:
+        description: Observações sobre um indicador
+        type: [string,'null']
+  IndicadorAtualizacao:
+    description: Objeto indicador
+    properties:
+      codigo:
+        type: string
+        description: mnemonico do indicador
+      titulo:
+        type: string
+        description: Titulo do Indicador
+      periodicidade:
+        type: number
+        description: Código da periodicidade
+      unidade_medida:
+        type: number
+        description: Código da unidade de medida
+      metodo_calculo:
+        type: [string,'null']
+        description: Metodologia de cálculo para o indicador
+  Conceituacao:
+    type: object
+    properties:
+      conceituacao:
+        type: string
+  Uso:
+    type: object
+    properties:
+      uso:
+        type: string
+  Interpretacao:
+    type: object
+    properties:
+      interpretacao:
+        type: string
+  Limitacao:
+    type: object
+    properties:
+      limitacao:
+        type: string
+  Nota:
+    type: object
+    properties:
+      nota:
+        type: string
+  Observacao:
+    type: object
+    properties:
+      observacao:
+        type: string
+  Login:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Retorna uma mensagem de sucesso
+      error:
+        type: string
+        description: Retorna o código de erro. Zero se deu certo.
+  GetVersion:
+    type: object
+    properties:
+      version: 
+        type: string
+      title: 
+        type: string
+  GetPeriodicidadeListResponse:
+    required:
+      - periodicidades
+    properties:
+      periodicidades:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetClassificacaoResponse:
+    required:
+      - classificacoes
+    properties:
+      classificacoes:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetUnidadeMedidaResponse:
+    required:
+      - unidades
+    properties:
+      unidades:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetAreaResponse:
+    required:
+      - areas
+    properties:
+      areas:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: number
+            descricao:
+              type: string
+            sigla:
+              type: string
+  GetIndicadorResponse:
+    required:
+      - indicadores
+    properties:
+      indicadores:
+        type: array
+        items:
+          $ref: "#/definitions/Indicador"
+  SuccessResponse:
+    required:
+      - codret
+      - mensagem
+    properties:
+      codret:
+        type: number
+      mensagem:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string

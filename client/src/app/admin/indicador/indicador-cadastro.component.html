@@ -1,0 +1,343 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="breadcrumb" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+
+  <sa-widget [colorbutton]="false" [editbutton]="false" [fullscreenbutton]="false" [custombutton]="false"
+             [sortable]="false">
+    <!-- widget options:
+    usage: <sa-widget [editbutton]="false">
+
+    [colorbutton]="false"
+    [editbutton]="false"
+    [togglebutton]="false"
+    [deletebutton]="false"
+    [fullscreenbutton]="false"
+    [custombutton]="false"
+    [collapsed]="true"
+    [sortable]="false"
+
+    -->
+    <header>
+      <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+      <h2>{{ titulo }} </h2>
+    </header>
+
+    <!-- widget div-->
+    <div>
+
+      <!-- widget content -->
+      <div class="widget-body no-padding">
+        <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
+          novalidate="novalidate" saBootstrapValidator
+          class="form-horizontal"
+          data-bv-message="O valor é inválido"
+          data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+          <fieldset>
+              <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
+              <div class="form-group" *ngIf="!indicador.codigo">
+                <label class="col-md-2 control-label">Código</label>
+                <div class="col-md-2">
+                  <input id="codigo" class="form-control"
+                    placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo" #codigo
+                    (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
+                    data-bv-notempty="true"
+                    data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
+
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">Título</label>
+                <div class="col-md-10">
+                  <input id="descricao" class="form-control"
+                    placeholder="Título do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
+                </div>
+              </div>
+          </fieldset>
+
+            <ul class="nav nav-tabs" id="dados-indicador">
+              <li [class.active]="currenttab=='t1'" class="active">
+                <a (click)="currenttab = 't1'">
+                  Dados Gerais </a>
+              </li>
+              <li [class.active]="currenttab=='t2'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't2'"> Ficha Qualificação</a>
+              </li>
+              <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't3'">
+                  <span class="badge bg-color-blue txt-color-white">12</span> Indicadores Relacionados</a>
+              </li>
+              <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't4'"><span
+                  class="badge bg-color-greenLight txt-color-white">10</span> Categoria análise</a>
+              </li>
+            </ul>
+            <tabset class="padding-10">
+              <tab [active]="currenttab == 't1'">
+                <fieldset>
+                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
+                  <div class="form-group">
+                  <div class="col-md-2">&nbsp;</div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st2">
+                      <label class="onoffswitch-label" for="st2">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Acumulativo</label>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st1">
+                      <label class="onoffswitch-label" for="st1">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Ativo</label>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="onoffswitch">
+                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                             id="st3">
+                      <label class="onoffswitch-label" for="st3">
+                          <span class="onoffswitch-inner"
+                                data-swchon-text="Sim"
+                                data-swchoff-text="Não"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </span>
+                    <label class="control-label">Público</label>
+                  </div>
+                </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Método de Cálculo</label>
+                    <div class="col-md-10">
+                      <textarea id="metodo_calculo" name="metodo_calculo" [ngModel]="indicador.metodo_calculo" class="form-control" placeholder="Metodologia para cálculo" rows="3" >
+                      </textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Fonte</label>
+                    <div class="col-md-10">
+                      <textarea class="form-control" placeholder="Fonte dos ddados" rows="2"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Tags</label>
+                    <div class="col-md-10">
+                      <select select2 multiple style="width:100%" class="select2">
+                        <optgroup label="Coordenações">
+                          <option value="AK">CGGIE</option>
+                          <option value="HI">CGMA</option>
+                        </optgroup>
+                        <optgroup label="Programas/Área Temática">
+                          <option value="CA">Crack</option>
+                          <option value="NV" selected="selected">Saúde da Família</option>
+                          <option value="CA">Saúde da Mulher</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="col-md-2 control-label" for="select-1">Classificação</label>
+                     <div class="col-md-2">
+
+                       <select class="form-control" id="select-1">
+                         <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
+                       </select>
+                     </div>
+                     <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
+                     <div class="col-md-2">
+                       <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
+                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                       </select>
+
+                     </div>
+                     <label class="col-md-2 control-label" for="select-1">Secretaria Responsável</label>
+                     <div class="col-md-2">
+
+                       <select class="form-control" id="select-1">
+                         <option>SVS</option>
+                         <option>SAS</option>
+                         <option>SCTIE</option>
+                       </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
+                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label">Contexto</label>
+                    <div class="col-md-4">
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        BR </label>
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        UF </label>
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        Município</label>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-default" type='button' (click)="newIndicador(f)">
+                          <i class="fa fa-bullseye"></i>
+                          Novo
+                        </button>
+                        <button class="btn btn-primary" type="submit">
+                          <i class="fa fa-save"></i>
+                          Grava
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+              </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't2'">
+                <fieldset style="margin: 15px">
+                  <legend>Conceituação
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="conceituacao" [innerHTML]="indicador.conceituacao||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Interpretação
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editInterpretacao(true)" *ngIf="!isEditInterpretacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editInterpretacao(false)" *ngIf="isEditInterpretacao"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="interpretacao" [innerHTML]="indicador.interpretacao||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Usos
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editUsos(true)" *ngIf="!isEditUsos"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editUsos(false)" *ngIf="isEditUsos"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="usos" [innerHTML]="indicador.usos||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Limitações
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editLimitacoes(true)" *ngIf="!isEditLimitacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editLimitacoes(false)" *ngIf="isEditLimitacoes"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Notas
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editNotas(true)" *ngIf="!isEditNotas"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editNotas(false)" *ngIf="isEditNotas"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="notas" [innerHTML]="indicador.notas||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Observações
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editObservacoes(true)" *ngIf="!isEditObservacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editObservacoes(false)" *ngIf="isEditObservacoes"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="observacoes" [innerHTML]="indicador.observacoes||msg_padrao"></span>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't3'">
+                <fieldset>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Nome do Indicador</label>
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="Código ou partes do nome do indicador..." type="text" list="list">
+                      <datalist id="list">
+                        <option value="NCPH">[NCPH] - Número de consultas médicas (SUS) por habitante</option>
+                        <option value="PRCTG">[PRCTG] - Proporção da população que refere ter consultado médico nos últimos 12 meses</option>
+                        <option value="PPRRUC">[PPRRUC] - Proporção da população que refere ter realizado a última consulta odontológica há menos de 1 ano</option>
+                      </datalist>
+                      <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
+                    </div>
+                  </div>
+                  <div class="table-responsive col-md-10">
+
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Sigla</th>
+                        <th>Indicador</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>PPBMD</td>
+                        <td>Proporção da população feminina de 25 a 64 anos que refere nunca ter realizado exame preventivo do câncer do colo do útero</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>PPCPS</td>
+                        <td>Proporção da população coberta por planos de saúde</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't4'">
+                <fieldset>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">Categoria Relacionada</label>
+                    <div class="col-md-10">
+                      <input class="form-control" placeholder="Categorias que podem ser relacionadas no estudo do indicador..." type="text" list="listacat">
+                      <datalist id="listacat">
+                        <option value="1">Unidade geográfica: Brasil, grandes regiões, estados, Distrito Federal, regiões metropolitanas</option>
+                        <option value="2">Faixa etária: De 0 a 9 anos, 10 a 19 anos, 20 a 39 anos, 40 a 59 anos e 60 anos ou mais.</option>
+                        <option value="3">Sexo: masculino e feminino</option>
+
+                      </datalist>
+                      <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
+                    </div>
+                  </div>
+                  <div class="table-responsive col-md-10">
+
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Categoria</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Forma de financiamento: SUS e não SUS (a partir de 2008)</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>Situação: urbano e rural.</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </fieldset>
+              </tab>
+            </tabset>
+
+        </form>
+      </div>
+      <!-- end widget content -->
+
+    </div>
+    <!-- end widget div -->
+
+  </sa-widget>
