@@ -70,8 +70,8 @@
                 <a (click)="currenttab = 't3'">
                   <span class="badge bg-color-blue txt-color-white">12</span> Indicadores Relacionados</a>
               </li>
-              <li [class.active]="currenttab=='t5'" *ngIf="indicador.codigo">
-                <a (click)="currenttab = 't5'"><span
+              <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't4'"><span
                   class="badge bg-color-greenLight txt-color-white">10</span> Categoria análise</a>
               </li>
             </ul>
@@ -261,7 +261,6 @@
                         <option value="NCPH">[NCPH] - Número de consultas médicas (SUS) por habitante</option>
                         <option value="PRCTG">[PRCTG] - Proporção da população que refere ter consultado médico nos últimos 12 meses</option>
                         <option value="PPRRUC">[PPRRUC] - Proporção da população que refere ter realizado a última consulta odontológica há menos de 1 ano</option>
-
                       </datalist>
                       <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
                     </div>

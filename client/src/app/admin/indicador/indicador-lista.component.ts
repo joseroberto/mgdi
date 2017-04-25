@@ -69,12 +69,12 @@ export class IndicadorListaComponent {
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
-                <td>Código:</td>
-                <td>${d.codigo}</td>
-            </tr>
-            <tr>
                 <td style="width:100px">Nome:</td>
                 <td>${d.titulo}</td>
+            </tr>
+            <tr>
+                <td>Conceito:</td>
+                <td>${d.conceituacao}</td>
             </tr>
             <tr>
                 <td></td>

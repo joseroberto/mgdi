@@ -201,6 +201,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
         $('.notas').summernote('code', this.indicador.notas);
       }else{
         this.indicador.notas = $('.notas').summernote('code');
+        $('.notas').summernote('destroy');
         this.indicadorService.updateNota(this.indicador.codigo, this.indicador.notas).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
