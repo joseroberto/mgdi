@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService, PeriodicidadeService, AreaService, UtilService } from '../../services/index';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 declare var $: any;
 
 @FadeInTop()
@@ -18,8 +18,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private breadcrumb = [];
   private sub: any;
   private flag_update:boolean = false;
-  private indicador = {
-      codigo: '', descricao: '', metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
+
+  private indicador:{codigo:string, titulo:string, periodicidade:number, unidade_medida:number,
+    metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
+    limitacoes:string, notas:string, observacoes:string} = {
+      codigo: '', titulo: '', periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', observacoes:''
   };
 
@@ -34,24 +37,19 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private isEditNotas:false;
   private isEditObservacoes:false;
 
-  @ViewChild('conceituacao') conceituacao;
-  @ViewChild('interpretacao') interpretacao;
-  @ViewChild('usos') usos;
-  @ViewChild('limitacoes') limitacoes;
-  @ViewChild('notas') notas;
-  @ViewChild('observacoes') observacoes;
-
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
       private periodicidadeService:PeriodicidadeService,
       private areaService:AreaService,
       private unidadeMedidaService:UnidadeMedidaService,
       private util:UtilService,
-      private route: ActivatedRoute) {
+      private route: ActivatedRoute,
+      private router: Router) {
         this.breadcrumb = ['Indicador', 'Novo'];
       }
 
   ngOnInit() {
+    System.import('script-loader!summernote/dist/summernote.min.js');
     this.flag_update = false;
     this.sub = this.route.params.subscribe(params => {
         this.indicador.codigo = params['codigo'];
@@ -67,13 +65,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
     });
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
         this.colecaoClassificacao = resp.classificacoes;
-    }, err => this.trataErro(err));
+    }, err => this.util.msgErroInfra(err));
     this.periodicidadeService.getAll().subscribe(resp => {
         this.colecaoPeriodicidade = resp.periodicidades;
-    }, err => this.trataErro(err));
+    }, err => this.util.msgErroInfra(err));
     this.unidadeMedidaService.getAll().subscribe(resp => {
         this.colecaoUnidadeMedida = resp.unidades;
-    }, err => this.trataErro(err));
+    }, err => this.util.msgErroInfra(err));
   }
 
 
@@ -81,76 +79,165 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  newIndicador(form){
+    if(!form.pristine){
+      this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+    }else{
+      this.router.navigateByUrl('/admin/indicador');
+    }
+  }
+
   editConceituacao(flag){
       this.isEditConceituacao = flag;
-      let content = this.conceituacao.nativeElement.innerHTML;
       if(flag){
-        console.log("Antes", content);
+        $('.conceituacao').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
+        $('.conceituacao').summernote('code', this.indicador.conceituacao);
       }else{
-        console.log("Depois",content);
+        this.indicador.conceituacao = $('.conceituacao').summernote('code');
+        $('.conceituacao').summernote('destroy');
+        this.indicadorService.updateConceituacao(this.indicador.codigo, this.indicador.conceituacao).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   editInterpretacao(flag){
       this.isEditInterpretacao = flag;
-      let content = this.interpretacao.nativeElement.innerHTML;
       if(flag){
-        console.log("Antes", content);
+        $('.interpretacao').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
+        $('.interpretacao').summernote('code', this.indicador.interpretacao);
       }else{
-        console.log("Depois",content);
+        this.indicador.interpretacao = $('.interpretacao').summernote('code');
+        $('.interpretacao').summernote('destroy');
+        this.indicadorService.updateInterpretacao(this.indicador.codigo, this.indicador.interpretacao).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   editUsos(flag){
       this.isEditUsos = flag;
-      let content = this.usos.nativeElement.innerHTML;
       if(flag){
-        console.log("Antes", content);
+        $('.usos').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
+        $('.usos').summernote('code', this.indicador.usos);
       }else{
-        console.log("Depois",content);
+        this.indicador.usos = $('.usos').summernote('code');
+        $('.usos').summernote('destroy');
+        this.indicadorService.updateUso(this.indicador.codigo, this.indicador.usos).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   editLimitacoes(flag){
       this.isEditLimitacoes = flag;
-      let content = this.limitacoes.nativeElement.innerHTML;
       if(flag){
-        console.log("Antes", content);
+        $('.limitacoes').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
+        $('.limitacoes').summernote('code', this.indicador.limitacoes);
       }else{
-        console.log("Depois",content);
+        this.indicador.limitacoes = $('.limitacoes').summernote('code');
+        $('.limitacoes').summernote('destroy');
+        this.indicadorService.updateLimitacao(this.indicador.codigo, this.indicador.limitacoes).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   editNotas(flag){
       this.isEditNotas = flag;
-      //let content = this.notas.nativeElement.innerHTML;
       if(flag){
-        //console.log('Teste', content===this.msg_padrao);
-        //if(content===this.msg_padrao){
-        //  this.notas.nativeElement.innerHTML = '';
-        //}
-        //console.log("Antes", content);
-        $('.notas').summernote({focus: true, height: 100});
+        $('.notas').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
         $('.notas').summernote('code', this.indicador.notas);
       }else{
         this.indicador.notas = $('.notas').summernote('code');
-        console.log("Depois",this.indicador.notas);
-        $('.notas').summernote('destroy');
+        this.indicadorService.updateNota(this.indicador.codigo, this.indicador.notas).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   editObservacoes(flag){
       this.isEditObservacoes = flag;
-      let content = this.observacoes.nativeElement.innerHTML;
       if(flag){
-        console.log("Antes", content);
+        $('.observacoes').summernote({focus: true, height: 100, lang:'pt-BR',
+          toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['ctrl', ['undo', 'redo']]
+          ]});
+        $('.observacoes').summernote('code', this.indicador.observacoes);
       }else{
-        console.log("Depois",content);
+        this.indicador.observacoes = $('.observacoes').summernote('code');
+        $('.observacoes').summernote('destroy');
+        this.indicadorService.updateObservacao(this.indicador.codigo, this.indicador.observacoes).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
       }
   }
 
   onSubmit(form){
-    console.log('Valor do campo conceituacao', this.conceituacao);
+    console.log('Antes de gravar', form.value);
       if(this.flag_update){
         this.indicador = Object.assign(this.indicador, form.value)
         console.log(form.value, this.indicador);
@@ -158,30 +245,21 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
           }else{
-            this.trataErro(resp);
+            this.util.msgErro(resp.mensagem);
           }
-        }, err=>this.trataErro(err));
+        }, err=>this.util.msgErroInfra(err));
       }else{
         form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
+
         this.indicadorService.create(form.value).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
+            console.log('Recarregando...', form.value.codigo);
+            this.router.navigateByUrl('/admin/indicador/'+ form.value.codigo);
           }else{
-            this.trataErro(resp);
+            this.util.msgErro(resp.mensagem);
           }
-          form.reset();
-        }, err=>this.trataErro(err));
+        }, err=>this.util.msgErroInfra(err));
       }
-  }
-
-  trataErro(err){
-    console.log(err);
-    let mensagem:string='';
-    if(err.status!=200){
-      mensagem = JSON.parse(err._body).message;
-    }else{
-      mensagem = err.mensagem;
-    }
-    this.util.msgErro(mensagem);
   }
 }

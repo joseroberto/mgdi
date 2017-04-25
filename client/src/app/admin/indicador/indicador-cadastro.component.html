@@ -53,35 +53,26 @@
                 <label class="col-md-2 control-label">Título</label>
                 <div class="col-md-10">
                   <input id="descricao" class="form-control"
-                    placeholder="Título do indicador" type="text" [ngModel]="indicador.descricao" name="descricao" required maxlength="200">
+                    placeholder="Título do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
                 </div>
               </div>
           </fieldset>
 
             <ul class="nav nav-tabs" id="dados-indicador">
               <li [class.active]="currenttab=='t1'" class="active">
-                <a (click)="currenttab = 't1'"><span class="badge bg-color-blue txt-color-white">12</span>
+                <a (click)="currenttab = 't1'">
                   Dados Gerais </a>
               </li>
-              <li [class.active]="currenttab=='t2'">
-                <a (click)="currenttab = 't2'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Ficha Qualificação</a>
+              <li [class.active]="currenttab=='t2'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't2'"> Ficha Qualificação</a>
               </li>
-              <li [class.active]="currenttab=='t5'">
+              <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't3'">
+                  <span class="badge bg-color-blue txt-color-white">12</span> Indicadores Relacionados</a>
+              </li>
+              <li [class.active]="currenttab=='t5'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't5'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Limitações</a>
-              </li>
-              <li [class.active]="currenttab=='t6'">
-                <a (click)="currenttab = 't6'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Indicadores Relacionados</a>
-              </li>
-              <li [class.active]="currenttab=='t7'">
-                <a (click)="currenttab = 't7'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Eventos Relacionados</a>
-              </li>
-              <li [class.active]="currenttab=='t8'">
-                <a (click)="currenttab = 't8'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Categoria análise</a>
+                  class="badge bg-color-greenLight txt-color-white">10</span> Categoria análise</a>
               </li>
             </ul>
             <tabset class="padding-10">
@@ -166,13 +157,12 @@
                        <select class="form-control" id="select-1">
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
-
                      </div>
                      <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
                      <div class="col-md-2">
-
-                       <select class="form-control" id="select-1">
-                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade" [value]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                       <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
+                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                        </select>
 
                      </div>
@@ -189,8 +179,8 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
                     <div class="col-md-4">
-                      <select class="form-control" id="select-1">
-                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [value]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
+                      <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
+                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                       </select>
                     </div>
                     <label class="col-md-2 control-label">Contexto</label>
@@ -206,52 +196,62 @@
                         Município</label>
                     </div>
                   </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button class="btn btn-default" type='button' (click)="newIndicador(f)">
+                          <i class="fa fa-bullseye"></i>
+                          Novo
+                        </button>
+                        <button class="btn btn-primary" type="submit">
+                          <i class="fa fa-save"></i>
+                          Grava
+                        </button>
+                      </div>
+                    </div>
+                  </div>
               </fieldset>
               </tab>
               <tab [active]="currenttab == 't2'">
                 <fieldset style="margin: 15px">
                   <legend>Conceituação
-                        <a (click)="(null)" summernoteAttach=".conceituacao" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" summernoteDetach=".conceituacao" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="conceituacao" #conceituacao>{{ indicador.conceituacao || msg_padrao}}</span>
+                  <span class="conceituacao" [innerHTML]="indicador.conceituacao||msg_padrao"></span>
                   <br/><br/>
                   <legend>Interpretação
-                        <a (click)="(null)" summernoteAttach=".interpretacao" class="btn btn-primary btn-xs" (click)="editInterpretacao(true)" *ngIf="!isEditInterpretacao"><i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" summernoteDetach=".interpretacao" class="btn btn-success btn-xs" (click)="editInterpretacao(false)" *ngIf="isEditInterpretacao"><i class="fa fa-save"></i> Grava</a>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editInterpretacao(true)" *ngIf="!isEditInterpretacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editInterpretacao(false)" *ngIf="isEditInterpretacao"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="interpretacao" #interpretacao>{{ indicador.interpretacao || msg_padrao}}</span>
+                  <span class="interpretacao" [innerHTML]="indicador.interpretacao||msg_padrao"></span>
                   <br/><br/>
                   <legend>Usos
-                        <a (click)="(null)" summernoteAttach=".usos" class="btn btn-primary btn-xs" (click)="editUsos(true)" *ngIf="!isEditUsos"><i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" summernoteDetach=".usos" class="btn btn-success btn-xs" (click)="editUsos(false)" *ngIf="isEditUsos"><i class="fa fa-save"></i> Grava</a>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editUsos(true)" *ngIf="!isEditUsos"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editUsos(false)" *ngIf="isEditUsos"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="usos" #usos>{{ indicador.usos || msg_padrao}}</span>
+                  <span class="usos" [innerHTML]="indicador.usos||msg_padrao"></span>
                   <br/><br/>
                   <legend>Limitações
-                        <a (click)="(null)" summernoteAttach=".limitacoes" class="btn btn-primary btn-xs" (click)="editLimitacoes(true)" *ngIf="!isEditLimitacoes"><i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" summernoteDetach=".limitacoes" class="btn btn-success btn-xs" (click)="editLimitacoes(false)" *ngIf="isEditLimitacoes"><i class="fa fa-save"></i> Grava</a>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editLimitacoes(true)" *ngIf="!isEditLimitacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editLimitacoes(false)" *ngIf="isEditLimitacoes"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="limitacoes" #limitacoes>{{ indicador.limitacoes || msg_padrao}}</span>
+                  <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
                   <br/><br/>
                   <legend>Notas
                         <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editNotas(true)" *ngIf="!isEditNotas"><i class="fa fa-edit"></i> Edita</a>
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editNotas(false)" *ngIf="isEditNotas"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="notas" #notas>{{ indicador.notas || msg_padrao}}</span>
+                  <span class="notas" [innerHTML]="indicador.notas||msg_padrao"></span>
                   <br/><br/>
                   <legend>Observações
-                        <a (click)="(null)" summernoteAttach=".notas" class="btn btn-primary btn-xs" (click)="editObservacoes(true)" *ngIf="!isEditObservacoes"><i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" summernoteDetach=".notas" class="btn btn-success btn-xs" (click)="editObservacoes(false)" *ngIf="isEditObservacoes"><i class="fa fa-save"></i> Grava</a>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editObservacoes(true)" *ngIf="!isEditObservacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editObservacoes(false)" *ngIf="isEditObservacoes"><i class="fa fa-save"></i> Grava</a>
                   </legend>
-                  <span class="observacoes" #observacoes>{{ indicador.observacoes || msg_padrao}}</span>
+                  <span class="observacoes" [innerHTML]="indicador.observacoes||msg_padrao"></span>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't5'">
-                <div class="summernote" [summernote]="{height: 180}" id='t5'>
-                </div>
-              </tab>
-              <tab [active]="currenttab == 't6'">
+              <tab [active]="currenttab == 't3'">
                 <fieldset>
                   <div class="form-group">
                     <label class="col-md-2 control-label">Nome do Indicador</label>
@@ -293,11 +293,7 @@
                   </div>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't7'">
-                <div class="summernote" [summernote]="{height: 180}" id='t7'>
-                </div>
-              </tab>
-              <tab [active]="currenttab == 't8'">
+              <tab [active]="currenttab == 't4'">
                 <fieldset>
                   <div class="form-group">
                     <label class="col-md-2 control-label">Categoria Relacionada</label>
@@ -337,20 +333,7 @@
                 </fieldset>
               </tab>
             </tabset>
-            <div class="form-actions">
-              <div class="row">
-                <div class="col-md-12">
-                  <button class="btn btn-default" type="reset">
-                    <i class="fa fa-bullseye"></i>
-                    Limpa
-                  </button>
-                  <button class="btn btn-primary" type="submit">
-                    <i class="fa fa-save"></i>
-                    Grava
-                  </button>
-                </div>
-              </div>
-            </div>
+
         </form>
       </div>
       <!-- end widget content -->

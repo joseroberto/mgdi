@@ -43,7 +43,7 @@ export class IndicadorListaComponent {
       "data": null,
       "defaultContent": ''
     },
-    {"data": "descricao"},
+    {"data": "titulo"},
     {"data": "codigo"}
   ],
   "order": [[1, 'asc']]
@@ -74,7 +74,7 @@ export class IndicadorListaComponent {
             </tr>
             <tr>
                 <td style="width:100px">Nome:</td>
-                <td>${d.descricao}</td>
+                <td>${d.titulo}</td>
             </tr>
             <tr>
                 <td></td>

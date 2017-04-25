@@ -26,4 +26,28 @@ export class IndicadorService extends REST {
   delete(codigo:string){
     return super.delete(`/indicador/${codigo}`);
   }
+
+  updateConceituacao(codigo:string, conceituacao:string){
+    return super.patch(`/indicador/${codigo}/conceituacao`,{conceituacao: conceituacao});
+  }
+
+  updateInterpretacao(codigo:string, interpretacao:string){
+    return super.patch(`/indicador/${codigo}/interpretacao`,{interpretacao: interpretacao});
+  }
+
+  updateUso(codigo:string, uso:string){
+    return super.patch(`/indicador/${codigo}/uso`,{uso: uso});
+  }
+
+  updateLimitacao(codigo:string, limitacao:string){
+    return super.patch(`/indicador/${codigo}/limitacao`,{limitacao: limitacao});
+  }
+
+  updateNota(codigo:string, nota:string){
+    return super.patch(`/indicador/${codigo}/nota`,{nota: nota});
+  }
+
+  updateObservacao(codigo:string, observacao:string){
+    return super.patch(`/indicador/${codigo}/observacao`,{observacao: observacao});
+  }
 }

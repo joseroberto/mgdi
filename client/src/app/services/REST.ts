@@ -30,6 +30,11 @@ export class REST{
       (response: Response) => response.json());
   }
 
+  protected patch(path:string, objeto:any){
+    return this.http.patch(this.getURL(path), objeto, this.jwt()).map(
+      (response: Response) => response.json());
+  }
+  
   protected delete(path:string){
     return this.http.delete(this.getURL(path), this.jwt()).map(
       (response: Response) => response.json());

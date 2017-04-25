@@ -58,6 +58,8 @@ CREATE TABLE dbesusgestor.tb_indicador
   ds_interpretacao text, -- Descrição da Interpretação
   ds_uso text, -- Descrição do Uso do Indicador
   ds_limitacao text, -- Descrição da Limitação do Indicador
+  ds_nota text, -- Notas sobre o Indicador
+  ds_observacao text, -- Observacoes sobre o Indicador
   ds_fonte_dados varchar(100), -- Fonte de dados do indicador
   ds_objetivo character varying(2000), -- Objetivo do Indicador
   co_indicador_classificacao integer, -- Código de classificação do Indicador
@@ -78,7 +80,7 @@ CREATE TABLE dbesusgestor.tb_indicador
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
 
-COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_indicador IS 'Nome do Indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_titulo IS 'Título do Indicador';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.co_indicador IS 'Código do Indicador TODO: Trocar para co_indicador_principal->co_indicador e a coluna co_indicador->ds_mnemonico';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.co_periodicidade IS 'Código da Periodicidade do Indicador';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.co_unidade_medida IS 'Código identificador da Unidade de Medida do Indicador';
@@ -86,6 +88,8 @@ COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_metodo_calculo IS 'Descrição do
 COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_conceituacao IS 'Descrição da Conceituação';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_interpretacao IS 'Descrição da Interpretação';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_uso IS 'Descrição do Uso do Indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_nota IS 'Notas sobre o Indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_observacao IS 'Observações sobre o Indicador';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_limitacao IS 'Descrição da Limitação do Indicador';
 
 COMMENT ON COLUMN dbesusgestor.tb_indicador.ds_fonte_dados IS 'Fonte de dados do indicador';

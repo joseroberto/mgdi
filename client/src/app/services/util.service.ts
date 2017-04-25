@@ -55,4 +55,14 @@ export class UtilService {
       timeout: 4000
     });
   }
+
+  msgAlerta(mensagem:string, evento:string){
+    this.notificationService.smallBox({
+      title: "Ding Dong!",
+      content: mensagem + " <p class='text-align-right'><a href-void class='btn btn-primary btn-sm'>Sim</a> <a href-void class='btn btn-danger btn-sm'>Não</a></p>",
+      color: "#296191",
+      //timeout: 8000,
+      icon: "fa fa-bell swing animated"
+    });
+  }
 }
