@@ -8,24 +8,38 @@ declare var $: any;
 @Component({
   selector: 'sa-form-elements',
   templateUrl: './indicador-cadastro.component.html',
+  styles:['div.note-editable.panel-body{height: 180px;}']
 })
 export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private currenttab = 't1';
-
+  private msg_padrao = 'Não há dados cadastrados';
   private tituloForm = 'Novo Indicador';
   private titulo = 'Novo Indicador';
   private breadcrumb = [];
   private sub: any;
   private flag_update:boolean = false;
   private indicador = {
-      codigo: '', descricao: '', metodo_calculo:'', conceituacao:''
+      codigo: '', descricao: '', metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
+      limitacoes:'', notas:'', observacoes:''
   };
 
   colecaoClassificacao:any[] = [];
   colecaoPeriodicidade:any[] = [];
   colecaoUnidadeMedida:any[] = [];
 
+  private isEditConceituacao:false;
+  private isEditInterpretacao:false;
+  private isEditUsos:false;
+  private isEditLimitacoes:false;
+  private isEditNotas:false;
+  private isEditObservacoes:false;
+
   @ViewChild('conceituacao') conceituacao;
+  @ViewChild('interpretacao') interpretacao;
+  @ViewChild('usos') usos;
+  @ViewChild('limitacoes') limitacoes;
+  @ViewChild('notas') notas;
+  @ViewChild('observacoes') observacoes;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
@@ -67,6 +81,73 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  editConceituacao(flag){
+      this.isEditConceituacao = flag;
+      let content = this.conceituacao.nativeElement.innerHTML;
+      if(flag){
+        console.log("Antes", content);
+      }else{
+        console.log("Depois",content);
+      }
+  }
+
+  editInterpretacao(flag){
+      this.isEditInterpretacao = flag;
+      let content = this.interpretacao.nativeElement.innerHTML;
+      if(flag){
+        console.log("Antes", content);
+      }else{
+        console.log("Depois",content);
+      }
+  }
+
+  editUsos(flag){
+      this.isEditUsos = flag;
+      let content = this.usos.nativeElement.innerHTML;
+      if(flag){
+        console.log("Antes", content);
+      }else{
+        console.log("Depois",content);
+      }
+  }
+
+  editLimitacoes(flag){
+      this.isEditLimitacoes = flag;
+      let content = this.limitacoes.nativeElement.innerHTML;
+      if(flag){
+        console.log("Antes", content);
+      }else{
+        console.log("Depois",content);
+      }
+  }
+
+  editNotas(flag){
+      this.isEditNotas = flag;
+      //let content = this.notas.nativeElement.innerHTML;
+      if(flag){
+        //console.log('Teste', content===this.msg_padrao);
+        //if(content===this.msg_padrao){
+        //  this.notas.nativeElement.innerHTML = '';
+        //}
+        //console.log("Antes", content);
+        $('.notas').summernote({focus: true, height: 100});
+        $('.notas').summernote('code', this.indicador.notas);
+      }else{
+        this.indicador.notas = $('.notas').summernote('code');
+        console.log("Depois",this.indicador.notas);
+        $('.notas').summernote('destroy');
+      }
+  }
+
+  editObservacoes(flag){
+      this.isEditObservacoes = flag;
+      let content = this.observacoes.nativeElement.innerHTML;
+      if(flag){
+        console.log("Antes", content);
+      }else{
+        console.log("Depois",content);
+      }
+  }
 
   onSubmit(form){
     console.log('Valor do campo conceituacao', this.conceituacao);

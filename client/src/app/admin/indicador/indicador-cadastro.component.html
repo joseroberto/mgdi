@@ -63,13 +63,9 @@
                 <a (click)="currenttab = 't1'"><span class="badge bg-color-blue txt-color-white">12</span>
                   Dados Gerais </a>
               </li>
-              <li [class.active]="currenttab=='t3'">
-                <a (click)="currenttab = 't3'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Interpretação</a>
-              </li>
-              <li [class.active]="currenttab=='t4'">
-                <a (click)="currenttab = 't4'"><span
-                  class="badge bg-color-greenLight txt-color-white">0</span> Usos</a>
+              <li [class.active]="currenttab=='t2'">
+                <a (click)="currenttab = 't2'"><span
+                  class="badge bg-color-greenLight txt-color-white">0</span> Ficha Qualificação</a>
               </li>
               <li [class.active]="currenttab=='t5'">
                 <a (click)="currenttab = 't5'"><span
@@ -92,7 +88,7 @@
               <tab [active]="currenttab == 't1'">
                 <fieldset>
                   <legend>&nbsp;&nbsp;Configurações do indicador</legend>
-                <div class="form-group">
+                  <div class="form-group">
                   <div class="col-md-2">&nbsp;</div>
                   <div class="col-md-3">
                     <span class="onoffswitch">
@@ -163,75 +159,93 @@
                       </select>
                     </div>
                   </div>
-
                   <div class="form-group">
-                   <label class="col-md-2 control-label" for="select-1">Classificação</label>
-                   <div class="col-md-2">
+                     <label class="col-md-2 control-label" for="select-1">Classificação</label>
+                     <div class="col-md-2">
 
-                     <select class="form-control" id="select-1">
-                       <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
-                     </select>
+                       <select class="form-control" id="select-1">
+                         <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
+                       </select>
 
-                   </div>
-                   <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
-                   <div class="col-md-2">
+                     </div>
+                     <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
+                     <div class="col-md-2">
 
-                     <select class="form-control" id="select-1">
-                       <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade" [value]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                     </select>
+                       <select class="form-control" id="select-1">
+                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade" [value]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                       </select>
 
-                   </div>
-                   <label class="col-md-2 control-label" for="select-1">Secretaria Responsável</label>
-                   <div class="col-md-2">
+                     </div>
+                     <label class="col-md-2 control-label" for="select-1">Secretaria Responsável</label>
+                     <div class="col-md-2">
 
-                     <select class="form-control" id="select-1">
-                       <option>SVS</option>
-                       <option>SAS</option>
-                       <option>SCTIE</option>
-                     </select>
-
-                   </div>
-                 </div>
-                 <div class="form-group">
-                  <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
-                  <div class="col-md-4">
-                    <select class="form-control" id="select-1">
-                      <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [value]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
-                    </select>
+                       <select class="form-control" id="select-1">
+                         <option>SVS</option>
+                         <option>SAS</option>
+                         <option>SCTIE</option>
+                       </select>
+                     </div>
                   </div>
-                  <label class="col-md-2 control-label">Contexto</label>
-                  <div class="col-md-4">
-                    <label class="checkbox-inline">
-                      <input type="radio">
-                      BR </label>
-                    <label class="checkbox-inline">
-                      <input type="radio">
-                      UF </label>
-                    <label class="checkbox-inline">
-                      <input type="radio">
-                      Município</label>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+                    <div class="col-md-4">
+                      <select class="form-control" id="select-1">
+                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [value]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label">Contexto</label>
+                    <div class="col-md-4">
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        BR </label>
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        UF </label>
+                      <label class="checkbox-inline">
+                        <input type="radio">
+                        Município</label>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-              <fieldset>
-                <legend>&nbsp;&nbsp;Conceituação
-                  <a class="btn btn-primary btn-sm icon black" summernoteAttach=".conceituacao"
-                    href="javascript:void(0);" title="Editar"><i class="fa fa-pencil "></i></a>
-                  <a class="btn btn-primary btn-sm icon black" summernoteDetach=".conceituacao"
-                      href="javascript:void(0);" title="Salvar"><i class="fa fa-pencil "></i></a>
-                </legend>
-                <div class="conceituacao" #conceituacao [summernote]="{height: 180}">
-                  {{ indicador.conceituacao }}
-                </div>
               </fieldset>
               </tab>
-              <tab [active]="currenttab == 't3'">
-                <div class="summernote" [summernote]="{height: 180}" id='t3'>
-                </div>
-              </tab>
-              <tab [active]="currenttab == 't4'">
-                <div class="summernote" [summernote]="{height: 180}" id='t4'>
-                </div>
+              <tab [active]="currenttab == 't2'">
+                <fieldset style="margin: 15px">
+                  <legend>Conceituação
+                        <a (click)="(null)" summernoteAttach=".conceituacao" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" summernoteDetach=".conceituacao" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="conceituacao" #conceituacao>{{ indicador.conceituacao || msg_padrao}}</span>
+                  <br/><br/>
+                  <legend>Interpretação
+                        <a (click)="(null)" summernoteAttach=".interpretacao" class="btn btn-primary btn-xs" (click)="editInterpretacao(true)" *ngIf="!isEditInterpretacao"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" summernoteDetach=".interpretacao" class="btn btn-success btn-xs" (click)="editInterpretacao(false)" *ngIf="isEditInterpretacao"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="interpretacao" #interpretacao>{{ indicador.interpretacao || msg_padrao}}</span>
+                  <br/><br/>
+                  <legend>Usos
+                        <a (click)="(null)" summernoteAttach=".usos" class="btn btn-primary btn-xs" (click)="editUsos(true)" *ngIf="!isEditUsos"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" summernoteDetach=".usos" class="btn btn-success btn-xs" (click)="editUsos(false)" *ngIf="isEditUsos"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="usos" #usos>{{ indicador.usos || msg_padrao}}</span>
+                  <br/><br/>
+                  <legend>Limitações
+                        <a (click)="(null)" summernoteAttach=".limitacoes" class="btn btn-primary btn-xs" (click)="editLimitacoes(true)" *ngIf="!isEditLimitacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" summernoteDetach=".limitacoes" class="btn btn-success btn-xs" (click)="editLimitacoes(false)" *ngIf="isEditLimitacoes"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="limitacoes" #limitacoes>{{ indicador.limitacoes || msg_padrao}}</span>
+                  <br/><br/>
+                  <legend>Notas
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editNotas(true)" *ngIf="!isEditNotas"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editNotas(false)" *ngIf="isEditNotas"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="notas" #notas>{{ indicador.notas || msg_padrao}}</span>
+                  <br/><br/>
+                  <legend>Observações
+                        <a (click)="(null)" summernoteAttach=".notas" class="btn btn-primary btn-xs" (click)="editObservacoes(true)" *ngIf="!isEditObservacoes"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" summernoteDetach=".notas" class="btn btn-success btn-xs" (click)="editObservacoes(false)" *ngIf="isEditObservacoes"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="observacoes" #observacoes>{{ indicador.observacoes || msg_padrao}}</span>
+                </fieldset>
               </tab>
               <tab [active]="currenttab == 't5'">
                 <div class="summernote" [summernote]="{height: 180}" id='t5'>
