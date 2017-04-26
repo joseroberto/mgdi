@@ -41,6 +41,7 @@ module.exports = {
     })
   },
   updateUso: (req,res)=>{
+    console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Usos do indicador ${req.swagger.params.codigo.value} atualizados com sucesso`});
     })
@@ -58,6 +59,16 @@ module.exports = {
   updateNota: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Notas do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    })
+  },
+  updateFonteDados: (req,res)=>{
+    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
+      res.json({codret: 0, mensagem: `Fonte de dados do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
+    })
+  },
+  updateMetodoCalculo: (req,res)=>{
+    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
+      res.json({codret: 0, mensagem: `Método de Cálculo do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
     })
   }
 }

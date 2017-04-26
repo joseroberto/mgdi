@@ -21,9 +21,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
 
   private indicador:{codigo:string, titulo:string, periodicidade:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
-    limitacoes:string, notas:string, observacoes:string} = {
+    limitacoes:string, notas:string, observacoes:string, fonte_dados:string} = {
       codigo: '', titulo: '', periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
-      limitacoes:'', notas:'', observacoes:''
+      limitacoes:'', notas:'', observacoes:'', fonte_dados:''
   };
 
   colecaoClassificacao:any[] = [];
@@ -36,6 +36,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private isEditLimitacoes:false;
   private isEditNotas:false;
   private isEditObservacoes:false;
+  private isEditMetodoCalculo:false;
+  private isEditFonteDados:false;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
@@ -55,12 +57,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
         this.indicador.codigo = params['codigo'];
         if(this.indicador.codigo){
           this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
+              console.log('Registro em edicao:', this.indicador);
               this.tituloForm = this.indicador.codigo;
               this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
               this.flag_update = true;
-            });
+            }, (err)=> this.util.msgErroInfra(err));
         }
     });
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
@@ -111,7 +114,46 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
         }, err=>this.util.msgErroInfra(err));
       }
   }
-
+  editMetodoCalculo(flag){
+    this.isEditMetodoCalculo = flag;
+    if(flag){
+      $('.metodo').summernote({focus: true, height: 100, lang:'pt-BR',
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['superscript', 'subscript']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['ctrl', ['undo', 'redo']]
+        ]});
+      $('.metodo').summernote('code', this.indicador.metodo_calculo);
+    }else{
+      this.indicador.metodo_calculo = $('.metodo').summernote('code');
+      $('.metodo').summernote('destroy');
+      this.indicadorService.updateMetodoCalculo(this.indicador.codigo, this.indicador.metodo_calculo).subscribe(resp=>{
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
+      }, err=>this.util.msgErroInfra(err));
+    }
+  }
+  editFonteDados(flag){
+    this.isEditFonteDados = flag;
+    if(flag){
+      $('.fonte').html('<textarea id="fonte_dados" name="fonte_dados" class="form-control" placeholder="Fonte de dados" rows="1" ></textarea>');
+      $('textarea#fonte_dados').val(this.indicador.fonte_dados);
+    }else{
+      this.indicador.fonte_dados = $('textarea#fonte_dados').val();
+      this.indicadorService.updateFonteDados(this.indicador.codigo, this.indicador.fonte_dados).subscribe(resp=>{
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
+      }, err=>this.util.msgErroInfra(err));
+    }
+  }
   editInterpretacao(flag){
       this.isEditInterpretacao = flag;
       if(flag){

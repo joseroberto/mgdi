@@ -148,6 +148,8 @@ paths:
     post:
       description: Cria um novo indicador
       operationId: createIndicador
+      security:
+        - Bearer: []
       parameters:
         - name: indicador
           in: body
@@ -384,6 +386,59 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"  
+  /api/indicador/{codigo}/fonte_dados:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza a fonte de dados de um indicador
+      operationId: updateFonteDados
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: fonte_dados
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/FonteDados'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+  /api/indicador/{codigo}/metodo_calculo:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza o Método de Cálculo de um indicador
+      operationId: updateMetodoCalculo
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: metodo_calculo
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/MetodoCalculo'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+
 definitions:
   Indicador:
     description: Objeto indicador
@@ -403,6 +458,9 @@ definitions:
       metodo_calculo:
         type: [string,'null']
         description: Metodologia de cálculo para o indicador
+      fonte_dados:
+        type: [string,'null']
+        description: Fonte de dados do indicador
       conceituacao:
         type: [string,'null']
         description: Conceituação de um indicador
@@ -436,38 +494,45 @@ definitions:
       unidade_medida:
         type: number
         description: Código da unidade de medida
-      metodo_calculo:
-        type: [string,'null']
-        description: Metodologia de cálculo para o indicador
   Conceituacao:
     type: object
     properties:
       conceituacao:
-        type: string
-  Uso:
-    type: object
-    properties:
-      uso:
         type: string
   Interpretacao:
     type: object
     properties:
       interpretacao:
         type: string
+  Uso:
+    type: object
+    properties:
+      usos:
+        type: string
   Limitacao:
     type: object
     properties:
-      limitacao:
+      limitacoes:
         type: string
   Nota:
     type: object
     properties:
-      nota:
+      notas:
         type: string
   Observacao:
     type: object
     properties:
-      observacao:
+      observacoes:
+        type: string
+  MetodoCalculo:
+    type: object
+    properties:
+      metodo_calculo:
+        type: string
+  FonteDados:
+    type: object
+    properties:
+      fonte_dados:
         type: string
   Login:
     type: object

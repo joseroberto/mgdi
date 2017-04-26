@@ -27,6 +27,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.TEXT,
         field: 'ds_metodo_calculo'
     },
+    fonte_dados:{
+        type: DataTypes.STRING(100),
+        field: 'ds_fonte_dados'
+    },
     conceituacao:{
         type: DataTypes.TEXT,
         field: 'ds_conceituacao'

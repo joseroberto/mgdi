@@ -35,19 +35,27 @@ export class IndicadorService extends REST {
     return super.patch(`/indicador/${codigo}/interpretacao`,{interpretacao: interpretacao});
   }
 
-  updateUso(codigo:string, uso:string){
-    return super.patch(`/indicador/${codigo}/uso`,{uso: uso});
+  updateUso(codigo:string, usos:string){
+    return super.patch(`/indicador/${codigo}/uso`,{usos: usos});
   }
 
-  updateLimitacao(codigo:string, limitacao:string){
-    return super.patch(`/indicador/${codigo}/limitacao`,{limitacao: limitacao});
+  updateLimitacao(codigo:string, limitacoes:string){
+    return super.patch(`/indicador/${codigo}/limitacao`,{limitacoes: limitacoes});
   }
 
-  updateNota(codigo:string, nota:string){
-    return super.patch(`/indicador/${codigo}/nota`,{nota: nota});
+  updateNota(codigo:string, notas:string){
+    return super.patch(`/indicador/${codigo}/nota`,{notas: notas});
   }
 
-  updateObservacao(codigo:string, observacao:string){
-    return super.patch(`/indicador/${codigo}/observacao`,{observacao: observacao});
+  updateObservacao(codigo:string, observacoes:string){
+    return super.patch(`/indicador/${codigo}/observacao`,{observacoes: observacoes});
+  }
+
+  updateMetodoCalculo(codigo:string, metodo_calculo:string){
+    return super.patch(`/indicador/${codigo}/metodo_calculo`,{metodo_calculo: metodo_calculo});
+  }
+
+  updateFonteDados(codigo:string, fonte_dados:string){
+    return super.patch(`/indicador/${codigo}/fonte_dados`,{fonte_dados: fonte_dados});
   }
 }

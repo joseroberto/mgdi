@@ -60,7 +60,7 @@ CREATE TABLE dbesusgestor.tb_indicador
   ds_limitacao text, -- Descrição da Limitação do Indicador
   ds_nota text, -- Notas sobre o Indicador
   ds_observacao text, -- Observacoes sobre o Indicador
-  ds_fonte_dados varchar(100), -- Fonte de dados do indicador
+  ds_fonte_dados text, -- Fonte de dados do indicador
   ds_objetivo character varying(2000), -- Objetivo do Indicador
   co_indicador_classificacao integer, -- Código de classificação do Indicador
   st_privado boolean, -- Status identificador do Indicador Público

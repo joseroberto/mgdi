@@ -36,7 +36,7 @@
           data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
           data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
           data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-          <fieldset>
+          <fieldset style="margin: 15px">
               <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
               <div class="form-group" *ngIf="!indicador.codigo">
                 <label class="col-md-2 control-label">Código</label>
@@ -77,79 +77,8 @@
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
-                <fieldset>
+                <fieldset style="margin: 15px">
                   <legend>&nbsp;&nbsp;Configurações do indicador</legend>
-                  <div class="form-group">
-                  <div class="col-md-2">&nbsp;</div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st2">
-                      <label class="onoffswitch-label" for="st2">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Acumulativo</label>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st1">
-                      <label class="onoffswitch-label" for="st1">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Ativo</label>
-                  </div>
-                  <div class="col-md-3">
-                    <span class="onoffswitch">
-                      <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                             id="st3">
-                      <label class="onoffswitch-label" for="st3">
-                          <span class="onoffswitch-inner"
-                                data-swchon-text="Sim"
-                                data-swchoff-text="Não"></span>
-                          <span class="onoffswitch-switch"></span>
-                      </label>
-                    </span>
-                    <label class="control-label">Público</label>
-                  </div>
-                </div>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">Método de Cálculo</label>
-                    <div class="col-md-10">
-                      <textarea id="metodo_calculo" name="metodo_calculo" [ngModel]="indicador.metodo_calculo" class="form-control" placeholder="Metodologia para cálculo" rows="3" >
-                      </textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">Fonte</label>
-                    <div class="col-md-10">
-                      <textarea class="form-control" placeholder="Fonte dos ddados" rows="2"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label">Tags</label>
-                    <div class="col-md-10">
-                      <select select2 multiple style="width:100%" class="select2">
-                        <optgroup label="Coordenações">
-                          <option value="AK">CGGIE</option>
-                          <option value="HI">CGMA</option>
-                        </optgroup>
-                        <optgroup label="Programas/Área Temática">
-                          <option value="CA">Crack</option>
-                          <option value="NV" selected="selected">Saúde da Família</option>
-                          <option value="CA">Saúde da Mulher</option>
-                        </optgroup>
-                      </select>
-                    </div>
-                  </div>
                   <div class="form-group">
                      <label class="col-md-2 control-label" for="select-1">Classificação</label>
                      <div class="col-md-2">
@@ -177,23 +106,67 @@
                      </div>
                   </div>
                   <div class="form-group">
+                    <label class="col-md-2 control-label">Tags</label>
+                    <div class="col-md-6">
+                      <select select2 multiple style="width:100%" class="select2">
+                        <optgroup label="Coordenações">
+                          <option value="AK">CGGIE</option>
+                          <option value="HI">CGMA</option>
+                        </optgroup>
+                        <optgroup label="Programas/Área Temática">
+                          <option value="CA">Crack</option>
+                          <option value="NV" selected="selected">Saúde da Família</option>
+                          <option value="CA">Saúde da Mulher</option>
+                        </optgroup>
+                      </select>
+                    </div>
                     <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
                         <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                       </select>
                     </div>
-                    <label class="col-md-2 control-label">Contexto</label>
-                    <div class="col-md-4">
-                      <label class="checkbox-inline">
-                        <input type="radio">
-                        BR </label>
-                      <label class="checkbox-inline">
-                        <input type="radio">
-                        UF </label>
-                      <label class="checkbox-inline">
-                        <input type="radio">
-                        Município</label>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-3">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                               id="st2">
+                        <label class="onoffswitch-label" for="st2">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Acumulativo</label>
+                    </div>
+                    <div class="col-md-3">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                               id="st1">
+                        <label class="onoffswitch-label" for="st1">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Ativo</label>
+                    </div>
+                    <div class="col-md-3">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
+                               id="st3">
+                        <label class="onoffswitch-label" for="st3">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Público</label>
                     </div>
                   </div>
                   <div class="form-actions">
@@ -237,6 +210,18 @@
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editLimitacoes(false)" *ngIf="isEditLimitacoes"><i class="fa fa-save"></i> Grava</a>
                   </legend>
                   <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Fonte
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editFonteDados(true)" *ngIf="!isEditFonteDados"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editFonteDados(false)" *ngIf="isEditFonteDados"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="fonte" [innerHTML]="indicador.fonte_dados||msg_padrao"></span>
+                  <br/><br/>
+                  <legend>Métodos de Cálculo
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editMetodoCalculo(true)" *ngIf="!isEditMetodoCalculo"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editMetodoCalculo(false)" *ngIf="isEditMetodoCalculo"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="metodo" [innerHTML]="indicador.metodo_calculo||msg_padrao"></span>
                   <br/><br/>
                   <legend>Notas
                         <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editNotas(true)" *ngIf="!isEditNotas"><i class="fa fa-edit"></i> Edita</a>
