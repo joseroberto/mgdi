@@ -71,7 +71,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-default" (click)="(null)">Default</a>
                         <a class="btn btn-default dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -99,7 +99,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-primary" (click)="(null)">Primary</a>
                         <a class="btn btn-primary dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -127,7 +127,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-info" (click)="(null)">Info</a>
                         <a class="btn btn-info dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -155,7 +155,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-success" (click)="(null)">Success</a>
                         <a class="btn btn-success dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -183,7 +183,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-warning" (click)="(null)">Warning</a>
                         <a class="btn btn-warning dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -211,7 +211,7 @@
                       <div class="btn-group dropdown" dropdown>
                         <a class="btn btn-danger" (click)="(null)">Danger</a>
                         <a class="btn btn-danger dropdown-toggle" dropdownToggle><span class="caret"></span></a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">Action</a>
                           </li>
@@ -510,7 +510,7 @@
                 <button class="btn btn-primary dropdown-toggle" dropdownToggle>
                   <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -533,7 +533,7 @@
                 <button class="btn btn-default dropdown-toggle" dropdownToggle>
                   <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -563,7 +563,7 @@
                 <button class="btn btn-primary dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -583,7 +583,7 @@
                 <button class="btn btn-default dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -610,7 +610,7 @@
                 <button class="btn btn-primary btn-sm dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -630,7 +630,7 @@
                 <button class="btn btn-default btn-sm dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -658,7 +658,7 @@
                 <button class="btn btn-primary btn-xs dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -678,7 +678,7 @@
                 <button class="btn btn-default btn-xs dropdown-toggle" dropdownToggle>
                   Action <span class="caret"></span>
                 </button>
-                <ul dropdownMenu class="dropdown-menu">
+                <ul *dropdownMenu class="dropdown-menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -705,7 +705,7 @@
               </p>
               <div class="dropdown" dropdown>
                 <a id="dLabel" role="button" class="btn btn-primary dropdown-toggle" dropdownToggle (click)="(null)"> Multi Level <span class="caret"></span> </a>
-                <ul dropdownMenu class="dropdown-menu multi-level" role="menu">
+                <ul *dropdownMenu class="dropdown-menu multi-level" role="menu">
                   <li>
                     <a (click)="(null)">Some action</a>
                   </li>
@@ -715,13 +715,13 @@
                   <li class="divider"></li>
                   <li class="dropdown-submenu">
                     <a tabindex="-1" (click)="(null)">Hover me for more options</a>
-                    <ul dropdownMenu class="dropdown-menu">
+                    <ul *dropdownMenu class="dropdown-menu">
                       <li>
                         <a tabindex="-1" (click)="(null)">Second level</a>
                       </li>
                       <li class="dropdown-submenu">
                         <a (click)="(null)">Even More..</a>
-                        <ul dropdownMenu class="dropdown-menu">
+                        <ul *dropdownMenu class="dropdown-menu">
                           <li>
                             <a (click)="(null)">3rd level</a>
                           </li>
@@ -913,7 +913,7 @@
                             Dropdown
                             <i class="fa fa-caret-down"></i>
                           </button>
-                          <ul dropdownMenu class="dropdown-menu">
+                          <ul *dropdownMenu class="dropdown-menu">
                             <li>
                               <a (click)="(null)">Dropdown link</a>
                             </li>

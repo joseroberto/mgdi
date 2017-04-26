@@ -596,11 +596,11 @@
             <span class="widget-icon"> <i class="fa fa-arrow-down"></i> </span>
             <h2><strong>Widget</strong> <i><u>with</u> Dropdown</i> </h2>
             <div class="widget-toolbar">
-              <div class="btn-group" data-dropdown>
-                <button class="btn dropdownToggle btn-xs btn-warning">
+              <div class="btn-group" dropdown>
+                <button dropdownToggle class="btn  btn-xs btn-warning">
                   Dropdown <i class="fa fa-caret-down"></i>
                 </button>
-                <ul class="dropdown-menu pull-right">
+                <ul *dropdownMenu class="dropdown-menu pull-right">
                   <li>
                     <a (click)="(null)">Option 1</a>
                   </li>

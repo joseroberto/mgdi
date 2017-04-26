@@ -13,6 +13,7 @@ function validateJuriNameFactory() : ValidatorFn {
                 valid: false
             }
         };
+    }
   }
 }
 

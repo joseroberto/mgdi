@@ -12,11 +12,12 @@ import {UtilsModule} from "../utils/utils.module";
 import {UserModule} from "../user/user.module";
 import { AsideChatComponent } from './aside-chat/aside-chat.component';
 import { AsideChatUserComponent } from './aside-chat-user/aside-chat-user.component';
-import {PopoverModule} from "ng2-popover";
+import {PopoverModule} from "ngx-popover";
+import {BsDropdownModule} from "ngx-bootstrap"
 
 @NgModule({
   imports: [
-      PopoverModule,
+      PopoverModule, BsDropdownModule,
     CommonModule, FormsModule, UtilsModule, UserModule, SmartadminWidgetsModule],
   declarations: [ChatWidgetComponent, ChatComponent, ChatUsersComponent, ChatBodyComponent, ChatFormComponent, AsideChatComponent, AsideChatUserComponent],
   exports: [ChatWidgetComponent, AsideChatComponent, AsideChatUserComponent ],

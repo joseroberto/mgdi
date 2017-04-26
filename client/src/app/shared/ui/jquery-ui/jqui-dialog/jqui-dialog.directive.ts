@@ -1,5 +1,4 @@
-import {Directive, ElementRef, OnInit} from '@angular/core';
-import {Input} from "@angular/core/src/metadata/directives";
+import {Directive, ElementRef, OnInit, Input} from '@angular/core';
 
 declare var $: any;
 

@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
-import {NgRedux, select} from 'ng2-redux'
-import {Input} from "@angular/core/src/metadata/directives";
+import {NgRedux, select} from '@angular-redux/store'
 
 @Component({
   selector: 'image-editor-default-panel',

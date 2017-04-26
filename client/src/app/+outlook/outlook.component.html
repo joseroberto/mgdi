@@ -7,7 +7,7 @@
       <button class="btn btn-default dropdown-toggle" dropdownToggle>
         {{activeFolder?.name}} <i class="fa fa-caret-down"></i>
       </button>
-      <ul class="dropdown-menu pull-left" dropdownMenu>
+      <ul class="dropdown-menu" *dropdownMenu>
         <li [class.active]="folder.key == activeFolder.key" *ngFor="let folder of outlook.folders">
           <a [routerLink]="[folder.key]">{{folder.name}} <i
             *ngIf="folder.key == activeFolder.key" class="fa fa-check"></i></a>

@@ -7,9 +7,10 @@ export const homeRoutes: Routes = [
         path: '',
         component: HomeComponent,
         data: {
-            pageTitle: 'Início'
+            pageTitle: 'Home'
         }
     }
 ];
 
 export const homeRouting:ModuleWithProviders = RouterModule.forChild(homeRoutes);
+

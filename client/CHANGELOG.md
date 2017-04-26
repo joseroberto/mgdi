@@ -1,20 +1,37 @@
-# Smartadmin
+# 0.4.4 
+  * update ngx-bootstrap, datatables-responsive, default include polyfills
 
-[live](http://indicadores.demas.saude.gov) demontração
+# 0.4.3 
+  * update ng2-bootstrap, ngx-popover, @angular-redux 
 
-## Note
-Sistema de gestão de indicadores do Ministério da Saúde.
+# 0.4.2
+  * freeze dependencies
 
-## Evoluções
+# 0.4.1
+  * remove flexbox layout
 
-# 0.0.3
-  * Formulário de indicadores com validação e uso de interface REST
-  * Formulário de planos/metas com validação e uso de interface REST
+# 0.4.0
+  * angular@4 support 
+  * angular-cli@1 
 
-# 0.0.2
-  * integração com validação de senha do SCPA
+# 0.3.1
+  * restore angular-cli support
+  
+# 0.2.1
+  * hot module replacement
+  * router animations
+
+# 0.2.0
+  * switch to custom webpack build flow 
+  * drop angular-cli
+  
+# 0.1.1 
+  * making bird-eye widget with d3js  
+  
+# 0.1.0
+  * migrate with angular-cli from SystemJs to webpack 2
+  * lazy routes
+  
 
 # 0.0.1
-  * telas do sistema de administração
-  * telas do site
-  * projeto de interface
+  * angular-cli support

@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 import {OptionsActions} from "../actions/options.actions";
 
 @Component({

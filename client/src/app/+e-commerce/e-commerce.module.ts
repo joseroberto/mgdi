@@ -9,7 +9,7 @@ import {StatsModule} from "../shared/stats/stats.module";
 import {routing} from "./e-commerce.routing";
 import {SmartadminDatatableModule} from "../shared/ui/datatable/smartadmin-datatable.module";
 import {ShoppingCartComponent} from "./shopping-cart/shopping-cart.component";
-import {CarouselModule} from "ng2-bootstrap";
+import {CarouselModule} from "ngx-bootstrap";
 
 @NgModule({
   imports: [

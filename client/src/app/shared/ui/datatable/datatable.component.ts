@@ -6,12 +6,12 @@ declare var $: any;
 
   selector: 'sa-datatable',
   template: `
-      <table class="dataTable {{tableClass}}" width="{{width}}">
+      <table class="dataTable responsive {{tableClass}}" width="{{width}}">
         <ng-content></ng-content>
       </table>
 `,
   styles: [
-    require('smartadmin-plugins/datatables-bundle/datatables.min.css')
+    require('smartadmin-plugins/datatables/datatables.min.css')
   ]
 })
 export class DatatableComponent implements OnInit {
@@ -25,21 +25,16 @@ export class DatatableComponent implements OnInit {
   @Input() public tableClass: string;
   @Input() public width: string = '100%';
 
-_dataTable;
   constructor(private el: ElementRef) {
   }
 
   ngOnInit() {
     Promise.all([
-      System.import('script-loader!smartadmin-plugins/datatables-bundle/datatables.min.js'),
+      System.import('script-loader!smartadmin-plugins/datatables/datatables.min.js'),
     ]).then(()=>{
       this.render()
-    })
-  }
 
-  refresh(){
-    console.log('Refrescando', this._dataTable);
-    this._dataTable.ajax.reload();
+    })
   }
 
   render() {
@@ -70,6 +65,10 @@ _dataTable;
       "dom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs text-right'" + toolbar + ">r>" +
       "t" +
       "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+      oLanguage: {
+        "sSearch": "<span class='input-group-addon'><i class='glyphicon glyphicon-search'></i></span> ",
+        "sLengthMenu": "_MENU_"
+      },
       "autoWidth": false,
       retrieve: true,
       responsive: true,
@@ -78,11 +77,12 @@ _dataTable;
       }
     });
 
-    this._dataTable = element.DataTable(options);
+    const _dataTable = element.DataTable(options);
+
     if (this.filter) {
       // Apply the filter
       element.on('keyup change', 'thead th input[type=text]', function () {
-        this._dataTable
+        _dataTable
           .column($(this).parent().index() + ':visible')
           .search(this.value)
           .draw();
@@ -97,10 +97,9 @@ _dataTable;
 
     if(this.detailsFormat){
       let format = this.detailsFormat
-      let data = this._dataTable;
       element.on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
-        var row = data.row( tr );
+        var row = _dataTable.row( tr );
         if ( row.child.isShown() ) {
           row.child.hide();
           tr.removeClass('shown');
@@ -111,6 +110,7 @@ _dataTable;
         }
       })
     }
+
 
   }
 

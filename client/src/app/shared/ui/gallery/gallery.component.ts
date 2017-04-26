@@ -1,7 +1,11 @@
 import {
-  Component, OnInit, Input, EventEmitter, Output, animate, transition, style, state,
-  trigger
+  Component, OnInit, Input, EventEmitter, Output
 } from '@angular/core';
+
+import {
+  animate, transition, style, state,
+  trigger
+} from '@angular/animations';
 
 
 @Component({
@@ -15,7 +19,7 @@ import {
   template: `
     <div class="superbox">
       <div  >      
-          <template ngFor let-item="$implicit" [ngForOf]="pictures"><!--
+          <ng-template ngFor let-item="$implicit" [ngForOf]="pictures"><!--
           --><div  
              [@slideToggle]="item.state"
            class="superbox-list" (click)="activate(item)">
@@ -35,7 +39,7 @@ import {
              
               <div class="superbox-close txt-color-white" (click)="deactivate(item)"><i class="fa fa-times fa-lg"></i></div>
             </div
-            ></template>
+            ></ng-template>
         <div class="superbox-float" ></div>
       </div>
     </div>
@@ -45,7 +49,7 @@ import {
       state('out', style({
         backgroundColor: '#eee',
       })),
-      state('in',   style({
+      state('in', style({
         backgroundColor: '#cfd8dc',
       })),
       transition('out => in', animate('100ms ease-in')),
@@ -92,7 +96,7 @@ import {
 })
 export class GalleryComponent implements OnInit {
 
-  @Input() pictures:Array<any>;
+  @Input() pictures: Array<any>;
 
 
   public current: any;
@@ -101,7 +105,7 @@ export class GalleryComponent implements OnInit {
 
     this.pictures.filter(it => it.active && it != picture).map(this.deactivate)
 
-    if(picture.active){
+    if (picture.active) {
       this.deactivate(picture)
       this.current = null
     } else {
@@ -113,7 +117,7 @@ export class GalleryComponent implements OnInit {
 
   }
 
-  deactivate(picture){
+  deactivate(picture) {
     picture.active = false;
     picture.state = 'out';
 
@@ -135,7 +139,7 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pictures.forEach((it)=>{
+    this.pictures.forEach((it) => {
       it.active = false;
       it.state = 'out'
     })

@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalDirective} from "ng2-bootstrap";
-import {ViewChild} from "@angular/core/src/metadata/di";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ModalDirective} from "ngx-bootstrap";
 import {NotificationService} from "../../shared/utils/notification.service";
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 

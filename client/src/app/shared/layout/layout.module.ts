@@ -1,8 +1,7 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import { ModalModule }  from 'ng2-bootstrap/modal';
-import { MarkdownModule } from 'angular2-markdown';
+
 import {HeaderModule} from "./header/header.module";
 import {FooterComponent} from "./footer/footer.component";
 import {NavigationModule} from "./navigation/navigation.module";
@@ -14,7 +13,7 @@ import { MainLayoutComponent } from './app-layouts/main-layout.component';
 import { EmptyLayoutComponent } from './app-layouts/empty-layout.component';
 import {RouterModule} from "@angular/router";
 import { AuthLayoutComponent } from './app-layouts/auth-layout.component';
-import {TooltipModule, DropdownModule} from "ng2-bootstrap";
+import {TooltipModule, BsDropdownModule} from "ngx-bootstrap";
 import { RouteBreadcrumbsComponent } from './ribbon/route-breadcrumbs.component';
 import {UtilsModule} from "../utils/utils.module";
 
@@ -25,11 +24,12 @@ import {UtilsModule} from "../utils/utils.module";
     NavigationModule,
     FormsModule,
     RouterModule,
+
     UtilsModule,
-    ModalModule.forRoot(),
-    MarkdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    DropdownModule.forRoot(),
+
+
+    TooltipModule,
+    BsDropdownModule,
   ],
   declarations: [
     FooterComponent,

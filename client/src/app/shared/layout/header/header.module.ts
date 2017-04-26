@@ -2,7 +2,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgModule} from "@angular/core";
 
-import {PopoverModule} from "ng2-popover";
+import {PopoverModule} from "ngx-popover";
 
 import {CollapseMenuComponent} from "./collapse-menu/collapse-menu.component";
 import {RecentProjectsComponent} from "./recent-projects/recent-projects.component";
@@ -19,7 +19,7 @@ import { SpeechButtonComponent } from './speech-button/speech-button.component';
 import {I18nModule} from "../../i18n/i18n.module";
 import {UserModule} from "../../user/user.module";
 import {VoiceControlModule} from "../../voice-control/voice-control.module";
-import {DropdownModule} from "ng2-bootstrap";
+import {BsDropdownModule} from "ngx-bootstrap";
 
 
 @NgModule({
@@ -30,7 +30,7 @@ import {DropdownModule} from "ng2-bootstrap";
 
     VoiceControlModule,
 
-    DropdownModule,
+    BsDropdownModule,
 
     UtilsModule, I18nModule, UserModule, PopoverModule,
   ],

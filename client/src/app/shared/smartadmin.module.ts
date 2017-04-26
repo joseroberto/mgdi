@@ -6,11 +6,11 @@ import {RouterModule} from '@angular/router';
 
 
 import {
-  ModalModule, ButtonsModule, TooltipModule, DropdownModule, ProgressbarModule, AlertModule, TabsModule,
+  ModalModule, ButtonsModule, TooltipModule, BsDropdownModule, ProgressbarModule, AlertModule, TabsModule,
   AccordionModule, CarouselModule
-} from 'ng2-bootstrap'
+} from 'ngx-bootstrap'
 
-import {PopoverModule} from "ng2-popover";
+import {PopoverModule} from "ngx-popover";
 
 import {SmartadminLayoutModule} from './layout'
 
@@ -47,7 +47,7 @@ import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.m
     AlertModule,
     TabsModule,
     TooltipModule,
-    DropdownModule,
+    BsDropdownModule,
     ProgressbarModule,
 
 

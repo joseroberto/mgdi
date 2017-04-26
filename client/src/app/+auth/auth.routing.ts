@@ -5,7 +5,7 @@ import {Routes, RouterModule} from "@angular/router";
 
 export const routes:Routes = [
   {
-    path: '',
+    path: 'login',
     loadChildren: './+login/login.module#LoginModule'
   },
   {

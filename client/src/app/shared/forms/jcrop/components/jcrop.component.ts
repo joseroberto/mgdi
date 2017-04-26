@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import {CropActions} from "../actions/crop.actions";
-import {NgRedux} from "ng2-redux";
+import {NgRedux} from "@angular-redux/store";
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/skipWhile';

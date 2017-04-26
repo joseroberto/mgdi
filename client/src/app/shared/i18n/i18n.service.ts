@@ -17,7 +17,7 @@ export class I18nService {
   constructor(private jsonApiService:JsonApiService, private ref:ApplicationRef) {
     this.state = new Subject();
 
-    this.initLanguage(config.defaultLocale || 'pt');
+    this.initLanguage(config.defaultLocale || 'us');
     this.fetch(this.currentLanguage.key)
   }
 
@@ -31,7 +31,6 @@ export class I18nService {
   }
 
   private initLanguage(locale:string) {
-    console.log('Linguagem inicial:', locale);
     let language = languages.find((it)=> {
       return it.key == locale
     });

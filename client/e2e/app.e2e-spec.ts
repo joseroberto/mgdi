@@ -1,10 +1,10 @@
-import { NewCliTestPage } from './app.po';
+import { UpgradeProjectPage } from './app.po';
 
-describe('new-cli-test App', function() {
-  let page: NewCliTestPage;
+describe('upgrade-project App', () => {
+  let page: UpgradeProjectPage;
 
   beforeEach(() => {
-    page = new NewCliTestPage();
+    page = new UpgradeProjectPage();
   });
 
   it('should display message saying app works', () => {

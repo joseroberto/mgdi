@@ -8,8 +8,8 @@ declare var $:any;
   selector: 'sa-logout',
   template: `
 <div id="logout" (click)="showPopup()" class="btn-header transparent pull-right">
-        <span> <a routerlink="/auth/login" title="Sair" data-action="userLogout"
-                  data-logout-msg="Você pode melhorar a segurança após sair fechar seu browser"><i
+        <span> <a routerlink="/auth/login" title="Sign Out" data-action="userLogout"
+                  data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i
           class="fa fa-sign-out"></i></a> </span>
     </div>
   `,
@@ -22,19 +22,19 @@ export class LogoutComponent implements OnInit {
 
   showPopup(){
     this.notificationService.smartMessageBox({
-      title : "<i class='fa fa-sign-out txt-color-orangeDark'></i> Sair <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
-      content : "Você pode melhorar a segurança após sair fechar seu browser",
-      buttons : '[Não][Sim]'
+      title : "<i class='fa fa-sign-out txt-color-orangeDark'></i> Logout <span class='txt-color-orangeDark'><strong>" + $('#show-shortcut').text() + "</strong></span> ?",
+      content : "You can improve your security further after logging out by closing this opened browser",
+      buttons : '[No][Yes]'
 
     }, (ButtonPressed) => {
-      if (ButtonPressed == "Sim") {
+      if (ButtonPressed == "Yes") {
         this.logout()
       }
     });
   }
 
   logout(){
-      this.router.navigate(['/'])
+      this.router.navigate(['/auth/login'])
   }
 
   ngOnInit() {

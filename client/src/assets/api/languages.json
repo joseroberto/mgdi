@@ -15,8 +15,38 @@
         "title": "Español"
     },
     {
+        "key": "de",
+        "alt": "German",
+        "title": "Deutsch"
+    },
+    {
+        "key": "jp",
+        "alt": "Japan",
+        "title": "日本語"
+    },
+    {
+        "key": "cn",
+        "alt": "China",
+        "title": "中文"
+    },
+    {
+        "key": "it",
+        "alt": "Italy",
+        "title": "Italiano"
+    },
+    {
         "key": "pt",
-        "alt": "Brasil",
-        "title": "Português"
+        "alt": "Portugal",
+        "title": "Portugal"
+    },
+    {
+        "key": "ru",
+        "alt": "Russia",
+        "title": "Русский язык"
+    },
+    {
+        "key": "kr",
+        "alt": "Korea",
+        "title": "한국어"
     }
 ]

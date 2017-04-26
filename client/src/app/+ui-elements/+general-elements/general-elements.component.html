@@ -538,7 +538,7 @@
                 </li>
                 <li dropdown class="dropdown">
                   <a dropdownToggle>Dropdown <b class="caret"></b></a>
-                  <ul dropdownMenu class="dropdown-menu">
+                  <ul *dropdownMenu class="dropdown-menu">
                     <li [class.active]="state.tabs.demo1 == 2">
                       <a (click)="state.tabs.demo1 = 2">@fat</a>
                     </li>
@@ -869,7 +869,7 @@
                 </li>
                 <li class="dropdown pull-left" dropdown>
                   <a dropdownToggle><i class="fa fa-lg fa-gear"></i> <b class="caret"></b></a>
-                  <ul dropdownMenu class="dropdown-menu">
+                  <ul *dropdownMenu class="dropdown-menu">
                     <li [class.active]="state.tabs.demo6=='l3'">
                       <a (click)="state.tabs.demo6 = 'l3'">@fat</a>
                     </li>
@@ -1394,7 +1394,7 @@
               <li dropdown class="dropdown dropdown-large">
                 <a dropdownToggle>Large Dropdown <b class="caret"></b></a>
 
-                <ul class="dropdown-menu dropdown-menu-large row">
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-large row">
                   <li class="col-sm-3">
                     <ul>
                       <li class="dropdown-header">
@@ -1537,7 +1537,7 @@
               </li>
               <li dropdown class="dropdown">
                 <a (click)="(null)" dropdownToggle>Dropdown <span class="caret"></span></a>
-                <ul dropdownMenu class="dropdown-menu" role="menu">
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
                   <li>
                     <a (click)="(null)">Action</a>
                   </li>
@@ -2138,16 +2138,16 @@
 
               <ul class="demo-btns text-center">
                 <li>
-                  <template #tipContent1><h1><b>One</b> <em>Really</em> big tip!</h1></template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
+                  <ng-template #tipContent1><h1><b>One</b> <em>Really</em> big tip!</h1></ng-template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
                      [tooltip]="tipContent1">Big Tip</a>
                 </li>
                 <li>
-                  <template #tipContent2><i class="fa fa-check fa-3x text-success"></i> <i class="fa fa-times fa-3x text-danger"></i></template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
+                  <ng-template #tipContent2><i class="fa fa-check fa-3x text-success"></i> <i class="fa fa-times fa-3x text-danger"></i></ng-template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
                      [tooltip]="tipContent2">has
                     Icon</a>
                 </li>
                 <li>
-                  <template #tipContent3><img src="assets/img/avatars/sunny.png" alt="me" class="online"></template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
+                  <ng-template #tipContent3><img src="assets/img/avatars/sunny.png" alt="me" class="online"></ng-template><a (click)="(null)" class="btn btn-default btn-lg" placement="top"
                      [tooltip]="tipContent3">also Image</a>
                 </li>
               </ul>
@@ -2166,7 +2166,7 @@
                      tooltip="Tooltip Bottom"><i class="fa fa-arrow-down"></i> Tooltip Bottom</a>
                 </li>
                 <li>
-                  <template #tipContent4><i class="fa fa-check text-success"></i> Tooltip right</template><a (click)="(null)" class="btn btn-default" placement="right"
+                  <ng-template #tipContent4><i class="fa fa-check text-success"></i> Tooltip right</ng-template><a (click)="(null)" class="btn btn-default" placement="right"
                      [tooltip]="tipContent4"><i
                     class="fa fa-arrow-right"></i>
                     Tooltip Right</a>

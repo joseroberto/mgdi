@@ -6,15 +6,15 @@
   </div>
   <popover-content #speechPopover [closeOnClickOutside]="true"
                    placement="bottom">
-    <template [ngIf]="!hasError">
+    <ng-template [ngIf]="!hasError">
       <h4 class="vc-title">Voice command activated <br/>
         <small>Please speak clearly into the mic</small>
       </h4>
       <a (click)="seeCommands()" class="btn btn-success">See Commands</a>
       <a class="btn bg-color-purple txt-color-white"
          (click)="speechPopover.hide()">Close Popup</a>
-    </template>
-    <template [ngIf]="hasError">
+    </ng-template>
+    <ng-template [ngIf]="hasError">
       <h4 class="vc-title-error text-center">
         <i class="fa fa-microphone-slash"></i> Voice command failed
         <br/>
@@ -23,7 +23,7 @@
         <small class="txt-color-red">Must have <strong>Internet Connection</strong>
         </small>
       </h4>
-    </template>
+    </ng-template>
   </popover-content>
 </div>
 
