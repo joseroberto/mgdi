@@ -31,7 +31,7 @@ const store = {
 
   mobileViewActivated: false,
   menuCollapsed: false,
-  menuMinified: false,
+  menuMinified: true,
 };
 
 
@@ -156,10 +156,10 @@ export class LayoutService {
 
     this.trigger();
   }
-  
+
 
   onMinifyMenu(){
-    this.store.menuMinified = !this.store.menuMinified;    
+    this.store.menuMinified = !this.store.menuMinified;
     this.trigger();
   }
 
