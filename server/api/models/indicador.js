@@ -90,6 +90,11 @@ module.exports = function(sequelize, DataTypes) {
            through: 'tb_indicador_categoria_analise',
            foreignKey: 'co_indicador',
          otherKey: 'co_categoria_analise' });
+         Indicador.belongsToMany(models.Tag, {
+           as: 'Tags',
+           through: 'tb_indicador_tag',
+           foreignKey: 'co_indicador',
+         otherKey: 'co_tag' });
       }
     },
     schema: 'dbesusgestor',

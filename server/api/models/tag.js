@@ -21,6 +21,12 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods:{
         associate:function(models){
+          Tag.belongsTo(models.TagCategoria,
+            {
+              as: 'Tags',
+              foreignKey: 'co_tag'
+            }
+          );
             /*Secretaria.hasMany(models.Indicador,
               {
                 foreignKey: 'co_secretaria',

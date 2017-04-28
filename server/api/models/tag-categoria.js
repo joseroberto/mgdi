@@ -16,15 +16,12 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods:{
         associate:function(models){
-            /*Secretaria.hasMany(models.Indicador,
+            TagCategoria.hasMany(models.Tag,
               {
-                foreignKey: 'co_secretaria',
-                constraints: false,
-                scope: {
-                  commentable: 'secretaria'
-                }
+                as: 'Tags',
+                foreignKey: 'co_tag_categoria'
               }
-            );*/
+            );
         }
     },
     schema: 'dbesusgestor',
