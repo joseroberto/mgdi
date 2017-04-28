@@ -10,10 +10,12 @@ module.exports = function(sequelize, DataTypes) {
     },
     descricao: {
         type: DataTypes.STRING,
+        allowNull: false,
         field: 'ds_area_responsavel'
     },
     sigla: {
         type: DataTypes.STRING,
+        allowNull: false,
         field: 'sg_area_responsavel'
     }
   },{

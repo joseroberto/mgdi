@@ -1,0 +1,41 @@
+'use strict';
+
+module.exports = function(sequelize, DataTypes) {
+  var Tag = sequelize.define('Tag', {
+    codigo: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        field: 'co_tag'
+    },
+    categoria: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'co_tag_categoria'
+    },
+    descricao: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        field: 'ds_tag'
+    }
+  },{
+    classMethods:{
+        associate:function(models){
+            /*Secretaria.hasMany(models.Indicador,
+              {
+                foreignKey: 'co_secretaria',
+                constraints: false,
+                scope: {
+                  commentable: 'secretaria'
+                }
+              }
+            );*/
+        }
+    },
+    schema: 'dbesusgestor',
+    timestamps: false,
+    freezeTableName: true,
+    tableName: 'tb_tag'
+  });
+  return Tag;
+};

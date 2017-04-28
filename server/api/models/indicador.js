@@ -13,6 +13,16 @@ module.exports = function(sequelize, DataTypes) {
         field: 'ds_titulo',
         allowNull: false
     },
+    descricao: {
+        type: DataTypes.STRING(200),
+        field: 'ds_descricao',
+        allowNull: false
+    },
+    secretaria: {
+        type: DataTypes.INTEGER,
+        field: 'co_secretaria',
+        allowNull: false
+    },
     periodicidade: {
         type: DataTypes.INTEGER,
         field: 'co_periodicidade',
@@ -54,12 +64,39 @@ module.exports = function(sequelize, DataTypes) {
     observacoes:{
         type: DataTypes.TEXT,
         field: 'ds_observacao'
+    },
+    ativo:{
+        type: DataTypes.BOOLEAN,
+        field: 'st_ativo'
+    },
+    acumulativo:{
+        type: DataTypes.BOOLEAN,
+        field: 'st_acumulativo'
+    },
+    privado:{
+        type: DataTypes.BOOLEAN,
+        field: 'st_privado'
     }
   },{
+    classMethods: {
+      associate: function(models) {
+         Indicador.belongsToMany(models.Indicador, {
+           as: 'IndicadoresRelacionados',
+           through: 'tb_indicador_relacionado',
+           foreignKey: 'co_indicador',
+         otherKey: 'co_indicador_pai' });
+         Indicador.belongsToMany(models.CategoriaAnalise, {
+           as: 'CategoriasAnalise',
+           through: 'tb_indicador_categoria_analise',
+           foreignKey: 'co_indicador',
+         otherKey: 'co_categoria_analise' });
+      }
+    },
     schema: 'dbesusgestor',
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_indicador'
   });
+
   return Indicador;
 };

@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.2"
+  version: "0.0.3"
   title: Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
@@ -75,6 +75,20 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
+  /api/secretaria:
+    x-swagger-router-controller: secretaria
+    get:
+      description: Retorna a lista de periodicidades
+      operationId: getSecretarias
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetSecretariaListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -127,6 +141,48 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetAreaResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tag:
+    x-swagger-router-controller: tag
+    get:
+      description: Retorna as tags possíveis de marcação
+      operationId: getTags
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetTagListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tag-categoria:
+    x-swagger-router-controller: tag-categoria
+    get:
+      description: Retorna as categorias das tags possíveis de marcação
+      operationId: getTagCategoria
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetTagCategoriaListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/categoria-analise:
+    x-swagger-router-controller: categoria-analise
+    get:
+      description: Retorna as categorias de análises possíveis
+      operationId: getCategoriasAnalises
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetCategoriaAnaliseListResponse"
         default:
           description: Error
           schema:
@@ -449,6 +505,9 @@ definitions:
       titulo:
         type: string
         description: Nome do Indicador
+      descricao:
+        type: string
+        description: Descrição do Indicador
       periodicidade:
         type: number
         description: Código da periodicidade
@@ -479,6 +538,16 @@ definitions:
       observacoes:
         description: Observações sobre um indicador
         type: [string,'null']
+      ativo:
+        type: boolean
+        description: Indicador ativo
+      acumulativo:
+        type: boolean
+        description: Indicador de acumulativo nos resultados
+      privado:
+        type: boolean
+        description: Indicador de privacidade de divulgação
+        
   IndicadorAtualizacao:
     description: Objeto indicador
     properties:
@@ -488,12 +557,24 @@ definitions:
       titulo:
         type: string
         description: Titulo do Indicador
+      descricao:
+        type: string
+        description: Descrição do Indicador
       periodicidade:
         type: number
         description: Código da periodicidade
       unidade_medida:
         type: number
         description: Código da unidade de medida
+      ativo:
+        type: boolean
+        description: Indicador ativo
+      acumulativo:
+        type: boolean
+        description: Indicador de acumulativo nos resultados
+      privado:
+        type: boolean
+        description: Indicador de privacidade de divulgação
   Conceituacao:
     type: object
     properties:
@@ -562,6 +643,62 @@ definitions:
         type: string
       title: 
         type: string
+  GetSecretariaListResponse:
+    required:
+      - secretarias
+    properties:
+      secretarias:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetCategoriaAnaliseListResponse:
+    required:
+      - categorias_analise
+    properties:
+      categorias_analise:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: string
+            titulo:
+              type: string
+            referencia:
+              type: string
+  GetTagCategoriaListResponse:
+    required:
+      - tag_categorias
+    properties:
+      tag_categorias:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetTagListResponse:
+    required:
+      - tags
+    properties:
+      tags:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            categoria:
+              type: number
+            descricao:
+              type: string
   GetPeriodicidadeListResponse:
     required:
       - periodicidades

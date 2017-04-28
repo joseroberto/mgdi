@@ -2,8 +2,9 @@ var models  = require('../models');
 
 module.exports = {
   getIndicadores: (req, res)=>{
-    models.Indicador.findAll({
+    models.Indicador.findAll({ 
     }).then(function(lista) {
+      console.log(lista);
       res.json({indicadores: lista});
     });
   },
