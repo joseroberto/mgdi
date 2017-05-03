@@ -1,7 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
-import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService, PeriodicidadeService, AreaService, UtilService } from '../../services/index';
+import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
+  PeriodicidadeService, AreaService, UtilService, SecretariaService, TagCategoriaService, TagService } from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
+import '../../extensions/array.extension';
+
 declare var $: any;
 
 @FadeInTop()
@@ -10,7 +13,7 @@ declare var $: any;
   templateUrl: './indicador-cadastro.component.html',
   styles:['div.note-editable.panel-body{height: 180px;}']
 })
-export class IndicadorCadastroComponent implements OnInit, OnDestroy {
+export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewInit {
   private currenttab = 't1';
   private msg_padrao = 'Não há dados cadastrados';
   private tituloForm = 'Novo Indicador';
@@ -19,16 +22,20 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
   private sub: any;
   private flag_update:boolean = false;
 
-  private indicador:{codigo:string, titulo:string, periodicidade:number, unidade_medida:number,
+  private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
-    limitacoes:string, notas:string, observacoes:string, fonte_dados:string} = {
-      codigo: '', titulo: '', periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
-      limitacoes:'', notas:'', observacoes:'', fonte_dados:''
+    limitacoes:string, notas:string, observacoes:string, fonte_dados:string,
+    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[]} = {
+      codigo: '', titulo: '', descricao:'', classificacao:null, periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
+      limitacoes:'', notas:'', observacoes:'', fonte_dados:'', acumulativo:false, ativo:true, privado:true, tags:[]
   };
 
   colecaoClassificacao:any[] = [];
   colecaoPeriodicidade:any[] = [];
   colecaoUnidadeMedida:any[] = [];
+  colecaoSecretaria:any[] = [];
+  colecaoTagCategoria:any[] = [];
+  colecaoTag:any[]=[];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -44,7 +51,10 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
       private periodicidadeService:PeriodicidadeService,
       private areaService:AreaService,
       private unidadeMedidaService:UnidadeMedidaService,
+      private secretariaService:SecretariaService,
       private util:UtilService,
+      private tagCategoriaService:TagCategoriaService,
+      private tagService: TagService,
       private route: ActivatedRoute,
       private router: Router) {
         this.breadcrumb = ['Indicador', 'Novo'];
@@ -75,8 +85,30 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
     this.unidadeMedidaService.getAll().subscribe(resp => {
         this.colecaoUnidadeMedida = resp.unidades;
     }, err => this.util.msgErroInfra(err));
+    this.secretariaService.getAll().subscribe(resp => {
+        this.colecaoSecretaria = resp.secretarias;
+    }, err => this.util.msgErroInfra(err));
+    this.tagCategoriaService.getAll().subscribe(resp => {
+        this.colecaoTagCategoria = resp.tag_categorias;
+    }, err => this.util.msgErroInfra(err));
+    this.tagService.getAll().subscribe(resp => {
+        this.colecaoTag = resp.tags;
+    }, err => this.util.msgErroInfra(err));
   }
 
+  ngAfterViewInit(){
+      $('.tags').on('change', (e) => {
+        this.indicador.tags=[];
+        jQuery(e.target).val().forEach(
+        obj=>{
+          console.log('item_obj', obj);
+          console.log('item_tag', this.colecaoTag.find(item=> item.codigo==obj));
+          this.indicador.tags.push(this.colecaoTag.find(item=> item.codigo==obj));
+        }
+      )
+    });
+
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -281,9 +313,10 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy {
 
   onSubmit(form){
     console.log('Antes de gravar', form.value);
+
       if(this.flag_update){
         this.indicador = Object.assign(this.indicador, form.value)
-        console.log(form.value, this.indicador);
+        console.log('originais (form, indicador)', form.value, this.indicador);
         this.indicadorService.update(this.indicador).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);

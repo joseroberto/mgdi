@@ -5,3 +5,6 @@ export * from './indicador.service';
 export * from './periodicidade.service';
 export * from './unidade-medida.service';
 export * from './util.service';
+export * from './secretaria.service';
+export * from './tag-categoria.service';
+export * from './tag.service';

@@ -28,6 +28,11 @@ module.exports = function(sequelize, DataTypes) {
         field: 'co_periodicidade',
         allowNull: false
     },
+    classificacao: {
+        type: DataTypes.INTEGER,
+        field: 'co_indicador_classificacao',
+        allowNull: false
+    },
     unidade_medida: {
         type: DataTypes.INTEGER,
         field: 'co_unidade_medida',

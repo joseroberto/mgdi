@@ -46,7 +46,6 @@
                     (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
                     data-bv-notempty="true"
                     data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
-
                 </div>
               </div>
               <div class="form-group">
@@ -78,13 +77,23 @@
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
                 <fieldset style="margin: 15px">
-                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
+                  <legend>&nbsp;&nbsp;Informações</legend>
                   <div class="form-group">
-                     <label class="col-md-2 control-label" for="select-1">Classificação</label>
+                    <label class="col-md-2 control-label">Descrição</label>
+                    <div class="col-md-10">
+                      <input type="text" id="descricao" name="descricao" maxlength="200"
+                      [ngModel]="indicador.descricao"
+                      class="form-control"
+                      placeholder="Descrição do indicador"
+                      data-bv-notempty="true"
+                      data-bv-notempty-message="A descrição do indicador é obrigatória">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="col-md-2 control-label" for="classificacao" >Classificação</label>
                      <div class="col-md-2">
-
-                       <select class="form-control" id="select-1">
-                         <option *ngFor="let itemClassificacao of colecaoClassificacao" [value]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
+                       <select class="form-control" id="classificacao" name="classificacao" [ngModel]="indicador.classificacao" required>
+                         <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
                      <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
@@ -93,30 +102,20 @@
                          <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                          [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                        </select>
-
                      </div>
-                     <label class="col-md-2 control-label" for="select-1">Secretaria Responsável</label>
+                     <label class="col-md-2 control-label" for="secretaria">Secretaria Responsável</label>
                      <div class="col-md-2">
-
-                       <select class="form-control" id="select-1">
-                         <option>SVS</option>
-                         <option>SAS</option>
-                         <option>SCTIE</option>
+                       <select class="form-control" id="secretaria" name="secretaria" [ngModel]="indicador.secretaria" required>
+                         <option *ngFor="let itemSecretaria of colecaoSecretaria" [ngValue]="itemSecretaria.codigo"> {{ itemSecretaria.sigla }}</option>
                        </select>
                      </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label">Tags</label>
+                    <label class="col-md-2 control-label" for="tags">Tags</label>
                     <div class="col-md-6">
-                      <select select2 multiple style="width:100%" class="select2">
-                        <optgroup label="Coordenações">
-                          <option value="AK">CGGIE</option>
-                          <option value="HI">CGMA</option>
-                        </optgroup>
-                        <optgroup label="Programas/Área Temática">
-                          <option value="CA">Crack</option>
-                          <option value="NV" selected="selected">Saúde da Família</option>
-                          <option value="CA">Saúde da Mulher</option>
+                      <select select2 multiple class="form-control tags" name="secretaria2" >
+                        <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">
+                          <option [value]="itemTag.codigo" *ngFor="let itemTag of itemCategoria.Tags">{{ itemTag.descricao }}</option>
                         </optgroup>
                       </select>
                     </div>
@@ -127,13 +126,16 @@
                       </select>
                     </div>
                   </div>
+                </fieldset>
+                <fieldset style="margin: 15px">
+                  <legend>&nbsp;&nbsp;Configurações do indicador</legend>
                   <div class="form-group">
                     <div class="col-md-2">&nbsp;</div>
                     <div class="col-md-3">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                               id="st2">
-                        <label class="onoffswitch-label" for="st2">
+                        <input type="checkbox" name="acumulativo" class="onoffswitch-checkbox"
+                               id="acumulativo" [ngModel]="indicador.acumulativo">
+                        <label class="onoffswitch-label" for="acumulativo">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
                                   data-swchoff-text="Não"></span>
@@ -144,9 +146,9 @@
                     </div>
                     <div class="col-md-3">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                               id="st1">
-                        <label class="onoffswitch-label" for="st1">
+                        <input type="checkbox" name="ativo" class="onoffswitch-checkbox"
+                               id="ativo" [ngModel]="indicador.ativo">
+                        <label class="onoffswitch-label" for="ativo">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
                                   data-swchoff-text="Não"></span>
@@ -157,9 +159,9 @@
                     </div>
                     <div class="col-md-3">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="start_interval" class="onoffswitch-checkbox"
-                               id="st3">
-                        <label class="onoffswitch-label" for="st3">
+                        <input type="checkbox" name="privado" class="onoffswitch-checkbox"
+                               id="privado" [ngModel]="indicador.privado">
+                        <label class="onoffswitch-label" for="privado">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
                                   data-swchoff-text="Não"></span>
@@ -324,5 +326,4 @@
 
     </div>
     <!-- end widget div -->
-
   </sa-widget>

@@ -44,7 +44,19 @@ export class IndicadorListaComponent {
       "defaultContent": ''
     },
     {"data": "titulo"},
-    {"data": "codigo"}
+    {"data": "codigo"},
+    {"data": "ativo", render: function(data, type, full, meta){
+      if(type == "display"){
+        return data? "<span class='label label-success'>ATIVO</span>":"<span class='label label-default'>INATIVO</span>";
+      }
+      return data;
+    }},
+    {"data": "privado", render: function(data, type, full, meta){
+      if(type == "display"){
+        return data? "<span class='label label-warning'>PRIVADO</span>":"<span class='label label-primary'>PÚBLICO</span>";
+      }
+      return data;
+    }}
   ],
   "order": [[1, 'asc']]
 }
@@ -73,12 +85,17 @@ export class IndicadorListaComponent {
                 <td>${d.titulo}</td>
             </tr>
             <tr>
+                <td>Descrição:</td>
+                <td>${d.descricao}</td>
+            </tr>
+            <tr>
                 <td>Conceito:</td>
                 <td>${d.conceituacao}</td>
             </tr>
             <tr>
-                <td></td>
+                <td>Tipo</td>
                 <td>
+                 ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
                   <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">
                     Apaga

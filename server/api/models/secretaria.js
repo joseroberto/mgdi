@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Secretaria = sequelize.define('Secretaria', {
-    id: {
+    codigo: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
