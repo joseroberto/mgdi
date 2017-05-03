@@ -64,7 +64,7 @@ module.exports = {
   version: (req,res)=>{
     try {
       var doc = yaml.safeLoad(fs.readFileSync('api/swagger/swagger.yaml', 'utf8'));
-      res.json(doc.info);
+      res.json(object.append(doc.info, {environment: process.env.NODE_ENV}));
     } catch (e) {
       console.log(e);
       res.status(500).send(e);

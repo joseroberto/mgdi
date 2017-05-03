@@ -27,15 +27,6 @@ module.exports = function(sequelize, DataTypes) {
               foreignKey: 'co_tag'
             }
           );
-            /*Secretaria.hasMany(models.Indicador,
-              {
-                foreignKey: 'co_secretaria',
-                constraints: false,
-                scope: {
-                  commentable: 'secretaria'
-                }
-              }
-            );*/
         }
     },
     schema: 'dbesusgestor',
