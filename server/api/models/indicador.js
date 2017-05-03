@@ -99,11 +99,13 @@ module.exports = function(sequelize, DataTypes) {
            as: 'Tags',
            through: 'tb_indicador_tag',
            foreignKey: 'co_indicador',
-         otherKey: 'co_tag' });
+           otherKey: 'co_tag' });
       }
     },
     schema: 'dbesusgestor',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'dt_inclusao',
+    updatedAt: 'dt_atualizacao',
     freezeTableName: true,
     tableName: 'tb_indicador'
   });

@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
         associate:function(models){
           Tag.belongsTo(models.TagCategoria,
             {
-              as: 'Tags',
+              as: 'Categoria',
               foreignKey: 'co_tag'
             }
           );
