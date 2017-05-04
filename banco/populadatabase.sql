@@ -1184,3 +1184,28 @@ COPY dbesusgestor.tb_unidade_medida (co_unidade_medida, ds_unidade_medida) FROM 
 3	Percentual
 4	Taxa
 \.
+
+insert into dbesusgestor.tb_categoria_analise(co_categoria_analise,ds_titulo,ds_referencia) values ('UG','Unidade geográfica: Brasil, grandes regiões, estados, Distrito Federal e regiões metropolitanas. Municípios das capitais, em anos censitários', '');
+insert into dbesusgestor.tb_categoria_analise(co_categoria_analise,ds_titulo,ds_referencia) values ('FE1','Faixa etária: 15 a 24 anos, 25 a 59 anos e 60 anos ou mais de idade', '');
+insert into dbesusgestor.tb_categoria_analise(co_categoria_analise,ds_titulo,ds_referencia) values ('SD','Situação do domicílio: urbana e rural', '');
+insert into dbesusgestor.tb_categoria_analise(co_categoria_analise,ds_titulo,ds_referencia) values ('COR','Cor ou raça, conforme a classificação do IBGE: branca, preta, amarela, parda e indígena', '');
+
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SAS', 'Secretaria de Atenção à Saúde');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SGTES', 'Secretaria de Gestão do Trabalho e da Educação na Saúde');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SVS', 'Secretaria de Vigilância em Saúde');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SGEP', 'Secretaria de Gestão Estratégica e Participativa');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SESAI', 'Secretaria Especial da Saúde Indígena');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SE', 'Secretaria Executiva');
+  insert into dbesusgestor.tb_secretaria (sg_secretaria, ds_secretaria) values ('SCTIE', 'Secretaria Ciência, Tecnologia e Insumos Estratégicos');
+
+
+insert into dbesusgestor.tb_tag_categoria (ds_tag_categoria) values ('Ações e Programas');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Academia da Saúde');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Saúde da Família');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Mais Médicos');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Melhor em Casa');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Pronto Atendimento');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'SAMU');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Controle do Câncer');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'Controle do Tabagismo');
+insert into dbesusgestor.tb_tag (co_tag_categoria, ds_tag) values (1, 'HumanizaSUS');

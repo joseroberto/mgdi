@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "dim_adm",
+    "username": "postgres",
     "password": "uyhjmn00",
     "database": "dbspo",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {

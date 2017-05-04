@@ -152,6 +152,8 @@ CREATE INDEX ux_co_indicador
     co_indicador_relacionado serial NOT NULL,
     co_indicador character varying(8) not null,
     co_indicador_pai character varying(8) not null,
+    dt_inclusao timestamp without time zone,
+    dt_atualizacao timestamp without time zone,
     CONSTRAINT tb_indicador_relacionado_pkey PRIMARY KEY (co_indicador_relacionado),
     CONSTRAINT tb_indicador_relacionado_co_indicador_fkey FOREIGN KEY (co_indicador)
         REFERENCES dbesusgestor.tb_indicador (co_indicador),

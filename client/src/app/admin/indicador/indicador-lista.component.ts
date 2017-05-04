@@ -90,7 +90,7 @@ export class IndicadorListaComponent {
             </tr>
             <tr>
                 <td>Conceito:</td>
-                <td>${d.conceituacao}</td>
+                <td>${d.conceituacao || ''}</td>
             </tr>
             <tr>
                 <td>Tipo</td>
