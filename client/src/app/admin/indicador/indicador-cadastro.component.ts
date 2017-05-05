@@ -324,7 +324,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   onSubmit(form){
     console.log('Antes de gravar', form.value);
-    form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
+    if(form.value && form.value.codigo)
+      form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
     this.indicador = Object.assign(this.indicador, form.value)
       if(this.flag_update){
         this.indicadorService.update(this.indicador).subscribe(resp=>{

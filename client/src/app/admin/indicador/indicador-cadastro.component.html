@@ -38,16 +38,17 @@
           data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
           <fieldset style="margin: 15px">
               <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
-              <div class="form-group" *ngIf="!indicador.codigo">
-                <label class="col-md-2 control-label">Código</label>
-                <div class="col-md-2">
-                  <input id="codigo" class="form-control"
-                    placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo" #codigo
-                    (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
-                    data-bv-notempty="true"
-                    data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
+              <div class="form-group" >
+                <div *ngIf="!indicador.codigo">
+                  <label class="col-md-2 control-label">Código</label>
+                  <div class="col-md-2">
+                    <input id="codigo" class="form-control"
+                      placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo" #codigo
+                      (input)="codigo.value=$event.target.value.toUpperCase().replace(' ','')"
+                      data-bv-notempty="true"
+                      data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
+                  </div>
                 </div>
-
                 <label class="col-md-1 control-label">Título</label>
                 <div class="col-md-7">
                   <input id="descricao" class="form-control"
