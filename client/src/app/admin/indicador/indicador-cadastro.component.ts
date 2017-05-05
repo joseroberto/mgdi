@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
-  PeriodicidadeService, AreaService, UtilService, SecretariaService, TagCategoriaService, TagService } from '../../services/index';
+  PeriodicidadeService, AreaService, UtilService, SecretariaService, TagCategoriaService } from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import '../../extensions/array.extension';
 
@@ -22,6 +22,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private sub: any;
   private flag_update:boolean = false;
 
+  @ViewChild('tags') selectElRef;
+
   private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string,
@@ -35,7 +37,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   colecaoUnidadeMedida:any[] = [];
   colecaoSecretaria:any[] = [];
   colecaoTagCategoria:any[] = [];
-  colecaoTag:any[]=[];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -54,7 +55,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private secretariaService:SecretariaService,
       private util:UtilService,
       private tagCategoriaService:TagCategoriaService,
-      private tagService: TagService,
       private route: ActivatedRoute,
       private router: Router) {
         this.breadcrumb = ['Indicador', 'Novo'];
@@ -63,19 +63,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   ngOnInit() {
     System.import('script-loader!summernote/dist/summernote.min.js');
     this.flag_update = false;
-    this.sub = this.route.params.subscribe(params => {
-        this.indicador.codigo = params['codigo'];
-        if(this.indicador.codigo){
-          this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
-              console.log('Registro em edicao:', this.indicador);
-              this.tituloForm = this.indicador.codigo;
-              this.titulo = 'Atualiza ' + this.indicador.codigo;
-              this.breadcrumb = ['Indicador', this.indicador.codigo];
-              this.indicador = Object.assign(this.indicador, resp);
-              this.flag_update = true;
-            }, (err)=> this.util.msgErroInfra(err));
-        }
-    });
+
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
         this.colecaoClassificacao = resp.classificacoes;
     }, err => this.util.msgErroInfra(err));
@@ -90,9 +78,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.tagCategoriaService.getAll().subscribe(resp => {
         this.colecaoTagCategoria = resp.tag_categorias;
-    }, err => this.util.msgErroInfra(err));
-    this.tagService.getAll().subscribe(resp => {
-        this.colecaoTag = resp.tags;
     }, err => this.util.msgErroInfra(err));
   }
 
@@ -109,7 +94,31 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
-      $('.tags').val([1,2]).trigger('change');
+
+      this.sub = this.route.params.subscribe(params => {
+          this.indicador.codigo = params['codigo'];
+          if(this.indicador.codigo){
+            this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
+                console.log('Registro em edicao:', this.indicador);
+                this.tituloForm = this.indicador.codigo;
+                this.titulo = 'Atualiza ' + this.indicador.codigo;
+                this.breadcrumb = ['Indicador', this.indicador.codigo];
+                this.indicador = Object.assign(this.indicador, resp);
+                this.flag_update = true;
+                console.log('Atualizando:', resp.Tags);
+                this.updateTagList(resp.Tags);
+              }, (err)=> this.util.msgErroInfra(err));
+          }
+      });
+  }
+
+  updateTagList(tags:any[]) {
+    let options = this.selectElRef.nativeElement.options;
+    console.log(options);
+    for(let i=0; i < options.length; i++) {
+      options[i].selected = tags.find( item=> item.codigo==options[i].value)!=undefined;
+    }
+    $('.tags').trigger('change');
   }
 
   ngOnDestroy() {

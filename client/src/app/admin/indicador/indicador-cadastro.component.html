@@ -113,7 +113,7 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label" for="tags">Tags</label>
                     <div class="col-md-6">
-                      <select select2 multiple class="form-control tags" name="secretaria2" >
+                      <select select2 multiple #tags class="form-control tags" name="secretaria2" >
                         <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">
                           <option [value]="itemTag.codigo" *ngFor="let itemTag of itemCategoria.Tags">{{ itemTag.descricao }}</option>
                         </optgroup>
