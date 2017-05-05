@@ -98,7 +98,8 @@ module.exports = function(sequelize, DataTypes) {
          Indicador.belongsToMany(models.Tag, {
            as: 'Tags',
            through: 'tb_indicador_tag',
-           foreignKey: 'co_indicador' });
+           foreignKey: 'co_indicador',
+           onDelete: 'cascade' });
       }
     },
     schema: 'dbesusgestor',

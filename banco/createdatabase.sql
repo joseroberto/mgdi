@@ -223,7 +223,7 @@ CREATE INDEX ux_co_indicador
     co_indicador varchar(8) NOT NULL,
     CONSTRAINT tb_indicador_tag_pkey PRIMARY KEY (co_indicador_tag),
     CONSTRAINT tb_indicador_tag_co_indicador_fkey FOREIGN KEY (co_indicador)
-        REFERENCES dbesusgestor.tb_indicador (co_indicador),
+        REFERENCES dbesusgestor.tb_indicador (co_indicador) ON DELETE CASCADE,
     CONSTRAINT tb_indicador_tag_co_tag_fkey FOREIGN KEY (co_tag)
             REFERENCES dbesusgestor.tb_tag (co_tag)
   );

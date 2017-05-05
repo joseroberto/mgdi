@@ -105,8 +105,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
                 this.breadcrumb = ['Indicador', this.indicador.codigo];
                 this.indicador = Object.assign(this.indicador, resp);
                 this.flag_update = true;
-                console.log('Atualizando:', resp.Tags);
-                this.updateTagList(resp.Tags);
+                if(resp && resp.hasOwnProperty('Tags'))
+                  this.updateTagList(resp.Tags);
               }, (err)=> this.util.msgErroInfra(err));
           }
       });
@@ -324,10 +324,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   onSubmit(form){
     console.log('Antes de gravar', form.value);
-
+    form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
+    this.indicador = Object.assign(this.indicador, form.value)
       if(this.flag_update){
-        this.indicador = Object.assign(this.indicador, form.value)
-        console.log('originais (form, indicador)', form.value, this.indicador);
         this.indicadorService.update(this.indicador).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
@@ -336,13 +335,10 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }
         }, err=>this.util.msgErroInfra(err));
       }else{
-        form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
-
-        this.indicadorService.create(form.value).subscribe(resp=>{
+        this.indicadorService.create(this.indicador).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
-            console.log('Recarregando...', form.value.codigo);
-            this.router.navigateByUrl('/admin/indicador/'+ form.value.codigo);
+            this.router.navigateByUrl('/admin/indicador/'+ this.indicador.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }

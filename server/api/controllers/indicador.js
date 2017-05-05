@@ -9,7 +9,9 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
+    console.log('create', req.body);
     models.Indicador.create(req.body).then((indicador)=> {
+      indicador.setTags(req.body.tags);
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     });
   },
@@ -22,6 +24,7 @@ module.exports = {
   },
   deleteIndicador: (req,res)=>{
     models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=>{
+      indicador.setTags(null);
       indicador.destroy();
       res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
     });

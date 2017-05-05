@@ -47,10 +47,9 @@
                     data-bv-notempty="true"
                     data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-2 control-label">Título</label>
-                <div class="col-md-10">
+
+                <label class="col-md-1 control-label">Título</label>
+                <div class="col-md-7">
                   <input id="descricao" class="form-control"
                     placeholder="Título do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
                 </div>
@@ -96,7 +95,7 @@
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="select-1">Periodicidade</label>
+                     <label class="col-md-2 control-label" for="periodicidade">Periodicidade</label>
                      <div class="col-md-2">
                        <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
                          <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
