@@ -32,11 +32,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       limitacoes:'', notas:'', observacoes:'', fonte_dados:'', acumulativo:false, ativo:true, privado:true, tags:[]
   };
 
-  colecaoClassificacao:any[] = [];
-  colecaoPeriodicidade:any[] = [];
-  colecaoUnidadeMedida:any[] = [];
-  colecaoSecretaria:any[] = [];
-  colecaoTagCategoria:any[] = [];
+  private colecaoClassificacao:any[] = [];
+  private colecaoPeriodicidade:any[] = [];
+  private colecaoUnidadeMedida:any[] = [];
+  private colecaoSecretaria:any[] = [];
+  private colecaoTagCategoria:any[] = [];
+  private colecaoIndicadores:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -79,6 +80,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.tagCategoriaService.getAll().subscribe(resp => {
         this.colecaoTagCategoria = resp.tag_categorias;
     }, err => this.util.msgErroInfra(err));
+    this.indicadorService.getAll().subscribe(resp => {
+        this.colecaoIndicadores = resp.indicadores.filter(item=>item.codigo!=this.indicador.codigo);
+    }, err => this.util.msgErroInfra(err));
   }
 
   ngAfterViewInit(){
@@ -94,27 +98,30 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
+      this.loadIndicador();
+  }
 
-      this.sub = this.route.params.subscribe(params => {
-          this.indicador.codigo = params['codigo'];
-          if(this.indicador.codigo){
-            this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
-                console.log('Registro em edicao:', this.indicador);
-                this.tituloForm = this.indicador.codigo;
-                this.titulo = 'Atualiza ' + this.indicador.codigo;
-                this.breadcrumb = ['Indicador', this.indicador.codigo];
-                this.indicador = Object.assign(this.indicador, resp);
-                this.flag_update = true;
-                if(resp && resp.hasOwnProperty('Tags'))
-                  this.updateTagList(resp.Tags);
-              }, (err)=> this.util.msgErroInfra(err));
-          }
-      });
+  loadIndicador(){
+    this.sub = this.route.params.subscribe(params => {
+        this.indicador.codigo = params['codigo'];
+        if(this.indicador.codigo){
+          this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
+              console.log('Registro em edicao:', this.indicador);
+              this.tituloForm = this.indicador.codigo;
+              this.titulo = 'Atualiza ' + this.indicador.codigo;
+              this.breadcrumb = ['Indicador', this.indicador.codigo];
+              this.indicador = Object.assign(this.indicador, resp);
+              console.log('Valor interno', this.indicador, resp);
+              this.flag_update = true;
+              if(resp && resp.hasOwnProperty('Tags'))
+                this.updateTagList(resp.Tags);
+            }, (err)=> this.util.msgErroInfra(err));
+        }
+    });
   }
 
   updateTagList(tags:any[]) {
     let options = this.selectElRef.nativeElement.options;
-    console.log(options);
     for(let i=0; i < options.length; i++) {
       options[i].selected = tags.find( item=> item.codigo==options[i].value)!=undefined;
     }
@@ -157,6 +164,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         }, err=>this.util.msgErroInfra(err));
       }
   }
+
   editMetodoCalculo(flag){
     this.isEditMetodoCalculo = flag;
     if(flag){
@@ -181,6 +189,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }, err=>this.util.msgErroInfra(err));
     }
   }
+
   editFonteDados(flag){
     this.isEditFonteDados = flag;
     if(flag){
@@ -197,6 +206,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }, err=>this.util.msgErroInfra(err));
     }
   }
+
   editInterpretacao(flag){
       this.isEditInterpretacao = flag;
       if(flag){
@@ -345,5 +355,21 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }
         }, err=>this.util.msgErroInfra(err));
       }
+  }
+
+  adicionaItemRelacionado(){
+    let valorSelecionado = $('#item_relacionado').val();
+    let codigo:string = $(`option[value='${valorSelecionado}']`).attr('codigo');
+    this.indicadorService.adicionaIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
+      if(resp.codret==0){
+        this.util.msgSucesso(resp.mensagem);
+      }else{
+        this.util.msgErro(resp.mensagem);
+      }
+    }, err=>this.util.msgErroInfra(err));
+  }
+
+  apagaItemRelacionado(codigo_indicador_pai:string, codigo_indicador:string){
+
   }
 }

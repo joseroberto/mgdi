@@ -7,7 +7,8 @@ export class IndicadorService extends REST {
   constructor(http:Http) {
     super(http);
   }
-  _getAll(){
+
+  getAll(){
     return super.get('/indicador');
   }
 
@@ -57,5 +58,13 @@ export class IndicadorService extends REST {
 
   updateFonteDados(codigo:string, fonte_dados:string){
     return super.patch(`/indicador/${codigo}/fonte_dados`,{fonte_dados: fonte_dados});
+  }
+
+  adicionaIndicadorRelacionado(codigo_pai:string, codigo:string){
+    return super.patch(`/indicador/${codigo_pai}/indicador_relacionado/${codigo}`,'');
+  }
+
+  deleteIndicadorRelacionado(codigo_pai:string, codigo:string){
+    return super.delete(`/indicador/${codigo_pai}/indicador_relacionado/${codigo}`);
   }
 }

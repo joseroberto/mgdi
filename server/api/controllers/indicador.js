@@ -1,4 +1,6 @@
+require('../extensions/array');
 var models  = require('../models');
+
 
 module.exports = {
   getIndicadores: (req, res)=>{
@@ -17,7 +19,9 @@ module.exports = {
   },
   getIndicador: (req,res)=>{
     models.Indicador.findById(req.swagger.params.codigo.value,
-      { include: [ { model: models.Tag, as: 'Tags' } ] }
+      { include: [ { model: models.Tag, as: 'Tags' },
+                   { model: models.Indicador, as: 'IndicadoresRelacionados' },
+                   { model: models.CategoriaAnalise , as: 'CategoriasAnalise' }] }
     ).then((indicador)=> {
       res.json(indicador);
     });
@@ -35,47 +39,76 @@ module.exports = {
         item.setTags(req.body.tags);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
-    })
+    });
   },
   updateConceituacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Conceituação do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
-    })
+    });
   },
   updateInterpretacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Interpretação do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
-    })
+    });
   },
   updateUso: (req,res)=>{
     console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Usos do indicador ${req.swagger.params.codigo.value} atualizados com sucesso`});
-    })
+    });
   },
   updateLimitacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Limitações do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
-    })
+    });
   },
   updateObservacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Observações do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
-    })
+    });
   },
   updateNota: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Notas do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
-    })
+    });
   },
   updateFonteDados: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Fonte de dados do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
-    })
+    });
   },
+
   updateMetodoCalculo: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Método de Cálculo do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
-    })
+    });
+  },
+
+  addCategoriaAnalise: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+      item.addCategoriasAnalise(req.body.categoria);
+      res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
+    });
+  },
+
+  deleteCategoriaAnalise: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+      //item.addCategoriasAnalise(req.body.categoria.codigo);
+      res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
+    });
+  },
+
+  addIndicadorRelacionado: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
+      item.addIndicadoresRelacionados(req.swagger.params.codigo.value);
+      res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
+    });
+  },
+
+  deleteIndicadorRelacionado: (req,res)=>{
+
+    models.IndicadorRelacionado.destroy({ where: { co_indicador:req.swagger.params.codigo.value, co_indicador_pai:req.body.indicadorRelacionado.codigo_pai.value}}).then(()=>{
+        res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
+    });
   }
 }

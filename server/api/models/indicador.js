@@ -87,7 +87,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
          Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
-           through: 'tb_indicador_relacionado',
+           through: models.IndicadorRelacionado,
            foreignKey: 'co_indicador',
          otherKey: 'co_indicador_pai' });
          Indicador.belongsToMany(models.CategoriaAnalise, {

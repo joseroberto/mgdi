@@ -76,7 +76,7 @@
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
-                <fieldset style="margin: 15px">
+                <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Informações</legend>
                   <div class="form-group">
                     <label class="col-md-2 control-label">Descrição</label>
@@ -127,7 +127,7 @@
                     </div>
                   </div>
                 </fieldset>
-                <fieldset style="margin: 15px">
+                <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Configurações do indicador</legend>
                   <div class="form-group">
                     <div class="col-md-2">&nbsp;</div>
@@ -179,8 +179,7 @@
                           Novo
                         </button>
                         <button class="btn btn-primary" type="submit">
-                          <i class="fa fa-save"></i>
-                          Grava
+                          <i class="fa fa-save"></i>Grava
                         </button>
                       </div>
                     </div>
@@ -188,7 +187,7 @@
               </fieldset>
               </tab>
               <tab [active]="currenttab == 't2'">
-                <fieldset style="margin: 15px">
+                <fieldset style="padding: 15px">
                   <legend>Conceituação
                         <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
@@ -239,21 +238,28 @@
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't3'">
-                <fieldset>
+                <fieldset  style="padding: 15px">
                   <div class="form-group">
                     <label class="col-md-2 control-label">Nome do Indicador</label>
-                    <div class="col-md-10">
-                      <input class="form-control" placeholder="Código ou partes do nome do indicador..." type="text" list="list">
+                    <div class="col-md-8">
+                      <div class="input-group">
+                      <input class="form-control" placeholder="Código ou partes do nome do indicador..."
+                          type="text" list="list" id="item_relacionado">
                       <datalist id="list">
-                        <option value="NCPH">[NCPH] - Número de consultas médicas (SUS) por habitante</option>
-                        <option value="PRCTG">[PRCTG] - Proporção da população que refere ter consultado médico nos últimos 12 meses</option>
-                        <option value="PPRRUC">[PPRRUC] - Proporção da população que refere ter realizado a última consulta odontológica há menos de 1 ano</option>
+                        <option *ngFor="let itemIndicador of colecaoIndicadores"
+                          value="[{{ itemIndicador.codigo }}] - {{ itemIndicador.titulo }}"
+                          [attr.codigo]="itemIndicador.codigo">
                       </datalist>
+                      <div class="input-group-btn">
+                      <button class="btn btn-primary" type="button" (click)="adicionaItemRelacionado()">
+                        <i class="fa fa-plus"></i>Adiciona Item
+                      </button>
+                      </div>
+                      </div>
                       <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
                     </div>
                   </div>
                   <div class="table-responsive col-md-10">
-
                     <table class="table table-hover">
                       <thead>
                       <tr>

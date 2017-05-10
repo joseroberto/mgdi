@@ -132,6 +132,10 @@ COMMENT ON COLUMN dbesusgestor.tb_indicador.st_ativo IS 'Marca o identificador e
 COMMENT ON COLUMN dbesusgestor.tb_indicador.st_acumulativo IS 'Marca o cálculo do indicador ser acumulativo no ano';
 COMMENT ON COLUMN dbesusgestor.tb_indicador.co_secretaria IS 'Código da secretaria responsável pelo indicador';
 
+COMMENT ON COLUMN dbesusgestor.tb_indicador.dt_inclusao IS 'Data de inclusão do registro';
+COMMENT ON COLUMN dbesusgestor.tb_indicador.dt_atualizacao IS 'Data de alteração do registro';
+
+
 
 -- Index: dbesusgestor.ix_co_indicador
 
@@ -164,12 +168,16 @@ CREATE INDEX ux_co_indicador
   COMMENT ON COLUMN dbesusgestor.tb_indicador_relacionado.co_indicador_relacionado IS 'Identificador da relação';
   COMMENT ON COLUMN dbesusgestor.tb_indicador_relacionado.co_indicador IS 'Indicador de origem';
   COMMENT ON COLUMN dbesusgestor.tb_indicador_relacionado.co_indicador_pai IS 'Colecao de indicadores relacionados';
+  COMMENT ON COLUMN dbesusgestor.tb_indicador_relacionado.dt_inclusao IS 'Data de inclusão do registro';
+  COMMENT ON COLUMN dbesusgestor.tb_indicador_relacionado.dt_atualizacao IS 'Data de alteração do registro';
 
   CREATE TABLE dbesusgestor.tb_indicador_categoria_analise
   (
     co_indicador_categoria_analise serial not null,
     co_indicador varchar(8) NOT NULL,
     co_categoria_analise varchar(8) NOT NULL,
+    dt_inclusao timestamp without time zone,
+    dt_atualizacao timestamp without time zone,
     CONSTRAINT tb_indicador_categoria_analise_pkey PRIMARY KEY (co_categoria_analise),
     CONSTRAINT tb_indicador_categoria_analise_co_indicador_fkey FOREIGN KEY (co_indicador)
         REFERENCES dbesusgestor.tb_indicador (co_indicador),
@@ -180,6 +188,8 @@ CREATE INDEX ux_co_indicador
   COMMENT ON COLUMN dbesusgestor.tb_indicador_categoria_analise.co_indicador_categoria_analise IS 'Chave da relação indicador e categoria de análise';
   COMMENT ON COLUMN dbesusgestor.tb_indicador_categoria_analise.co_indicador IS 'Indicador relacionado';
   COMMENT ON COLUMN dbesusgestor.tb_indicador_categoria_analise.co_categoria_analise IS 'Catgoria de análise relacionada';
+  COMMENT ON COLUMN dbesusgestor.tb_indicador_categoria_analise.dt_inclusao IS 'Data de inclusão do registro';
+  COMMENT ON COLUMN dbesusgestor.tb_indicador_categoria_analise.dt_atualizacao IS 'Data de alteração do registro';
 
   -- Cria tags e categoria de tags
 

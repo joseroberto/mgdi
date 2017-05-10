@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.3"
+  version: "0.0.4"
   title: Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
@@ -311,7 +311,57 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"     
+            $ref: "#/definitions/ErrorResponse" 
+            
+  /api/indicador/{codigo_pai}/indicador_relacionado/{codigo}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona relação a um indicador
+      operationId: addIndicadorRelacionado
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo_pai
+          type: string
+          in: path
+          required: true
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+    delete:
+      description: Rompe a relação com um indicador
+      operationId: deleteIndicadorRelacionado
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo_pai
+          type: string
+          in: path
+          required: true
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
   /api/indicador/{codigo}/interpretacao:
     x-swagger-router-controller: indicador
     patch:
@@ -575,6 +625,7 @@ definitions:
       privado:
         type: boolean
         description: Indicador de privacidade de divulgação
+
   Conceituacao:
     type: object
     properties:
