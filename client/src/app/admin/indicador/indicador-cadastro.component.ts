@@ -367,7 +367,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
     let codigo:string = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
-    this.indicadorService.adicionaIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
+    if(codigo){
+        this.indicadorService.adicionaIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         $('#item_relacionado').val('');
@@ -376,6 +377,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.util.msgErro(resp.mensagem);
       }
     }, err=>this.util.msgErroInfra(err));
+    }else{
+        this.util.msgErro('Preencha o indicador relacionado');
+    }
   }
 
   apagaItemRelacionado(codigo:string){
@@ -392,7 +396,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   adicionaCategoriaRelacionada(){
     let valorSelecionado = $('#categoria_relacionada').val();
     let codigo_categoria_analise:string = $(`#listacat option[value='${valorSelecionado}']`).attr('codigo');
-    this.indicadorService.adicionaCategoriaRelacionada(this.indicador.codigo, codigo_categoria_analise).subscribe(resp=>{
+    if(codigo_categoria_analise){
+      this.indicadorService.adicionaCategoriaRelacionada(this.indicador.codigo, codigo_categoria_analise).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         $('#categoria_relacionada').val('');
@@ -401,6 +406,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.util.msgErro(resp.mensagem);
       }
     }, err=>this.util.msgErroInfra(err));
+    }else{
+        this.util.msgErro('Preencha a categoria de análise');
+    }
   }
 
   apagaCategoriaRelacionada(codigo_categoria_analise:string){
