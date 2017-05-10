@@ -238,7 +238,7 @@
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't3'">
-                <fieldset  style="padding: 15px">
+                <fieldset style="padding: 15px">
                   <div class="form-group">
                     <label class="col-md-2 control-label">Nome do Indicador</label>
                     <div class="col-md-8">
@@ -269,66 +269,52 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>PPBMD</td>
-                        <td>Proporção da população feminina de 25 a 64 anos que refere nunca ter realizado exame preventivo do câncer do colo do útero</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>PPCPS</td>
-                        <td>Proporção da população coberta por planos de saúde</td>
+                      <tr *ngFor="let itemRelacao of this.indicador.IndicadoresRelacionados; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ itemRelacao.codigo }}</td>
+                        <td>{{ itemRelacao.descricao }}</td>
                       </tr>
                       </tbody>
                     </table>
-
                   </div>
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't4'">
-                <fieldset>
+                <fieldset style="padding: 15px">
                   <div class="form-group">
                     <label class="col-md-2 control-label">Categoria Relacionada</label>
-                    <div class="col-md-10">
-                      <input class="form-control" placeholder="Categorias que podem ser relacionadas no estudo do indicador..." type="text" list="listacat">
+                    <div class="col-md-8">
+                      <div class="input-group">
+                      <input class="form-control"
+                      placeholder="Categorias que podem ser relacionadas no estudo do indicador..."
+                      type="text" list="listacat" id="categoria_relacionada">
                       <datalist id="listacat">
-                        <option value="1">Unidade geográfica: Brasil, grandes regiões, estados, Distrito Federal, regiões metropolitanas</option>
-                        <option value="2">Faixa etária: De 0 a 9 anos, 10 a 19 anos, 20 a 39 anos, 40 a 59 anos e 60 anos ou mais.</option>
-                        <option value="3">Sexo: masculino e feminino</option>
-                        <option value="4">Cor ou raça, conforme a classificação do IBGE: branca, preta, amarela, parda e indígena.</option>
+                        <option *ngFor="let itemCategoriaAnalise of colecaoCategoriaAnalise"
+                          [value]="itemCategoriaAnalise.titulo" [attr.codigo]="itemCategoriaAnalise.codigo">
                       </datalist>
+                      <div class="input-group-btn">
+                      <button class="btn btn-primary" type="button" (click)="adicionaCategoriaRelacionada()">
+                        <i class="fa fa-plus"></i>Adiciona Item
+                      </button>
+                      </div>
+                      </div>
                       <p class="note"><strong>Nota:</strong> discrimine os indicadores que contêm alguma correlação.</p>
                     </div>
                   </div>
                   <div class="table-responsive col-md-10">
-
                     <table class="table table-hover">
                       <thead>
                       <tr>
                         <th>#</th>
+                        <th>Sigla</th>
                         <th>Categoria</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Forma de financiamento: SUS e não SUS (a partir de 2008)</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Situação: urbano e rural.</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Unidade geográfica: Brasil, grandes regiões, estados, Distrito Federal, regiões metropolitanas.</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>Faixa etária: De 0 a 9 anos, 10 a 19 anos, 20 a 39 anos, 40 a 59 anos e 60 anos ou mais.</td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td>Cor ou raça, conforme a classificação do IBGE: branca, preta, amarela, parda e indígena.</td>
+                      <tr *ngFor="let itemCat of indicador.CategoriasAnalise; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ itemCat.codigo }}</td>
+                        <td>{{ itemCat.titulo }}</td>
                       </tr>
                       </tbody>
                     </table>

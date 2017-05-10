@@ -92,7 +92,7 @@ module.exports = function(sequelize, DataTypes) {
          otherKey: 'co_indicador_pai' });
          Indicador.belongsToMany(models.CategoriaAnalise, {
            as: 'CategoriasAnalise',
-           through: 'tb_indicador_categoria_analise',
+           through: models.IndicadorCategoriaAnalise,
            foreignKey: 'co_indicador',
          otherKey: 'co_categoria_analise' });
          Indicador.belongsToMany(models.Tag, {

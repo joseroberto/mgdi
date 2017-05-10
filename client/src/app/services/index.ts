@@ -8,3 +8,4 @@ export * from './util.service';
 export * from './secretaria.service';
 export * from './tag-categoria.service';
 export * from './tag.service';
+export * from './categoria-analise.service';

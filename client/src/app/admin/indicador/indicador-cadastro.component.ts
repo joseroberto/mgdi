@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
-  PeriodicidadeService, AreaService, UtilService, SecretariaService, TagCategoriaService } from '../../services/index';
+  PeriodicidadeService, AreaService, UtilService, SecretariaService,
+  TagCategoriaService, CategoriaAnaliseService } from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import '../../extensions/array.extension';
 
@@ -37,6 +38,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoUnidadeMedida:any[] = [];
   private colecaoSecretaria:any[] = [];
   private colecaoTagCategoria:any[] = [];
+  private colecaoCategoriaAnalise:any[] = [];
   private colecaoIndicadores:any[] = [];
 
   private isEditConceituacao:false;
@@ -56,6 +58,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private secretariaService:SecretariaService,
       private util:UtilService,
       private tagCategoriaService:TagCategoriaService,
+      private categoriaAnaliseService:CategoriaAnaliseService,
       private route: ActivatedRoute,
       private router: Router) {
         this.breadcrumb = ['Indicador', 'Novo'];
@@ -79,6 +82,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.tagCategoriaService.getAll().subscribe(resp => {
         this.colecaoTagCategoria = resp.tag_categorias;
+    }, err => this.util.msgErroInfra(err));
+    this.categoriaAnaliseService.getAll().subscribe(resp => {
+        this.colecaoCategoriaAnalise = resp.categorias_analise;
     }, err => this.util.msgErroInfra(err));
     this.indicadorService.getAll().subscribe(resp => {
         this.colecaoIndicadores = resp.indicadores.filter(item=>item.codigo!=this.indicador.codigo);
@@ -370,6 +376,24 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   apagaItemRelacionado(codigo_indicador_pai:string, codigo_indicador:string){
+
+  }
+
+  adicionaCategoriaRelacionada(){
+    let valorSelecionado = $('#categoria_relacionada').val();
+    let codigo:string = $(`option[value='${valorSelecionado}']`).attr('codigo');
+    console.log('adiciona categoria');
+    this.indicadorService.adicionaCategoriaRelacionada(this.indicador.codigo, codigo).subscribe(resp=>{
+      console.log('retorno', resp);
+      if(resp.codret==0){
+        this.util.msgSucesso(resp.mensagem);
+      }else{
+        this.util.msgErro(resp.mensagem);
+      }
+    }, err=>this.util.msgErroInfra(err));
+  }
+
+  apagaCategoriaRelacionada(codigo_indicador_pai:string, codigo_indicador:string){
 
   }
 }

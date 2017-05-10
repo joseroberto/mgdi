@@ -361,6 +361,54 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{codigo_pai}/categoria_relacionada/{codigo}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona categoria relacionada a um indicador
+      operationId: addCategoriaAnalise
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo_pai
+          type: string
+          in: path
+          required: true
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+    delete:
+      description: Rompe a relação com um indicador
+      operationId: deleteCategoriaAnalise
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo_pai
+          type: string
+          in: path
+          required: true
+        - name: codigo
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
             
   /api/indicador/{codigo}/interpretacao:
     x-swagger-router-controller: indicador

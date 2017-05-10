@@ -67,4 +67,12 @@ export class IndicadorService extends REST {
   deleteIndicadorRelacionado(codigo_pai:string, codigo:string){
     return super.delete(`/indicador/${codigo_pai}/indicador_relacionado/${codigo}`);
   }
+
+  adicionaCategoriaRelacionada(codigo_pai:string, codigo:string){
+    return super.patch(`/indicador/${codigo_pai}/categoria_relacionada/${codigo}`,'');
+  }
+
+  deleteCategoriaRelacionada(codigo_pai:string, codigo:string){
+    return super.delete(`/indicador/${codigo_pai}/categoria_relacionada/${codigo}`);
+  }
 }
