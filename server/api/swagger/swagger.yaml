@@ -313,7 +313,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse" 
             
-  /api/indicador/{codigo_pai}/indicador_relacionado/{codigo}:
+  /api/indicador/{codigo_pai}/indicador-relacionado/{codigo}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona relação a um indicador
@@ -361,7 +361,7 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/indicador/{codigo_pai}/categoria_relacionada/{codigo}:
+  /api/indicador/{codigo}/categoria-analise/{categoria_analise}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona categoria relacionada a um indicador
@@ -369,7 +369,7 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
+        - name: categoria_analise
           type: string
           in: path
           required: true
@@ -392,7 +392,7 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
+        - name: categoria_analise
           type: string
           in: path
           required: true

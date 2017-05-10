@@ -85,14 +85,19 @@ module.exports = {
   },
 
   addCategoriaAnalise: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
-      item.addCategoriasAnalise(req.swagger.params.codigo.value);
+    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+      item.addCategoriasAnalise(req.swagger.params.categoria_analise.value);
       res.json({codret: 0, mensagem: "Categoria de análise adicionada com sucesso"});
     });
   },
 
   deleteCategoriaAnalise: (req,res)=>{
-    models.IndicadorCategoriaAnalise.destroy({ where: { co_indicador:req.swagger.params.codigo.value, co_indicador_pai:req.body.indicadorRelacionado.codigo_pai.value}}).then(()=>{
+    console.log({
+      co_indicador:req.swagger.params.codigo.value,
+      co_categoria_analise:req.swagger.params.categoria_analise.value});
+    models.IndicadorCategoriaAnalise.destroy({ where: {
+      co_indicador:req.swagger.params.codigo.value,
+      co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
     });
   },
@@ -105,7 +110,9 @@ module.exports = {
   },
 
   deleteIndicadorRelacionado: (req,res)=>{
-    models.IndicadorRelacionado.destroy({ where: { co_indicador:req.swagger.params.codigo.value, co_indicador_pai:req.body.indicadorRelacionado.codigo_pai.value}}).then(()=>{
+    models.IndicadorRelacionado.destroy(
+      { where: { co_indicador:req.swagger.params.codigo.value,
+        co_indicador_pai:req.swagger.params.codigo_pai.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
     });
   }

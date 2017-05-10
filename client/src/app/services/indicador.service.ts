@@ -61,18 +61,18 @@ export class IndicadorService extends REST {
   }
 
   adicionaIndicadorRelacionado(codigo_pai:string, codigo:string){
-    return super.patch(`/indicador/${codigo_pai}/indicador_relacionado/${codigo}`,'');
+    return super.patch(`/indicador/${codigo_pai}/indicador-relacionado/${codigo}`,'');
   }
 
   deleteIndicadorRelacionado(codigo_pai:string, codigo:string){
-    return super.delete(`/indicador/${codigo_pai}/indicador_relacionado/${codigo}`);
+    return super.delete(`/indicador/${codigo_pai}/indicador-relacionado/${codigo}`);
   }
 
-  adicionaCategoriaRelacionada(codigo_pai:string, codigo:string){
-    return super.patch(`/indicador/${codigo_pai}/categoria_relacionada/${codigo}`,'');
+  adicionaCategoriaRelacionada(codigo:string,categoria_analise:string, ){
+    return super.patch(`/indicador/${codigo}/categoria-analise/${categoria_analise}`,'');
   }
 
-  deleteCategoriaRelacionada(codigo_pai:string, codigo:string){
-    return super.delete(`/indicador/${codigo_pai}/categoria_relacionada/${codigo}`);
+  deleteCategoriaRelacionada(codigo:string, categoria_analise:string){
+    return super.delete(`/indicador/${codigo}/categoria-analise/${categoria_analise}`);
   }
 }

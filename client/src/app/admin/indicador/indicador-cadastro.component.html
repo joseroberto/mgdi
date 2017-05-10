@@ -67,11 +67,11 @@
               </li>
               <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't3'">
-                  <span class="badge bg-color-blue txt-color-white">12</span> Indicadores Relacionados</a>
+                  <span class="badge bg-color-blue txt-color-white">{{ indicador.IndicadoresRelacionados.length }}</span> Indicadores Relacionados</a>
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't4'"><span
-                  class="badge bg-color-greenLight txt-color-white">10</span> Categoria análise</a>
+                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria análise</a>
               </li>
             </ul>
             <tabset class="padding-10">
@@ -244,8 +244,8 @@
                     <div class="col-md-8">
                       <div class="input-group">
                       <input class="form-control" placeholder="Código ou partes do nome do indicador..."
-                          type="text" list="list" id="item_relacionado">
-                      <datalist id="list">
+                          type="text" list="listInd" id="item_relacionado">
+                      <datalist id="listInd">
                         <option *ngFor="let itemIndicador of colecaoIndicadores"
                           value="[{{ itemIndicador.codigo }}] - {{ itemIndicador.titulo }}"
                           [attr.codigo]="itemIndicador.codigo">
@@ -266,6 +266,7 @@
                         <th>#</th>
                         <th>Sigla</th>
                         <th>Indicador</th>
+                        <th>&nbsp;</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -273,6 +274,10 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ itemRelacao.codigo }}</td>
                         <td>{{ itemRelacao.descricao }}</td>
+                        <td> <a class="btn btn-danger btn-sm icon white"
+                              (click)="apagaItemRelacionado(itemRelacao.codigo)"
+                              href="javascript:void(0);"><i class="fa fa-times "></i></a>
+                        </td>
                       </tr>
                       </tbody>
                     </table>
@@ -308,6 +313,7 @@
                         <th>#</th>
                         <th>Sigla</th>
                         <th>Categoria</th>
+                        <th>&nbsp;</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -315,6 +321,10 @@
                         <td>{{ i+1 }}</td>
                         <td>{{ itemCat.codigo }}</td>
                         <td>{{ itemCat.titulo }}</td>
+                        <td> <a class="btn btn-danger btn-sm icon white"
+                              (click)="apagaCategoriaRelacionada(itemCat.codigo)"
+                              href="javascript:void(0);"><i class="fa fa-times "></i></a>
+                        </td>
                       </tr>
                       </tbody>
                     </table>
