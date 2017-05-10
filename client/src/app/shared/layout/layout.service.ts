@@ -22,7 +22,8 @@ const store = {
   fixedPageFooter: localStorage.getItem('sm-fixed-page-footer') == 'true',
   insideContainer: localStorage.getItem('sm-inside-container') == 'true',
   rtl: localStorage.getItem('sm-rtl') == 'true',
-  menuOnTop: localStorage.getItem('sm-menu-on-top') == 'true',
+  menuOnTop: false,
+  //menuOnTop: localStorage.getItem('sm-menu-on-top') == 'true',
   colorblindFriendly: localStorage.getItem('sm-colorblind-friendly') == 'true',
 
   shortcutOpen: false,
