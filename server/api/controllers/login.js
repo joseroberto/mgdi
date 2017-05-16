@@ -1,25 +1,25 @@
 'use strict';
 
 const jwt    = require('jsonwebtoken');
-const yaml   = require('js-yaml');
-const fs   = require('fs');
 const soap = require('soap');
 const crypto = require('crypto');
 const util = require('util');
-const filename  = (process.env.NODE_ENV == 'production')? 'config/default.production.yaml':'config/default.yaml';
+var log4js = require("log4js");
+const config_param = require('../helpers/config')();
+const swagger = require('../helpers/swagger')();
 
 module.exports = {
   authenticate: (req, res)=>{
+    var log = log4js.getLogger();
     var user = req.body.email;
+    log.info('Usuario %s tentando autenticar', user);
     var password = crypto.createHash('sha256').update(req.body.password, 'utf8').digest().toString('hex');
 
     try {
-      var doc = yaml.safeLoad(fs.readFileSync('config/default.yaml', 'utf8'));
-      if(doc.environment.production){
-        soap.createClient(doc.config.wsdl, function(err, client) {
-            //console.log('Erro:',err, client );
+      if(!config_param.bypass){
+        soap.createClient(config_param.wsdl, function(err, client) {
             client.buscaPerfilUsuario(
-              {autenticacao: {email: user, senha: password, siglaSistema: doc.config.system}},
+              {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
               function(err, result) {
                 if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
                   var perfis = {}
@@ -37,7 +37,7 @@ module.exports = {
                       perfis: perfis
                   };
                   console.log(temp); //TODO: Retirar isso
-                  var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
+                  var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
                   res.json({token: util.format('Bearer %s', token), user: temp});
                 }else{
                   console.log(err);
@@ -53,7 +53,7 @@ module.exports = {
             perfis: []
         };
         console.log('Usuario fake:', temp); //TODO: Retirar isso
-        var token = jwt.sign(temp, doc.config.secret, { expiresIn: '7d' });
+        var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
         res.json({token: util.format('Bearer %s', token), user: temp});
       }
     } catch (e) {
@@ -63,15 +63,14 @@ module.exports = {
   },
   version: (req,res)=>{
     try {
-      var doc = yaml.safeLoad(fs.readFileSync('api/swagger/swagger.yaml', 'utf8'));
       var env = '';
       if(process.env && process.env.NODE_ENV){
         env = process.env.NODE_ENV;
       }else{
         env = 'Sem informações';
       }
-      doc.info['enviroment']=env;
-      res.json(doc.info);
+      swagger.info['enviroment']=env;
+      res.json(swagger.info);
     } catch (e) {
       console.log(e);
       res.status(500).send(e);

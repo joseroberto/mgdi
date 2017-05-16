@@ -2,11 +2,19 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
-var morgan = require('morgan')
+var morgan = require('morgan');
+var log4js = require("log4js");
+var config_param = require('./api/helpers/config')();
 
 module.exports = app; // for testing
 
-app.use(morgan('combined'));
+var theAppLog = log4js.getLogger();
+
+app.use(morgan("combined",{
+  "stream": {
+    write: function(str) { theAppLog.debug(str); }
+  }
+}));
 
 /*app.use((req, response, next) =>{
     console.log('Content-Type',req.get('Content-Type'));
@@ -27,10 +35,15 @@ process.on('SIGINT', function() {
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
+  swaggerExpress.runner.swagger.host = config_param.host;
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
 
   var port = process.env.PORT || 8000;
+  theAppLog.info('Servidor REST %s', config_param.host);
+  theAppLog.info('Porta %s', port);
+  theAppLog.info('Ambiente %s', process.env.NODE_ENV );
+
   app.use((request, response, next) => {
         response.header('Access-Control-Allow-Origin', '*');
         response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');

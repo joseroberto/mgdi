@@ -1,7 +1,6 @@
 // Modulo de seguranca
-const yaml   = require('js-yaml');
-const fs   = require('fs');
 const jwt = require('jsonwebtoken');
+const config_param = require('config');
 
 module.exports = {
   // swagger-tools style handler
@@ -9,7 +8,7 @@ module.exports = {
     var token='';
 
     if(authorization) {
-        var doc = yaml.safeLoad(fs.readFileSync('config/default.yaml', 'utf8'));
+
         var parts = authorization.split(' ');
         if(parts.length === 2) {
             var scheme = parts[0];
@@ -26,7 +25,7 @@ module.exports = {
 
     if(token) {
       try{
-        jwt.verify(token, doc.config.secret, {}, function(err, decoded) {
+        jwt.verify(token, config_param.secret, {}, function(err, decoded) {
             if(err) {
                 return cb(new Error('Invalid token'));
             }
