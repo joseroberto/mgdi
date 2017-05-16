@@ -9,3 +9,5 @@ export * from './secretaria.service';
 export * from './tag-categoria.service';
 export * from './tag.service';
 export * from './categoria-analise.service';
+export * from './banco-dados.service';
+export * from './tipo-consulta.service';

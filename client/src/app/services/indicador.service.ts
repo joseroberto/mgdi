@@ -56,6 +56,10 @@ export class IndicadorService extends REST {
     return super.patch(`/indicador/${codigo}/metodo_calculo`,{metodo_calculo: metodo_calculo});
   }
 
+  updateProcedimentoOperacional(codigo:string, procedimento_operacional:string){
+    return super.patch(`/indicador/${codigo}/procedimento_operacional`,{procedimento_operacional: procedimento_operacional});
+  }
+
   updateFonteDados(codigo:string, fonte_dados:string){
     return super.patch(`/indicador/${codigo}/fonte_dados`,{fonte_dados: fonte_dados});
   }

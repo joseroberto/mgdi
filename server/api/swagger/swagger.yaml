@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.4"
+  version: "0.0.5"
   title: Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
@@ -127,6 +127,34 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetUnidadeMedidaResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tipo-consulta:
+    x-swagger-router-controller: tipo-consulta
+    get:
+      description: Retorna o tipo de consulta efetuada para recuperar o indicador
+      operationId: getTiposConsulta
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetTipoConsultaResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/banco-dados:
+    x-swagger-router-controller: banco-dados
+    get:
+      description: Retorna os bancos de dados possiveis para a consulta aos indicadores
+      operationId: getBancoDados
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetBancoDadosResponse"
         default:
           description: Erro
           schema:
@@ -435,7 +463,33 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"    
+            $ref: "#/definitions/ErrorResponse"  
+  /api/indicador/{codigo}/procedimento_operacional:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza o procedimento operacional de um indicador
+      operationId: updateProcedimentoOperacional
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: procedimento_operacional
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProcedimentoOperacional'         
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
   /api/indicador/{codigo}/uso:
     x-swagger-router-controller: indicador
     patch:
@@ -684,6 +738,11 @@ definitions:
     properties:
       interpretacao:
         type: string
+  ProcedimentoOperacional:
+    type: object
+    properties:
+      procedimento_operacional:
+        type: string
   Uso:
     type: object
     properties:
@@ -775,6 +834,32 @@ definitions:
       - tag_categorias
     properties:
       tag_categorias:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetBancoDadosResponse:
+    required:
+      - banco_dados
+    properties:
+      banco_dados:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetTipoConsultaResponse:
+    required:
+      - tipos_consulta
+    properties:
+      tipos_consulta:
         type: array
         items:
           type: object

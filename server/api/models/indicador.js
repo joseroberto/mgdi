@@ -38,9 +38,27 @@ module.exports = function(sequelize, DataTypes) {
         field: 'co_unidade_medida',
         allowNull: false
     },
+    tipo_consulta: {
+        type: DataTypes.INTEGER,
+        field: 'co_tipo_consulta',
+        allowNull: false
+    },
+    banco_dados: {
+        type: DataTypes.INTEGER,
+        field: 'co_banco_dados',
+        allowNull: false
+    },
     metodo_calculo:{
         type: DataTypes.TEXT,
         field: 'ds_metodo_calculo'
+    },
+    referencia_consulta:{
+        type: DataTypes.TEXT,
+        field: 'ds_referencia_consulta'
+    },
+    procedimento_operacional:{
+        type: DataTypes.TEXT,
+        field: 'ds_procedimento_operacional'
     },
     fonte_dados:{
         type: DataTypes.STRING(100),
@@ -74,6 +92,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.BOOLEAN,
         field: 'st_ativo'
     },
+    carga_manual:{
+        type: DataTypes.BOOLEAN,
+        field: 'st_carga_manual'
+    },
     acumulativo:{
         type: DataTypes.BOOLEAN,
         field: 'st_acumulativo'
@@ -85,6 +107,21 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods: {
       associate: function(models) {
+         //Indicador.belongsTo(models.BancoDados,{
+        //   as: 'BancoDados',
+        //   foreignKey: 'co_banco_dados'});
+         //Indicador.belongsTo(models.TipoConsulta,{
+        //  as: 'TipoConsulta',
+        //  foreignKey: 'co_tipo_consulta'});
+         Indicador.belongsTo(models.Periodicidade,{
+           as: 'Periodicidade',
+           foreignKey: 'co_periodicidade'});
+         Indicador.belongsTo(models.ClassificacaoIndicador,{
+            as: 'ClassificacaoIndicador',
+            foreignKey: 'co_indicador_classificacao'});
+         Indicador.belongsTo(models.UnidadeMedida,{
+            as: 'UnidadeMedida',
+            foreignKey: 'co_unidade_medida'});
          Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,

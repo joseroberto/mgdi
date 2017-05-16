@@ -1,7 +1,6 @@
 require('../extensions/array');
 var models  = require('../models');
 
-
 module.exports = {
   getIndicadores: (req, res)=>{
     models.Indicador.findAll({
@@ -34,6 +33,7 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
+    console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
         item.setTags(req.body.tags);
@@ -70,6 +70,11 @@ module.exports = {
   updateNota: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Notas do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    });
+  },
+  updateProcedimentoOperacional: (req,res)=>{
+    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
+      res.json({codret: 0, mensagem: `Procedimento operacional para o indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
     });
   },
   updateFonteDados: (req,res)=>{

@@ -39,6 +39,7 @@
           <fieldset style="margin: 15px">
               <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
               <div class="form-group" >
+                <input type="hidden" name="codigo" [value]="indicador.codigo">
                 <div *ngIf="!indicador.codigo">
                   <label class="col-md-2 control-label">Código</label>
                   <div class="col-md-2">
@@ -73,6 +74,13 @@
                 <a (click)="currenttab = 't4'"><span
                   class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria análise</a>
               </li>
+              <li [class.active]="currenttab=='t5'" *ngIf="!indicador.carga_manual">
+                <a (click)="currenttab = 't5'"> Ficha Técnica</a>
+              </li>
+              <li [class.active]="currenttab=='t6'" *ngIf="indicador.carga_manual">
+                <a (click)="currenttab = 't6'"><span
+                  class="badge bg-color-purple txt-color-white">5</span> Histórico de Carga</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -96,7 +104,7 @@
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="periodicidade">Periodicidade</label>
+                     <label class="col-md-2 control-label" for="periodicidade">Periodicidade da Publicação</label>
                      <div class="col-md-2">
                        <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
                          <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
@@ -131,7 +139,7 @@
                   <legend>&nbsp;&nbsp;Configurações do indicador</legend>
                   <div class="form-group">
                     <div class="col-md-2">&nbsp;</div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <span class="onoffswitch">
                         <input type="checkbox" name="acumulativo" class="onoffswitch-checkbox"
                                id="acumulativo" [ngModel]="indicador.acumulativo">
@@ -144,7 +152,7 @@
                       </span>
                       <label class="control-label">Acumulativo</label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <span class="onoffswitch">
                         <input type="checkbox" name="ativo" class="onoffswitch-checkbox"
                                id="ativo" [ngModel]="indicador.ativo">
@@ -157,7 +165,7 @@
                       </span>
                       <label class="control-label">Ativo</label>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <span class="onoffswitch">
                         <input type="checkbox" name="privado" class="onoffswitch-checkbox"
                                id="privado" [ngModel]="indicador.privado">
@@ -169,6 +177,19 @@
                         </label>
                       </span>
                       <label class="control-label">Privado</label>
+                    </div>
+                    <div class="col-md-2">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="manual" class="onoffswitch-checkbox"
+                               id="manual" [(ngModel)]="indicador.carga_manual">
+                        <label class="onoffswitch-label" for="manual">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Importa Dados</label>
                     </div>
                   </div>
                   <div class="form-actions">
@@ -328,7 +349,85 @@
                       </tr>
                       </tbody>
                     </table>
-
+                  </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't5'">
+                <fieldset style="padding: 15px">
+                  <div class="form-group">
+                     <div class="row">
+                     <label class="col-md-2 control-label" for="tipo_consulta" >Tipo de Consulta</label>
+                     <div class="col-md-2">
+                       <select class="form-control" id="tipo_consulta" name="tipo_consulta" [(ngModel)]="indicador.tipo_consulta" required>
+                         <option *ngFor="let itemTipoConsulta of colecaoTipoConsulta" [ngValue]="itemTipoConsulta.codigo">{{ itemTipoConsulta.descricao }}</option>
+                       </select>
+                     </div>
+                     <label class="col-md-2 control-label" for="banco_dados" *ngIf="indicador.tipo_consulta==2">Banco de Dados</label>
+                     <div class="col-md-2" *ngIf="indicador.tipo_consulta==2">
+                       <select class="form-control" id="banco_dados" name="banco_dados" [ngModel]="indicador.banco_dados" required>
+                         <option *ngFor="let itemBancoDados of colecaoBancoDados" [ngValue]="itemBancoDados.codigo">{{ itemBancoDados.descricao }}</option>
+                       </select>
+                     </div>
+                     </div>
+                     <div class="row">
+                     <label class="col-md-2 control-label" for="referencia_consulta" *ngIf="indicador.tipo_consulta!=0" >{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }}</label>
+                     <div class="col-md-10" *ngIf="indicador.tipo_consulta!=0">
+                      <textarea id="referencia_consulta" name="referencia_consulta" style="width:90%" rows='5' [ngModel]="indicador.referencia_consulta"></textarea>
+                     </div>
+                     </div>
+                  </div>
+                     <div class="form-actions">
+                       <div class="row">
+                         <div class="col-md-12">
+                           <button class="btn btn-primary" type="submit">
+                             <i class="fa fa-save"></i>Grava
+                           </button>
+                         </div>
+                       </div>
+                     </div>
+                  <div class="form-group">
+                     <div class="row">
+                     <div class="col-md-12">
+                     <br/><br/>
+                     <legend>Procedimento Operacional
+                          <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editProcedimentoOperacional(true)" *ngIf="!isEditProcedimentoOperacional"><i class="fa fa-edit"></i> Edita</a>
+                          <a (click)="(null)" class="btn btn-success btn-xs" (click)="editProcedimentoOperacional(false)" *ngIf="isEditProcedimentoOperacional"><i class="fa fa-save"></i> Grava</a>
+                     </legend>
+                     <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
+                  </div>
+                     </div>
+                  </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't6'">
+                <fieldset style="padding: 15px">
+                  <div class="table-responsive col-md-10">
+                    <table class="table table-hover">
+                      <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Tipo</th>
+                        <th>Arquivo</th>
+                        <th>Responsável</th>
+                        <th>Resultado Processamento</th>
+                        <th>&nbsp;</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>Imagem</td>
+                        <td>importa_dados.xls</td>
+                        <td>André de Souza Campos</td>
+                        <td>1500 Registros importados com sucesso</td>
+                        <td>
+                            <a class="btn btn-info btn-sm icon white">
+                              <i class="fa fa-file"></i> Visualiza Log
+                            </a>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </fieldset>
               </tab>

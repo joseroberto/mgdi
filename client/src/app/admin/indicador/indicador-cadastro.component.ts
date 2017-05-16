@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
   PeriodicidadeService, AreaService, UtilService, SecretariaService,
-  TagCategoriaService, CategoriaAnaliseService } from '../../services/index';
+  TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService } from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import '../../extensions/array.extension';
 
@@ -25,13 +25,23 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   @ViewChild('tags') selectElRef;
 
+  private options = {focus: true, height: 100, lang:'pt-BR',
+    toolbar: [
+      // [groupName, [list of button]]
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['font', ['superscript', 'subscript']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['ctrl', ['undo', 'redo']]
+    ]};
+
   private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
-    limitacoes:string, notas:string, observacoes:string, fonte_dados:string,
-    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[]} = {
-      codigo: '', titulo: '', descricao:'', classificacao:null, periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
-      limitacoes:'', notas:'', observacoes:'', fonte_dados:'', acumulativo:false, ativo:true, privado:true, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[]
+    limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
+    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], tipo_consulta:number, banco_dados:number,
+    referencia_consulta:string, procedimento_operacional:string} = {
+      codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'', periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
+      limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:true, tags:[],
+      IndicadoresRelacionados:[], CategoriasAnalise:[], tipo_consulta:0, banco_dados:0
   };
 
   private colecaoClassificacao:any[] = [];
@@ -41,6 +51,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoTagCategoria:any[] = [];
   private colecaoCategoriaAnalise:any[] = [];
   private colecaoIndicadores:any[] = [];
+  private colecaoTipoConsulta:any[] = [];
+  private colecaoBancoDados:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -50,6 +62,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private isEditObservacoes:false;
   private isEditMetodoCalculo:false;
   private isEditFonteDados:false;
+  private isEditProcedimentoOperacional:false;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
@@ -60,6 +73,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private util:UtilService,
       private tagCategoriaService:TagCategoriaService,
       private categoriaAnaliseService:CategoriaAnaliseService,
+      private bancoDadosService:BancoDadosService,
+      private tipoConsultaService:TipoConsultaService,
       private route: ActivatedRoute,
       private router: Router) {
         this.breadcrumb = ['Indicador', 'Novo'];
@@ -87,6 +102,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.categoriaAnaliseService.getAll().subscribe(resp => {
         this.colecaoCategoriaAnalise = resp.categorias_analise;
     }, err => this.util.msgErroInfra(err));
+    this.tipoConsultaService.getAll().subscribe(resp => {
+        this.colecaoTipoConsulta = resp.tipos_consulta;
+    }, err => this.util.msgErroInfra(err));
+    this.bancoDadosService.getAll().subscribe(resp => {
+        this.colecaoBancoDados = resp.banco_dados;
+    }, err => this.util.msgErroInfra(err));
     this.indicadorService.getAll().subscribe(resp => {
         this.colecaoIndicadores = resp.indicadores.filter(item=>item.codigo!=this.indicador.codigo);
     }, err => this.util.msgErroInfra(err));
@@ -98,14 +119,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         if(jQuery(e.target).val()){
           jQuery(e.target).val().forEach(
             obj=>{
-              console.log('item_obj', obj);
-              //console.log('item_tag', this.colecaoTag.find(item=> item.codigo==obj));
-              //this.indicador.tags.push(this.colecaoTag.find(item=> item.codigo==obj));
               this.indicador.tags.push(obj);
             });
           }
       });
       this.loadIndicador();
+      //$('.procedimento_operacional').summernote(this.options);
   }
 
   loadIndicador(){
@@ -150,14 +169,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editConceituacao(flag){
       this.isEditConceituacao = flag;
       if(flag){
-        $('.conceituacao').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.conceituacao').summernote(this.options);
         $('.conceituacao').summernote('code', this.indicador.conceituacao);
       }else{
         this.indicador.conceituacao = $('.conceituacao').summernote('code');
@@ -175,14 +187,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editMetodoCalculo(flag){
     this.isEditMetodoCalculo = flag;
     if(flag){
-      $('.metodo').summernote({focus: true, height: 100, lang:'pt-BR',
-        toolbar: [
-          // [groupName, [list of button]]
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['font', ['superscript', 'subscript']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['ctrl', ['undo', 'redo']]
-        ]});
+      $('.metodo').summernote(this.options);
       $('.metodo').summernote('code', this.indicador.metodo_calculo);
     }else{
       this.indicador.metodo_calculo = $('.metodo').summernote('code');
@@ -217,14 +222,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editInterpretacao(flag){
       this.isEditInterpretacao = flag;
       if(flag){
-        $('.interpretacao').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.interpretacao').summernote(this.options);
         $('.interpretacao').summernote('code', this.indicador.interpretacao);
       }else{
         this.indicador.interpretacao = $('.interpretacao').summernote('code');
@@ -242,14 +240,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editUsos(flag){
       this.isEditUsos = flag;
       if(flag){
-        $('.usos').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.usos').summernote(this.options);
         $('.usos').summernote('code', this.indicador.usos);
       }else{
         this.indicador.usos = $('.usos').summernote('code');
@@ -264,17 +255,28 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
+  editProcedimentoOperacional(flag){
+      this.isEditProcedimentoOperacional = flag;
+      if(flag){
+        $('.procedimento_operacional').summernote(this.options);
+        $('.procedimento_operacional').summernote('code', this.indicador.procedimento_operacional);
+      }else{
+        this.indicador.procedimento_operacional = $('.procedimento_operacional').summernote('code');
+        $('.procedimento_operacional').summernote('destroy');
+        this.indicadorService.updateProcedimentoOperacional(this.indicador.codigo, this.indicador.procedimento_operacional).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
+      }
+  }
+
   editLimitacoes(flag){
       this.isEditLimitacoes = flag;
       if(flag){
-        $('.limitacoes').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.limitacoes').summernote(this.options);
         $('.limitacoes').summernote('code', this.indicador.limitacoes);
       }else{
         this.indicador.limitacoes = $('.limitacoes').summernote('code');
@@ -292,14 +294,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editNotas(flag){
       this.isEditNotas = flag;
       if(flag){
-        $('.notas').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.notas').summernote(this.options);
         $('.notas').summernote('code', this.indicador.notas);
       }else{
         this.indicador.notas = $('.notas').summernote('code');
@@ -317,14 +312,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   editObservacoes(flag){
       this.isEditObservacoes = flag;
       if(flag){
-        $('.observacoes').summernote({focus: true, height: 100, lang:'pt-BR',
-          toolbar: [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['ctrl', ['undo', 'redo']]
-          ]});
+        $('.observacoes').summernote(this.options);
         $('.observacoes').summernote('code', this.indicador.observacoes);
       }else{
         this.indicador.observacoes = $('.observacoes').summernote('code');
