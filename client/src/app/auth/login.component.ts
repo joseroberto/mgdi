@@ -24,9 +24,11 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/admin'], {queryParams: {q:'login'}});
       },err =>{
         console.log("Erro no login", err);
+        let mensagem = JSON.parse(err._body);
         if (err.status == 403){
-          this.util.msgErro("Login negado por email ou senha inválida.");
+          this.util.msgErro(mensagem.message);
         }else{
+
           this.util.msgErroInfra("Erro no acesso ao login. Tente mais tarde!");
         }
       });

@@ -21,7 +21,16 @@ module.exports = {
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
               function(err, result) {
-                if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
+                console.log("---------------------------------err", err);
+                //console.log("result", result);
+                if(err || !result.respostaBuscaPerfilUsuario || !result.respostaBuscaPerfilUsuario.perfis || !result.respostaBuscaPerfilUsuario.perfis.perfil){
+                  console.log('Tratamento');
+                  if(String(err).indexOf('Error')!== -1){
+                    res.status(403).send({codret:1000, message:'Login/Senha inválida'});
+                  }else{
+                    res.status(403).send({codret:1000, message:'Usuário não possui perfil para login no sistema SAGE'});
+                  }
+                }else if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
                   var perfis = {}
                   result.respostaBuscaPerfilUsuario.perfis.perfil.forEach((item)=>{
                     var esferas = [];
@@ -36,11 +45,10 @@ module.exports = {
                       email: result.respostaBuscaPerfilUsuario.usuario.email,
                       perfis: perfis
                   };
-                  console.log(temp); //TODO: Retirar isso
                   var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
                   res.json({token: util.format('Bearer %s', token), user: temp});
                 }else{
-                  console.log(err);
+                  console.log('Erro', err);
                   res.status(403).send(err);
                 }
               });

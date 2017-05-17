@@ -22,7 +22,7 @@ export class AuthenticationService extends REST implements CanActivate{
             localStorage.setItem('currentUser', JSON.stringify(resp.user));
             return resp;
           }
-        );      
+        );
     }
 
     canActivate() {
