@@ -1,6 +1,6 @@
 // Modulo de seguranca
 const jwt = require('jsonwebtoken');
-const config_param = require('config');
+const config_param = require('./config')();
 
 module.exports = {
   // swagger-tools style handler
@@ -8,7 +8,6 @@ module.exports = {
     var token='';
 
     if(authorization) {
-
         var parts = authorization.split(' ');
         if(parts.length === 2) {
             var scheme = parts[0];
@@ -26,6 +25,7 @@ module.exports = {
     if(token) {
       try{
         jwt.verify(token, config_param.secret, {}, function(err, decoded) {
+            console.log('Err', err);
             if(err) {
                 return cb(new Error('Invalid token'));
             }
