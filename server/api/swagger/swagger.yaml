@@ -75,6 +75,18 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
+  /api/profile:
+    x-swagger-router-controller: login
+    get:
+      description: Informaçoes de usuario logado
+      operationId: profile
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
   /api/secretaria:
     x-swagger-router-controller: secretaria
     get:
