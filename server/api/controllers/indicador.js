@@ -111,16 +111,33 @@ module.exports = {
   },
 
   addIndicadorRelacionado: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
+    Promise.all([
+      models.Indicador.findById(req.swagger.params.codigo_pai.value),
+      models.Indicador.findById(req.swagger.params.codigo.value)
+    ]).then((item)=>{
+      item[0].addIndicadoresRelacionados(req.swagger.params.codigo.value);
+      item[1].addIndicadoresRelacionados(req.swagger.params.codigo_pai.value);
+      res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
+    });
+    /*models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
       item.addIndicadoresRelacionados(req.swagger.params.codigo.value);
       res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
     });
+
+    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+      item.addIndicadoresRelacionados(req.swagger.params.codigo_pai.value);
+      res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
+    });*/
   },
 
   deleteIndicadorRelacionado: (req,res)=>{
     models.IndicadorRelacionado.destroy(
-      { where: { co_indicador:req.swagger.params.codigo.value,
-        co_indicador_pai:req.swagger.params.codigo_pai.value}}).then(()=>{
+      { where: {$or: [
+        { co_indicador:req.swagger.params.codigo.value,
+        co_indicador_pai:req.swagger.params.codigo_pai.value},
+        { co_indicador:req.swagger.params.codigo_pai.value,
+          co_indicador_pai:req.swagger.params.codigo.value}]}
+        }).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
     });
   }
