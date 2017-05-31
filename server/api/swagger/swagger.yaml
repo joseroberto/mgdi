@@ -215,6 +215,29 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{codigos}/query:
+    x-swagger-router-controller: query
+    get:
+      description: Retorna o valor do indicdor
+      operationId: getValores
+      parameters:
+        - name: codigos
+          type: array
+          items:
+            type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: array
+            items:
+              type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador:
     x-swagger-router-controller: indicador
     get:
