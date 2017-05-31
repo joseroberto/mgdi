@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {LayoutService} from "../../layout/layout.service";
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
 
@@ -9,7 +10,8 @@ import {LayoutService} from "../../layout/layout.service";
 })
 export class LoginInfoComponent implements OnInit {
 
-  user:any;
+  user:object;
+  subscription: Subscription;
 
   constructor(
     private userService: UserService,
@@ -17,14 +19,14 @@ export class LoginInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getLoginInfo().subscribe(user => {
-      this.user = user
-    })
-
+    console.log('ngOnInit');
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    console.log(this.user);
   }
 
+
   toggleShortcut() {
-    this.layoutService.onShortcutToggle()
+    this.layoutService.onShortcutToggle();
   }
 
 }

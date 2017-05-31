@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
-export class UserService {
+export class AnnounceUserService {
 
   private userAnnouncedSource = new Subject<{}>();
 
@@ -10,7 +10,7 @@ export class UserService {
 
   constructor() {  }
 
-  announceUserChange(item: any) {
+  announceUserChange(item: {}) {
     this.userAnnouncedSource.next(item);
   }
 }

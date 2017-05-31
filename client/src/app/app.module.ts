@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CookieService } from 'ngx-cookie-service';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -70,7 +71,8 @@ type StoreType = {
     TagService,
     CategoriaAnaliseService,
     TipoConsultaService,
-    BancoDadosService
+    BancoDadosService,
+    CookieService
   ]
 })
 export class AppModule {

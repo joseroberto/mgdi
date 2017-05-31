@@ -189,11 +189,11 @@ export class LayoutService {
 
   factoryReset() {
     this.notificationService.smartMessageBox({
-      title: "<i class='fa fa-refresh' style='color:green'></i> Clear Local Storage",
-      content: "Would you like to RESET all your saved widgets and clear LocalStorage?",
-      buttons: '[No][Yes]'
+      title: "<i class='fa fa-refresh' style='color:green'></i> Limpa base local",
+      content: "Deseja retornar as configurações iniciais e dar um RESET nas configurações armazenadas?",
+      buttons: '[Não][Sim]'
     }, (ButtonPressed) => {
-      if (ButtonPressed == "Yes" && localStorage) {
+      if (ButtonPressed == "Sim" && localStorage) {
         localStorage.clear();
         location.reload()
       }
