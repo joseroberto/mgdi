@@ -1,14 +1,15 @@
 const async = require('async');
 const pg = require('pg');
+const util = require('util');
 const _ = require('underscore');
 
 const indicador = {
 
   // Criterio de Analise
   'IBGEMUN': { desc: 'IBGE Municipio',
-        sql:'SELECT tb_ibge.regiao, tb_ibge.ibge as co_ibge, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.regiao'},
+        sql:'SELECT tb_ibge.regiao, tb_ibge.ibge as co_ibge, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.regiao'},
   'IBGEEST': { desc: 'IBGE Estadual',
-              sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
+              sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
   // TODO: Não tem por requigão?  E nacional?
 
   // Indicadores
@@ -49,23 +50,34 @@ module.exports = {
   getValores: (req, res)=>{
     // Tipo nacional -> BR, UF, MUN TODO: Depois colocar por regiao e BR
     var tipo = '';
+    if(req.swagger.params.tipo && req.swagger.params.tipo.value){
+      tipo = req.swagger.params.tipo.value;
+    }
     // Filtro por UF ou MUN
-    var filtro = '';
+    var where = '';
+    if(req.swagger.params.tipo && req.swagger.params.uf.value){
+      where = where + ' AND tb_ibge.co_uf = '+ req.swagger.params.uf.value;
+    }
+    if(req.swagger.params.ibge && req.swagger.params.ibge.value){
+      where = where + ' AND tb_ibge.ibge=' + req.swagger.params.ibge.value;
+    }
 
     var sql_from = ' SELECT * FROM IBGE ';
     var sql_with = '';
     var campo = ''; // TODO: Colocar na configuracao do indicador
-
     switch(tipo){
       case 'UF':
         sql_with = 'WITH IBGE AS (' + indicador['IBGEEST'].sql + ')';
         campo = 'co_uf';
+        break;
       case 'MUN':
         sql_with = 'WITH IBGE AS (' + indicador['IBGEMUN'].sql + ')';
         campo = 'co_ibge';
+        break;
       default:
         sql_with = 'WITH IBGE AS (' + indicador['IBGEEST'].sql + ')';
         campo = 'co_uf';
+        break;
     }
 
     req.swagger.params.codigos.value.forEach((item)=>{
@@ -76,8 +88,9 @@ module.exports = {
     });
 
     sql_with = sql_with.replace(new RegExp('XXX','g'), campo+',');
+    sql_with = sql_with.replace(new RegExp('TTT','g'), where);
 
-    var sql = sql_with+sql_from;
+    var sql = sql_with+sql_from + ' ORDER BY 1,2,3,4';
 
     console.log(sql);
 
