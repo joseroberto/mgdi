@@ -250,9 +250,7 @@ paths:
         "200":
           description: Sucesso
           schema:
-            type: array
-            items:
-              type: object
+            $ref: "#/definitions/QueryIndicador"
         default:
           description: Erro
           schema:
@@ -690,6 +688,19 @@ paths:
             $ref: "#/definitions/ErrorResponse"  
 
 definitions:
+  QueryIndicador:
+    description: Resultado da consulta especifica de indicador
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
+      metadata:
+        type: array
+        items:
+          type: object
   Indicador:
     description: Objeto indicador
     properties:
