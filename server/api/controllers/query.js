@@ -8,12 +8,12 @@ const indicador = {
   // Criterio de Analise
   'IBGEMUN': { desc: 'IBGE Municipio',
         metadata: [
-          {colType: 'String', colName: 'Região', resumo: 'Região agregada', tipo: 'geo', ref: 'regiao' },
-          {colType: 'String', colName: 'Local', resumo: 'Região desagregada', tipo: 'geo', ref: 'uf'},
-          {colType: 'String', colName: 'codigogeo', resumo: 'Código da unidade', tipo: 'id', ref: ''},
-          {colType: 'Numeric', colName: 'Ano', resumo: 'Ano da ocorrência', tipo: 'ano', ref: ''},
+          {colType: 'String', colName: 'Região', resumo: 'Região agregada', tipo: 'geo', ref: 'uf' },
+          {colType: 'String', colName: 'Local', resumo: 'Região desagregada', tipo: 'geo', ref: 'cidade'},
+          {colType: 'String', colName: 'codigogeo', resumo: 'Código da unidade', tipo: 'id', ref: 'ibge'},
+          {colType: 'Numeric', colName: 'Ano', resumo: 'Ano da ocorrência', tipo: 'ano', ref: 'ano'},
         ],
-        sql:'SELECT tb_ibge.regiao, tb_ibge.ibge as co_ibge, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.regiao'},
+        sql:'SELECT tb_ibge.uf, tb_ibge.ibge as co_ibge, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.uf'},
   'IBGEEST': { desc: 'IBGE Estadual',
         metadata: [
           {colType: 'String', colName: 'Região', resumo: 'Região agregada', tipo: 'geo', ref: 'regiao'},
@@ -69,55 +69,62 @@ module.exports = {
   getValores: (req, res)=>{
     // Tipo nacional -> BR, UF, MUN TODO: Depois colocar por regiao e BR
     var tipo = '';
+    var sql_from = ' SELECT * FROM IBGE ';
+    var sql_with = '';
+    var campo_agregacao = ''; // TODO: Colocar na configuracao do indicador
+    var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
+    var meta = [];
+
     if(req.swagger.params.tipo && req.swagger.params.tipo.value){
       tipo = req.swagger.params.tipo.value;
     }
-    // Filtro por UF ou MUN
-    var where = '';
-    if(req.swagger.params.tipo && req.swagger.params.uf.value){
-      where = where + ' AND tb_ibge.co_uf = '+ req.swagger.params.uf.value;
-    }
-    if(req.swagger.params.ibge && req.swagger.params.ibge.value){
-      where = where + ' AND tb_ibge.ibge=' + req.swagger.params.ibge.value;
-    }
 
-    var sql_from = ' SELECT * FROM IBGE ';
-    var sql_with = '';
-    var campo = ''; // TODO: Colocar na configuracao do indicador
-    var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
-    var meta = [];
     switch(tipo){
       case 'UF':
         sql_with = 'WITH IBGE AS (' + indicador['IBGEEST'].sql + ')';
-        campo = 'co_uf';
+        campo_agregacao = 'co_uf';
         tipoFiltro = 'nacional';
         tipoRegiao = 'brasil';
         meta = meta.concat(indicador['IBGEEST'].metadata);
         break;
       case 'MUN':
         sql_with = 'WITH IBGE AS (' + indicador['IBGEMUN'].sql + ')';
-        campo = 'co_ibge';
-        tipoFiltro = 'estadual';
+        campo_agregacao = 'co_ibge';
+        tipoFiltro = 'municipal';
+        tipoRegiao = 'municipio';
         meta = meta.concat(indicador['IBGEMUN'].metadata);
         break;
       default:
         sql_with = 'WITH IBGE AS (' + indicador['IBGEEST'].sql + ')';
-        campo = 'co_uf';
+        campo_agregacao = 'co_uf';
         tipoFiltro = 'nacional';
         meta = meta.concat(indicador['IBGEEST'].metadata);
         break;
     }
 
+    // Filtro por UF ou MUN
+    var where = '';
+    if(req.swagger.params.tipo && req.swagger.params.uf.value){
+      where = where + ' AND tb_ibge.co_uf = '+ req.swagger.params.uf.value;
+      tipoFiltro = 'regional';
+      tipoRegiao = 'uf';
+      codigoRegiao = req.swagger.params.uf.value;
+    }
+    if(req.swagger.params.ibge && req.swagger.params.ibge.value){
+      where = where + ' AND tb_ibge.ibge=' + req.swagger.params.ibge.value;
+      codigoRegiao = req.swagger.params.ibge.value;
+    }
+
     req.swagger.params.codigos.value.forEach((item)=>{
       if(indicador[item]){
         sql_with = sql_with + ',' + item + ' AS (' + indicador[item].sql + ')';
-        sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.' + campo + '=' + item + '.' + campo + ' AND IBGE.ano=' + item + '.ano' ;
+        sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.' + campo_agregacao + '=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
         meta.push({colType: 'Numeric', colName: indicador[item].desc, resumo: indicador[item].resumo, tipo: 'valor', ref: indicador[item].ref});
       }
     });
 
     // Trocas
-    sql_with = sql_with.replace(new RegExp('XXX','g'), campo+',');
+    sql_with = sql_with.replace(new RegExp('XXX','g'), campo_agregacao+',');
     sql_with = sql_with.replace(new RegExp('TTT','g'), where);
 
     var sql = sql_with+sql_from + ' ORDER BY 1,2,3,4';
