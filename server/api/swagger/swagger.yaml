@@ -40,7 +40,7 @@ paths:
     post:
       operationId: authenticate
       tags:
-        - auth
+        - Autenticação
       description: |
         Permite ao usuário logar e receber um token uma vez valida a requisição
       parameters:
@@ -70,6 +70,8 @@ paths:
     get:
       description: versão e título da API
       operationId: version
+      tags:
+        - Infraestrutura
       responses:
         "200":
           description: Sucesso
@@ -80,6 +82,8 @@ paths:
     get:
       description: Retorna a lista de periodicidades
       operationId: getSecretarias
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -94,6 +98,8 @@ paths:
     get:
       description: Retorna a lista de periodicidades
       operationId: getPeriodicidades
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -108,6 +114,8 @@ paths:
     get:
       description: Retorna a classificacao possivel para os indicadores
       operationId: getClassificacoes
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -122,6 +130,8 @@ paths:
     get:
       description: Retorna as unidades de medida possiveis para os indicadores
       operationId: getUnidadesMedida
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -136,6 +146,8 @@ paths:
     get:
       description: Retorna o tipo de consulta efetuada para recuperar o indicador
       operationId: getTiposConsulta
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -150,6 +162,8 @@ paths:
     get:
       description: Retorna os bancos de dados possiveis para a consulta aos indicadores
       operationId: getBancoDados
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -164,6 +178,8 @@ paths:
     get:
       description: Retorna as areas responsáveis pelos os indicadores
       operationId: getAreas
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -178,6 +194,8 @@ paths:
     get:
       description: Retorna as tags possíveis de marcação
       operationId: getTags
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -192,6 +210,8 @@ paths:
     get:
       description: Retorna as categorias das tags possíveis de marcação
       operationId: getTagCategoria
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -206,6 +226,8 @@ paths:
     get:
       description: Retorna as categorias de análises possíveis
       operationId: getCategoriasAnalises
+      tags:
+        - Cadastros Auxiliares
       responses:
         "200":
           description: Sucesso
@@ -220,6 +242,8 @@ paths:
     get:
       description: Retorna o valor do indicdor
       operationId: getValores
+      tags:
+        - Indicadores
       parameters:
         - name: codigos
           type: array
@@ -260,6 +284,8 @@ paths:
     get:
       description: Retorna os indicadores cadastrados no sistema
       operationId: getIndicadores
+      tags:
+        - Indicadores
       responses:
         "200":
           description: Sucesso
@@ -272,6 +298,8 @@ paths:
     post:
       description: Cria um novo indicador
       operationId: createIndicador
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -296,6 +324,8 @@ paths:
     get:
       description: Le um registro de indicador
       operationId: getIndicador
+      tags:
+        - Indicadores
       parameters:
         - name: codigo
           type: string
@@ -313,6 +343,8 @@ paths:
     delete:
       description: Apaga um registro de indicador
       operationId: deleteIndicador
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -332,6 +364,8 @@ paths:
     put:
       description: Atualiza um registro de indicador
       operationId: editaIndicador
+      tags:
+        - Indicadores
       security:
         - Bearer: []      
       parameters:
@@ -359,6 +393,8 @@ paths:
     patch:
       description: Atualiza conceituação de um indicador
       operationId: updateConceituacao
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -386,6 +422,8 @@ paths:
     patch:
       description: Adiciona relação a um indicador
       operationId: addIndicadorRelacionado
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -409,6 +447,8 @@ paths:
     delete:
       description: Rompe a relação com um indicador
       operationId: deleteIndicadorRelacionado
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -434,6 +474,8 @@ paths:
     patch:
       description: Adiciona categoria relacionada a um indicador
       operationId: addCategoriaAnalise
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -457,6 +499,8 @@ paths:
     delete:
       description: Rompe a relação com um indicador
       operationId: deleteCategoriaAnalise
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -483,6 +527,8 @@ paths:
     patch:
       description: Atualiza a interpretação de um indicador
       operationId: updateInterpretacao
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -509,6 +555,8 @@ paths:
     patch:
       description: Atualiza o procedimento operacional de um indicador
       operationId: updateProcedimentoOperacional
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -535,6 +583,8 @@ paths:
     patch:
       description: Atualiza a interpretação de um indicador
       operationId: updateUso
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -561,6 +611,8 @@ paths:
     patch:
       description: Atualiza as limitações de um indicador
       operationId: updateLimitacao
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -587,6 +639,8 @@ paths:
     patch:
       description: Atualiza as Notas de um indicador
       operationId: updateNota
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -613,6 +667,8 @@ paths:
     patch:
       description: Atualiza as Observações de um indicador
       operationId: updateObservacao
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -639,6 +695,8 @@ paths:
     patch:
       description: Atualiza a fonte de dados de um indicador
       operationId: updateFonteDados
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
@@ -665,6 +723,8 @@ paths:
     patch:
       description: Atualiza o Método de Cálculo de um indicador
       operationId: updateMetodoCalculo
+      tags:
+        - Indicadores
       security:
         - Bearer: []
       parameters:
