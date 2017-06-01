@@ -114,6 +114,10 @@ module.exports = {
       where = where + ' AND tb_ibge.ibge=' + req.swagger.params.ibge.value;
       codigoRegiao = req.swagger.params.ibge.value;
     }
+    if(req.swagger.params.regiao && req.swagger.params.regiao.value){
+      where = where + " AND substring(CAST (tb_ibge.co_uf AS text), 1, 1) = '" + req.swagger.params.regiao.value + "'";
+      codigoRegiao = req.swagger.params.regiao.value;
+    }
 
     req.swagger.params.codigos.value.forEach((item)=>{
       if(indicador[item]){
