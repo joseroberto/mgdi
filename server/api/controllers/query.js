@@ -25,27 +25,27 @@ const indicador = {
   // TODO: Não tem por requigão?  E nacional?
 
   // Indicadores
-  'DHM14A':{ desc: 'Detecção em menores de 15 anos', ref: 'deteccao_menores_15_anos',
+  'DHM14A':{ desc: 'Detecção em menores de 15 anos',
         resumo: 'Casos novos em menores de 15 anos de idade residentes em determinado local e diagnosticados no ano da avaliação',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS deteccao_menores_15_anos FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 10 GROUP BY XXX nu_ano_ref'},
-  'DGIID':{ desc: 'Detecção de grau II de deformidade', ref: 'deteccao_grau2_deformidade',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS DHM14A FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 10 GROUP BY XXX nu_ano_ref'},
+  'DGIID':{ desc: 'Detecção de grau II de deformidade',
         resumo: 'Detecção de grau II de deformidade","resumo":"Casos novos com grau 2 de incapacidade física no diagnóstico, residentes em determinado local e detectados no ano da avaliação',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS deteccao_grau2_deformidade FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 82 GROUP BY XXX nu_ano_ref'},
-  'DPG': { desc:'Detecção na pop. geral', ref: 'deteccao_pop_geral',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS DGIID FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 82 GROUP BY XXX nu_ano_ref'},
+  'DPG': { desc:'Detecção na pop. geral',
         resumo: 'Número de casos novos residentes em determinado local e diagnosticados no ano da avaliação',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS deteccao_pop_geral FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 16 GROUP BY XXX nu_ano_ref'},
-  'CCAC': { desc:'Casos curados nos anos das coortes', ref: '',
-        resumo: 'População total residente no mesmo local e período', ref: 'curados_anos_coortes',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS curados_anos_coortes FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 310 GROUP BY XXX nu_ano_ref'},
-  'CNDAC': { desc:'Casos novos diagnosticados nos anos das coortes', ref: 'novos_diag_anos_coortes',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS DPG FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 16 GROUP BY XXX nu_ano_ref'},
+  'CCAC': { desc:'Casos curados nos anos das coortes',
+        resumo: 'População total residente no mesmo local e período',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS CCAC FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 310 GROUP BY XXX nu_ano_ref'},
+  'CNDAC': { desc:'Casos novos diagnosticados nos anos das coortes',
         resumo: 'Total de casos novos de hanseníase residentes no mesmo local e diagnosticados nos anos das coortes',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS novos_diag_anos_coortes FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 320 GROUP BY XXX nu_ano_ref'},
-  'CIR': { desc:'Contatos intradomiciliares registrados', ref: 'contatos_registrados',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS CNDAC FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 320 GROUP BY XXX nu_ano_ref'},
+  'CIR': { desc:'Contatos intradomiciliares registrados',
         resumo: 'Total de contatos intradomiciliares registrados referentes aos casos novos de hanseníase residentes no mesmo local e diagnosticados no ano de avaliação',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS contatos_registrados FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 90 GROUP BY XXX nu_ano_ref'},
-  'CIE': { desc:'Contatos intradomiciliares examinados', ref: 'contatos_examinados',
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS CIR FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 90 GROUP BY XXX nu_ano_ref'},
+  'CIE': { desc:'Contatos intradomiciliares examinados',
         resumo: 'Número de contatos intradomiciliares examinados referente aos casos novos residentes em determinado local e diagnosticados no ano da avaliação',
-        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS contatos_examinados FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 80 GROUP BY XXX nu_ano_ref'},
+        sql: 'SELECT XXX nu_ano_ref AS ano, sum(qt_casos_agravo) AS CIE FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 80 GROUP BY XXX nu_ano_ref'},
 
 };
 
@@ -165,7 +165,7 @@ module.exports = {
       if(indicador[item]){
         sql_with = sql_with + ',' + item + ' AS (' + indicador[item].sql + ')';
         sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.' + campo_agregacao + '=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
-        meta.push({colType: 'Numeric', colName: indicador[item].desc, resumo: indicador[item].resumo, tipo: 'valor', ref: indicador[item].ref});
+        meta.push({colType: 'Numeric', colName: indicador[item].desc, descricao: indicador[item].resumo, tipo: 'valor', ref: item.toLowerCase()});
       }
     });
 
@@ -178,7 +178,7 @@ module.exports = {
     //console.log(sql);
 
     pool.query(sql,null, (err, result)=>{
-      console.log(result);
+      //console.log(result);
       if(err) {
         console.error('error running query', err);
         res.json({mensagem:err});
