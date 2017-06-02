@@ -102,21 +102,63 @@ module.exports = {
         break;
     }
 
-    // Filtro por UF ou MUN
+    // Filtro por uf, ibge, regiao,
     var where = '';
-    if(req.swagger.params.tipo && req.swagger.params.uf.value){
-      where = where + ' AND tb_ibge.co_uf = '+ req.swagger.params.uf.value;
-      tipoFiltro = 'regional';
-      tipoRegiao = 'uf';
-      codigoRegiao = req.swagger.params.uf.value;
-    }
-    if(req.swagger.params.ibge && req.swagger.params.ibge.value){
-      where = where + ' AND tb_ibge.ibge=' + req.swagger.params.ibge.value;
-      codigoRegiao = req.swagger.params.ibge.value;
-    }
-    if(req.swagger.params.regiao && req.swagger.params.regiao.value){
-      where = where + " AND substring(CAST (tb_ibge.co_uf AS text), 1, 1) = '" + req.swagger.params.regiao.value + "'";
-      codigoRegiao = req.swagger.params.regiao.value;
+    switch (req.swagger.params.filtro.value) {
+      case 'UF':
+        if(req.swagger.params.valores_filtro.value){
+          where = where + ' AND tb_ibge.co_uf IN ('+ req.swagger.params.valores_filtro.value+')';
+          tipoFiltro = 'regional';
+          tipoRegiao = 'uf';
+          codigoRegiao = req.swagger.params.valores_filtro.value;
+        }
+        break;
+      case 'MUN':
+        if(req.swagger.params.valores_filtro.value){
+          where = where + ' AND tb_ibge.ibge IN (' + req.swagger.params.valores_filtro.value+')';
+          codigoRegiao = req.swagger.params.valores_filtro.value;
+        }
+        break;
+      case 'CID':
+        if(req.swagger.params.valores_filtro.value){
+          where = where + ' AND tb_ibge.co_tr_cidadania IN (' + req.swagger.params.valores_filtro.value + ')';
+        }else{
+          where = where + ' AND tb_ibge.co_tr_cidadania >0';
+        }
+        break;
+      case 'CCL':
+        if(req.swagger.params.valores_filtro.value){
+          where = where + ' AND tb_ibge.co_colegiado in (' + req.swagger.params.valores_filtro.value + ')'
+        }
+        break;
+      case 'REG':
+          if(req.swagger.params.valores_filtro.value){
+            where = where + ' AND floor(tb_ibge.co_uf/10)  IN (' + req.swagger.params.valores_filtro.value+')';
+            codigoRegiao = req.swagger.params.valores_filtro.value;
+          }
+          break;
+      case 'MET':
+          if(req.swagger.params.valores_filtro.value){
+            where = where + ' AND tb_ibge.codigo_id_metropolitana IN (' + req.swagger.params.valores_filtro.value + ')';
+          }else{
+            where = where + ' AND tb_ibge.codigo_id_metropolitana >0';
+          }
+          break;
+      case 'FRT':
+          where = where + 'tb_ibge.sis_fronteiras = 1';
+          break;
+      case 'QUA':
+          where = where + 'tb_ibge.habilitados_qualifar = 1';
+          break;
+      case 'SA':
+          where = where + 'tb_ibge.semi_arido = 1';
+          break;
+      case 'AL':
+          where = where + 'tb_ibge.amazonia_legal = 1';
+          break;
+      case 'RIB':
+          where = where + 'tb_ibge.co_ride = 1';
+          break;
     }
 
     req.swagger.params.codigos.value.forEach((item)=>{
@@ -136,6 +178,7 @@ module.exports = {
     //console.log(sql);
 
     pool.query(sql,null, (err, result)=>{
+      console.log(result);
       if(err) {
         console.error('error running query', err);
         res.json({mensagem:err});
@@ -144,8 +187,17 @@ module.exports = {
       res.json({
         resultset: result.rows,
         info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao},
-        metadata:meta
+        metadata:addColIndex(meta)
       });
     });
   }
+}
+
+function addColIndex(arr_metadata){
+  i=0
+  arr_metadata.forEach(item=>{
+    item['colIndex'] = i;
+    i++;
+  });
+  return arr_metadata;
 }

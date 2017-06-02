@@ -255,27 +255,22 @@ paths:
         - name: tipo
           type: string
           in: query
-          enum: [MUN, UF]
+          enum: [UF, MUN]
           required: false
           description: Tipo de consulta (MUN - Municipal, UF - Estadual)
-        - name: uf
-          type: integer
+        - name: filtro
+          type: string
           in: query
-          minimum: 1
-          description: Codigo da UF para filtrar
+          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB]
           required: false
-        - name: ibge
-          type: integer
-          minimum: 1
-          in: query
-          required: false
-          description: Codigo do ibge do municipio a ser filtrado
-        - name: regiao
-          type: integer
-          minimum: 1
+          description: Tipos de filtro (MUN-Municipal, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana)
+        - name: valores_filtro
+          type: array
+          items:
+            type: string
           in: query
           required: false
-          description: Codigo da região do ibge a ser filtrada
+          description: Valores a serem filtrados
       responses:
         "200":
           description: Sucesso

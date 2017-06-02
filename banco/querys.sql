@@ -24,6 +24,25 @@ SELECT co_ibge as munic,nu_ano_ref AS ano, sum(qt_casos_agravo) AS contatos_regi
 
 SELECT co_ibge as munic,nu_ano_ref AS ano, sum(qt_casos_agravo) AS contatos_examinados FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 80 GROUP BY co_ibge,nu_ano_ref
 
+-- Codigos
+
+tb_ibge.co_tr_cidadania = 74   --> $tc
+tb_ibge.co_colegiado = ?  -->
+tb_ibge.codigo_id_metropolitana = $rm
+tb_ibge.co_id_qualisus = $qs
+"tb_ibge.sis_fronteiras = 1"
+habilitados_qualifar = 1
+tb_ibge.semi_arido = 1
+tb_ibge.co_ride = 1
+tb_ibge.amazonia_legal = 1
+
+tb_ibge.st_xingu = 1  --> PX
+dbgeral.tb_ibge.co_tr_cidadania > 0
+dbgeral.tb_ibge.codigo_id_metropolitana >0
+
+
+
+
 -- Query inicial
 
 WITH tb_ibge
