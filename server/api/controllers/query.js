@@ -8,20 +8,24 @@ const indicador = {
   // Criterio de Analise
   'IBGEMUN': { desc: 'IBGE Municipio',
         metadata: [
-          {colType: 'String', colName: 'Região', resumo: 'Região agregada', tipo: 'geo', ref: 'uf' },
-          {colType: 'String', colName: 'Local', resumo: 'Região desagregada', tipo: 'geo', ref: 'cidade'},
-          {colType: 'String', colName: 'codigogeo', resumo: 'Código da unidade', tipo: 'id', ref: 'ibge'},
-          {colType: 'Numeric', colName: 'Ano', resumo: 'Ano da ocorrência', tipo: 'ano', ref: 'ano'},
+          {colType: 'String', colName: 'regiao',titulo: 'Região', resumo: 'Região agregada', tipo: 'geo' },
+          {colType: 'String', colName: 'Local',titulo: 'Cidade', resumo: 'Região desagregada', tipo: 'geo'},
+          {colType: 'String', colName: 'codigogeo', titulo: 'Municipio', resumo: 'Código da unidade', tipo: 'id'},
+          {colType: 'Numeric',colName: 'ano', titulo: 'Ano', resumo: 'Ano da ocorrência', tipo: 'ano', ref: 'ano'},
+          {colType: 'Numeric', colName: 'pop_me_15', titulo:'População menor de 15 anos', descricao: 'População menor de 15 anos', tipo: 'valor'},
+          {colType: 'Numeric', colName: 'pop', titulo:'Região', descricao: 'População', tipo: 'valor'},
         ],
-        sql:'SELECT tb_ibge.uf, tb_ibge.ibge as co_ibge, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.uf'},
+        sql:'SELECT tb_ibge.uf, tb_ibge.ibge as codigogeo, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.uf'},
   'IBGEEST': { desc: 'IBGE Estadual',
         metadata: [
-          {colType: 'String', colName: 'Região', resumo: 'Região agregada', tipo: 'geo', ref: 'regiao'},
-          {colType: 'String', colName: 'Local', resumo: 'Região desagregada', tipo: 'geo', ref: 'uf'},
-          {colType: 'String', colName: 'codigogeo', resumo: 'Código da unidade', tipo: 'id', ref: 'co_uf'},
-          {colType: 'Numeric', colName: 'Ano', resumo: 'Ano da ocorrência', tipo: 'ano', ref: 'ano'},
+          {colType: 'String', colName: 'regiao', titulo:'Região', descricao: 'Região agregada', tipo: 'geo'},
+          {colType: 'String', colName: 'Local', titulo:'Localidade', descricao: 'Região desagregada', tipo: 'geo'},
+          {colType: 'String', colName: 'codigogeo', titulo:'Nome UF', descricao: 'Código da unidade', tipo: 'id'},
+          {colType: 'Numeric', colName: 'ano', titulo:'Ano', descricao: 'Ano da ocorrência', tipo: 'ano'},
+          {colType: 'Numeric', colName: 'pop_me_15', titulo:'Região', descricao: 'População menor de 15 anos', tipo: 'valor'},
+          {colType: 'Numeric', colName: 'pop', titulo:'Região', descricao: 'População', tipo: 'valor'},
         ],
-        sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
+        sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf as codigogeo, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
   // TODO: Não tem por requigão?  E nacional?
 
   // Indicadores
@@ -164,8 +168,8 @@ module.exports = {
     req.swagger.params.codigos.value.forEach((item)=>{
       if(indicador[item]){
         sql_with = sql_with + ',' + item + ' AS (' + indicador[item].sql + ')';
-        sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.' + campo_agregacao + '=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
-        meta.push({colType: 'Numeric', colName: indicador[item].desc, descricao: indicador[item].resumo, tipo: 'valor', ref: item.toLowerCase()});
+        sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.codigogeo=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
+        meta.push({colType: 'Numeric', titulo: indicador[item].desc, descricao: indicador[item].resumo, tipo: 'valor', colName: item.toLowerCase()});
       }
     });
 
@@ -175,7 +179,7 @@ module.exports = {
 
     var sql = sql_with+sql_from + ' ORDER BY 1,2,3,4';
 
-    //console.log(sql);
+    console.log(sql);
 
     pool.query(sql,null, (err, result)=>{
       //console.log(result);
