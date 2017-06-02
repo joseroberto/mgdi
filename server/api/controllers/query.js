@@ -15,7 +15,7 @@ const indicador = {
           {colType: 'Numeric', colName: 'pop_me_15', titulo:'População menor de 15 anos', descricao: 'População menor de 15 anos', tipo: 'valor'},
           {colType: 'Numeric', colName: 'pop', titulo:'Região', descricao: 'População', tipo: 'valor'},
         ],
-        sql:'SELECT tb_ibge.uf, tb_ibge.ibge as codigogeo, tb_ibge.cidade, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.uf'},
+        sql:'SELECT tb_ibge.uf, tb_ibge.ibge as codigogeo, tb_ibge.cidade as local, tabpop.ano_pop as ano, sum(tabpop.pop_me_15)::int as pop_me_15, sum(tabpop.pop)::int as pop FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE  tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tabpop.ano_pop,tb_ibge.cidade,tb_ibge.ibge,tb_ibge.uf'},
   'IBGEEST': { desc: 'IBGE Estadual',
         metadata: [
           {colType: 'String', colName: 'regiao', titulo:'Região', descricao: 'Região agregada', tipo: 'geo'},
@@ -25,7 +25,7 @@ const indicador = {
           {colType: 'Numeric', colName: 'pop_me_15', titulo:'Região', descricao: 'População menor de 15 anos', tipo: 'valor'},
           {colType: 'Numeric', colName: 'pop', titulo:'Região', descricao: 'População', tipo: 'valor'},
         ],
-        sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf as codigogeo, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
+        sql:'SELECT tb_ibge.regiao, tb_ibge.co_uf as codigogeo, tb_ibge.uf as local, tabpop.ano_pop as ano, sum(tabpop.pop_me_15)::int as pop_me_15, sum(tabpop.pop)::int as pop FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 TTT group by tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop'},
   // TODO: Não tem por requigão?  E nacional?
 
   // Indicadores
