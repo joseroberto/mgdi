@@ -163,6 +163,13 @@ module.exports = {
       case 'RIB':
           where = where + 'tb_ibge.co_ride = 1';
           break;
+      case 'QSU':
+          if(req.swagger.params.valores_filtro.value){
+            where = where + ' AND tb_ibge.co_id_qualisus IN (' + req.swagger.params.valores_filtro.value + ')';
+          }else{
+            where = where + ' AND tb_ibge.co_id_qualisus >0';
+          }
+          break;
     }
 
     req.swagger.params.codigos.value.forEach((item)=>{
