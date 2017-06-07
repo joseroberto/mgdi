@@ -15,18 +15,21 @@ module.exports = {
     var arquivo = req.swagger.params.arquivo.value;
     // Le arquivo
     if(arquivo.mimetype=='text/csv'){
-      csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'codigo_pai']})
+      csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'unidade_pai']})
       .fromString(arquivo.buffer.toString())
       .on('json', (json)=>{
-          console.log('original',json);
+          //console.log('original',json);
           if('sigla' in json){
-            var uni = Object.assign(json, {isInformal: (json['informal']=='S')}, {UnidadePai:{codigo: json['codigo_pai']}})
-            console.log(uni);
+            var uni = Object.assign(json, {isInformal: (json['informal']=='S')})
+            if(json['unidade_pai']){
+              uni = Object.assign(uni,{unidadepai:json['unidade_pai'] });
+            }
+            //console.log(uni);
             models.Unidade.findOrCreate({where:{
                 codigo: json['codigo']
               },
               defaults: uni}).then((u, created)=>{
-                console.log(u.values, created);
+                //console.log(u, created);
               });
             }
       })

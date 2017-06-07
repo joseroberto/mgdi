@@ -42,6 +42,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.BOOLEAN,
         field: 'st_informal'
     },
+    unidadepai:{
+        type: DataTypes.INTEGER,
+        field: 'co_unidade_pai'
+    },
   },{
     classMethods:{
         associate:function(models){

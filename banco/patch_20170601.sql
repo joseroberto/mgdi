@@ -28,3 +28,5 @@ COMMENT ON COLUMN dbesusgestor.tb_unidade.ds_email IS 'Email de contato com a un
 alter table dbesusgestor.tb_unidade add CONSTRAINT tb_unidade_co_unidade_pai_fkey FOREIGN KEY (co_unidade_pai)
         REFERENCES dbesusgestor.tb_unidade (co_unidade) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+alter table dbesusgestor.tb_unidade drop CONSTRAINT tb_unidade_co_unidade_pai_fkey;
