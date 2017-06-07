@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  version: "0.0.5"
-  title: Indicadores
+  version: "0.0.6"
+  title: SGI - Sistema de gestão de Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
 # basePath prefixes all resource paths
@@ -778,8 +778,63 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/unidade/import:
+    x-swagger-router-controller: unidade
+    post:
+      description: Importa dados do SIORG
+      summary: Importa arquivo CSV do SIORG
+      operationId: import_arquivo
+      consumes:
+        - multipart/form-data  # and/or application/x-www-form-urlencoded
+      tags:
+        - Importação
 
+      parameters:
+        - name: arquivo
+          in: formData
+          required: true
+          type: file
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista unidades do SIORG
+      summary: Lista unidades
+      operationId: getUnidades
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryUnidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      
 definitions:
+  QueryUnidade:
+    description: Unidades
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
+      metadata:
+        type: array
+        items:
+          type: object
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
     properties:

@@ -1,0 +1,43 @@
+var models  = require('../models');
+//const csv_converter = require('csvtojson').Converter,
+const csv = require('csvtojson'),
+        fs = require('fs');
+
+
+module.exports = {
+  getUnidades: (req, res)=>{
+    models.Unidade.findAll({
+    }).then(function(lista) {
+      res.json({unidades: lista});
+    });
+  },
+  import_arquivo: (req,res)=>{
+    var arquivo = req.swagger.params.arquivo.value;
+    // Le arquivo
+    if(arquivo.mimetype=='text/csv'){
+      csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'codigo_pai']})
+      .fromString(arquivo.buffer.toString())
+      .on('json', (json)=>{
+          console.log('original',json);
+          if('sigla' in json){
+            var uni = Object.assign(json, {isInformal: (json['informal']=='S')}, {UnidadePai:{codigo: json['codigo_pai']}})
+            console.log(uni);
+            models.Unidade.findOrCreate({where:{
+                codigo: json['codigo']
+              },
+              defaults: uni}).then((u, created)=>{
+                console.log(u.values, created);
+              });
+            }
+      })
+      .on('error', (err)=>{
+        console.log(err);
+        res.status(500).send(err);
+      })
+      .on('done', ()=>{
+          res.json({codret: 0, mensagem: "Arquivo rescebido com sucesso."});
+      });
+    }
+
+  }
+}

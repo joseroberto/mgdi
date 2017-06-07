@@ -17,7 +17,9 @@ module.exports = {
 
     try {
       if(!config_param.bypass){
-        soap.createClient(config_param.wsdl, function(err, client) {
+        console.log('Acessando:', config_param.wsdl);
+        soap.createClient(config_param.wsdl, function(err, client) {  
+          if(!err){
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
               function(err, result) {
@@ -52,6 +54,10 @@ module.exports = {
                   res.status(403).send(err);
                 }
               });
+          }else{
+            console.log(err);
+            res.status(500).send(err);
+          }
         });
       }else{
         var temp = {

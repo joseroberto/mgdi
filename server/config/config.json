@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "vasconcelos",
-    "password": "serenaya",
+    "username": "postgres",
+    "password": "",
     "database": "dbspo",
-    "host": "10.1.2.25",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
