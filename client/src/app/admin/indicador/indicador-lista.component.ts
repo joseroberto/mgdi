@@ -82,19 +82,24 @@ export class IndicadorListaComponent {
             <tbody>
             <tr>
                 <td style="width:100px">Nome:</td>
-                <td>${d.titulo}</td>
+                <td colspan="5">${d.titulo}</td>
             </tr>
             <tr>
                 <td>Descrição:</td>
-                <td>${d.descricao}</td>
+                <td colspan="5">${d.descricao}</td>
             </tr>
             <tr>
                 <td>Conceito:</td>
-                <td>${d.conceituacao || ''}</td>
+                <td colspan="5">${d.conceituacao || ''}</td>
+            </tr>
+            <tr>
+                <td>Periodicidade:</td>
+                <td>${d.Periodicidade.descricao}</td>
+                <td colspan="4">Unidade de medida: &nbsp;${d.UnidadeMedida.descricao}</td>
             </tr>
             <tr>
                 <td>Tipo</td>
-                <td>
+                <td colspan="5">
                  ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
                   <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">

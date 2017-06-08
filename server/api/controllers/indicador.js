@@ -4,8 +4,10 @@ var models  = require('../models');
 module.exports = {
   getIndicadores: (req, res)=>{
     models.Indicador.findAll({
-      attributes: [ 'codigo', 'titulo', 'descricao', 'periodicidade', 'unidade_medida',
-        'ativo',  'acumulativo', 'privado', 'conceituacao' ],
+      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao' ],
+      include: [ { model: models.Periodicidade, as: 'Periodicidade' },
+      { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+     ],
       order: ['titulo']
     }).then(function(lista) {
       //console.log(lista);

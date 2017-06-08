@@ -305,7 +305,7 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/GetIndicadorResponse"
+            $ref: "#/definitions/GetIndicadorConsulta"
         default:
           description: Erro
           schema:
@@ -352,7 +352,7 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/Indicador"
+            type: object
         default:
           description: Erro
           schema:
@@ -848,61 +848,7 @@ definitions:
         type: array
         items:
           type: object
-  Indicador:
-    description: Objeto indicador
-    properties:
-      codigo:
-        type: string
-        description: mnemonico do indicador
-      titulo:
-        type: string
-        description: Nome do Indicador
-      descricao:
-        type: string
-        description: Descrição do Indicador
-      periodicidade:
-        type: number
-        description: Código da periodicidade
-      unidade_medida:
-        type: number
-        description: Código da unidade de medida
-      metodo_calculo:
-        type: [string,'null']
-        description: Metodologia de cálculo para o indicador
-      fonte_dados:
-        type: [string,'null']
-        description: Fonte de dados do indicador
-      carga_manual:
-        type: boolean
-        description: Indicador de carga manual
-      conceituacao:
-        type: [string,'null']
-        description: Conceituação de um indicador
-      interpretacao:
-        type: [string,'null']
-        description: Intepretação de um indicador
-      limitacoes:
-        type: [string,'null']
-        description: Limitação de um indicador
-      usos:
-        type: [string,'null']
-        description: Usos de um indicador
-      notas:
-        type: [string,'null']
-        description: Notas sobre um indicador
-      observacoes:
-        description: Observações sobre um indicador
-        type: [string,'null']
-      ativo:
-        type: boolean
-        description: Indicador ativo
-      acumulativo:
-        type: boolean
-        description: Indicador de acumulativo nos resultados
-      privado:
-        type: boolean
-        description: Indicador de privacidade de divulgação
-
+  
   IndicadorAtualizacao:
     description: Objeto indicador
     properties:
@@ -1140,14 +1086,14 @@ definitions:
               type: string
             sigla:
               type: string
-  GetIndicadorResponse:
+  GetIndicadorConsulta:
     required:
       - indicadores
     properties:
       indicadores:
         type: array
         items:
-          $ref: "#/definitions/Indicador"
+          type: object
   SuccessResponse:
     required:
       - codret

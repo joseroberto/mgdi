@@ -98,7 +98,41 @@
                     </div>
                   </div>
                   <div class="form-group">
-                     <label class="col-md-2 control-label" for="classificacao" >Classificação</label>
+                    <popover-content #classificacao
+                                     title="Classificação dos indicadores"
+                                     [closeOnClickOutside]="true">
+                      Segundo <i>Bonnefoy (2005)</i> e <i>Jannuzzi (2005)</i>, os indicadores podem ser de:<br/><br/>
+                      <ul>
+                        <li><b>Insumo (antes)</b>: são indicadores que têm relação direta com os recursos
+                        a serem alocados, ou seja, com a disponibilidade dos recursos humanos,
+                        materiais, fi nanceiros e outros a serem utilizados pelas ações de governo.
+                        São exemplos médicos/mil habitantes e gasto per capita com educação;</li>
+
+                        <li><b>Processo (durante)</b>: são medidas que traduzem o esforço empreendido na
+                        obtenção dos resultados, ou seja, medem o nível de utilização dos insumos
+                        alocados como, por exemplo, o percentual de atendimento de um público alvo
+                        e o percentual de liberação dos recursos financeiros;</li>
+
+                        <li><b>Produto (depois)</b>: medem o alcance das metas físicas. São medidas
+                        que expressam as entregas de produtos ou serviços ao público-alvo. São
+                        exemplos o percentual de quilômetros de estrada entregues, de armazéns
+                        construídos e de crianças vacinadas em relação às metas estabelecidas;</li>
+
+                        <li><b>Resultado (depois)</b>: essas medidas expressam, direta ou indiretamente,
+                        os benefícios no público-alvo decorrentes das ações empreendidas no
+                        contexto de uma dada política e têm particular importância no contexto de
+                        gestão pública orientada a resultados. São exemplos as taxas de morbidade
+                        (doenças), taxa de reprovação escolar e de homicídios;</li>
+
+                        <li><b>Impacto (depois)</b>: possuem natureza abrangente e multidimensional,
+                        têm relação com a sociedade como um todo e medem os efeitos das
+                        estratégias governamentais de médio e longo prazos. Na maioria dos casos
+                        estão associados aos objetivos setoriais e de governo. São
+                        exemplos o Índice Gini de distribuição de renda e o PIB per capita.</li>
+                      </ul>
+                    </popover-content>
+                     <label class="col-md-2 control-label" for="classificacao" >Classificação
+                       <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="classificacao"></i></label>
                      <div class="col-md-2">
                        <select class="form-control" id="classificacao" name="classificacao" [ngModel]="indicador.classificacao" required>
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>

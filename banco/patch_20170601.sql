@@ -30,3 +30,41 @@ alter table dbesusgestor.tb_unidade add CONSTRAINT tb_unidade_co_unidade_pai_fke
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 alter table dbesusgestor.tb_unidade drop CONSTRAINT tb_unidade_co_unidade_pai_fkey;
+
+
+with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+     select ds_sigla, co_unidade, co_unidade_pai, array[co_unidade],1, ds_nome
+       from dbesusgestor.tb_unidade
+       where co_unidade_pai is null
+     union all
+       select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  path || o1.co_unidade ,o2.deep+1, o1.ds_nome
+       from dbesusgestor.tb_unidade o1, unidade o2
+       where o2.co_unidade = o1.co_unidade_pai
+
+    )
+ select * from unidade WHERE sigla like '%DEMAS%';
+
+
+ with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+      select ds_sigla, co_unidade, co_unidade_pai, ARRAY[ds_sigla]::varchar(50)[] as path,1, ds_nome
+        from dbesusgestor.tb_unidade
+        where co_unidade_pai is null
+      union all
+        select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || o1.ds_sigla)::varchar(50)[],o2.deep+1, o1.ds_nome
+        from dbesusgestor.tb_unidade o1, unidade o2
+        where o2.co_unidade = o1.co_unidade_pai
+     )
+
+  select * from unidade WHERE sigla like '%DEMAS%';
+
+  with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+       select ds_sigla, co_unidade, co_unidade_pai, ds_sigla::varchar(50) as path,1, ds_nome
+         from dbesusgestor.tb_unidade
+         where co_unidade_pai is null
+       union all
+         select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || '/' || o1.ds_sigla)::varchar(50),o2.deep+1, o1.ds_nome
+         from dbesusgestor.tb_unidade o1, unidade o2
+         where o2.co_unidade = o1.co_unidade_pai
+      )
+
+   select * from unidade WHERE sigla like '%DEMAS%';
