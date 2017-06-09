@@ -4,14 +4,15 @@ module.exports = function(sequelize, DataTypes) {
   var Unidade = sequelize.define('Unidade', {
     codigo: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'co_unidade'
     },
     sigla: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        field: 'ds_sigla'
+        field: 'ds_sigla',
+        unique: true
     },
     nome: {
         type: DataTypes.STRING(255),
@@ -42,17 +43,23 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.BOOLEAN,
         field: 'st_informal'
     },
-    unidadepai:{
-        type: DataTypes.INTEGER,
-        field: 'co_unidade_pai'
-    },
+    unidade_pai:{
+      type: DataTypes.INTEGER,
+      field: 'co_unidade_pai',
+    }
+    //parentId:{
+    //    type: DataTypes.INTEGER,
+    //    field: 'co_unidade_pai',
+
+    //},
   },{
-    classMethods:{
-        associate:function(models){
-          Unidade.belongsTo(models.Unidade,{
-             as: 'UnidadePai',
-             foreignKey: 'co_unidade_pai'});
-        }
+    hierarchy: {
+      foreignKey: 'unidade_pai',
+      levelFieldName: 'nu_nivel',
+      throughSchema: 'dbesusgestor',
+      throughTable: 'tb_unidade_hierarquia',
+      throughForeignKey:'co_unidade_superior',
+      throughKey: 'co_unidade'
     },
     schema: 'dbesusgestor',
     timestamps: false,

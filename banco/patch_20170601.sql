@@ -2,7 +2,7 @@
 
 CREATE TABLE dbesusgestor.tb_unidade
 (
-  co_unidade integer NOT NULL,
+  co_unidade serial NOT NULL,
   ds_sigla character varying(50) not null,
   ds_nome character varying(255) not null,
   ds_email character varying(100),
@@ -10,6 +10,7 @@ CREATE TABLE dbesusgestor.tb_unidade
   ds_competencia text,
   ds_atividade text,
   co_unidade_pai integer,
+  nu_nivel integer,
   st_informal boolean default 'F',
   CONSTRAINT tb_unidade_pkey PRIMARY KEY (co_unidade)
 );
@@ -24,47 +25,22 @@ COMMENT ON COLUMN dbesusgestor.tb_unidade.co_unidade_pai IS 'Código da unidade 
 COMMENT ON COLUMN dbesusgestor.tb_unidade.st_informal IS 'Flag indicando se a unidade é informal';
 COMMENT ON COLUMN dbesusgestor.tb_unidade.ds_telefone IS 'Telefone de contato com a unidade';
 COMMENT ON COLUMN dbesusgestor.tb_unidade.ds_email IS 'Email de contato com a unidade';
+COMMENT ON COLUMN dbesusgestor.tb_unidade.nu_nivel IS 'Nivel na hierarquia';
+
 
 alter table dbesusgestor.tb_unidade add CONSTRAINT tb_unidade_co_unidade_pai_fkey FOREIGN KEY (co_unidade_pai)
         REFERENCES dbesusgestor.tb_unidade (co_unidade) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 
-alter table dbesusgestor.tb_unidade drop CONSTRAINT tb_unidade_co_unidade_pai_fkey;
+create unique index ux_tb_unidade_ds_sigla on dbesusgestor.tb_unidade (ds_sigla);
+
+create table dbesusgestor.tb_unidade_hierarquia(
+  co_unidade int not null,
+  co_unidade_superior int not null
+);
 
 
-with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
-     select ds_sigla, co_unidade, co_unidade_pai, array[co_unidade],1, ds_nome
-       from dbesusgestor.tb_unidade
-       where co_unidade_pai is null
-     union all
-       select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  path || o1.co_unidade ,o2.deep+1, o1.ds_nome
-       from dbesusgestor.tb_unidade o1, unidade o2
-       where o2.co_unidade = o1.co_unidade_pai
+-----------------------------------------------
 
-    )
- select * from unidade WHERE sigla like '%DEMAS%';
-
-
- with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
-      select ds_sigla, co_unidade, co_unidade_pai, ARRAY[ds_sigla]::varchar(50)[] as path,1, ds_nome
-        from dbesusgestor.tb_unidade
-        where co_unidade_pai is null
-      union all
-        select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || o1.ds_sigla)::varchar(50)[],o2.deep+1, o1.ds_nome
-        from dbesusgestor.tb_unidade o1, unidade o2
-        where o2.co_unidade = o1.co_unidade_pai
-     )
-
-  select * from unidade WHERE sigla like '%DEMAS%';
-
-  with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
-       select ds_sigla, co_unidade, co_unidade_pai, ds_sigla::varchar(50) as path,1, ds_nome
-         from dbesusgestor.tb_unidade
-         where co_unidade_pai is null
-       union all
-         select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || '/' || o1.ds_sigla)::varchar(50),o2.deep+1, o1.ds_nome
-         from dbesusgestor.tb_unidade o1, unidade o2
-         where o2.co_unidade = o1.co_unidade_pai
-      )
-
-   select * from unidade WHERE sigla like '%DEMAS%';
+alter table dbesusgestor.tb_indicador_categoria_analise drop constraint tb_indicador_categoria_analise_pkey;
+alter table dbesusgestor.tb_indicador_categoria_analise add constraint tb_indicador_categoria_analise_pkey primary key (co_indicador_categoria_analise);

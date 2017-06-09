@@ -4,8 +4,8 @@ module.exports = function(sequelize, DataTypes) {
   var Indicador = sequelize.define('Indicador', {
     codigo: {
         type: DataTypes.STRING(8),
-        allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         field: 'co_indicador'
     },
     titulo: {

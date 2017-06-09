@@ -6,9 +6,35 @@ const csv = require('csvtojson'),
 
 module.exports = {
   getUnidades: (req, res)=>{
-    models.Unidade.findAll({
-    }).then(function(lista) {
+    models.Unidade.findAll({}).then(function(lista) {
       res.json({unidades: lista});
+    });
+  },
+  createUnidade: (req,res)=>{
+    console.log('createUnidade', req.body);
+    delete req.body['codigo'];
+    models.Unidade.create(req.body).then((indicador)=> {
+      res.json({codret: 0, mensagem: "Unidade cadastrada com sucesso"});
+    }).catch(err=>{
+      console.log(err);
+      res.status(500).json({message: err.message});
+    });
+  },
+  editaUnidade: (req,res)=>{
+    console.log('editaUnidade',req.body);
+    models.Unidade.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
+        res.json({codret: 0, mensagem: "Unidade atualizada com sucesso"});
+    });
+  },
+  getUnidade: (req,res)=>{
+    models.Unidade.findById(req.swagger.params.codigo.value, { hierarchy: true }).then(function(lista) {
+      res.json({unidades: lista});
+    });
+  },
+  deleteUnidade: (req,res)=>{
+    models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
+      unidade.destroy();
+      res.json({codret: 0, mensagem: "Unidade apagada com sucesso"});
     });
   },
   import_arquivo: (req,res)=>{

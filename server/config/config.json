@@ -4,20 +4,23 @@
     "password": "",
     "database": "dbspo",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "omitNull": true
   },
   "test": {
     "username": "vasconcelos",
     "password": "serenaya",
     "database": "dbspo",
     "host": "10.1.2.25",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "omitNull": true
   },
   "production": {
     "username": "vasconcelos",
     "password": "serenaya",
     "database": "dbspo",
     "host": "10.1.2.25",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "omitNull": true
   }
 }

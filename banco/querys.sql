@@ -171,3 +171,58 @@ ORDER  BY tb_ibge.regiao,
 --- Query gerada
 
 WITH IBGE AS (SELECT tb_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop as ano, sum(tabpop.pop_me_15) as pop_me_15, sum(tabpop.pop) as pop_ FROM dbgeral.tb_pop_faixas AS tabpop INNER JOIN dbgeral.tb_ibge AS tb_ibge ON tabpop.co_ibge = tb_ibge.ibge WHERE tabpop.pop_me_15 > 0 AND tabpop.pop > 0 AND tabpop.ano_pop > 2000 group by b_ibge.regiao, tb_ibge.co_uf, tb_ibge.uf, tabpop.ano_pop),DHM14A AS (SELECT co_uf, nu_ano_ref AS ano, sum(qt_casos_agravo) AS deteccao_menores_15_anos FROM morbi_mortalidade2.tb_casos_agravo_hanseniase WHERE co_agravo = 4 AND co_grupo_agravo = 10 GROUP BY co_uf, nu_ano_ref) SELECT * FROM IBGE  left JOIN DHM14A ON IBGE.co_uf=DHM14A.co_uf AND IBGE.ano=DHM14A.ano
+
+
+
+-----
+
+
+with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+     select ds_sigla, co_unidade, co_unidade_pai, array[co_unidade],1, ds_nome
+       from dbesusgestor.tb_unidade
+       where co_unidade_pai is null
+     union all
+       select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  path || o1.co_unidade ,o2.deep+1, o1.ds_nome
+       from dbesusgestor.tb_unidade o1, unidade o2
+       where o2.co_unidade = o1.co_unidade_pai
+
+    )
+ select * from unidade WHERE sigla like '%DEMAS%';
+
+
+ with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+      select ds_sigla, co_unidade, co_unidade_pai, ARRAY[ds_sigla]::varchar(50)[] as path,1, ds_nome
+        from dbesusgestor.tb_unidade
+        where co_unidade_pai is null
+      union all
+        select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || o1.ds_sigla)::varchar(50)[],o2.deep+1, o1.ds_nome
+        from dbesusgestor.tb_unidade o1, unidade o2
+        where o2.co_unidade = o1.co_unidade_pai
+     )
+
+  select * from unidade WHERE sigla like '%DEMAS%';
+
+  with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+       select ds_sigla, co_unidade, co_unidade_pai, ds_sigla::varchar(50) as path,1, ds_nome
+         from dbesusgestor.tb_unidade
+         where co_unidade_pai is null
+       union all
+         select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || '/' || o1.ds_sigla)::varchar(50),o2.deep+1, o1.ds_nome
+         from dbesusgestor.tb_unidade o1, unidade o2
+         where o2.co_unidade = o1.co_unidade_pai
+      )
+
+   select * from unidade WHERE sigla like '%DEMAS%';
+
+-- SVS 7457
+   with recursive unidade (sigla, co_unidade, codigo_pai, path, deep, nome) as (
+        select ds_sigla, co_unidade, co_unidade_pai, ds_sigla::varchar(50) as path,1, ds_nome
+          from dbesusgestor.tb_unidade
+          where co_unidade_pai is null and co_unidade=7457
+        union all
+          select o1.ds_sigla, o1.co_unidade, o1.co_unidade_pai,  (o2.path || '/' || o1.ds_sigla)::varchar(50),o2.deep+1, o1.ds_nome
+          from dbesusgestor.tb_unidade o1, unidade o2
+          where o2.co_unidade = o1.co_unidade_pai
+       )
+
+select * from unidade;

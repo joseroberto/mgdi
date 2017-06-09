@@ -806,7 +806,7 @@ paths:
   /api/unidade:
     x-swagger-router-controller: unidade
     get:
-      description: Lista unidades do SIORG
+      description: Lista unidades
       summary: Lista unidades
       operationId: getUnidades
       tags:
@@ -820,8 +820,117 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-      
+    post:
+      description: Inclui uma unidade
+      summary: Lista unidades
+      operationId: createUnidade
+      parameters:
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Unidade'
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade/{codigo}:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista informações de uma unidade
+      summary: Lista unidades
+      operationId: getUnidade
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Unidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita dados de uma unidade
+      summary: Atualiza unidades
+      operationId: editaUnidade
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Unidade'
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma unidade
+      summary: Apaga uma unidade
+      operationId: deleteUnidade
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 definitions:
+  Unidade:
+    description: Unidade
+    properties:
+      codigo:
+        type: integer
+      sigla:
+        type: string
+      nome:
+        type: string
+      email:
+        type: string
+      telefone:
+        type: string
+      competencia:
+        type: string
+      atividade:
+        type: string
+      isInformal:
+        type: boolean
+      unidade_pai:
+        type: number
+        
   QueryUnidade:
     description: Unidades
     properties:
