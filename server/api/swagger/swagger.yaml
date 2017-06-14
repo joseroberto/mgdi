@@ -79,23 +79,6 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
-  /api/secretaria:
-    x-swagger-router-controller: secretaria
-    get:
-      description: Retorna a lista de secretarias
-      summary: Lista de secretarias
-      operationId: getSecretarias
-      tags:
-        - Cadastros Auxiliares
-      responses:
-        "200":
-          description: Sucesso
-          schema:
-            $ref: "#/definitions/GetSecretariaListResponse"
-        default:
-          description: Erro
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -316,8 +299,7 @@ paths:
       operationId: createIndicador
       tags:
         - Indicadores
-      security:
-        - Bearer: []
+
       parameters:
         - name: indicador
           in: body
@@ -970,9 +952,15 @@ definitions:
       descricao:
         type: string
         description: Descrição do Indicador
-      periodicidade:
+      periodicidade_atualizacao:
         type: number
-        description: Código da periodicidade
+        description: Periodicidade de atualização dos dados
+      periodicidade_avaliacao:
+        type: number
+        description: Periodicidade de avaliação dos dados
+      periodicidade_monitoramento:
+        type: number
+        description: Periodicidade de monitoramento dos dados
       unidade_medida:
         type: number
         description: Código da unidade de medida
@@ -981,10 +969,26 @@ definitions:
         description: Indicador ativo
       acumulativo:
         type: boolean
-        description: Indicador de acumulativo nos resultados
+        description: Indica se é acumulativo nos resultados
       privado:
         type: boolean
-        description: Indicador de privacidade de divulgação
+        description: Indica se precida ter privacidade de divulgação
+      especifico:
+        type: boolean
+        description: Indica se é específico de uma área
+      carga_manual:
+        type: boolean
+        description: Indica se é utilizada a carga manual para um indicador
+      secretaria:
+        type: number
+        description: Código da Secretaria Responsável
+      unidade_responsavel:
+        type: number
+        description: Código da Unidade Responsável
+      classificacao:
+        type: number
+        description: Código da classificçaão do Indicador
+        
 
   Conceituacao:
     type: object
@@ -1059,19 +1063,6 @@ definitions:
         type: string
       title:
         type: string
-  GetSecretariaListResponse:
-    required:
-      - secretarias
-    properties:
-      secretarias:
-        type: array
-        items:
-          type: object
-          properties:
-            codigo:
-              type: number
-            descricao:
-              type: string
   GetCategoriaAnaliseListResponse:
     required:
       - categorias_analise

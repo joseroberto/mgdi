@@ -77,7 +77,6 @@ export class IndicadorListaComponent {
   }
 
   public detailsFormat(d) {
-
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
@@ -93,9 +92,11 @@ export class IndicadorListaComponent {
                 <td colspan="5">${d.conceituacao || ''}</td>
             </tr>
             <tr>
-                <td>Periodicidade:</td>
-                <td>${d.Periodicidade.descricao}</td>
-                <td colspan="4">Unidade de medida: &nbsp;${d.UnidadeMedida.descricao}</td>
+                <td>Periodicidade de atualização: </td>
+                <td>${d.PeriodicidadeAtualizacao.descricao}</td>
+                <td>Periodicidade de avaliação: &nbsp;${d.PeriodicidadeAvaliacao.descricao}</td>
+                <td>Periodicidade de monitoramento: &nbsp;${d.PeriodicidadeMonitoramento.descricao}</td>
+                <td colspan="2">Unidade de medida: &nbsp;${d.UnidadeMedida.descricao}</td>
             </tr>
             <tr>
                 <td>Tipo</td>

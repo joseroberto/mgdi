@@ -1,12 +1,32 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
-  PeriodicidadeService, AreaService, UtilService, SecretariaService,
-  TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService } from '../../services/index';
+  PeriodicidadeService, AreaService, UtilService,
+  TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
+  UnidadeService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import '../../extensions/array.extension';
 
 declare var $: any;
+
+class IndicadorAtualizacao{
+  codigo: string;
+  titulo: string;
+  descricao: string;
+  classificacao: number;
+  periodicidade_atualizacao: number;
+  periodicidade_avaliacao: number;
+  periodicidade_monitoramento: number;
+  unidade_medida: number;
+  ativo: boolean;
+  acumulativo: boolean;
+  privado: boolean;
+  especifico: boolean;
+  carga_manual: boolean;
+  unidade_responsavel: number;
+  secretaria: number;
+  tags:any[];
+}
 
 @FadeInTop()
 @Component({
@@ -22,6 +42,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private breadcrumb = [];
   private sub: any;
   private flag_update:boolean = false;
+  private secretaria_selecionada: Object = {};
 
   @ViewChild('tags') selectElRef;
 
@@ -34,14 +55,16 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       ['ctrl', ['undo', 'redo']]
     ]};
 
-  private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade:number, unidade_medida:number,
+  private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
+    periodicidade_monitoramento:number, periodicidade_avaliacao:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
-    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string} = {
-      codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'', periodicidade:null, unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
+    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number} = {
+      codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
+      periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:true, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], tipo_consulta:0, banco_dados:0
+      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null
   };
 
   private colecaoClassificacao:any[] = [];
@@ -53,6 +76,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoIndicadores:any[] = [];
   private colecaoTipoConsulta:any[] = [];
   private colecaoBancoDados:any[] = [];
+  private colecaoUnidades:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -69,14 +93,14 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private periodicidadeService:PeriodicidadeService,
       private areaService:AreaService,
       private unidadeMedidaService:UnidadeMedidaService,
-      private secretariaService:SecretariaService,
       private util:UtilService,
       private tagCategoriaService:TagCategoriaService,
       private categoriaAnaliseService:CategoriaAnaliseService,
       private bancoDadosService:BancoDadosService,
       private tipoConsultaService:TipoConsultaService,
       private route: ActivatedRoute,
-      private router: Router) {
+      private router: Router,
+      private unidadeService: UnidadeService) {
         this.breadcrumb = ['Indicador', 'Novo'];
       }
 
@@ -93,9 +117,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.unidadeMedidaService.getAll().subscribe(resp => {
         this.colecaoUnidadeMedida = resp.unidades;
     }, err => this.util.msgErroInfra(err));
-    this.secretariaService.getAll().subscribe(resp => {
-        this.colecaoSecretaria = resp.secretarias;
-    }, err => this.util.msgErroInfra(err));
     this.tagCategoriaService.getAll().subscribe(resp => {
         this.colecaoTagCategoria = resp.tag_categorias;
     }, err => this.util.msgErroInfra(err));
@@ -110,6 +131,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.indicadorService.getAll().subscribe(resp => {
         this.colecaoIndicadores = resp.indicadores.filter(item=>item.codigo!=this.indicador.codigo);
+    }, err => this.util.msgErroInfra(err));
+    this.unidadeService.getAll().subscribe(resp=>{
+        this.colecaoUnidades = resp.unidades;
     }, err => this.util.msgErroInfra(err));
   }
 
@@ -132,12 +156,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.indicador.codigo = params['codigo'];
         if(this.indicador.codigo){
           this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
-              console.log('Registro em edicao:', this.indicador);
+              //console.log('Registro em edicao:', this.indicador);
               this.tituloForm = this.indicador.codigo;
               this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
-              console.log('Valor interno', this.indicador, resp);
+              //console.log('Valor interno', this.indicador, resp);
+              this.carregaUnidade(this.indicador.secretaria);
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
@@ -328,14 +353,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onSubmit(form){
-
-    console.log('Antes de gravar', form.value);
-    if(form.value && form.value.codigo)
-      form.value.codigo = form.value.codigo.toUpperCase(); //Para reforcar... nao entendo pq a ultima letra fica minusculo no javascript/tela.
-      this.indicador = Object.assign(this.indicador, form.value)
+    let valor: IndicadorAtualizacao= this.populaObjetoGravacao([this.indicador,form.value]);
+    console.log('Antes de gravar', valor);
+    if(form.valid)
       //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
-        this.indicadorService.update(this.indicador).subscribe(resp=>{
+        this.indicadorService.update(valor).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
           }else{
@@ -343,10 +366,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }
         }, err=>this.util.msgErroInfra(err));
       }else{
-        this.indicadorService.create(this.indicador).subscribe(resp=>{
+        valor['codigo'] = form.value.codigo_edit.toUpperCase();
+        this.indicadorService.create(valor).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
-            this.router.navigateByUrl('/admin/indicador/'+ this.indicador.codigo);
+            this.router.navigateByUrl('/admin/indicador/'+ valor.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }
@@ -354,6 +378,29 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
+  populaObjetoGravacao(obj:any[]):IndicadorAtualizacao{
+      console.log('obj', obj);
+      let valor:IndicadorAtualizacao = new IndicadorAtualizacao();
+      obj.forEach(item=>{
+        if('codigo' in item ) valor['codigo']=item['codigo'];
+        if('titulo' in item ) valor['titulo']=item['titulo'];
+        if('descricao' in item ) valor['descricao']=item['descricao'];
+        if('classificacao' in item ) valor['classificacao']=item['classificacao'];
+        if('periodicidade_atualizacao' in item ) valor['periodicidade_atualizacao']=item['periodicidade_atualizacao'];
+        if('periodicidade_avaliacao' in item ) valor['periodicidade_avaliacao']=item['periodicidade_avaliacao'];
+        if('periodicidade_monitoramento' in item ) valor['periodicidade_monitoramento']=item['periodicidade_monitoramento'];
+        if('unidade_medida' in item ) valor['unidade_medida']=item['unidade_medida'];
+        if('ativo' in item ) valor['ativo']=item['ativo'];
+        if('acumulativo' in item) valor['acumulativo']=item['acumulativo'];
+        if('privado' in item) valor['privado']=item['privado'];
+        if('especifico' in item ) valor['especifico']=item['especifico'];
+        if('unidade_responsavel' in item ) valor['unidade_responsavel']=item['unidade_responsavel'];
+        if('secretaria' in item ) valor['secretaria']=item['secretaria'];
+        if('carga_manual' in item ) valor['carga_manual']=item['carga_manual'];
+        if('tags' in item ) valor['tags']=item['tags'];
+      });
+      return valor;
+  }
   adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
     let codigo:string = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
@@ -410,5 +457,34 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.util.msgErro(resp.mensagem);
       }
     }, err=>this.util.msgErroInfra(err));
+  }
+
+  selecionaUnidade(){
+    let valorSelecionado = $('#unidade_responsavel').val();
+    let codigo_unidade:number = $(`#listResponsavel option[value='${valorSelecionado}']`).attr('codigo');
+    if(codigo_unidade){
+      this.indicador.unidade_responsavel = +codigo_unidade;
+      this.carregaUnidade(codigo_unidade);
+    }
+  }
+
+  carregaUnidade(codigo:number){
+    this.unidadeService.getUnidade(codigo).subscribe(resp=>{
+      console.log('Secretaria selecionada:', resp);
+      this.secretaria_selecionada = resp.unidade;
+      // Atualiza a secretaria nu_nivel=1
+      if(resp.unidade && resp.unidade.nu_nivel==1){
+        this.indicador.secretaria = resp.unidade.codigo;
+      }else{
+        this.indicador.secretaria = resp.unidade.ancestors.find(item=> item.nu_nivel==1)['codigo'];
+      }
+    });
+  }
+
+  formataNomeUnidade():string{
+    if(this.indicador.UnidadeResponsavel){
+      return `[${ this.indicador.UnidadeResponsavel.sigla }] - ${this.indicador.UnidadeResponsavel.nome}`;
+    }
+    return '';
   }
 }

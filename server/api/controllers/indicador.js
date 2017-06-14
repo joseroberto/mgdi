@@ -5,7 +5,9 @@ module.exports = {
   getIndicadores: (req, res)=>{
     models.Indicador.findAll({
       attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao' ],
-      include: [ { model: models.Periodicidade, as: 'Periodicidade' },
+      include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
+      { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
+      { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
       { model: models.UnidadeMedida, as: 'UnidadeMedida' },
      ],
       order: ['titulo']
@@ -17,7 +19,8 @@ module.exports = {
   createIndicador: (req,res)=>{
     console.log('create', req.body);
     models.Indicador.create(req.body).then((indicador)=> {
-      indicador.setTags(req.body.tags);
+      if(req.body.tags)
+        indicador.setTags(req.body.tags);
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     });
   },
@@ -25,7 +28,8 @@ module.exports = {
     models.Indicador.findById(req.swagger.params.codigo.value,
       { include: [ { model: models.Tag, as: 'Tags' },
                    { model: models.Indicador, as: 'IndicadoresRelacionados' },
-                   { model: models.CategoriaAnalise , as: 'CategoriasAnalise' }] }
+                   { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+                    { model: models.Unidade , as: 'UnidadeResponsavel' }] }
     ).then((indicador)=> {
       res.json(indicador);
     });

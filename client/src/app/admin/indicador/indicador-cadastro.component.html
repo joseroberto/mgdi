@@ -72,9 +72,9 @@
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't4'"><span
-                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria análise</a>
+                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria de análise</a>
               </li>
-              <li [class.active]="currenttab=='t5'" *ngIf="!indicador.carga_manual">
+              <li [class.active]="currenttab=='t5'" *ngIf="indicador.codigo && !indicador.carga_manual">
                 <a (click)="currenttab = 't5'"> Ficha Técnica</a>
               </li>
               <li [class.active]="currenttab=='t6'" *ngIf="indicador.carga_manual">
@@ -138,34 +138,94 @@
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="periodicidade">Periodicidade da Publicação</label>
+                     <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
                      <div class="col-md-2">
-                       <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
-                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
-                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                       </select>
-                     </div>
-                     <label class="col-md-2 control-label" for="secretaria">Secretaria Responsável</label>
-                     <div class="col-md-2">
-                       <select class="form-control" id="secretaria" name="secretaria" [ngModel]="indicador.secretaria" required>
-                         <option *ngFor="let itemSecretaria of colecaoSecretaria" [ngValue]="itemSecretaria.codigo"> {{ itemSecretaria.sigla }}</option>
+                       <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
+                         <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
                      </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label" for="tags">Tags</label>
+                    <label class="col-md-2 control-label" for="tags">Marcadores</label>
                     <div class="col-md-6">
-                      <select select2 multiple #tags class="form-control tags" name="secretaria2" >
+                      <select select2 multiple #tags class="form-control tags" name="secretaria2">
                         <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">
                           <option [value]="itemTag.codigo" *ngFor="let itemTag of itemCategoria.Tags">{{ itemTag.descricao }}</option>
                         </optgroup>
                       </select>
                     </div>
-                    <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <legend>&nbsp;&nbsp;Periodicidades</legend>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
-                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
+                      <select class="form-control" id="periodicidade" name="periodicidade_atualizacao" [ngModel]="indicador.periodicidade_atualizacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao" [ngModel]="indicador.periodicidade_avaliacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento" [ngModel]="indicador.periodicidade_monitoramento" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <legend>&nbsp;&nbsp;Unidade Responsável</legend>
+                  <div class="form-group">
+                      <div class="col-md-12">
+                        <input class="form-control" placeholder="Sigla ou partes do nome..."
+                            type="text" list="listResponsavel" id="unidade_responsavel" name="unidade_responsavel_view"
+                            [ngModel]="formataNomeUnidade()"
+                            (change)="selecionaUnidade()">
+                        <datalist id="listResponsavel">
+                          <option *ngFor="let itemUnidade of colecaoUnidades"
+                            value="[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}"
+                            [attr.codigo]="itemUnidade.codigo">
+                        </datalist>
+                        <p class="note"><strong>Nota:</strong> selecione a coordenação do Ministério da Saúde responsável pelo indicador.</p>
+                      </div>
+                      <br/><br/><br/>
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
+                          <h4> {{secretaria_selecionada.nome}}
+                            <br>
+                            <small> {{secretaria_selecionada.sigla}}</small>
+                          </h4>
+                          <ul class="list-unstyled">
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
+                              </p>
+                            </li>
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
+                              </p>
+                            </li>
+                          </ul>
+                      </div>
+
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
+                      <p class="font-md">
+                        <i>Subordinada a ...</i>
+                      </p>
+                      <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
+                        <li class="col-md-12" style="padding-left:30px">
+                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </fieldset>
@@ -214,8 +274,8 @@
                     </div>
                     <div class="col-md-2">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="manual" class="onoffswitch-checkbox"
-                               id="manual" [(ngModel)]="indicador.carga_manual">
+                        <input type="checkbox" name="carga_manual" class="onoffswitch-checkbox"
+                               id="carga_manual" [(ngModel)]="indicador.carga_manual">
                         <label class="onoffswitch-label" for="manual">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
@@ -224,6 +284,19 @@
                         </label>
                       </span>
                       <label class="control-label">Importa Dados</label>
+                    </div>
+                    <div class="col-md-2">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="especifico" class="onoffswitch-checkbox"
+                               id="especifico" [(ngModel)]="indicador.especifico">
+                        <label class="onoffswitch-label" for="especifico">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Específico</label>
                     </div>
                   </div>
                   <div class="form-actions">
@@ -239,7 +312,7 @@
                       </div>
                     </div>
                   </div>
-              </fieldset>
+                </fieldset>
               </tab>
               <tab [active]="currenttab == 't2'">
                 <fieldset style="padding: 15px">

@@ -44,3 +44,45 @@ create table dbesusgestor.tb_unidade_hierarquia(
 
 alter table dbesusgestor.tb_indicador_categoria_analise drop constraint tb_indicador_categoria_analise_pkey;
 alter table dbesusgestor.tb_indicador_categoria_analise add constraint tb_indicador_categoria_analise_pkey primary key (co_indicador_categoria_analise);
+
+alter table dbesusgestor.tb_indicador rename column co_periodicidade to co_periodicidade_atualizacao;
+alter table dbesusgestor.tb_indicador add column co_periodicidade_avaliacao int;
+alter table dbesusgestor.tb_indicador add column co_periodicidade_monitoramento int;
+
+update dbesusgestor.tb_indicador set co_periodicidade_avaliacao=co_periodicidade_atualizacao, co_periodicidade_monitoramento=co_periodicidade_atualizacao;
+
+alter table dbesusgestor.tb_indicador add constraint fk_periodicidade_avaliacao_indicador FOREIGN KEY (co_periodicidade_avaliacao) REFERENCES dbesusgestor.tb_periodicidade(co_periodicidade);
+alter table dbesusgestor.tb_indicador add constraint fk_periodicidade_monitoramento_indicador FOREIGN KEY (co_periodicidade_monitoramento) REFERENCES dbesusgestor.tb_periodicidade(co_periodicidade);
+
+alter table dbesusgestor.tb_indicador alter column co_periodicidade_avaliacao set not null;
+alter table dbesusgestor.tb_indicador alter column co_periodicidade_monitoramento set not null;
+
+alter table dbesusgestor.tb_indicador add column st_especifico boolean not null default 'F';
+
+------
+alter table dbesusgestor.tb_indicador add column co_unidade_responsavel int;
+alter table dbesusgestor.tb_indicador drop constraint tb_indicador_co_secretaria_fkey;
+
+-- inclui dados que falta na tb_unidade
+insert into dbesusgestor.tb_unidade (ds_sigla, ds_nome, nu_nivel) select sg_secretaria, ds_secretaria,1 from dbesusgestor.tb_secretaria where sg_secretaria not in (select ds_sigla from dbesusgestor.tb_unidade);
+
+alter table dbesusgestor.tb_indicador drop constraint tb_indicador_co_secretaria_fkey;
+
+---- Atualiza dados do campo secretaria
+
+update dbesusgestor.tb_indicador set co_secretaria = b.co_unidade
+from dbesusgestor.tb_secretaria a inner join dbesusgestor.tb_unidade b on a.sg_secretaria=b.ds_sigla;
+
+---- Atualiza dados do campo unidade responsavel
+alter table dbesusgestor.tb_indicador add column co_unidade_responsavel int;
+update dbesusgestor.tb_indicador set co_unidade_responsavel = co_secretaria where co_unidade_responsavel is null;
+
+---- Troca campo co_unidade_responsavel para not null;
+alter table dbesusgestor.tb_indicador alter column co_unidade_responsavel set not null;
+
+alter table dbesusgestor.tb_indicador  add constraint tb_indicador_co_unidade_fkey FOREIGN KEY (co_secretaria) REFERENCES dbesusgestor.tb_unidade(co_unidade);
+alter table dbesusgestor.tb_indicador  add constraint tb_indicador_co_unidade_responsavel_fkey FOREIGN KEY (co_unidade_responsavel) REFERENCES dbesusgestor.tb_unidade(co_unidade);
+
+drop table dbesusgestor.tb_secretaria;
+
+-- update dbesusgestor.tb_unidade  set nu_nivel=1 where nu_nivel is null;

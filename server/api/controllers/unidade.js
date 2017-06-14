@@ -27,8 +27,11 @@ module.exports = {
     });
   },
   getUnidade: (req,res)=>{
-    models.Unidade.findById(req.swagger.params.codigo.value, { hierarchy: true }).then(function(lista) {
-      res.json({unidades: lista});
+    models.Unidade.findById(req.swagger.params.codigo.value,{
+      include: [ { model: models.Unidade, as: 'ancestors' } ],
+    	order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]}
+    ).then(function(lista) {
+      res.json({unidade: lista});
     });
   },
   deleteUnidade: (req,res)=>{

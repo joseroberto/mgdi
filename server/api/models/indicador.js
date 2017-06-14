@@ -23,9 +23,24 @@ module.exports = function(sequelize, DataTypes) {
         field: 'co_secretaria',
         allowNull: false
     },
-    periodicidade: {
+    unidade_responsavel: {
         type: DataTypes.INTEGER,
-        field: 'co_periodicidade',
+        field: 'co_unidade_responsavel',
+        allowNull: false
+    },
+    periodicidade_atualizacao: {
+        type: DataTypes.INTEGER,
+        field: 'co_periodicidade_atualizacao',
+        allowNull: false
+    },
+    periodicidade_avaliacao: {
+        type: DataTypes.INTEGER,
+        field: 'co_periodicidade_avaliacao',
+        allowNull: false
+    },
+    periodicidade_monitoramento: {
+        type: DataTypes.INTEGER,
+        field: 'co_periodicidade_monitoramento',
         allowNull: false
     },
     classificacao: {
@@ -41,12 +56,14 @@ module.exports = function(sequelize, DataTypes) {
     tipo_consulta: {
         type: DataTypes.INTEGER,
         field: 'co_tipo_consulta',
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
     banco_dados: {
         type: DataTypes.INTEGER,
         field: 'co_banco_dados',
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
     metodo_calculo:{
         type: DataTypes.TEXT,
@@ -90,19 +107,33 @@ module.exports = function(sequelize, DataTypes) {
     },
     ativo:{
         type: DataTypes.BOOLEAN,
-        field: 'st_ativo'
+        field: 'st_ativo',
+        allowNull: false,
+        defaultValue: 0
     },
     carga_manual:{
         type: DataTypes.BOOLEAN,
-        field: 'st_carga_manual'
+        field: 'st_carga_manual',
+        allowNull: false,
+        defaultValue: 0
     },
     acumulativo:{
         type: DataTypes.BOOLEAN,
-        field: 'st_acumulativo'
+        field: 'st_acumulativo',
+        allowNull: false,
+        defaultValue: 0
     },
     privado:{
         type: DataTypes.BOOLEAN,
-        field: 'st_privado'
+        field: 'st_privado',
+        allowNull: false,
+        defaultValue: 0
+    },
+    especifico:{
+        type: DataTypes.BOOLEAN,
+        field: 'st_especifico',
+        allowNull: false,
+        defaultValue: 0
     }
   },{
     classMethods: {
@@ -114,25 +145,34 @@ module.exports = function(sequelize, DataTypes) {
         //  as: 'TipoConsulta',
         //  foreignKey: 'co_tipo_consulta'});
          Indicador.belongsTo(models.Periodicidade,{
-           as: 'Periodicidade',
-           foreignKey: 'co_periodicidade'});
-         Indicador.belongsTo(models.ClassificacaoIndicador,{
+           as: 'PeriodicidadeAtualizacao',
+           foreignKey: 'co_periodicidade_atualizacao'});
+        Indicador.belongsTo(models.Periodicidade,{
+             as: 'PeriodicidadeAvaliacao',
+             foreignKey: 'co_periodicidade_avaliacao'});
+        Indicador.belongsTo(models.Periodicidade,{
+            as: 'PeriodicidadeMonitoramento',
+            foreignKey: 'co_periodicidade_monitoramento'});
+        Indicador.belongsTo(models.ClassificacaoIndicador,{
             as: 'ClassificacaoIndicador',
             foreignKey: 'co_indicador_classificacao'});
-         Indicador.belongsTo(models.UnidadeMedida,{
+        Indicador.belongsTo(models.UnidadeMedida,{
             as: 'UnidadeMedida',
             foreignKey: 'co_unidade_medida'});
-         Indicador.belongsToMany(models.Indicador, {
+        Indicador.belongsTo(models.Unidade,{
+           as: 'UnidadeResponsavel',
+           foreignKey: 'co_unidade_responsavel'});
+        Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,
            foreignKey: 'co_indicador_pai',
-         otherKey: 'co_indicador' });
-         Indicador.belongsToMany(models.CategoriaAnalise, {
+           otherKey: 'co_indicador' });
+        Indicador.belongsToMany(models.CategoriaAnalise, {
            as: 'CategoriasAnalise',
            through: models.IndicadorCategoriaAnalise,
            foreignKey: 'co_indicador',
-         otherKey: 'co_categoria_analise' });
-         Indicador.belongsToMany(models.Tag, {
+           otherKey: 'co_categoria_analise' });
+        Indicador.belongsToMany(models.Tag, {
            as: 'Tags',
            through: 'tb_indicador_tag',
            foreignKey: 'co_indicador',

@@ -26,7 +26,9 @@ export class UtilService {
     });
   }
 
-  msgErroInfra(mensagem:string){
+  msgErroInfra(err:any){
+    console.log(err);
+    let mensagem:string = err;
     this.notificationService.smallBox({
       title: "Erro na Infraestrutura",
       content: mensagem,
