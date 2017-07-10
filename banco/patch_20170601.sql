@@ -39,7 +39,13 @@ create table dbesusgestor.tb_unidade_hierarquia(
   co_unidade_superior int not null
 );
 
+alter table dbesusgestor.tb_unidade_hierarquia add CONSTRAINT tb_unidade_hierarquia_co_unidade_fkey FOREIGN KEY (co_unidade)
+        REFERENCES dbesusgestor.tb_unidade (co_unidade) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+alter table dbesusgestor.tb_unidade_hierarquia add CONSTRAINT tb_unidade_hierarquia_co_unidade_superior_fkey FOREIGN KEY (co_unidade_superior)
+        REFERENCES dbesusgestor.tb_unidade (co_unidade) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION;
 -----------------------------------------------
 
 alter table dbesusgestor.tb_indicador_categoria_analise drop constraint tb_indicador_categoria_analise_pkey;

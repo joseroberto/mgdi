@@ -104,11 +104,11 @@ export class IndicadorListaComponent {
                  ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
                   <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">
-                    Apaga
+                    <i class="fa fa-times "></i>&nbsp;Apaga
                   </button>
                   <button class='btn btn-xs btn-info pull-right'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaIndicador('${d.codigo}');})">
-                    Edita
+                    <i class="fa fa-pencil "></i>&nbsp;Edita
                   </button>
                 </td>
             </tbody>

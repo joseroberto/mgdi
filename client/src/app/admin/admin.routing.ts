@@ -11,6 +11,7 @@ import {GeneralElementsComponent} from "./teste/general-elements.component";
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
+import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
 
 // Itens de planos
 import {PlanoComponent} from './plano/plano.component';
@@ -41,6 +42,11 @@ export const homeRoutes: Routes = [
     path: 'indicadorlista',
     component: IndicadorListaComponent,
     data: {pageTitle: 'Lista Indicadores'}
+    },
+    {
+    path: 'indicadorlistaunidade',
+    component: IndicadorListaUnidadeComponent,
+    data: {pageTitle: 'Lista Indicadores por Unidade'}
     },
     {
     path: 'plano',

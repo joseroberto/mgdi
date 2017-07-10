@@ -785,6 +785,23 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/unidade-hierarquia:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista unidades de forma hierarquica
+      summary: Lista unidades com suas respectivas unidades filha
+      operationId: getUnidadesHierarchical
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryUnidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/unidade:
     x-swagger-router-controller: unidade
     get:

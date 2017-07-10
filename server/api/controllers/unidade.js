@@ -26,6 +26,11 @@ module.exports = {
         res.json({codret: 0, mensagem: "Unidade atualizada com sucesso"});
     });
   },
+  getUnidadesHierarchical: (req, res)=>{
+    models.Unidade.findAll({hierarchy: true}).then(function(lista) {
+      res.json({unidades: lista});
+    });
+  },
   getUnidade: (req,res)=>{
     models.Unidade.findById(req.swagger.params.codigo.value,{
       include: [ { model: models.Unidade, as: 'ancestors' } ],

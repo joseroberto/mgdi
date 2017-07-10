@@ -14,4 +14,8 @@ export class UnidadeService extends REST {
   getUnidade(codigo:number){
     return this.get(`/unidade/${codigo}`);
   }
+
+  getUnidadesHierarchical(){
+    return this.get('/unidade-hierarquia');
+  }
 }
