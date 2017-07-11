@@ -14,7 +14,15 @@ export class TreeViewComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    this.reset();
     this.items && this.render();
+  }
+
+  reset(){
+    const root = this.el.nativeElement.getElementsByTagName('div')[0];
+    while (root.firstChild) {
+        root.removeChild(root.firstChild);
+    }
   }
 
   private render(){

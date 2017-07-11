@@ -912,23 +912,23 @@ definitions:
     description: Unidade
     properties:
       codigo:
-        type: integer
+        type: [integer,'null']
       sigla:
         type: string
       nome:
         type: string
       email:
-        type: string
+        type: [string, 'null']
       telefone:
-        type: string
+        type: [string, 'null']
       competencia:
-        type: string
+        type: [string, 'null']
       atividade:
-        type: string
+        type: [string, 'null']
       isInformal:
         type: boolean
       unidade_pai:
-        type: number
+        type: [number,'null']
         
   QueryUnidade:
     description: Unidades

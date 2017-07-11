@@ -15,6 +15,18 @@ export class UnidadeService extends REST {
     return this.get(`/unidade/${codigo}`);
   }
 
+  create(unidade:any){
+    return super.post('/unidade', unidade);
+  }
+
+  update(unidade:any){
+    return super.put(`/unidade/${unidade.codigo}`, unidade);
+  }
+
+  apaga(codigo:number){
+    return super.delete(`/unidade/${codigo}`);
+  }
+
   getUnidadesHierarchical(){
     return this.get('/unidade-hierarquia');
   }
