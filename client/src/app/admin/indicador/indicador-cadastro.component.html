@@ -157,32 +157,6 @@
                   </div>
                 </fieldset>
                 <fieldset style="padding: 15px">
-                  <legend>&nbsp;&nbsp;Periodicidades</legend>
-                  <div class="form-group">
-                    <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
-                    <div class="col-md-2">
-                      <select class="form-control" id="periodicidade" name="periodicidade_atualizacao" [ngModel]="indicador.periodicidade_atualizacao" required>
-                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
-                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                      </select>
-                    </div>
-                    <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
-                    <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao" [ngModel]="indicador.periodicidade_avaliacao" required>
-                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
-                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                      </select>
-                    </div>
-                    <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
-                    <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento" [ngModel]="indicador.periodicidade_monitoramento" required>
-                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
-                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                      </select>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Unidade Responsável</legend>
                   <div class="form-group">
                       <div class="col-md-12">
@@ -226,6 +200,32 @@
                           {{ itemancestor.sigla}} - {{ itemancestor.nome}}
                         </li>
                       </ul>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <legend>&nbsp;&nbsp;Periodicidades</legend>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade" name="periodicidade_atualizacao" [ngModel]="indicador.periodicidade_atualizacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao" [ngModel]="indicador.periodicidade_avaliacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento" [ngModel]="indicador.periodicidade_monitoramento" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
                     </div>
                   </div>
                 </fieldset>
