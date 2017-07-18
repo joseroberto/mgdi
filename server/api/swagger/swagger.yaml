@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  version: "0.0.5"
-  title: Indicadores
+  version: "0.0.6"
+  title: SGI - Sistema de gestão de Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
 # basePath prefixes all resource paths
@@ -38,6 +38,7 @@ paths:
   /login:
     x-swagger-router-controller: login
     post:
+      summary: Loga o usuário
       operationId: authenticate
       tags:
         - Autenticação
@@ -69,6 +70,7 @@ paths:
     x-swagger-router-controller: login
     get:
       description: versão e título da API
+      summary: Versão da API
       operationId: version
       tags:
         - Infraestrutura
@@ -77,26 +79,11 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
-  /api/secretaria:
-    x-swagger-router-controller: secretaria
-    get:
-      description: Retorna a lista de periodicidades
-      operationId: getSecretarias
-      tags:
-        - Cadastros Auxiliares
-      responses:
-        "200":
-          description: Sucesso
-          schema:
-            $ref: "#/definitions/GetSecretariaListResponse"
-        default:
-          description: Erro
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
       description: Retorna a lista de periodicidades
+      summary: Lista de periodicidades
       operationId: getPeriodicidades
       tags:
         - Cadastros Auxiliares
@@ -113,6 +100,7 @@ paths:
     x-swagger-router-controller: classificacao-indicador
     get:
       description: Retorna a classificacao possivel para os indicadores
+      summary: Lista de classificações
       operationId: getClassificacoes
       tags:
         - Cadastros Auxiliares
@@ -129,6 +117,7 @@ paths:
     x-swagger-router-controller: unidade-medida
     get:
       description: Retorna as unidades de medida possiveis para os indicadores
+      summary: Lista de Unidades
       operationId: getUnidadesMedida
       tags:
         - Cadastros Auxiliares
@@ -145,6 +134,7 @@ paths:
     x-swagger-router-controller: tipo-consulta
     get:
       description: Retorna o tipo de consulta efetuada para recuperar o indicador
+      summary: Lista de tipos de consulta
       operationId: getTiposConsulta
       tags:
         - Cadastros Auxiliares
@@ -161,6 +151,7 @@ paths:
     x-swagger-router-controller: banco-dados
     get:
       description: Retorna os bancos de dados possiveis para a consulta aos indicadores
+      summary: Lista de banco de dados possíveis para consulta
       operationId: getBancoDados
       tags:
         - Cadastros Auxiliares
@@ -177,6 +168,7 @@ paths:
     x-swagger-router-controller: area
     get:
       description: Retorna as areas responsáveis pelos os indicadores
+      summary: Lista as áreas
       operationId: getAreas
       tags:
         - Cadastros Auxiliares
@@ -193,6 +185,7 @@ paths:
     x-swagger-router-controller: tag
     get:
       description: Retorna as tags possíveis de marcação
+      summary: Lista os marcadores
       operationId: getTags
       tags:
         - Cadastros Auxiliares
@@ -209,6 +202,7 @@ paths:
     x-swagger-router-controller: tag-categoria
     get:
       description: Retorna as categorias das tags possíveis de marcação
+      summary: Lista as categorias de marcação
       operationId: getTagCategoria
       tags:
         - Cadastros Auxiliares
@@ -225,6 +219,7 @@ paths:
     x-swagger-router-controller: categoria-analise
     get:
       description: Retorna as categorias de análises possíveis
+      summary: Lista de categorias de análise
       operationId: getCategoriasAnalises
       tags:
         - Cadastros Auxiliares
@@ -240,7 +235,8 @@ paths:
   /api/indicador/{codigos}/query:
     x-swagger-router-controller: query
     get:
-      description: Retorna o valor do indicdor
+      description: Retorna o valor do indicador
+      summary: Query para valores de indicadores
       operationId: getValores
       tags:
         - Indicadores
@@ -261,9 +257,9 @@ paths:
         - name: filtro
           type: string
           in: query
-          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB]
+          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
           required: false
-          description: Tipos de filtro (MUN-Municipal, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana)
+          description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
         - name: valores_filtro
           type: array
           items:
@@ -284,6 +280,7 @@ paths:
     x-swagger-router-controller: indicador
     get:
       description: Retorna os indicadores cadastrados no sistema
+      summary: Lista de indicadores
       operationId: getIndicadores
       tags:
         - Indicadores
@@ -291,18 +288,18 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/GetIndicadorResponse"
+            $ref: "#/definitions/GetIndicadorConsulta"
         default:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
       description: Cria um novo indicador
+      summary: Cria um novo indicador
       operationId: createIndicador
       tags:
         - Indicadores
-      security:
-        - Bearer: []
+
       parameters:
         - name: indicador
           in: body
@@ -324,6 +321,7 @@ paths:
     x-swagger-router-controller: indicador
     get:
       description: Le um registro de indicador
+      summary: Retorna um registro de um indicador
       operationId: getIndicador
       tags:
         - Indicadores
@@ -336,13 +334,14 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/Indicador"
+            type: object
         default:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
     delete:
       description: Apaga um registro de indicador
+      summary: Apaga um registro de indicador
       operationId: deleteIndicador
       tags:
         - Indicadores
@@ -363,12 +362,13 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     put:
-      description: Atualiza um registro de indicador
+      description: Atualiza as informações de um registro de indicador
+      summary: Atualiza as informações de um indicador
       operationId: editaIndicador
       tags:
         - Indicadores
       security:
-        - Bearer: []      
+        - Bearer: []
       parameters:
         - name: codigo
           type: string
@@ -393,6 +393,7 @@ paths:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza conceituação de um indicador
+      summary: Atualiza uma conceituação de um indicador
       operationId: updateConceituacao
       tags:
         - Indicadores
@@ -407,7 +408,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Conceituacao'         
+            $ref: '#/definitions/Conceituacao'
       responses:
         "200":
           description: Sucesso
@@ -416,12 +417,13 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse" 
-            
+            $ref: "#/definitions/ErrorResponse"
+
   /api/indicador/{codigo_pai}/indicador-relacionado/{codigo}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona relação a um indicador
+      summary: Adiciona a relação entre indicadores
       operationId: addIndicadorRelacionado
       tags:
         - Indicadores
@@ -444,9 +446,10 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse" 
+            $ref: "#/definitions/ErrorResponse"
     delete:
       description: Rompe a relação com um indicador
+      summary: Rompe a relação entre indicadores
       operationId: deleteIndicadorRelacionado
       tags:
         - Indicadores
@@ -474,6 +477,7 @@ paths:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona categoria relacionada a um indicador
+      summary: Adiciona uma categoria de análise a um indicador
       operationId: addCategoriaAnalise
       tags:
         - Indicadores
@@ -496,9 +500,10 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse" 
+            $ref: "#/definitions/ErrorResponse"
     delete:
       description: Rompe a relação com um indicador
+      summary: Rompe a relação entre indicadores
       operationId: deleteCategoriaAnalise
       tags:
         - Indicadores
@@ -522,11 +527,12 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+
   /api/indicador/{codigo}/interpretacao:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza a interpretação de um indicador
+      summary: Atualiza o campo interpretação de um indicador
       operationId: updateInterpretacao
       tags:
         - Indicadores
@@ -541,7 +547,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Interpretacao'         
+            $ref: '#/definitions/Interpretacao'
       responses:
         "200":
           description: Sucesso
@@ -550,11 +556,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/procedimento_operacional:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza o procedimento operacional de um indicador
+      summary: Atualiza o procedimento operacional de um indicador
       operationId: updateProcedimentoOperacional
       tags:
         - Indicadores
@@ -569,7 +576,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/ProcedimentoOperacional'         
+            $ref: '#/definitions/ProcedimentoOperacional'
       responses:
         "200":
           description: Sucesso
@@ -578,11 +585,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse" 
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/uso:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza a interpretação de um indicador
+      summary: Atualiza a interpretação de um indicador
       operationId: updateUso
       tags:
         - Indicadores
@@ -597,7 +605,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Uso'         
+            $ref: '#/definitions/Uso'
       responses:
         "200":
           description: Sucesso
@@ -606,11 +614,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"    
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/limitacao:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza as limitações de um indicador
+      summary: Atualiza as limitações de um indicador
       operationId: updateLimitacao
       tags:
         - Indicadores
@@ -625,7 +634,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Limitacao'         
+            $ref: '#/definitions/Limitacao'
       responses:
         "200":
           description: Sucesso
@@ -634,11 +643,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"    
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/nota:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza as Notas de um indicador
+      summary: Atualiza as Notas de um indicador
       operationId: updateNota
       tags:
         - Indicadores
@@ -653,7 +663,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Nota'         
+            $ref: '#/definitions/Nota'
       responses:
         "200":
           description: Sucesso
@@ -662,11 +672,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/observacao:
     x-swagger-router-controller: indicador
     patch:
-      description: Atualiza as Observações de um indicador
+      description: Atualiza as observações de um indicador
+      summary: Atualiza as observações de um indicador
       operationId: updateObservacao
       tags:
         - Indicadores
@@ -681,7 +692,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Observacao'         
+            $ref: '#/definitions/Observacao'
       responses:
         "200":
           description: Sucesso
@@ -690,11 +701,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/fonte_dados:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza a fonte de dados de um indicador
+      summary: Atualiza a fonte de dados de um indicador
       operationId: updateFonteDados
       tags:
         - Indicadores
@@ -709,7 +721,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/FonteDados'         
+            $ref: '#/definitions/FonteDados'
       responses:
         "200":
           description: Sucesso
@@ -718,11 +730,12 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}/metodo_calculo:
     x-swagger-router-controller: indicador
     patch:
       description: Atualiza o Método de Cálculo de um indicador
+      summary: Atualiza o Método de Cálculo de um indicador
       operationId: updateMetodoCalculo
       tags:
         - Indicadores
@@ -737,7 +750,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/MetodoCalculo'         
+            $ref: '#/definitions/MetodoCalculo'
       responses:
         "200":
           description: Sucesso
@@ -746,9 +759,190 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"  
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade/import:
+    x-swagger-router-controller: unidade
+    post:
+      description: Importa dados do SIORG
+      summary: Importa arquivo CSV do SIORG
+      operationId: import_arquivo
+      consumes:
+        - multipart/form-data  # and/or application/x-www-form-urlencoded
+      tags:
+        - Importação
 
+      parameters:
+        - name: arquivo
+          in: formData
+          required: true
+          type: file
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade-hierarquia:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista unidades de forma hierarquica
+      summary: Lista unidades com suas respectivas unidades filha
+      operationId: getUnidadesHierarchical
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryUnidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista unidades
+      summary: Lista unidades
+      operationId: getUnidades
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryUnidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Inclui uma unidade
+      summary: Lista unidades
+      operationId: createUnidade
+      parameters:
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Unidade'
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade/{codigo}:
+    x-swagger-router-controller: unidade
+    get:
+      description: Lista informações de uma unidade
+      summary: Lista unidades
+      operationId: getUnidade
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Unidade"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita dados de uma unidade
+      summary: Atualiza unidades
+      operationId: editaUnidade
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Unidade'
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma unidade
+      summary: Apaga uma unidade
+      operationId: deleteUnidade
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 definitions:
+  Unidade:
+    description: Unidade
+    properties:
+      codigo:
+        type: [integer,'null']
+      sigla:
+        type: string
+      nome:
+        type: string
+      email:
+        type: [string, 'null']
+      telefone:
+        type: [string, 'null']
+      competencia:
+        type: [string, 'null']
+      atividade:
+        type: [string, 'null']
+      isInformal:
+        type: boolean
+      unidade_pai:
+        type: [number,'null']
+        
+  QueryUnidade:
+    description: Unidades
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
+      metadata:
+        type: array
+        items:
+          type: object
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
     properties:
@@ -762,61 +956,7 @@ definitions:
         type: array
         items:
           type: object
-  Indicador:
-    description: Objeto indicador
-    properties:
-      codigo:
-        type: string
-        description: mnemonico do indicador
-      titulo:
-        type: string
-        description: Nome do Indicador
-      descricao:
-        type: string
-        description: Descrição do Indicador
-      periodicidade:
-        type: number
-        description: Código da periodicidade
-      unidade_medida:
-        type: number
-        description: Código da unidade de medida
-      metodo_calculo:
-        type: [string,'null']
-        description: Metodologia de cálculo para o indicador
-      fonte_dados:
-        type: [string,'null']
-        description: Fonte de dados do indicador
-      carga_manual:
-        type: boolean
-        description: Indicador de carga manual
-      conceituacao:
-        type: [string,'null']
-        description: Conceituação de um indicador
-      interpretacao:
-        type: [string,'null']
-        description: Intepretação de um indicador
-      limitacoes:
-        type: [string,'null']
-        description: Limitação de um indicador
-      usos:
-        type: [string,'null']
-        description: Usos de um indicador
-      notas:
-        type: [string,'null']
-        description: Notas sobre um indicador
-      observacoes:
-        description: Observações sobre um indicador
-        type: [string,'null']
-      ativo:
-        type: boolean
-        description: Indicador ativo
-      acumulativo:
-        type: boolean
-        description: Indicador de acumulativo nos resultados
-      privado:
-        type: boolean
-        description: Indicador de privacidade de divulgação
-        
+  
   IndicadorAtualizacao:
     description: Objeto indicador
     properties:
@@ -829,9 +969,15 @@ definitions:
       descricao:
         type: string
         description: Descrição do Indicador
-      periodicidade:
+      periodicidade_atualizacao:
         type: number
-        description: Código da periodicidade
+        description: Periodicidade de atualização dos dados
+      periodicidade_avaliacao:
+        type: number
+        description: Periodicidade de avaliação dos dados
+      periodicidade_monitoramento:
+        type: number
+        description: Periodicidade de monitoramento dos dados
       unidade_medida:
         type: number
         description: Código da unidade de medida
@@ -840,10 +986,26 @@ definitions:
         description: Indicador ativo
       acumulativo:
         type: boolean
-        description: Indicador de acumulativo nos resultados
+        description: Indica se é acumulativo nos resultados
       privado:
         type: boolean
-        description: Indicador de privacidade de divulgação
+        description: Indica se precida ter privacidade de divulgação
+      especifico:
+        type: boolean
+        description: Indica se é específico de uma área
+      carga_manual:
+        type: boolean
+        description: Indica se é utilizada a carga manual para um indicador
+      secretaria:
+        type: number
+        description: Código da Secretaria Responsável
+      unidade_responsavel:
+        type: number
+        description: Código da Unidade Responsável
+      classificacao:
+        type: number
+        description: Código da classificçaão do Indicador
+        
 
   Conceituacao:
     type: object
@@ -914,23 +1076,10 @@ definitions:
   GetVersion:
     type: object
     properties:
-      version: 
+      version:
         type: string
-      title: 
+      title:
         type: string
-  GetSecretariaListResponse:
-    required:
-      - secretarias
-    properties:
-      secretarias:
-        type: array
-        items:
-          type: object
-          properties:
-            codigo:
-              type: number
-            descricao:
-              type: string
   GetCategoriaAnaliseListResponse:
     required:
       - categorias_analise
@@ -1054,14 +1203,14 @@ definitions:
               type: string
             sigla:
               type: string
-  GetIndicadorResponse:
+  GetIndicadorConsulta:
     required:
       - indicadores
     properties:
       indicadores:
         type: array
         items:
-          $ref: "#/definitions/Indicador"
+          type: object
   SuccessResponse:
     required:
       - codret

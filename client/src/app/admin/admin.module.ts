@@ -22,6 +22,7 @@ import {GeneralElementsComponent} from "./teste/general-elements.component";
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
+import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
 
 // Itens de planos
 import {ExemploListaComponent} from './plano/exemplo-lista.component';
@@ -52,6 +53,7 @@ import {WindowRef} from './indicador/WindowRef';
     GeneralElementsComponent,
     IndicadorListaComponent,
     IndicadorCadastroComponent,
+    IndicadorListaUnidadeComponent,
     ExemploListaComponent,
     PlanoComponent
   ],

@@ -72,9 +72,9 @@
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't4'"><span
-                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria análise</a>
+                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria de análise</a>
               </li>
-              <li [class.active]="currenttab=='t5'" *ngIf="!indicador.carga_manual">
+              <li [class.active]="currenttab=='t5'" *ngIf="indicador.codigo && !indicador.carga_manual">
                 <a (click)="currenttab = 't5'"> Ficha Técnica</a>
               </li>
               <li [class.active]="currenttab=='t6'" *ngIf="indicador.carga_manual">
@@ -98,39 +98,133 @@
                     </div>
                   </div>
                   <div class="form-group">
-                     <label class="col-md-2 control-label" for="classificacao" >Classificação</label>
+                    <popover-content #classificacao
+                                     title="Classificação dos indicadores"
+                                     [closeOnClickOutside]="true">
+                      Segundo <i>Bonnefoy (2005)</i> e <i>Jannuzzi (2005)</i>, os indicadores podem ser de:<br/><br/>
+                      <ul>
+                        <li><b>Insumo (antes)</b>: são indicadores que têm relação direta com os recursos
+                        a serem alocados, ou seja, com a disponibilidade dos recursos humanos,
+                        materiais, fi nanceiros e outros a serem utilizados pelas ações de governo.
+                        São exemplos médicos/mil habitantes e gasto per capita com educação;</li>
+
+                        <li><b>Processo (durante)</b>: são medidas que traduzem o esforço empreendido na
+                        obtenção dos resultados, ou seja, medem o nível de utilização dos insumos
+                        alocados como, por exemplo, o percentual de atendimento de um público alvo
+                        e o percentual de liberação dos recursos financeiros;</li>
+
+                        <li><b>Produto (depois)</b>: medem o alcance das metas físicas. São medidas
+                        que expressam as entregas de produtos ou serviços ao público-alvo. São
+                        exemplos o percentual de quilômetros de estrada entregues, de armazéns
+                        construídos e de crianças vacinadas em relação às metas estabelecidas;</li>
+
+                        <li><b>Resultado (depois)</b>: essas medidas expressam, direta ou indiretamente,
+                        os benefícios no público-alvo decorrentes das ações empreendidas no
+                        contexto de uma dada política e têm particular importância no contexto de
+                        gestão pública orientada a resultados. São exemplos as taxas de morbidade
+                        (doenças), taxa de reprovação escolar e de homicídios;</li>
+
+                        <li><b>Impacto (depois)</b>: possuem natureza abrangente e multidimensional,
+                        têm relação com a sociedade como um todo e medem os efeitos das
+                        estratégias governamentais de médio e longo prazos. Na maioria dos casos
+                        estão associados aos objetivos setoriais e de governo. São
+                        exemplos o Índice Gini de distribuição de renda e o PIB per capita.</li>
+                      </ul>
+                    </popover-content>
+                     <label class="col-md-2 control-label" for="classificacao" >Classificação
+                       <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="classificacao"></i></label>
                      <div class="col-md-2">
                        <select class="form-control" id="classificacao" name="classificacao" [ngModel]="indicador.classificacao" required>
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="periodicidade">Periodicidade da Publicação</label>
+                     <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
                      <div class="col-md-2">
-                       <select class="form-control" id="periodicidade" name="periodicidade" [ngModel]="indicador.periodicidade" required>
-                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
-                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
-                       </select>
-                     </div>
-                     <label class="col-md-2 control-label" for="secretaria">Secretaria Responsável</label>
-                     <div class="col-md-2">
-                       <select class="form-control" id="secretaria" name="secretaria" [ngModel]="indicador.secretaria" required>
-                         <option *ngFor="let itemSecretaria of colecaoSecretaria" [ngValue]="itemSecretaria.codigo"> {{ itemSecretaria.sigla }}</option>
+                       <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
+                         <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
                      </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label" for="tags">Tags</label>
+                    <label class="col-md-2 control-label" for="tags">Marcadores</label>
                     <div class="col-md-6">
-                      <select select2 multiple #tags class="form-control tags" name="secretaria2" >
+                      <select select2 multiple #tags class="form-control tags" name="secretaria2">
                         <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">
                           <option [value]="itemTag.codigo" *ngFor="let itemTag of itemCategoria.Tags">{{ itemTag.descricao }}</option>
                         </optgroup>
                       </select>
                     </div>
-                    <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <legend>&nbsp;&nbsp;Unidade Responsável</legend>
+                  <div class="form-group">
+                      <div class="col-md-12">
+                        <input class="form-control" placeholder="Sigla ou partes do nome..."
+                            type="text" list="listResponsavel" id="unidade_responsavel" name="unidade_responsavel_view"
+                            [ngModel]="formataNomeUnidade()"
+                            (change)="selecionaUnidade()">
+                        <datalist id="listResponsavel">
+                          <option *ngFor="let itemUnidade of colecaoUnidades"
+                            value="[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}"
+                            [attr.codigo]="itemUnidade.codigo">
+                        </datalist>
+                        <p class="note"><strong>Nota:</strong> selecione a coordenação do Ministério da Saúde responsável pelo indicador.</p>
+                      </div>
+                      <br/><br/><br/>
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
+                          <h4> {{secretaria_selecionada.nome}}
+                            <br>
+                            <small> {{secretaria_selecionada.sigla}}</small>
+                          </h4>
+                          <ul class="list-unstyled">
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
+                              </p>
+                            </li>
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
+                              </p>
+                            </li>
+                          </ul>
+                      </div>
+
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
+                      <p class="font-md">
+                        <i>Subordinada a ...</i>
+                      </p>
+                      <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
+                        <li class="col-md-12" style="padding-left:30px">
+                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <legend>&nbsp;&nbsp;Periodicidades</legend>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
-                        <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
+                      <select class="form-control" id="periodicidade" name="periodicidade_atualizacao" [ngModel]="indicador.periodicidade_atualizacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao" [ngModel]="indicador.periodicidade_avaliacao" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento" [ngModel]="indicador.periodicidade_monitoramento" required>
+                        <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
+                        [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
                     </div>
                   </div>
@@ -180,8 +274,8 @@
                     </div>
                     <div class="col-md-2">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="manual" class="onoffswitch-checkbox"
-                               id="manual" [(ngModel)]="indicador.carga_manual">
+                        <input type="checkbox" name="carga_manual" class="onoffswitch-checkbox"
+                               id="carga_manual" [(ngModel)]="indicador.carga_manual">
                         <label class="onoffswitch-label" for="manual">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
@@ -191,13 +285,25 @@
                       </span>
                       <label class="control-label">Importa Dados</label>
                     </div>
+                    <div class="col-md-2">
+                      <span class="onoffswitch">
+                        <input type="checkbox" name="especifico" class="onoffswitch-checkbox"
+                               id="especifico" [(ngModel)]="indicador.especifico">
+                        <label class="onoffswitch-label" for="especifico">
+                            <span class="onoffswitch-inner"
+                                  data-swchon-text="Sim"
+                                  data-swchoff-text="Não"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </span>
+                      <label class="control-label">Específico</label>
+                    </div>
                   </div>
                   <div class="form-actions">
                     <div class="row">
                       <div class="col-md-12">
                         <button class="btn btn-default" type='button' (click)="newIndicador(f)">
-                          <i class="fa fa-bullseye"></i>
-                          Novo
+                          <i class="fa fa-plus"></i>Novo
                         </button>
                         <button class="btn btn-primary" type="submit">
                           <i class="fa fa-save"></i>Grava
@@ -205,7 +311,7 @@
                       </div>
                     </div>
                   </div>
-              </fieldset>
+                </fieldset>
               </tab>
               <tab [active]="currenttab == 't2'">
                 <fieldset style="padding: 15px">

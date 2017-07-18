@@ -77,32 +77,38 @@ export class IndicadorListaComponent {
   }
 
   public detailsFormat(d) {
-
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
                 <td style="width:100px">Nome:</td>
-                <td>${d.titulo}</td>
+                <td colspan="5">${d.titulo}</td>
             </tr>
             <tr>
                 <td>Descrição:</td>
-                <td>${d.descricao}</td>
+                <td colspan="5">${d.descricao}</td>
             </tr>
             <tr>
                 <td>Conceito:</td>
-                <td>${d.conceituacao || ''}</td>
+                <td colspan="5">${d.conceituacao || ''}</td>
+            </tr>
+            <tr>
+                <td>Periodicidade de atualização: </td>
+                <td>${d.PeriodicidadeAtualizacao.descricao}</td>
+                <td>Periodicidade de avaliação: &nbsp;${d.PeriodicidadeAvaliacao.descricao}</td>
+                <td>Periodicidade de monitoramento: &nbsp;${d.PeriodicidadeMonitoramento.descricao}</td>
+                <td colspan="2">Unidade de medida: &nbsp;${d.UnidadeMedida.descricao}</td>
             </tr>
             <tr>
                 <td>Tipo</td>
-                <td>
+                <td colspan="5">
                  ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
                   <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">
-                    Apaga
+                    <i class="fa fa-times "></i>&nbsp;Apaga
                   </button>
                   <button class='btn btn-xs btn-info pull-right'
                     onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaIndicador('${d.codigo}');})">
-                    Edita
+                    <i class="fa fa-pencil "></i>&nbsp;Edita
                   </button>
                 </td>
             </tbody>
