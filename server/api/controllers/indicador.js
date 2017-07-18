@@ -4,7 +4,7 @@ var models  = require('../models');
 module.exports = {
   getIndicadores: (req, res)=>{
     models.Indicador.findAll({
-      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao' ],
+      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
       { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
       { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
