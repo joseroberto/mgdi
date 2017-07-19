@@ -5,7 +5,7 @@
   <div class="row" >
     <div class="col-sm-9">
       <div class="well padding-10">
-        <div *ngFor="let item of listaIndicadores ">
+        <div *ngFor="let item of listaIndicadores | paginate: { itemsPerPage: 10, currentPage: p }">
             <div class="row">
               <div class="col-md-4">
                 <div>
@@ -26,14 +26,15 @@
                 </ul>
               </div>
               <div class="col-md-8 padding-left-0">
-                <h3 class="margin-top-0"><a (click)="(null)"> {{ item.titulo }} </a><br><small class="font-xs"><i>Fonte: <a (click)="(null)">{{ item.fonte_dados }}</a></i></small></h3>
+                <h3 class="margin-top-0"><a routerLink="/item/{{ item.codigo }}"> {{ item.titulo }} </a><br>
+                  <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ item.fonte_dados }}</a></i></small></h3>
                 <p> {{ item.conceituacao }} </p>
                 <a class="btn btn-primary" routerLink="/item/{{ item.codigo }}"> Leia mais </a>
               </div>
             </div>
             <hr>
         </div>
-
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
     <div class="col-sm-3">

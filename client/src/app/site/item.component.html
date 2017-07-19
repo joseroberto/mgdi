@@ -1,13 +1,13 @@
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicador', indicador.titulo ]" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicador',indicador.codigo ]" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></sa-big-breadcrumbs>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="well padding-10">
         <div class="row">
           <div class="col-md-9 padding-left-0">
-            <h3 class="margin-top-0"><a (click)="(null)"> {{ indicador.codigo }} - {{ indicador.titulo }} </a><br>
+            <h3 class="margin-top-0"><a (click)="(null)"> {{ indicador.titulo }} </a><br>
               <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ indicador.fonte_dados }}</a></i></small></h3>
             <h4>Descrição</h4>
             <br/>
