@@ -8,7 +8,7 @@ export const routes:Routes = [
       path: '',
       component: SiteComponent,
       data: {pageTitle: 'Site'}
-  }, { path: 'item', component: ItemComponent}
+  }, { path: 'item/:codigo', component: ItemComponent}
 ];
 
 export const routing = RouterModule.forChild(routes);

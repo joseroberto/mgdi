@@ -20,6 +20,7 @@ import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
 import {LoginComponent} from './auth/login.component'
 
+
 // Servicos
 import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeService, AreaService,
   UnidadeMedidaService, IndicadorService, UtilService,
