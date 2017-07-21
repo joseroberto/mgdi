@@ -1,4 +1,5 @@
 var models  = require('../models');
+var sequelize = require('sequelize');
 //const csv_converter = require('csvtojson').Converter,
 const csv = require('csvtojson'),
         fs = require('fs');
@@ -27,7 +28,10 @@ module.exports = {
     });
   },
   getUnidadesHierarchical: (req, res)=>{
-    models.Unidade.findAll({hierarchy: true}).then(function(lista) {
+    models.Unidade.findAll({
+      hierarchy: true,
+      include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{ 'ativo':true }, attributes:['codigo', 'titulo', 'descricao'], required: false }]
+    }).then(function(lista) {
       res.json({unidades: lista});
     });
   },
@@ -39,13 +43,29 @@ module.exports = {
       res.json({unidade: lista});
     });
   },
-  deleteUnidade: (req,res)=>{
-    models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
-      unidade.destroy();
-      res.json({codret: 0, mensagem: "Unidade apagada com sucesso"});
-    });
-  },
-  import_arquivo: (req,res)=>{
+  countIndicador: (req,res)=>{
+    var attr = {
+      attributes: ['sigla', 'nome', [sequelize.fn('count', sequelize.col('*')),'numero_indicadores']],
+      include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{}, attributes:[] }],
+      where:{},
+      group:['Unidade.co_unidade', 'Unidade.ds_sigla', 'Unidade.ds_nome']
+    };
+    // Testa autorizacao para forcar filtro
+    if (!req.headers.authorization){
+        attr.include[0].where['privado'] = false;
+    }
+    models.Unidade.findAll(attr).then(function(lista) {
+    //console.log(lista);
+    res.json({unidades: lista});
+  });
+},
+deleteUnidade: (req,res)=>{
+  models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
+    unidade.destroy();
+    res.json({codret: 0, mensagem: "Unidade apagada com sucesso"});
+  });
+},
+import_arquivo: (req,res)=>{
     var arquivo = req.swagger.params.arquivo.value;
     // Le arquivo
     if(arquivo.mimetype=='text/csv'){

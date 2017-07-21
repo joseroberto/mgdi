@@ -18,7 +18,7 @@ module.exports = {
     try {
       if(!config_param.bypass){
         console.log('Acessando:', config_param.wsdl);
-        soap.createClient(config_param.wsdl, function(err, client) {  
+        soap.createClient(config_param.wsdl, function(err, client) {
           if(!err){
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
@@ -26,7 +26,6 @@ module.exports = {
                 console.log("---------------------------------err", err);
                 //console.log("result", result);
                 if(err || !result.respostaBuscaPerfilUsuario || !result.respostaBuscaPerfilUsuario.perfis || !result.respostaBuscaPerfilUsuario.perfis.perfil){
-                  console.log('Tratamento');
                   if(String(err).indexOf('Error')!== -1){
                     res.status(403).send({codret:1000, message:'Login/Senha inválida'});
                   }else{
