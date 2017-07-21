@@ -8,8 +8,15 @@ export class IndicadorService extends REST {
     super(http);
   }
 
-  getAll(){
-    return super.get('/indicador');
+  getAll(limit?:number, offset?:number){
+    if(!limit){
+      limit = 9999;
+    }
+    if(!offset){
+      offset=0;
+    }
+    let path = `/indicador?limit=${limit}&offset=${offset}`;
+    return super.get(path);
   }
 
   get(codigo:string){

@@ -1070,8 +1070,12 @@ definitions:
       classificacao:
         type: number
         description: Código da classificçaão do Indicador
-        
-
+      granularidade:
+        type: number
+        description: Código da granularidade do Indicador
+      criterio_agregacao:
+        type: number
+        description: Código do critério de agregacão do Indicador
   Conceituacao:
     type: object
     properties:

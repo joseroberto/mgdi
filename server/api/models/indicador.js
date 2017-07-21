@@ -59,6 +59,18 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
+    granularidade: {
+        type: DataTypes.INTEGER,
+        field: 'co_granularidade',
+        allowNull: false,
+        defaultValue: 0
+    },
+    criterio_agregacao: {
+        type: DataTypes.INTEGER,
+        field: 'co_criterio_agregacao',
+        allowNull: false,
+        defaultValue: 0
+    },
     banco_dados: {
         type: DataTypes.INTEGER,
         field: 'co_banco_dados',

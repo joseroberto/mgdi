@@ -11,20 +11,31 @@ export class SiteComponent implements OnInit {
   private listaIndicadores:any[];
   private page: number =1;
   private total: number = 0;
+  private itensPorPagina: number = 20;
 
   getPage(page: number) {
-    this.page = page;
-    console.log(page);
+    this.loadIndicador(page);
   }
 
   constructor(private indicadorService:IndicadorService) { }
 
   ngOnInit() {
-    this.indicadorService.getAll().subscribe(resp=>{
-      if(resp.indicadores){
-        this.listaIndicadores=resp.indicadores;
-      }
-    })
+    this.pageChanged(1);
+  }
+
+  pageChanged(pagina:number){
+    this.loadIndicador(pagina);
+  }
+
+  loadIndicador(pagina:number){
+    this.page = pagina;
+    var offset = (pagina-1) * this.itensPorPagina;
+
+    this.indicadorService.getAll(this.itensPorPagina, offset).subscribe(resp=>{
+        console.log(resp)
+        this.total = resp.count;
+        this.listaIndicadores=resp.rows;
+    });
   }
 
   barColorsDemo(row, series, type) {
