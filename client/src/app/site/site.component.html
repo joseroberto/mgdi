@@ -1,6 +1,11 @@
 <div id="content">
   <div class="row">
     <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicadores']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <br/>
+    <h3 class="margin-top-0" *ngIf="pesquisa">
+      <br/>
+      <small class="font-xs"><i>Pesquisa por <a (click)="(null)">{{ pesquisa }}</a></i></small>
+    </h3>
   </div>
   <div class="row" >
     <div class="col-sm-9">
@@ -27,7 +32,8 @@
               </div>
               <div class="col-md-8 padding-left-0">
                 <h3 class="margin-top-0"><a routerLink="/item/{{ item.codigo }}"> {{ item.titulo }} </a><br>
-                  <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ item.fonte_dados }}</a></i></small></h3>
+                  <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ item.fonte_dados }}</a></i></small>
+                </h3>
                 <p> {{ item.conceituacao }} </p>
                 <a class="btn btn-primary" routerLink="/item/{{ item.codigo }}"> Leia mais </a>
               </div>
@@ -73,11 +79,16 @@
       <div class="well padding-10">
         <h5 class="margin-top-0"><i class="fa fa-search"></i> Busca dados...</h5>
         <div class="input-group">
-          <input type="text" class="form-control">
+          <input type="text"
+            class="form-control"
+            name="pesquisa"
+            [(ngModel)]="minha_pesquisa">
           <span class="input-group-btn">
-									<button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button> </span>
+									<button class="btn btn-default" type="button"
+                    (click)="refresh_page()">
+                    <i class="fa fa-search"></i>
+                  </button>
+          </span>
         </div>
         <!-- /input-group -->
       </div>
@@ -163,17 +174,8 @@
         <div class="row">
           <div class="col-lg-12">
             <ul class="list-group no-margin">
-              <li class="list-group-item">
-                <a href=""> <span class="badge pull-right">15</span> SVS </a>
-              </li>
-              <li class="list-group-item">
-                <a href=""> <span class="badge pull-right">30</span> SAS </a>
-              </li>
-              <li class="list-group-item">
-                <a href=""> <span class="badge pull-right">9</span> SGTES </a>
-              </li>
-              <li class="list-group-item">
-                <a href=""> <span class="badge pull-right">4</span> SESAI </a>
+              <li class="list-group-item" *ngFor="let item of listaIndicadorPorUnidade">
+                <a href="#" data-toggle="tooltip" title="{{ item.nome }}"> <span class="badge pull-right">{{ item.numero_indicadores }}</span> {{ item.sigla }} </a>
               </li>
             </ul>
           </div>

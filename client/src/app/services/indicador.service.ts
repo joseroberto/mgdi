@@ -8,14 +8,17 @@ export class IndicadorService extends REST {
     super(http);
   }
 
-  getAll(limit?:number, offset?:number){
+  getAll(limit?:number, offset?:number, query?:string){
     if(!limit){
       limit = 9999;
     }
     if(!offset){
       offset=0;
     }
-    let path = `/indicador?limit=${limit}&offset=${offset}`;
+    if(!query){
+      query='';
+    }
+    let path = `/indicador?limit=${limit}&offset=${offset}&query=${query}`;
     return super.get(path);
   }
 
@@ -85,5 +88,9 @@ export class IndicadorService extends REST {
 
   deleteCategoriaRelacionada(codigo:string, categoria_analise:string){
     return super.delete(`/indicador/${codigo}/categoria-analise/${categoria_analise}`);
+  }
+
+  getCountPorUnidade(){
+    return super.get('/indicador-porunidade');
   }
 }

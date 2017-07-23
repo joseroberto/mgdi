@@ -363,19 +363,25 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/indicador/total:
-    x-swagger-router-controller: indicador
+  /api/indicador-porunidade:
+    x-swagger-router-controller: unidade
     get:
-      description: Retorna o numero de indicadores cadastrados no sistema
-      summary: Número de indicadores
-      operationId: countIndicadores
+      description: Retorna o numero de indicadores por unidade no sistema
+      summary: Número de indicadores por unidade
+      operationId: countIndicador
       tags:
         - Indicadores
       responses:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/SuccessResponse"
+            type: object
+            properties:
+              unidades:
+                type: array
+                items:
+                  type: object
+ 
         default:
           description: Erro
           schema:

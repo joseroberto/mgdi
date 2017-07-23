@@ -1,5 +1,7 @@
 import {NgModule} from "@angular/core";
 import { CommonModule } from '@angular/common';
+import {SmartadminModule} from "../shared/smartadmin.module";
+
 import {routing} from "./site.routing";
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SiteComponent } from './site.component';
@@ -10,7 +12,7 @@ import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.modu
 @NgModule({
   declarations: [SiteComponent, ItemComponent],
   imports: [
-    routing,CommonModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
+    routing,CommonModule, SmartadminModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
   ],
   providers: [],
   entryComponents: []

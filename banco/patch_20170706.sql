@@ -44,3 +44,15 @@ alter table dbesusgestor.tb_indicador add CONSTRAINT tb_indicador_co_granularida
 alter table dbesusgestor.tb_indicador add CONSTRAINT tb_indicador_co_criterio_agregacao_fkey FOREIGN KEY (co_criterio_agregacao)
                     REFERENCES dbesusgestor.tb_criterio_agregacao (co_criterio_agregacao) MATCH SIMPLE
                     ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+update dbesusgestor.tb_indicador set st_ativo='T' where st_ativo is null;
+alter table dbesusgestor.tb_indicador alter column st_ativo set not null;
+alter table dbesusgestor.tb_indicador alter column st_ativo set default 'T';
+
+update dbesusgestor.tb_indicador set st_privado='T' where st_privado is null;
+alter table dbesusgestor.tb_indicador alter column st_privado set not null;
+alter table dbesusgestor.tb_indicador alter column st_privado set default 'F';
+
+update dbesusgestor.tb_indicador set st_acumulativo='T' where st_acumulativo is null;
+alter table dbesusgestor.tb_indicador alter column st_acumulativo set not null;
+alter table dbesusgestor.tb_indicador alter column st_acumulativo set default 'F';

@@ -46,8 +46,7 @@ module.exports = {
   countIndicador: (req,res)=>{
     var attr = {
       attributes: ['sigla', 'nome', [sequelize.fn('count', sequelize.col('*')),'numero_indicadores']],
-      include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{}, attributes:[] }],
-      where:{},
+      include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{'ativo': true}, attributes:[] }],
       group:['Unidade.co_unidade', 'Unidade.ds_sigla', 'Unidade.ds_nome']
     };
     // Testa autorizacao para forcar filtro
@@ -55,7 +54,6 @@ module.exports = {
         attr.include[0].where['privado'] = false;
     }
     models.Unidade.findAll(attr).then(function(lista) {
-    //console.log(lista);
     res.json({unidades: lista});
   });
 },

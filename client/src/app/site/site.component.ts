@@ -9,9 +9,17 @@ import { IndicadorService, UtilService } from '../services/index';
 })
 export class SiteComponent implements OnInit {
   private listaIndicadores:any[];
+  private listaIndicadorPorUnidade:any[];
   private page: number =1;
   private total: number = 0;
   private itensPorPagina: number = 20;
+  private pesquisa:string = '';
+  private minha_pesquisa:string = '';
+
+  refresh_page(){
+    this.pesquisa = this.minha_pesquisa;
+    this.pageChanged(1);
+  }
 
   getPage(page: number) {
     this.loadIndicador(page);
@@ -21,6 +29,7 @@ export class SiteComponent implements OnInit {
 
   ngOnInit() {
     this.pageChanged(1);
+    this.loadIndicadorPorUnidade();
   }
 
   pageChanged(pagina:number){
@@ -31,10 +40,16 @@ export class SiteComponent implements OnInit {
     this.page = pagina;
     var offset = (pagina-1) * this.itensPorPagina;
 
-    this.indicadorService.getAll(this.itensPorPagina, offset).subscribe(resp=>{
-        console.log(resp)
+    this.indicadorService.getAll(this.itensPorPagina, offset, this.pesquisa).subscribe(resp=>{
         this.total = resp.count;
         this.listaIndicadores=resp.rows;
+    });
+  }
+
+  loadIndicadorPorUnidade(){
+    this.indicadorService.getCountPorUnidade().subscribe(resp=>{
+      console.log(resp);
+      this.listaIndicadorPorUnidade = resp.unidades;
     });
   }
 
