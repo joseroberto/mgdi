@@ -1,0 +1,41 @@
+<footer>
+  <div class="row padding-10">
+    <div class="col-md-3">
+      <div class="well">
+        <p>
+          <a href="http://portalsaude.saude.gov.br/index.php?option=com_content&amp;view=category&amp;layout=faq&amp;id=285&amp;Itemid=529">
+            <img src="assets/img/site/logo_136.png" alt="Logo Disque Saúde 136 Ouvidoria Geral do SUS" title="Disque Saúde 136 Ouvidoria Geral do SUS"></a></p>
+            <address>
+              <strong>Ministério da Saúde</strong><br>
+              Esplanada dos Ministérios Bloco G<br>
+              Brasília-DF / CEP: 70058-900 <br>
+              Telefone: (61) 3315-2425<br>
+            </address>
+      </div>
+    </div>
+      <div class="col-md-9">
+        <div class="well padding-10">
+          <img src="http://portalsaude.saude.gov.br/templates/bootstrap-responsive/images/sombraColuna.png" alt="Imagem decorativa Sombra de coluna do rodapé" title="Imagem de sombra de coluna do rodapé" width="700" height="7">
+          <img src="http://portalsaude.saude.gov.br/images/jpg/2014/julho/01/assinatura-rodape-w3c.jpg" alt="Assinatura" title="Logos Acessibilidade Brasil e W3C Css" width="661" height="40">
+        </div>
+        <div class="txt-color-black">Sage/SGI - Sala de Gestão Estratégica  © 2017 - Versão {{ version }} -
+          <a (click)="lgModal.show()">Release Notes</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Release Notes</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 
 import {HeaderModule} from "./header/header.module";
 import {FooterComponent} from "./footer/footer.component";
+import {FooterSiteComponent} from "./footer/footer-site.component";
 import {NavigationModule} from "./navigation/navigation.module";
 import {RibbonComponent} from "./ribbon/ribbon.component";
 import {ShortcutComponent} from "./shortcut/shortcut.component";
@@ -25,15 +26,13 @@ import {UtilsModule} from "../utils/utils.module";
     NavigationModule,
     FormsModule,
     RouterModule,
-
     UtilsModule,
-
-
     TooltipModule,
     BsDropdownModule,
   ],
   declarations: [
     FooterComponent,
+    FooterSiteComponent,
     RibbonComponent,
     ShortcutComponent,
     LayoutSwitcherComponent,
@@ -46,6 +45,7 @@ import {UtilsModule} from "../utils/utils.module";
     HeaderModule,
     NavigationModule,
     FooterComponent,
+    FooterSiteComponent,
     RibbonComponent,
     ShortcutComponent,
     LayoutSwitcherComponent,
