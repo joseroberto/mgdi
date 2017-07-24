@@ -1,14 +1,15 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "smartadmin"
+    "name": "mgi"
   },
   "apps": [
     {
       "root": "src",
       "outDir": "dist",
       "assets": [
-        "assets"
+        "assets",
+        { "glob": "CHANGELOG.md", "input": "../", "output": "./" }
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -21,6 +22,7 @@
         "styles.css"
       ],
       "scripts": [
+        "../node_modules/marked/lib/marked.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
@@ -44,7 +46,7 @@
     {
       "project": "e2e/tsconfig.e2e.json"
     }
-  ], 
+  ],
   "test": {
     "karma": {
       "config": "./karma.conf.js"

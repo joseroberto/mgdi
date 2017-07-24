@@ -18,6 +18,8 @@ import { ModalModule, TooltipModule, BsDropdownModule} from "ngx-bootstrap";
 import { RouteBreadcrumbsComponent } from './ribbon/route-breadcrumbs.component';
 import {UtilsModule} from "../utils/utils.module";
 
+import { MarkdownToHtmlModule } from 'ng2-markdown-to-html';
+
 @NgModule({
   imports: [
     ModalModule,
@@ -29,6 +31,7 @@ import {UtilsModule} from "../utils/utils.module";
     UtilsModule,
     TooltipModule,
     BsDropdownModule,
+    MarkdownToHtmlModule.forRoot(),
   ],
   declarations: [
     FooterComponent,
