@@ -43,7 +43,7 @@ module.exports = {
       res.json({unidade: lista});
     });
   },
-  countIndicador: (req,res)=>{
+  countIndicadorPorUnidade: (req,res)=>{
     var attr = {
       attributes: ['sigla', 'nome', [sequelize.fn('count', sequelize.col('*')),'numero_indicadores']],
       include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{'ativo': true}, attributes:[] }],

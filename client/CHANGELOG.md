@@ -1,6 +1,14 @@
 # MGI - Módulo de Gestão de indicadores
 
-## Evoluções
+## Versões - Release Notes
+
+### 0.0.6
+
+* Interface de visualização de indicadores com filtro de busca de termos de palavras, lista de campos
+* Paginação com limite/offset de registros para indicadores
+* Contagem de indicadores com agregação por unidade (do MS) e por marcadores
+* Novos campos de indicador: Granularidade e critério de agregação
+* Consulta hierarquica de indicadores com detalhamento por unidade
 
 ### 0.0.5
 

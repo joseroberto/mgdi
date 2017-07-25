@@ -10,6 +10,7 @@ module.exports = {
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+        { model: models.Tag, as: 'Tags'}
       ],
       where: {},
       order: ['titulo']

@@ -93,4 +93,8 @@ export class IndicadorService extends REST {
   getCountPorUnidade(){
     return super.get('/indicador-porunidade');
   }
+  
+  getCountPorTag(){
+    return super.get('/indicador-portag');
+  }
 }

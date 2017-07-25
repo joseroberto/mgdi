@@ -24,7 +24,8 @@ import {LoginComponent} from './auth/login.component'
 // Servicos
 import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeService, AreaService,
   UnidadeMedidaService, IndicadorService, UtilService,
-  TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService, BancoDadosService, UnidadeService } from './services/index';
+  TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService,
+  BancoDadosService, UnidadeService, GranularidadeService, CriterioAgregacaoService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -73,7 +74,9 @@ type StoreType = {
     CategoriaAnaliseService,
     TipoConsultaService,
     BancoDadosService,
-    CookieService
+    CookieService,
+    GranularidadeService,
+    CriterioAgregacaoService
   ]
 })
 export class AppModule {

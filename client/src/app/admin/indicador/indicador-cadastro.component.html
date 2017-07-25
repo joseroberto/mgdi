@@ -138,15 +138,55 @@
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="select-1">Unidade de medida</label>
+
+                     <label class="col-md-2 control-label" for="unidade_medida">Unidade de medida
+                       <popover-content #unidade_medida
+                                        title="Unidade de Medida Utilizada"
+                                        [closeOnClickOutside]="true">
+                           Selecione a unidade de medida utilizada para o indicador
+                       </popover-content>
+                       <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade_medida"></i></label>
                      <div class="col-md-2">
                        <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
                          <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
                      </div>
+                     <label class="col-md-2 control-label" for="granularidade">Granularidade
+                       <popover-content #granularidade
+                                        title="Granularidade"
+                                        [closeOnClickOutside]="true">
+                           Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
+                       </popover-content>
+                       <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="granularidade"></i></label>
+                     <div class="col-md-2">
+                       <select class="form-control" id="granularidade" name="granularidade" [ngModel]="indicador.granularidade" required>
+                         <option *ngFor="let itemGranularidade of colecaoGranularidades" [ngValue]="itemGranularidade.codigo">{{ itemGranularidade.descricao }}</option>
+                       </select>
+                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-2 control-label" for="tags">Marcadores</label>
+                    <popover-content #criterio_agregacao
+                                     title="Critério de agregação"
+                                     [closeOnClickOutside]="true">
+                        Qual o critério de agregação para os dados do indicador. .
+                    </popover-content>
+                    <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
+                      <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="criterio_agregacao"></i></label>
+                    <div class="col-md-2">
+                      <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao" required>
+                        <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="tags">Marcadores
+                      <popover-content #tag
+                                       title="Marcadores"
+                                       [closeOnClickOutside]="true">
+                          Selecione dados para marcação de utilização do indicador.  Por exemplo: Qual programa ele pertence?
+                      </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tag"></i>
+                    </label>
                     <div class="col-md-6">
                       <select select2 multiple #tags class="form-control tags" name="secretaria2">
                         <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">

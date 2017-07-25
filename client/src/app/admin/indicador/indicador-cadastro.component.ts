@@ -3,7 +3,7 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
   PeriodicidadeService, AreaService, UtilService,
   TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
-  UnidadeService} from '../../services/index';
+  UnidadeService, GranularidadeService, CriterioAgregacaoService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import '../../extensions/array.extension';
 
@@ -60,11 +60,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number} = {
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number } = {
       codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:true, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null
+      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null
   };
 
   private colecaoClassificacao:any[] = [];
@@ -77,6 +77,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoTipoConsulta:any[] = [];
   private colecaoBancoDados:any[] = [];
   private colecaoUnidades:any[] = [];
+  private colecaoGranularidades:any[] = [];
+  private colecaoCriteriosAgregacao:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -100,7 +102,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private tipoConsultaService:TipoConsultaService,
       private route: ActivatedRoute,
       private router: Router,
-      private unidadeService: UnidadeService) {
+      private unidadeService: UnidadeService,
+      private granularidadeService: GranularidadeService,
+      private criterioAgregacaoService: CriterioAgregacaoService) {
         this.breadcrumb = ['Indicador', 'Novo'];
       }
 
@@ -134,6 +138,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.unidadeService.getAll().subscribe(resp=>{
         this.colecaoUnidades = resp.unidades;
+    }, err => this.util.msgErroInfra(err));
+    this.granularidadeService.getAll().subscribe(resp=>{
+        this.colecaoGranularidades = resp.granularidade;
+    }, err => this.util.msgErroInfra(err));
+    this.criterioAgregacaoService.getAll().subscribe(resp=>{
+        this.colecaoCriteriosAgregacao = resp.criterio_agregacao;
     }, err => this.util.msgErroInfra(err));
   }
 
