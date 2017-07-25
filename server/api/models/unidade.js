@@ -53,6 +53,13 @@ module.exports = function(sequelize, DataTypes) {
 
     //},
   },{
+    classMethods: {
+      associate: function(models) {
+        Unidade.hasMany(models.Indicador,{
+          as: 'IndicadoresRelacionados',
+          foreignKey: 'co_secretaria'});
+      }
+    },
     hierarchy: {
       foreignKey: 'unidade_pai',
       levelFieldName: 'nu_nivel',

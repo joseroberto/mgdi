@@ -147,6 +147,40 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/granularidade:
+    x-swagger-router-controller: granularidade
+    get:
+      description: Retorna a lista de granularidades possiveis para a consulta aos indicadores
+      summary: Lista de granularidades
+      operationId: getGranularidade
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetGranularidadeResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/criterio-agregacao:
+    x-swagger-router-controller: criterio-agregacao
+    get:
+      description: Retorna a lista de critérios de agregação possiveis para a consulta aos indicadores
+      summary: Lista de critérios de agregação
+      operationId: getCriterioAgregacao
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetCriterioAgregacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/banco-dados:
     x-swagger-router-controller: banco-dados
     get:
@@ -284,6 +318,19 @@ paths:
       operationId: getIndicadores
       tags:
         - Indicadores
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          type: number
+        - name: offset
+          in: query
+          required: false
+          type: number
+        - name: query
+          in: query
+          required: false
+          type: string
       responses:
         "200":
           description: Sucesso
@@ -299,7 +346,8 @@ paths:
       operationId: createIndicador
       tags:
         - Indicadores
-
+      security:
+        - Bearer: []
       parameters:
         - name: indicador
           in: body
@@ -315,6 +363,52 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador-portag:
+    x-swagger-router-controller: tag
+    get:
+      description: Retorna o numero de indicadores por tag no sistema
+      summary: Número de indicadores por tag
+      operationId: countIndicadorPorTag
+      tags:
+        - Indicadores
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+            properties:
+              unidades:
+                type: array
+                items:
+                  type: object
+ 
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+  /api/indicador-porunidade:
+    x-swagger-router-controller: unidade
+    get:
+      description: Retorna o numero de indicadores por unidade no sistema
+      summary: Número de indicadores por unidade
+      operationId: countIndicadorPorUnidade
+      tags:
+        - Indicadores
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+            properties:
+              unidades:
+                type: array
+                items:
+                  type: object
+ 
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
   /swagger:
     x-swagger-pipe: swagger_raw
   /api/indicador/{codigo}:
@@ -1005,8 +1099,12 @@ definitions:
       classificacao:
         type: number
         description: Código da classificçaão do Indicador
-        
-
+      granularidade:
+        type: number
+        description: Código da granularidade do Indicador
+      criterio_agregacao:
+        type: number
+        description: Código do critério de agregacão do Indicador
   Conceituacao:
     type: object
     properties:
@@ -1100,6 +1198,32 @@ definitions:
       - tag_categorias
     properties:
       tag_categorias:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetCriterioAgregacaoResponse:
+    required:
+      - criterio_agregacao
+    properties:
+      criterio_agregacao:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetGranularidadeResponse:
+    required:
+      - granularidade
+    properties:
+      granularidade:
         type: array
         items:
           type: object
@@ -1205,9 +1329,12 @@ definitions:
               type: string
   GetIndicadorConsulta:
     required:
-      - indicadores
+      - count
+      - rows
     properties:
-      indicadores:
+      count:
+        type: integer
+      rows:
         type: array
         items:
           type: object

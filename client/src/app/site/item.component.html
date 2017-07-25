@@ -1,50 +1,44 @@
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs icon="fa-bookmark" [items]="['Indicadores', 'RIPSA', 'Taxa de crescimento da população']" icon="paragraph" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicador',indicador.codigo ]" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></sa-big-breadcrumbs>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="well padding-10">
         <div class="row">
           <div class="col-md-9 padding-left-0">
-            <h3 class="margin-top-0"><a (click)="(null)"> Taxa de fecundidade total </a><br><small class="font-xs"><i>Fonte: <a (click)="(null)">IBGE</a></i></small></h3>
+            <h3 class="margin-top-0"><a (click)="(null)"> {{ indicador.titulo }} </a><br>
+              <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ indicador.fonte_dados }}</a></i></small></h3>
+            <h4>Descrição</h4>
+            <br/>
+            <p>{{ indicador.descricao }}</p>
+            <br/>
             <h4>Conceituação</h4>
             <br/>
-  <p>Número médio de filhos nascidos vivos, tidos por uma mulher ao final do seu período reprodutivo, na população residente em determinado espaço geográfico, no ano considerado.
-  <br/>
-  A taxa é estimada para um ano calendário determinado, a partir de informações retrospectivas obtidas em censos e inquéritos demográficos.</p>
-  <br />
-  <h4>Interpretação</h4>
-  <br/>
-  <p>Junto com a migração, esse indicador é o principal determinante da dinâmica demográfica, não sendo afetado pela estrutura etária da população. Expressa a situação reprodutiva de uma mulher pertencente a uma coorte hipotética, sujeita às taxas específicas de fecundidade por idade, observadas na população em estudo, supondo-se a ausência de mortalidade nessa coorte.
-  <br/>
-  Taxas inferiores a 2,1 são sugestivas de fecundidade insuficiente para assegurar a reposição populacional.
-  <br/>
-  O decréscimo da taxa pode estar associado a vários fatores, tais como: urbanização crescente, redução da mortalidade infantil, melhoria do nível educacional, ampliação do uso de métodos contraceptivos,
-  maior participação da mulher na força de trabalho e instabilidade de emprego.</p>
-  <br/>
-  <h4>Usos</h4>
-  <br />
-  <p>Avaliar tendências da dinâmica demográfica e realizar estudos comparativos entre áreas geográficas e grupos sociais.
-  <br/>
-  Realizar projeções de população, levando em conta hipóteses de tendências de comportamento futuro da
-  fecundidade.
-  <br/>
-  Subsidiar processos de planejamento, gestão e avaliação de políticas públicas nas áreas de saúde, educação,
-  trabalho e previdência social, com projeções demográficas que orientem o redimensionamento da oferta
-  de serviços, entre outras aplicações.
-</p>
-<h4>Limitações</h4>
-<br/>
-<ul>
-<li>Imprecisões da base de dados utilizada para o cálculo do indicador, relacionadas à coleta de dados demográficos
-ou à metodologia empregada para elaborar estimativas e projeções populacionais.</li>
-<li>Em função da subenumeração de dados em muitas áreas do país, o número de nascidos vivos obtido de
-sistemas de registro contínuo está sujeito a correções para o cálculo da taxa.</li>
-<li>O cálculo do indicador para anos intercensitários depende da disponibilidade de estimativas confiáveis do
-número de mulheres por faixas etárias do período reprodutivo.</li>
-</ul>
-<br/><br/>
+            <p>{{ indicador.conceituacao }}</p>
+            <br/>
+            <h4>Limitações</h4>
+            <br/>
+            <p>{{ indicador.limitacoes }}</p>
+            <br/>
+            <h4>Interpretação</h4>
+            <br/>
+            <p>{{ indicador.interpretacao }}</p>
+            <br/>
+            <h4>Usos</h4>
+            <br/>
+            <p>{{ indicador.usos }}</p>
+            <br/>
+            <h4>Método de Cálculo</h4>
+            <br/>
+            <p>{{ indicador.metodo_calculo }}</p>
+            <div *ngIf="indicador.observacoes">
+              <br/>
+              <h4>Observações</h4>
+              <br/>
+              <p>{{ indicador.observacoes }}</p>
+            </div>
+            <br/><br/>
             <a class="btn btn-primary" routerLink="/"> Voltar </a>
           </div>
         </div>

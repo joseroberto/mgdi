@@ -33,7 +33,7 @@ export class IndicadorListaComponent {
 
 
   public options = {
-  "ajax": {"url": `${environment.url}/api/indicador`, "dataSrc":'indicadores'},
+  "ajax": {"url": `${environment.url}/api/indicador`, "dataSrc":'rows'},
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
   "columns": [
@@ -77,6 +77,15 @@ export class IndicadorListaComponent {
   }
 
   public detailsFormat(d) {
+    let tags:string='';
+    if(d.Tags.length){
+      tags += '<tr><td>Marcador(es):</td><td colspan="5">';
+      d.Tags.forEach(item=>{
+        tags+=`<span class="badge badge-info">${item.descricao}</span>`;
+      });
+      tags += '</td></tr>';
+    }
+
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
@@ -92,12 +101,12 @@ export class IndicadorListaComponent {
                 <td colspan="5">${d.conceituacao || ''}</td>
             </tr>
             <tr>
-                <td>Periodicidade de atualização: </td>
-                <td>${d.PeriodicidadeAtualizacao.descricao}</td>
+                <td >Un. de medida: </td><td>${d.UnidadeMedida.descricao}</td>
+                <td>Periodicidade de atualização: &nbsp;${d.PeriodicidadeAtualizacao.descricao}</td>
                 <td>Periodicidade de avaliação: &nbsp;${d.PeriodicidadeAvaliacao.descricao}</td>
-                <td>Periodicidade de monitoramento: &nbsp;${d.PeriodicidadeMonitoramento.descricao}</td>
-                <td colspan="2">Unidade de medida: &nbsp;${d.UnidadeMedida.descricao}</td>
+                <td colspan="2">Periodicidade de monitoramento: &nbsp;${d.PeriodicidadeMonitoramento.descricao}</td>
             </tr>
+            ${tags}
             <tr>
                 <td>Tipo</td>
                 <td colspan="5">
@@ -114,5 +123,4 @@ export class IndicadorListaComponent {
             </tbody>
         </table>`
   }
-
 }

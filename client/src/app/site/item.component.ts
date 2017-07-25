@@ -1,11 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { IndicadorService, UtilService } from '../services/index';
+
 @Component({
   templateUrl: 'item.component.html',
 })
 export class ItemComponent implements OnInit {
-  constructor(private location:Location) {  }
+  private indicador:Object=null;
 
-  ngOnInit() {}
+  constructor(private location:Location, private route: ActivatedRoute, private indicadorService:IndicadorService) {
+    this.indicador = {titulo:''}
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+        if(params['codigo']){
+          this.loadIndicador(params['codigo']);
+        }
+    });
+  }
+
+  loadIndicador(codigo:string){
+    this.indicadorService.get(codigo).subscribe(resp=>{
+      if (resp){
+        console.log(resp);
+        this.indicador = resp;
+      }
+    });
+  }
 
 }

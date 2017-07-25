@@ -1,19 +1,41 @@
 require('../extensions/array');
 var models  = require('../models');
+var sequelize = require('sequelize');
 
 module.exports = {
   getIndicadores: (req, res)=>{
-    models.Indicador.findAll({
-      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao' ],
+    var attr = {
+      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
-      { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
-      { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-      { model: models.UnidadeMedida, as: 'UnidadeMedida' },
-     ],
+        { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
+        { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+        { model: models.Tag, as: 'Tags'}
+      ],
+      where: {},
       order: ['titulo']
-    }).then(function(lista) {
-      //console.log(lista);
-      res.json({indicadores: lista});
+    };
+    // Testa autorizacao para forcar filtro
+    if (!req.headers.authorization){
+        attr.where['privado'] = false;
+    }
+
+    if(req.swagger.params.limit.value){
+        attr['limit'] = req.swagger.params.limit.value;
+    }
+
+    if(req.swagger.params.query.value){
+      $or: [{a: 5}, {a: 6}]
+        attr.where['$or'] = [{'titulo':{ '$like': `%${req.swagger.params.query.value}%`}},
+                             {'descricao':{ '$like': `%${req.swagger.params.query.value}%`}}];
+    }
+
+    if(req.swagger.params.offset.value){
+        attr['offset'] = req.swagger.params.offset.value;
+    }
+
+    models.Indicador.findAndCountAll(attr).then(function(resp) {
+      res.json(resp);
     });
   },
   createIndicador: (req,res)=>{

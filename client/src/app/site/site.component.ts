@@ -1,17 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import {FadeInTop} from "../shared/animations/fade-in-top.decorator";
+import { IndicadorService, UtilService } from '../services/index';
 
 @FadeInTop()
 @Component({
-  selector: 'app-blog',
-  templateUrl: './blog.component.html',
+  selector: 'app-site',
+  templateUrl: './site.component.html',
 })
-export class BlogComponent implements OnInit {
+export class SiteComponent implements OnInit {
+  private listaIndicadores:any[];
+  private listaIndicadorPorUnidade:any[];
+  private listaIndicadorPorTag:any[];
+  private page: number =1;
+  private total: number = 0;
+  private itensPorPagina: number = 20;
+  private pesquisa:string = '';
+  private minha_pesquisa:string = '';
 
+  refresh_page(){
+    this.pesquisa = this.minha_pesquisa;
+    this.pageChanged(1);
+  }
 
-  constructor() { }
+  getPage(page: number) {
+    this.loadIndicador(page);
+  }
+
+  constructor(private indicadorService:IndicadorService) { }
 
   ngOnInit() {
+    this.pageChanged(1);
+    this.loadIndicadorPorUnidade();
+    this.loadIndicadorPorTag();
+  }
+
+  pageChanged(pagina:number){
+    this.loadIndicador(pagina);
+  }
+
+  loadIndicador(pagina:number){
+    this.page = pagina;
+    var offset = (pagina-1) * this.itensPorPagina;
+
+    this.indicadorService.getAll(this.itensPorPagina, offset, this.pesquisa).subscribe(resp=>{
+        this.total = resp.count;
+        this.listaIndicadores=resp.rows;
+    });
+  }
+
+  loadIndicadorPorUnidade(){
+    this.indicadorService.getCountPorUnidade().subscribe(resp=>{
+      this.listaIndicadorPorUnidade = resp.unidades;
+    });
+  }
+
+  loadIndicadorPorTag(){
+    this.indicadorService.getCountPorTag().subscribe(resp=>{
+      console.log(resp);
+      this.listaIndicadorPorTag = resp.tags.slice(0,9);
+    });
   }
 
   barColorsDemo(row, series, type) {

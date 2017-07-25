@@ -69,41 +69,7 @@
         <h4 class="modal-title">Release Notes</h4>
       </div>
       <div class="modal-body">
-        <div ng-bind-html="trustedHtml" class="ng-binding">
-          <h3 id="sgi">SGI</h3>
-<p>Sistema de gestão de indicadores do Ministério da Saúde.</p>
-<h4 id="evoluções">Evoluções</h4>
-<h3 id="004">0.0.5</h3>
-<ul>
-<li>Ficha técnica de indicadores</li>
-<li>Integração com SCPA de produção</li>
-<li>Indicadores agora possuem categoria de análise, indicadores relacionados</li>
-<li>Tags múltiplas funcionando para edição/inclusão/exclusão</li>
-<li>Correção no componente de lista (tabela)</li>
-</ul>
-<h3 id="004">0.0.4</h3>
-<ul>
-<li>Criação da infraestrutura Secretarias</li>
-<li>Infraestrutura para indicadores relacionados</li>
-<li>Infraestrutura para categorias de análise</li>
-<li>Tags</li>
-<li>Melhoria na distribuição de campos nos dados gerais de indicadores</li>
-</ul>
-<h3 id="003">0.0.3</h3>
-<ul>
-<li>Formulário de indicadores com validação e uso de interface REST</li>
-<li>Formulário de planos/metas com validação e uso de interface REST</li>
-</ul>
-<h3 id="002">0.0.2</h3>
-<ul>
-<li>integração com validação de senha do SCPA</li>
-</ul>
-<h3 id="001">0.0.1</h3>
-<ul>
-<li>telas do sistema de administração</li>
-<li>telas do site</li>
-<li>projeto de interface</li>
-</ul></div>
+        <div markdown-to-html src="CHANGELOG.md"></div>
       </div>
     </div>
   </div>

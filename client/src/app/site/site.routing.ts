@@ -1,14 +1,14 @@
 import {ModuleWithProviders} from "@angular/core"
 import {RouterModule, Routes} from "@angular/router";
-import { BlogComponent } from './blog.component';
+import { SiteComponent } from './site.component';
 import { ItemComponent } from './item.component';
 
 export const routes:Routes = [
   {
       path: '',
-      component: BlogComponent,
+      component: SiteComponent,
       data: {pageTitle: 'Site'}
-  }, { path: 'item', component: ItemComponent}
+  }, { path: 'item/:codigo', component: ItemComponent}
 ];
 
 export const routing = RouterModule.forChild(routes);

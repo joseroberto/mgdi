@@ -1,16 +1,20 @@
 import {NgModule} from "@angular/core";
 import { CommonModule } from '@angular/common';
-import {routing} from "./site.routing";
+import {SmartadminModule} from "../shared/smartadmin.module";
 
-import { BlogComponent } from './blog.component';
+import {routing} from "./site.routing";
+import {NgxPaginationModule} from 'ngx-pagination';
+import { SiteComponent } from './site.component';
 import { ItemComponent } from './item.component';
 import {SmartadminLayoutModule} from "../shared/layout/layout.module";
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 
+import { PaginacaoComponent } from '../componentes/paginacao.component';
+
 @NgModule({
-  declarations: [BlogComponent, ItemComponent],
+  declarations: [SiteComponent, ItemComponent, PaginacaoComponent],
   imports: [
-    routing,SmartadminLayoutModule,MorrisGraphModule
+    routing,CommonModule, SmartadminModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
   ],
   providers: [],
   entryComponents: []

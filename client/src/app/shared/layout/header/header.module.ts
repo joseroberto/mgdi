@@ -13,7 +13,7 @@ import {ActivitiesMessageComponent} from "./activities/activities-message/activi
 import {ActivitiesNotificationComponent} from "./activities/activities-notification/activities-notification.component";
 import {ActivitiesTaskComponent} from "./activities/activities-task/activities-task.component";
 import {HeaderComponent} from "./header.component";
-
+import {HeaderSiteComponent} from "./header-site.component";
 import {UtilsModule} from "../../utils/utils.module";
 import { SpeechButtonComponent } from './speech-button/speech-button.component';
 import {I18nModule} from "../../i18n/i18n.module";
@@ -43,10 +43,12 @@ import {BsDropdownModule} from "ngx-bootstrap";
     CollapseMenuComponent,
     ActivitiesComponent,
     HeaderComponent,
+    HeaderSiteComponent,
     SpeechButtonComponent,
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    HeaderSiteComponent
   ]
 })
 export class HeaderModule{}
