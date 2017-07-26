@@ -60,11 +60,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number } = {
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean } = {
       codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:true, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null
+      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null, especifico: false
   };
 
   private colecaoClassificacao:any[] = [];
@@ -134,7 +134,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.colecaoBancoDados = resp.banco_dados;
     }, err => this.util.msgErroInfra(err));
     this.indicadorService.getAll().subscribe(resp => {
-        this.colecaoIndicadores = resp.indicadores.filter(item=>item.codigo!=this.indicador.codigo);
+        this.colecaoIndicadores = resp.rows.filter(item=>item.codigo!=this.indicador.codigo);
     }, err => this.util.msgErroInfra(err));
     this.unidadeService.getAll().subscribe(resp=>{
         this.colecaoUnidades = resp.unidades;
@@ -161,7 +161,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       //$('.procedimento_operacional').summernote(this.options);
   }
 
-  loadIndicador(){
+  private loadIndicador(){
     this.sub = this.route.params.subscribe(params => {
         this.indicador.codigo = params['codigo'];
         if(this.indicador.codigo){
@@ -181,7 +181,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  updateTagList(tags:any[]) {
+  private updateTagList(tags:any[]) {
     let options = this.selectElRef.nativeElement.options;
     for(let i=0; i < options.length; i++) {
       options[i].selected = tags.find( item=> item.codigo==options[i].value)!=undefined;
@@ -193,7 +193,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.sub.unsubscribe();
   }
 
-  newIndicador(form){
+  private newIndicador(form){
     if(!form.pristine){
       this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
     }else{
@@ -201,7 +201,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  editConceituacao(flag){
+  private editConceituacao(flag){
       this.isEditConceituacao = flag;
       if(flag){
         $('.conceituacao').summernote(this.options);
@@ -219,7 +219,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editMetodoCalculo(flag){
+  private editMetodoCalculo(flag){
     this.isEditMetodoCalculo = flag;
     if(flag){
       $('.metodo').summernote(this.options);
@@ -237,7 +237,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  editFonteDados(flag){
+  private editFonteDados(flag){
     this.isEditFonteDados = flag;
     if(flag){
       $('.fonte').html('<textarea id="fonte_dados" name="fonte_dados" class="form-control" placeholder="Fonte de dados" rows="1" ></textarea>');
@@ -254,7 +254,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  editInterpretacao(flag){
+  private editInterpretacao(flag){
       this.isEditInterpretacao = flag;
       if(flag){
         $('.interpretacao').summernote(this.options);
@@ -272,7 +272,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editUsos(flag){
+  private editUsos(flag){
       this.isEditUsos = flag;
       if(flag){
         $('.usos').summernote(this.options);
@@ -290,7 +290,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editProcedimentoOperacional(flag){
+  private editProcedimentoOperacional(flag){
       this.isEditProcedimentoOperacional = flag;
       if(flag){
         $('.procedimento_operacional').summernote(this.options);
@@ -308,7 +308,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editLimitacoes(flag){
+  private editLimitacoes(flag){
       this.isEditLimitacoes = flag;
       if(flag){
         $('.limitacoes').summernote(this.options);
@@ -326,7 +326,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editNotas(flag){
+  private editNotas(flag){
       this.isEditNotas = flag;
       if(flag){
         $('.notas').summernote(this.options);
@@ -344,7 +344,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  editObservacoes(flag){
+  private editObservacoes(flag){
       this.isEditObservacoes = flag;
       if(flag){
         $('.observacoes').summernote(this.options);
@@ -362,7 +362,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  onSubmit(form){
+  private onSubmit(form){
     let valor: IndicadorAtualizacao= this.populaObjetoGravacao([this.indicador,form.value]);
     console.log('Antes de gravar', valor);
     if(form.valid)
@@ -388,7 +388,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
-  populaObjetoGravacao(obj:any[]):IndicadorAtualizacao{
+  private populaObjetoGravacao(obj:any[]):IndicadorAtualizacao{
       console.log('obj', obj);
       let valor:IndicadorAtualizacao = new IndicadorAtualizacao();
       obj.forEach(item=>{
@@ -411,7 +411,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       });
       return valor;
   }
-  adicionaItemRelacionado(){
+  private adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
     let codigo:string = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
     if(codigo){
@@ -429,7 +429,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  apagaItemRelacionado(codigo:string){
+  private apagaItemRelacionado(codigo:string){
     this.indicadorService.deleteIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
@@ -440,7 +440,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err=>this.util.msgErroInfra(err));
   }
 
-  adicionaCategoriaRelacionada(){
+  private adicionaCategoriaRelacionada(){
     let valorSelecionado = $('#categoria_relacionada').val();
     let codigo_categoria_analise:string = $(`#listacat option[value='${valorSelecionado}']`).attr('codigo');
     if(codigo_categoria_analise){
@@ -458,7 +458,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  apagaCategoriaRelacionada(codigo_categoria_analise:string){
+  private apagaCategoriaRelacionada(codigo_categoria_analise:string){
     this.indicadorService.deleteCategoriaRelacionada(this.indicador.codigo, codigo_categoria_analise).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
@@ -469,7 +469,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err=>this.util.msgErroInfra(err));
   }
 
-  selecionaUnidade(){
+  private selecionaUnidade(){
     let valorSelecionado = $('#unidade_responsavel').val();
     let codigo_unidade:number = $(`#listResponsavel option[value='${valorSelecionado}']`).attr('codigo');
     if(codigo_unidade){
@@ -478,7 +478,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  carregaUnidade(codigo:number){
+  private carregaUnidade(codigo:number){
     this.unidadeService.getUnidade(codigo).subscribe(resp=>{
       console.log('Secretaria selecionada:', resp);
       this.secretaria_selecionada = resp.unidade;
@@ -491,7 +491,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     });
   }
 
-  formataNomeUnidade():string{
+  private formataNomeUnidade():string{
     if(this.indicador.UnidadeResponsavel){
       return `[${ this.indicador.UnidadeResponsavel.sigla }] - ${this.indicador.UnidadeResponsavel.nome}`;
     }

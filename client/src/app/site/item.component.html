@@ -9,34 +9,27 @@
           <div class="col-md-9 padding-left-0">
             <h3 class="margin-top-0"><a (click)="(null)"> {{ indicador.titulo }} </a><br>
               <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ indicador.fonte_dados }}</a></i></small></h3>
-            <h4>Descrição</h4>
-            <br/>
-            <p>{{ indicador.descricao }}</p>
-            <br/>
-            <h4>Conceituação</h4>
-            <br/>
-            <p>{{ indicador.conceituacao }}</p>
-            <br/>
-            <h4>Limitações</h4>
-            <br/>
-            <p>{{ indicador.limitacoes }}</p>
-            <br/>
-            <h4>Interpretação</h4>
-            <br/>
-            <p>{{ indicador.interpretacao }}</p>
-            <br/>
-            <h4>Usos</h4>
-            <br/>
-            <p>{{ indicador.usos }}</p>
-            <br/>
-            <h4>Método de Cálculo</h4>
-            <br/>
-            <p>{{ indicador.metodo_calculo }}</p>
+            <legend>Descrição</legend>
+            <span class="descricao" [innerHTML]="indicador.descricao||msg_padrao"></span>
+            <br/><br/>
+            <legend>Conceituação</legend>
+            <span class="conceituacao" [innerHTML]="indicador.conceituacao||msg_padrao"></span>
+            <br/><br/>
+            <legend>Limitações</legend>
+            <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
+            <br/><br/>
+            <legend>Interpretação</legend>
+            <span class="interpretacao" [innerHTML]="indicador.interpretacao||msg_padrao"></span>
+            <br/><br/>
+            <legend>Usos</legend>
+            <span class="usos" [innerHTML]="indicador.usos||msg_padrao"></span>
+            <br/><br/>
+            <legend>Método de Cálculo</legend>
+            <span class="metodo_calculo" [innerHTML]="indicador.metodo_calculo||msg_padrao"></span>
             <div *ngIf="indicador.observacoes">
-              <br/>
-              <h4>Observações</h4>
-              <br/>
-              <p>{{ indicador.observacoes }}</p>
+              <br/><br/>
+              <legend>Observações</legend>
+              <span class="observacoes" [innerHTML]="indicador.observacoes||msg_padrao"></span>
             </div>
             <br/><br/>
             <a class="btn btn-primary" routerLink="/"> Voltar </a>

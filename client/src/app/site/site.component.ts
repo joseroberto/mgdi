@@ -14,16 +14,12 @@ export class SiteComponent implements OnInit {
   private page: number =1;
   private total: number = 0;
   private itensPorPagina: number = 20;
-  private pesquisa:string = '';
+  private pesquisa:Object = {};
   private minha_pesquisa:string = '';
 
-  refresh_page(){
-    this.pesquisa = this.minha_pesquisa;
+  buscaDados(){
+    this.pesquisa['query'] = this.minha_pesquisa;
     this.pageChanged(1);
-  }
-
-  getPage(page: number) {
-    this.loadIndicador(page);
   }
 
   constructor(private indicadorService:IndicadorService) { }
@@ -42,55 +38,76 @@ export class SiteComponent implements OnInit {
     this.page = pagina;
     var offset = (pagina-1) * this.itensPorPagina;
 
-    this.indicadorService.getAll(this.itensPorPagina, offset, this.pesquisa).subscribe(resp=>{
+    this.indicadorService.getAll(this.itensPorPagina, offset, this.formataPesquisa(this.pesquisa)).subscribe(resp=>{
         this.total = resp.count;
-        this.listaIndicadores=resp.rows;
+        this.listaIndicadores=resp.rows.slice(0,19);  //TODO: Retirar se o limit funcionar na consulta
     });
+  }
+
+  formataPesquisa(objeto: Object):string{
+      let resposta:string='';
+      if ('query' in objeto){
+        resposta+=`query=${objeto['query']}&`;
+      }
+      if ('tag' in objeto){
+        resposta+=`tag=${objeto['tag'][0]}&`;
+      }
+      if ('unidade' in objeto){
+        resposta+=`unidade=${objeto['unidade'][0]}&`;
+      }
+      return resposta;
+  }
+
+  formataTela(objeto:Object):string{
+    let resposta:string='';
+
+    if ('query' in objeto){
+      resposta+=`<span class="badge bg-color-greenLight">${objeto['query']}</span>&nbsp;`;
+    }
+    if ('tag' in objeto){
+      resposta+=`<span class="badge bg-color-orange">${objeto['tag'][1]}</span>&nbsp;`;
+    }
+    if ('unidade' in objeto){
+      resposta+=`<span class="badge bg-color-default">${objeto['unidade'][1]}</span>&nbsp;`;
+    }
+    return resposta;
+  }
+
+  isEmpty(objeto:Object){
+    return Object.keys(objeto).length==0;
   }
 
   loadIndicadorPorUnidade(){
     this.indicadorService.getCountPorUnidade().subscribe(resp=>{
+      console.log('Unidades',resp.unidades);
       this.listaIndicadorPorUnidade = resp.unidades;
     });
   }
 
   loadIndicadorPorTag(){
     this.indicadorService.getCountPorTag().subscribe(resp=>{
-      console.log(resp);
+      console.log('Tags',resp.tags);
       this.listaIndicadorPorTag = resp.tags.slice(0,9);
     });
   }
 
-  barColorsDemo(row, series, type) {
-    if (type === 'bar') {
-      var red = Math.ceil(150 * row.y / 8);
-      return 'rgb(' + red + ',0,0)';
-    } else {
-      return '#000';
-    }
+  buscaPorTag(codigo:number, sigla:string){
+      this.pesquisa['tag'] = [codigo, sigla];
+      this.pageChanged(1);
   }
 
-  percentageFormat(x) {
-    return x + "%"
+  buscaPorUnidade(codigo:number, nome:string){
+      this.pesquisa['unidade'] = [codigo,nome];
+      this.pageChanged(1);
   }
 
   dateFormat(d) {
     return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
   }
 
-  getData(){
-    return [{"x":"2011 Q1","y":0},{"x":"2011 Q2","y":1},{"x":"2011 Q3","y":2},{"x":"2011 Q4","y":3},{"x":"2012 Q1","y":4},{"x":"2012 Q2","y":5},{"x":"2012 Q3","y":6},{"x":"2012 Q4","y":7},{"x":"2013 Q1","y":8}];
+  limpaFiltro(){
+    this.pesquisa = {};
+    this.pageChanged(1);
   }
 
-  getData2(){
-    return [{"x":"2011 Q1","y":3,"z":2,"a":3},{"x":"2011 Q2","y":2,"z":null,"a":1},{"x":"2011 Q3","y":0,"z":2,"a":4},{"x":"2011 Q4","y":2,"z":4,"a":3}];
-  }
-
-  getData3(){
-    return [{"period":"2012-10-01","licensed":3407,"sorned":660},{"period":"2012-09-30","licensed":3351,"sorned":629},{"period":"2012-09-29","licensed":3269,"sorned":618},{"period":"2012-09-20","licensed":3246,"sorned":661},{"period":"2012-09-19","licensed":3257,"sorned":667},{"period":"2012-09-18","licensed":3248,"sorned":627},{"period":"2012-09-17","licensed":3171,"sorned":660},{"period":"2012-09-16","licensed":3171,"sorned":676},{"period":"2012-09-15","licensed":3201,"sorned":656},{"period":"2012-09-10","licensed":3215,"sorned":622}];
-  }
-
-  getData4(){
-    return [{"value":70,"label":"AM"},{"value":15,"label":"RO"},{"value":10,"label":"RR"},{"value":5,"label":"Outros"}];
-  }
 }

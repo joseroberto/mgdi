@@ -331,6 +331,14 @@ paths:
           in: query
           required: false
           type: string
+        - name: secretaria
+          in: query
+          required: false
+          type: number
+        - name: tag
+          in: query
+          required: false
+          type: number
       responses:
         "200":
           description: Sucesso

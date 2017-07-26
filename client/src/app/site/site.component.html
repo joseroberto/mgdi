@@ -2,9 +2,10 @@
   <div class="row">
     <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicadores']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     <br/>
-    <h3 class="margin-top-0" *ngIf="pesquisa">
+    <h3 class="margin-top-0" *ngIf="!isEmpty(pesquisa)">
       <br/>
-      <small class="font-xs"><i>Pesquisa por <a (click)="(null)">{{ pesquisa }}</a></i></small>
+      <small class="font-xs"><i>Pesquisa por <span [innerHTML]="formataTela(pesquisa)"></span></i></small>
+      &nbsp;&nbsp;<a class="btn btn-primary btn-xs" (click)="limpaFiltro()"><i class="fa fa-times"></i> Limpa filtro</a>
     </h3>
   </div>
   <div class="row" >
@@ -51,7 +52,7 @@
             [(ngModel)]="minha_pesquisa">
           <span class="input-group-btn">
 									<button class="btn btn-default" type="button"
-                    (click)="refresh_page()">
+                    (click)="buscaDados()">
                     <i class="fa fa-search"></i>
                   </button>
           </span>
@@ -64,7 +65,7 @@
         <div class="row">
           <div class="col-lg-12">
               <span *ngFor="let item of listaIndicadorPorTag">
-                <a href="#" data-toggle="tooltip" title="Quantidade: {{ item.numero_indicadores }}"><span class="badge badge-info">{{ item.descricao }}</span></a>
+                <a href="#" (click)="buscaPorTag(item.codigo, item.descricao )" data-toggle="tooltip" title="Quantidade: {{ item.numero_indicadores }}"><span class="badge badge-info">{{ item.descricao }}</span></a>
               </span>
           </div>
         </div>
@@ -89,21 +90,6 @@
           <li>
             <a (click)="(null)" class="margin-top-0">Taxa de mortalidade perinatal</a>
           </li>
-          <li>
-            <a (click)="(null)" class="padding-top-5 display-block">Grau de urbanização</a>
-          </li>
-          <li>
-            <a (click)="(null)" class="margin-top-5">Índice de envelhecimento</a>
-          </li>
-          <li>
-            <a (click)="(null)" class="margin-top-5">Taxa de fecundidade total</a>
-          </li>
-          <li>
-            <a (click)="(null)" class="margin-top-5">Taxa bruta de mortali</a>
-          </li>
-          <li>
-            <a (click)="(null)" class="margin-top-5">Esperança de vida ao nascer</a>
-          </li>
         </ul>
       </div>
       <!-- /well -->
@@ -114,7 +100,7 @@
           <div class="col-lg-12">
             <ul class="list-group no-margin">
               <li class="list-group-item" *ngFor="let item of listaIndicadorPorUnidade">
-                <a href="#" data-toggle="tooltip" title="{{ item.nome }}"> <span class="badge pull-right">{{ item.numero_indicadores }}</span> {{ item.sigla }} </a>
+                <a href="#" (click)="buscaPorUnidade(item.codigo, item.sigla)" data-toggle="tooltip" title="{{ item.nome }}"> <span class="badge pull-right">{{ item.numero_indicadores }}</span> {{ item.sigla }} </a>
               </li>
             </ul>
           </div>
