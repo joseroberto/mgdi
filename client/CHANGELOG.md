@@ -9,6 +9,9 @@
 * Contagem de indicadores com agregação por unidade (do MS) e por marcadores
 * Novos campos de indicador: Granularidade e critério de agregação
 * Consulta hierarquica de indicadores com detalhamento por unidade
+* Novo campo de indicador flag para o uso específico
+* Busca de indicadores por Unidade do MS
+* Busca de indicadores por Marcadores
 
 ### 0.0.5
 

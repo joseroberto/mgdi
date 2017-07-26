@@ -10,7 +10,7 @@ module.exports = {
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
-        { model: models.Tag, as: 'Tags'}
+        //{ model: models.Tag, as: 'Tags'}
       ],
       where: {},
       order: ['titulo']
@@ -20,18 +20,28 @@ module.exports = {
         attr.where['privado'] = false;
     }
 
-    if(req.swagger.params.limit.value){
-        attr['limit'] = req.swagger.params.limit.value;
-    }
+    //if(req.swagger.params.limit.value){
+    //    attr['limit'] = req.swagger.params.limit.value;
+    //} else {
+        //BUG: Há um erro no sequelize para consultas com limit e mapeamentos n:n como o caso da Tags
+        if(req.swagger.params.tag.value){
+            attr.include.push({ model: models.Tag, as: 'Tags', where:{ codigo: req.swagger.params.tag.value}});
+        }else{
+            attr.include.push({ model: models.Tag, as: 'Tags'});
+        }
+    //}
 
     if(req.swagger.params.query.value){
-      $or: [{a: 5}, {a: 6}]
         attr.where['$or'] = [{'titulo':{ '$like': `%${req.swagger.params.query.value}%`}},
                              {'descricao':{ '$like': `%${req.swagger.params.query.value}%`}}];
     }
 
     if(req.swagger.params.offset.value){
         attr['offset'] = req.swagger.params.offset.value;
+    }
+
+    if(req.swagger.params.secretaria.value){
+        attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
 
     models.Indicador.findAndCountAll(attr).then(function(resp) {
@@ -128,9 +138,6 @@ module.exports = {
   },
 
   deleteCategoriaAnalise: (req,res)=>{
-    console.log({
-      co_indicador:req.swagger.params.codigo.value,
-      co_categoria_analise:req.swagger.params.categoria_analise.value});
     models.IndicadorCategoriaAnalise.destroy({ where: {
       co_indicador:req.swagger.params.codigo.value,
       co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{

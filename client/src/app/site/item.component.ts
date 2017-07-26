@@ -8,6 +8,7 @@ import { IndicadorService, UtilService } from '../services/index';
 })
 export class ItemComponent implements OnInit {
   private indicador:Object=null;
+  private msg_padrao = 'Não há dados cadastrados';
 
   constructor(private location:Location, private route: ActivatedRoute, private indicadorService:IndicadorService) {
     this.indicador = {titulo:''}
