@@ -10,6 +10,7 @@ module.exports = {
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+        { model: models.Unidade, as: 'UnidadeResponsavel' },
         //{ model: models.Tag, as: 'Tags'}
       ],
       where: {},
@@ -41,10 +42,15 @@ module.exports = {
     }
 
     if(req.swagger.params.secretaria.value){
+        console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
 
     models.Indicador.findAndCountAll(attr).then(function(resp) {
+      //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
+      if(req.swagger.params.limit.value){
+        resp.rows = resp.rows.slice(0, req.swagger.params.limit.value);
+      }
       res.json(resp);
     });
   },

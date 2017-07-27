@@ -18,6 +18,7 @@ export class IndicadorService extends REST {
     if(!query){
       query='';
     }
+    console.log('query', query);
     let path = `/indicador?limit=${limit}&offset=${offset}&${query}`;
     return super.get(path);
   }
