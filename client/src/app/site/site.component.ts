@@ -40,7 +40,7 @@ export class SiteComponent implements OnInit {
 
     this.indicadorService.getAll(this.itensPorPagina, offset, this.formataPesquisa(this.pesquisa)).subscribe(resp=>{
         this.total = resp.count;
-        this.listaIndicadores=resp.rows.slice(0,19);  //TODO: Retirar se o limit funcionar na consulta
+        this.listaIndicadores=resp.rows;
     });
   }
 
@@ -53,7 +53,7 @@ export class SiteComponent implements OnInit {
         resposta+=`tag=${objeto['tag'][0]}&`;
       }
       if ('unidade' in objeto){
-        resposta+=`unidade=${objeto['unidade'][0]}&`;
+        resposta+=`secretaria=${objeto['unidade'][0]}&`;
       }
       return resposta;
   }
@@ -69,6 +69,18 @@ export class SiteComponent implements OnInit {
     }
     if ('unidade' in objeto){
       resposta+=`<span class="badge bg-color-default">${objeto['unidade'][1]}</span>&nbsp;`;
+    }
+    return resposta;
+  }
+
+  formataBadgesTela(label:string, campo:string, color:string, array:any[]):string{
+    let resposta:string='';
+
+    array.forEach((item)=>{
+      resposta+=`<span class="badge bg-color-${color}">${item[campo]}</span>&nbsp;`;
+    });
+    if(resposta){
+      resposta= '<h4><small class="font-xs"><i>'+label+'</i></small>&nbsp;'+resposta+'</h4>';
     }
     return resposta;
   }

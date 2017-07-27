@@ -1,12 +1,11 @@
 <div id="content">
   <div class="row">
     <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicadores']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
-    <br/>
-    <h3 class="margin-top-0" *ngIf="!isEmpty(pesquisa)">
-      <br/>
-      <small class="font-xs"><i>Pesquisa por <span [innerHTML]="formataTela(pesquisa)"></span></i></small>
-      &nbsp;&nbsp;<a class="btn btn-primary btn-xs" (click)="limpaFiltro()"><i class="fa fa-times"></i> Limpa filtro</a>
-    </h3>
+
+      <h3 class="col-md-12 margin-top-0" *ngIf="!isEmpty(pesquisa)">
+        <small class="font-xs"><i>Pesquisa por <span [innerHTML]="formataTela(pesquisa)"></span></i></small>
+        &nbsp;&nbsp;<a class="btn btn-primary btn-xs" (click)="limpaFiltro()"><i class="fa fa-times"></i> Limpa filtro</a>
+      </h3>
   </div>
   <div class="row" >
     <div class="col-sm-9">
@@ -34,7 +33,11 @@
                 <h3 class="margin-top-0"><a routerLink="/item/{{ item.codigo }}"> {{ item.titulo }} </a><br>
                   <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ item.fonte_dados }}</a></i></small>
                 </h3>
-                <p> {{ item.conceituacao }} </p>
+                <span [innerHTML]="item.conceituacao"></span>
+                <hr/>
+                <span [innerHTML]="formataBadgesTela('Unidade Responsável:', 'sigla', 'default', [item.UnidadeResponsavel])"></span>
+                <span [innerHTML]="formataBadgesTela('Marcador(es):', 'descricao', 'orange', item.Tags)"></span>
+                <br/>
                 <a class="btn btn-primary" routerLink="/item/{{ item.codigo }}"> Leia mais </a>
               </div>
             </div>
@@ -61,7 +64,7 @@
       </div>
       <!-- /well -->
       <div class="well padding-10">
-        <h5 class="margin-top-0"><i class="fa fa-tags"></i> Tags populares:</h5>
+        <h5 class="margin-top-0"><i class="fa fa-tags"></i> Marcadores populares:</h5>
         <div class="row">
           <div class="col-lg-12">
               <span *ngFor="let item of listaIndicadorPorTag">
@@ -71,7 +74,7 @@
         </div>
       </div>
       <!-- /well -->
-      <div class="well padding-10">
+      <div class="well padding-10" *ngIf="false">
         <h5 class="margin-top-0"><i class="fa fa-thumbs-o-up"></i> Compartilhe</h5>
         <ul class="no-padding no-margin">
           <p class="no-margin">
