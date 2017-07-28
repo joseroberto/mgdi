@@ -25,7 +25,15 @@ export class SiteComponent implements OnInit {
   constructor(private indicadorService:IndicadorService) { }
 
   ngOnInit() {
-    this.pageChanged(1);
+    if(localStorage.getItem('pesquisa_site')){
+      this.pesquisa = JSON.parse(localStorage.getItem('pesquisa_site'));
+    }else{
+      this.pesquisa = {};
+    }
+
+    this.page  = localStorage.getItem('pagina_site')? +(localStorage.getItem('pagina_site')):1;
+
+    this.pageChanged(this.page);
     this.loadIndicadorPorUnidade();
     this.loadIndicadorPorTag();
   }
@@ -38,6 +46,12 @@ export class SiteComponent implements OnInit {
     this.page = pagina;
     var offset = (pagina-1) * this.itensPorPagina;
 
+    // Guarda pesquisa
+    localStorage.setItem('pesquisa_site', JSON.stringify(this.pesquisa));
+    // Guarda pagina
+    localStorage.setItem('pagina_site', String(this.page));
+
+    console.log('Armazenado:', localStorage.getItem('pesquisa_site'));
     this.indicadorService.getAll(this.itensPorPagina, offset, this.formataPesquisa(this.pesquisa)).subscribe(resp=>{
         this.total = resp.count;
         this.listaIndicadores=resp.rows;
@@ -91,14 +105,14 @@ export class SiteComponent implements OnInit {
 
   loadIndicadorPorUnidade(){
     this.indicadorService.getCountPorUnidade().subscribe(resp=>{
-      console.log('Unidades',resp.unidades);
+      //console.log('Unidades',resp.unidades);
       this.listaIndicadorPorUnidade = resp.unidades;
     });
   }
 
   loadIndicadorPorTag(){
     this.indicadorService.getCountPorTag().subscribe(resp=>{
-      console.log('Tags',resp.tags);
+      //console.log('Tags',resp.tags);
       this.listaIndicadorPorTag = resp.tags.slice(0,9);
     });
   }

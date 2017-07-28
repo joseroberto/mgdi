@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.6"
+  version: "0.0.7"
   title: SGI - Sistema de gestão de Indicadores
 # during dev, should point to your local machine
 host: localhost:8000
@@ -389,11 +389,11 @@ paths:
                 type: array
                 items:
                   type: object
- 
+
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"    
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador-porunidade:
     x-swagger-router-controller: unidade
     get:
@@ -412,11 +412,11 @@ paths:
                 type: array
                 items:
                   type: object
- 
+
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"    
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
   /api/indicador/{codigo}:
@@ -1031,7 +1031,7 @@ definitions:
         type: boolean
       unidade_pai:
         type: [number,'null']
-        
+
   QueryUnidade:
     description: Unidades
     properties:
@@ -1058,7 +1058,7 @@ definitions:
         type: array
         items:
           type: object
-  
+
   IndicadorAtualizacao:
     description: Objeto indicador
     properties:

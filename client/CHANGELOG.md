@@ -2,6 +2,10 @@
 
 ## Versões - Release Notes
 
+### 0.0.7
+
+* NEW: Persistencia da página de pesquisa na visualização de dados de indicadores (site)
+
 ### 0.0.6
 
 * Interface de visualização de indicadores com filtro de busca de termos de palavras, lista de campos
