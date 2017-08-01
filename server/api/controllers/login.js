@@ -7,6 +7,7 @@ const util = require('util');
 var log4js = require("log4js");
 const config_param = require('../helpers/config')();
 const swagger = require('../helpers/swagger')();
+const  models  = require('../models');
 
 module.exports = {
   authenticate: (req, res)=>{
@@ -23,8 +24,8 @@ module.exports = {
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
               function(err, result) {
-                console.log("---------------------------------err", err);
-                //console.log("result", result);
+                if(err)
+                  console.log("---------------------------------\n", err);
                 if(err || !result.respostaBuscaPerfilUsuario || !result.respostaBuscaPerfilUsuario.perfis || !result.respostaBuscaPerfilUsuario.perfis.perfil){
                   if(String(err).indexOf('Error')!== -1){
                     res.status(403).send({codret:1000, message:'Login/Senha inválida'});
@@ -33,12 +34,14 @@ module.exports = {
                   }
                 }else if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
                   var perfis = {}
+                  var array_perfis = [];
                   result.respostaBuscaPerfilUsuario.perfis.perfil.forEach((item)=>{
                     var esferas = [];
                     item.esferas.esferasPerfil.forEach((esfera)=>{
                         esferas.push(esfera.configuracao);
                     });
                     perfis[item.perfil.sigla]=esferas;
+                    array_perfis.push(item.perfil.sigla);
                   });
                   var temp = {
                       cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
@@ -46,8 +49,32 @@ module.exports = {
                       email: result.respostaBuscaPerfilUsuario.usuario.email,
                       perfis: perfis
                   };
-                  var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
-                  res.json({token: util.format('Bearer %s', token), user: temp});
+
+                  // Salva dados usuario
+                  models.User.findOne({email:result.respostaBuscaPerfilUsuario.usuario.email}).then((resp)=>{
+                      temp['perfis'] = array_perfis;
+                      if(resp){
+                        resp.update(temp).then((result)=>{
+                          console.log("Dados de usuário atualizado:", result);
+                        });
+                        //models.User.update(temp, { where: { cpf: result.respostaBuscaPerfilUsuario.usuario.cpf }}).then((user)=> {
+
+                        //});
+                      }else{
+                        models.User.create(temp).then((user)=> {
+                          console.log("Dados de usuário criado:", user);
+                        });
+                      }
+
+                      temp['ultimo_login']=resp['dt_atualizacao'];
+                      var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
+                      res.json({token: util.format('Bearer %s', token), user: temp});
+
+                  }).catch(err=>{
+                      console.log('Erro na atualização de dados de usuário', err);
+                  });
+
+
                 }else{
                   console.log('Erro', err);
                   res.status(403).send(err);

@@ -12,7 +12,7 @@ module.exports = {
     });
   },
   createUnidade: (req,res)=>{
-    console.log('createUnidade', req.body);
+    //console.log('createUnidade', req.body);
     delete req.body['codigo'];
     models.Unidade.create(req.body).then((indicador)=> {
       res.json({codret: 0, mensagem: "Unidade cadastrada com sucesso"});

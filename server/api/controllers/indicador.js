@@ -42,7 +42,7 @@ module.exports = {
     }
 
     if(req.swagger.params.secretaria.value){
-        console.log('Secretaria: ', req.swagger.params.secretaria.value);
+        //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
 
@@ -55,7 +55,7 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
-    console.log('create', req.body);
+    //console.log('create', req.body);
     models.Indicador.create(req.body).then((indicador)=> {
       if(req.body.tags)
         indicador.setTags(req.body.tags);
@@ -63,7 +63,20 @@ module.exports = {
     });
   },
   getIndicador: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value,
+    models.Indicador.findAll(
+      { include: [ { model: models.Tag, as: 'Tags' },
+                   { model: models.Indicador, as: 'IndicadoresRelacionados' },
+                   { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+                    { model: models.Unidade , as: 'UnidadeResponsavel' }],
+        where: {codigo: req.swagger.params.codigo.value}
+      }
+    ).then((indicador)=> {
+      if(indicador && indicador.length>0)
+          res.json(indicador[0]);
+    });
+  },
+  getIndicadorPorId: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.id.value,
       { include: [ { model: models.Tag, as: 'Tags' },
                    { model: models.Indicador, as: 'IndicadoresRelacionados' },
                    { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
@@ -80,7 +93,7 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
-    console.log(req.body);
+    //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
         item.setTags(req.body.tags);
@@ -99,7 +112,7 @@ module.exports = {
     });
   },
   updateUso: (req,res)=>{
-    console.log(req.body);
+    //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Usos do indicador ${req.swagger.params.codigo.value} atualizados com sucesso`});
     });

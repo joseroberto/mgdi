@@ -419,6 +419,28 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
+  /api/indicador-id/{id}:
+    x-swagger-router-controller: indicador
+    get:
+      description: Le um registro de indicador
+      summary: Retorna um registro de um indicador
+      operationId: getIndicadorPorId
+      tags:
+        - Indicadores
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}:
     x-swagger-router-controller: indicador
     get:
