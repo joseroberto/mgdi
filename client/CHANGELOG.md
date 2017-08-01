@@ -6,10 +6,11 @@
 
 * NEW: Persistencia da página de pesquisa na visualização de dados de indicadores (site)
 * NEW: Criação de um id numérico para indicador (para atender ao i3GEO)
-* PLANNING: Criação de área de armazenamento de perfil de usuário
+* NEW: Criação de área de armazenamento de perfil de usuário
 * PLANNING: Armazenamento de log de mudanças na ficha de indicadores
 * PLANNING: Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
 * PLANNING: Fix da consulta de indicador na listagem por dado digitado campo pesquisa.
+* PLANNING: PDFKit para relatórios da ficha de indicadores
 
 ### 0.0.6
 

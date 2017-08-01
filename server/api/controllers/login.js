@@ -107,7 +107,7 @@ module.exports = {
       if(process.env && process.env.NODE_ENV){
         env = process.env.NODE_ENV;
       }else{
-        env = 'Sem informações';
+        env = 'development';
       }
       swagger.info['enviroment']=env;
       res.json(swagger.info);

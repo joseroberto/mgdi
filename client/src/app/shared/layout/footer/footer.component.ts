@@ -9,6 +9,7 @@ import { VersionService } from '../../../services/index';
 export class FooterComponent implements OnInit {
   private versionClient:string;
   private versionServer:string;
+  private enviroment:string;
   private title: string;
 
   constructor(private versionService:VersionService) {}
@@ -18,6 +19,7 @@ export class FooterComponent implements OnInit {
     this.versionService.getVersion().subscribe(resp=>{
         this.versionServer = resp.version;
         this.title = resp.title;
+        this.enviroment = resp.enviroment;
     });
   }
 
