@@ -18,7 +18,7 @@
           <img src="http://portalsaude.saude.gov.br/templates/bootstrap-responsive/images/sombraColuna.png" alt="Imagem decorativa Sombra de coluna do rodapé" title="Imagem de sombra de coluna do rodapé" width="700" height="7">
           <img src="http://portalsaude.saude.gov.br/images/jpg/2014/julho/01/assinatura-rodape-w3c.jpg" alt="Assinatura" title="Logos Acessibilidade Brasil e W3C Css" width="661" height="40">
         </div>
-        <div class="txt-color-black">{{ title }}  © 2017 - Versão (client/server) {{ versionClient }} / {{ versionServer }} -
+        <div class="txt-color-black">{{ title }}  © 2017 - Versão {{ versionClient }} -
           <a (click)="lgModal.show()">Release Notes</a> - Ambiente {{ enviroment }}
         </div>
       </div>
@@ -32,6 +32,7 @@
         <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h3>Server: {{ titleServer }} - {{ versionServer }}</h3>
         <h4 class="modal-title">Release Notes</h4>
       </div>
       <div class="modal-body">

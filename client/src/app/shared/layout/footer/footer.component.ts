@@ -11,15 +11,17 @@ export class FooterComponent implements OnInit {
   private versionServer:string;
   private enviroment:string;
   private title: string;
+  private titleServer: string;
   private ultimo_login: string;
 
   constructor(private versionService:VersionService) {}
 
   ngOnInit() {
     this.versionClient = config.version;
+    this.title = config.title;
     this.versionService.getVersion().subscribe(resp=>{
         this.versionServer = resp.version;
-        this.title = resp.title;
+        this.titleServer = resp.title;
         this.enviroment = resp.enviroment;
     });
 

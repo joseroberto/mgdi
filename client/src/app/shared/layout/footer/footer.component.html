@@ -1,7 +1,7 @@
 <div class="page-footer">
     <div class="row">
       <div class="col-xs-8 col-sm-8">
-          <span class="txt-color-white">{{ title }}  © 2017 - Versão (client/server) {{ versionClient }} / {{ versionServer }}  -
+          <span class="txt-color-white">{{ title }}  © 2017 - Versão {{ versionClient }}  -
             <a (click)="lgModal.show()">Release Notes</a> - Ambiente {{ enviroment }}
           </span>
       </div>
@@ -66,6 +66,7 @@
         <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h3>Server: {{ titleServer }} - {{ versionServer }}</h3>
         <h4 class="modal-title">Release Notes</h4>
       </div>
       <div class="modal-body">

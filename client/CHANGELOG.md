@@ -1,7 +1,3 @@
-# MGI - Módulo de Gestão de indicadores
-
-## Versões - Release Notes
-
 ### 0.0.7
 
 * NEW: Persistencia da página de pesquisa na visualização de dados de indicadores (site)
