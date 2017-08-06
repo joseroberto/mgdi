@@ -16,10 +16,11 @@ module.exports = {
       where: {},
       order: ['titulo']
     };
+    //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
-    if (!req.headers.authorization){
-        attr.where['privado'] = false;
-    }
+    //if (!req.headers.authorization){
+    //    attr.where['privado'] = false;
+    //}
 
     //if(req.swagger.params.limit.value){
     //    attr['limit'] = req.swagger.params.limit.value;
@@ -45,6 +46,8 @@ module.exports = {
         //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
+
+    console.log(attr);
 
     models.Indicador.findAndCountAll(attr).then(function(resp) {
       //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
