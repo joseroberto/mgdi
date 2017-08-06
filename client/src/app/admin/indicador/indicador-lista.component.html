@@ -42,7 +42,8 @@
               <sa-datatable #listaIndicadores [options]="options"
                          [detailsFormat]="detailsFormat"
                          tableClass="display projects-table table table-striped table-bordered table-hover"
-                         width="100%">
+                         width="100%"
+                         (onInit)="getIndicadores()">
                 <thead>
                 <tr>
                   <th></th>

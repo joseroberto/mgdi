@@ -1,4 +1,4 @@
-import {Component, NgZone, ViewChild} from '@angular/core';
+import {Component, NgZone, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
   selector: 'app-projects',
   templateUrl: './indicador-lista.component.html',
 })
-export class IndicadorListaComponent {
+export class IndicadorListaComponent  {
 
   @ViewChild('listaIndicadores') tabelaIndicadores
 
@@ -33,7 +33,6 @@ export class IndicadorListaComponent {
 
 
   public options = {
-  "ajax": {"url": `${environment.url}/api/indicador`, "dataSrc":'rows'},
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
   "columns": [
@@ -61,7 +60,20 @@ export class IndicadorListaComponent {
   "order": [[1, 'asc']]
 }
 
-  apagaIndicador(codigo:string){
+getIndicadores(){
+  this.tabelaIndicadores.clear();
+  this.indicadorService.getAll().subscribe((resp)=>{
+    //console.log(resp);
+    if(resp.count > 0){
+      resp.rows.forEach(item => {
+          this.tabelaIndicadores.addRow(item);
+      });
+      this.tabelaIndicadores.draw();
+    }
+  } , err => this.util.msgErroInfra(err));
+}
+
+apagaIndicador(codigo:string){
       this.indicadorService.delete(codigo).subscribe(resp=>{
         console.log(resp);
         if(!resp.codret){
@@ -70,13 +82,13 @@ export class IndicadorListaComponent {
         }else
           this.util.msgErro(resp.mensagem);
       }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
-  }
+}
 
-  editaIndicador(codigo:string){
+editaIndicador(codigo:string){
       this.router.navigate(['/admin/indicador', codigo]);
-  }
+}
 
-  public detailsFormat(d) {
+detailsFormat(d) {
     let tags:string='';
     if(d.Tags.length){
       tags += '<tr><td>Marcador(es):</td><td colspan="5">';
