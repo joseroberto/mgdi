@@ -27,6 +27,7 @@ export class DatatableComponent implements OnInit {
   @Output() onInit: EventEmitter<number> = new EventEmitter<number>();
 
   private _dataTable:any;
+  private row_selected:any;
 
   constructor(private el: ElementRef) {
   }
@@ -54,6 +55,10 @@ export class DatatableComponent implements OnInit {
 
   addRow(item){
     this._dataTable.row.add(item);
+  }
+
+  deleteRow(item){
+    this._dataTable.row(`#${item}`).remove().draw();
   }
 
   render() {
@@ -116,6 +121,8 @@ export class DatatableComponent implements OnInit {
       element.on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = data.row( tr );
+        this.row_selected = $(this).parents('tr');
+        console.log('teste', $(this).parents('tr'));
         if ( row.child.isShown() ) {
           row.child.hide();
           tr.removeClass('shown');

@@ -543,7 +543,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/indicador/{codigo_pai}/indicador-relacionado/{codigo}:
+  /api/indicador/{id_pai}/indicador-relacionado/{id}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona relação a um indicador
@@ -554,14 +554,14 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
-          type: string
+        - name: id_pai
+          type: number
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -580,14 +580,14 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
-          type: string
+        - name: id_pai
+          type: number
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -597,7 +597,7 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/indicador/{codigo}/categoria-analise/{categoria_analise}:
+  /api/indicador/{id}/categoria-analise/{categoria_analise}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona categoria relacionada a um indicador
@@ -612,10 +612,10 @@ paths:
           type: string
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -638,10 +638,10 @@ paths:
           type: string
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso

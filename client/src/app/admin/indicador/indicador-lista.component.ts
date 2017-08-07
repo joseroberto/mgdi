@@ -35,6 +35,7 @@ export class IndicadorListaComponent  {
   public options = {
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
+  "rowId": 'codigo',
   "columns": [
     {
       "class": 'details-control',
@@ -63,7 +64,7 @@ export class IndicadorListaComponent  {
 getIndicadores(){
   this.tabelaIndicadores.clear();
   this.indicadorService.getAll().subscribe((resp)=>{
-    //console.log(resp);
+    console.log(resp);
     if(resp.count > 0){
       resp.rows.forEach(item => {
           this.tabelaIndicadores.addRow(item);
@@ -74,14 +75,14 @@ getIndicadores(){
 }
 
 apagaIndicador(codigo:string){
-      this.indicadorService.delete(codigo).subscribe(resp=>{
-        console.log(resp);
-        if(!resp.codret){
-          this.util.msgSucessoDelete(resp.mensagem);
-          this.tabelaIndicadores.refresh();
-        }else
-          this.util.msgErro(resp.mensagem);
-      }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+  this.indicadorService.delete(codigo).subscribe(resp=>{
+      console.log(resp);
+      if(!resp.codret){
+        this.util.msgSucessoDelete(resp.mensagem);
+        this.tabelaIndicadores.deleteRow(codigo);
+      }else
+        this.util.msgErro(resp.mensagem);
+    }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
 }
 
 editaIndicador(codigo:string){
@@ -101,7 +102,7 @@ detailsFormat(d) {
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
-                <td style="width:100px">Nome:</td>
+                <td style="width:100px">Título Resumido:</td>
                 <td colspan="5">${d.titulo}</td>
             </tr>
             <tr>

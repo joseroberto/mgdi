@@ -50,7 +50,7 @@
                       data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
                   </div>
                 </div>
-                <label class="col-md-1 control-label">Título</label>
+                <label class="col-md-1 control-label">Título Resumido</label>
                 <div class="col-md-7">
                   <input id="descricao" class="form-control"
                     placeholder="Título do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
@@ -89,7 +89,7 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label">Descrição</label>
                     <div class="col-md-10">
-                      <input type="text" id="descricao" name="descricao" maxlength="200"
+                      <input type="text" id="descricao" name="descricao" maxlength="255"
                       [ngModel]="indicador.descricao"
                       class="form-control"
                       placeholder="Descrição do indicador"

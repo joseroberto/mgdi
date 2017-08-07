@@ -18,9 +18,9 @@ module.exports = {
     };
     //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
-    //if (!req.headers.authorization){
-    //    attr.where['privado'] = false;
-    //}
+    if (!req.headers.authorization){
+        attr.where['privado'] = false;
+    }
 
     //if(req.swagger.params.limit.value){
     //    attr['limit'] = req.swagger.params.limit.value;
@@ -46,8 +46,6 @@ module.exports = {
         //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
-
-    console.log(attr);
 
     models.Indicador.findAndCountAll(attr).then(function(resp) {
       //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
@@ -89,17 +87,31 @@ module.exports = {
     });
   },
   deleteIndicador: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=>{
-      indicador.setTags(null);
-      indicador.destroy();
-      res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+    models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((indicador)=>{
+
+      models.IndicadorCategoriaAnalise.destroy({ where: {
+        co_seq_indicador:indicador[0].id}}).then(()=>{
+
+          models.IndicadorRelacionado.destroy(
+            { where: {$or: [
+              { co_seq_indicador:indicador[0].id},
+              { co_seq_indicador_pai:indicador[0].id}]}
+              }).then(()=>{
+                console.log(indicador[0]);
+                indicador[0].setTags(null);
+                indicador[0].destroy();
+                res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+          });
+
+      });
+
     });
   },
   editaIndicador: (req,res)=>{
     //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-      models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
-        item.setTags(req.body.tags);
+      models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
+        item[0].setTags(req.body.tags);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
     });
@@ -153,7 +165,7 @@ module.exports = {
   },
 
   addCategoriaAnalise: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
       item.addCategoriasAnalise(req.swagger.params.categoria_analise.value);
       res.json({codret: 0, mensagem: "Categoria de análise adicionada com sucesso"});
     });
@@ -161,7 +173,7 @@ module.exports = {
 
   deleteCategoriaAnalise: (req,res)=>{
     models.IndicadorCategoriaAnalise.destroy({ where: {
-      co_indicador:req.swagger.params.codigo.value,
+      co_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
     });
@@ -169,11 +181,11 @@ module.exports = {
 
   addIndicadorRelacionado: (req,res)=>{
     Promise.all([
-      models.Indicador.findById(req.swagger.params.codigo_pai.value),
-      models.Indicador.findById(req.swagger.params.codigo.value)
+      models.Indicador.findById(req.swagger.params.id_pai.value),
+      models.Indicador.findById(req.swagger.params.id.value)
     ]).then((item)=>{
-      item[0].addIndicadoresRelacionados(req.swagger.params.codigo.value);
-      item[1].addIndicadoresRelacionados(req.swagger.params.codigo_pai.value);
+      item[0].addIndicadoresRelacionados(req.swagger.params.id.value);
+      item[1].addIndicadoresRelacionados(req.swagger.params.id_pai.value);
       res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
     });
     /*models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
@@ -190,10 +202,10 @@ module.exports = {
   deleteIndicadorRelacionado: (req,res)=>{
     models.IndicadorRelacionado.destroy(
       { where: {$or: [
-        { co_indicador:req.swagger.params.codigo.value,
-        co_indicador_pai:req.swagger.params.codigo_pai.value},
-        { co_indicador:req.swagger.params.codigo_pai.value,
-          co_indicador_pai:req.swagger.params.codigo.value}]}
+        { co_seq_indicador:req.swagger.params.id.value,
+        co_seq_indicador_pai:req.swagger.params.id_pai.value},
+        { co_seq_indicador:req.swagger.params.id_pai.value,
+          co_seq_indicador_pai:req.swagger.params.id.value}]}
         }).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
     });
