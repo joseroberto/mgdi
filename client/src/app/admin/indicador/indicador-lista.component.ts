@@ -1,4 +1,4 @@
-import {Component, NgZone, ViewChild } from '@angular/core';
+import {Component, NgZone, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
@@ -11,9 +11,12 @@ import { environment } from '../../../environments/environment';
   selector: 'app-projects',
   templateUrl: './indicador-lista.component.html',
 })
-export class IndicadorListaComponent  {
+export class IndicadorListaComponent implements OnInit {
 
   @ViewChild('listaIndicadores') tabelaIndicadores
+  private listaIndicadorPorUnidade:any[];
+  private listaIndicadorPorTag:any[];
+  private pesquisa:Object = {};
 
   constructor(private zone:NgZone, private winRef: WindowRef,
     private indicadorService:IndicadorService,
@@ -36,6 +39,7 @@ export class IndicadorListaComponent  {
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
   "rowId": 'codigo',
+  "searching": true,
   "columns": [
     {
       "class": 'details-control',
@@ -45,6 +49,8 @@ export class IndicadorListaComponent  {
     },
     {"data": "titulo"},
     {"data": "codigo"},
+    {"data": "descricao",  "visible":false},
+    {"data": "conceituacao", "visible":false},
     {"data": "ativo", render: function(data, type, full, meta){
       if(type == "display"){
         return data? "<span class='label label-success'>ATIVO</span>":"<span class='label label-default'>INATIVO</span>";
@@ -61,9 +67,14 @@ export class IndicadorListaComponent  {
   "order": [[1, 'asc']]
 }
 
+ngOnInit(){
+    this.loadIndicadorPorTag();
+    this.loadIndicadorPorUnidade();
+}
+
 getIndicadores(){
   this.tabelaIndicadores.clear();
-  this.indicadorService.getAll().subscribe((resp)=>{
+  this.indicadorService.getAll(null, null, this.formataPesquisa(this.pesquisa)).subscribe((resp)=>{
     console.log(resp);
     if(resp.count > 0){
       resp.rows.forEach(item => {
@@ -136,4 +147,67 @@ detailsFormat(d) {
             </tbody>
         </table>`
   }
+
+  loadIndicadorPorTag(){
+    this.indicadorService.getCountPorTag().subscribe(resp=>{
+      //console.log('Tags',resp.tags);
+      this.listaIndicadorPorTag = resp.tags;
+    });
+  }
+
+  loadIndicadorPorUnidade(){
+    this.indicadorService.getCountPorUnidade().subscribe(resp=>{
+      //console.log('Unidades',resp.unidades);
+      this.listaIndicadorPorUnidade = resp.unidades;
+    });
+  }
+
+  buscaPorTag(codigo:number, sigla:string){
+      this.pesquisa['tag'] = [codigo, sigla];
+      this.getIndicadores();
+  }
+
+  buscaPorUnidade(codigo:number, nome:string){
+      this.pesquisa['unidade'] = [codigo,nome];
+      this.getIndicadores();
+  }
+
+  formataPesquisa(objeto: Object):string{
+      let resposta:string='';
+      if ('query' in objeto){
+        resposta+=`query=${objeto['query']}&`;
+      }
+      if ('tag' in objeto){
+        resposta+=`tag=${objeto['tag'][0]}&`;
+      }
+      if ('unidade' in objeto){
+        resposta+=`secretaria=${objeto['unidade'][0]}&`;
+      }
+      return resposta;
+  }
+
+  formataTela(objeto:Object):string{
+    let resposta:string='';
+
+    if ('query' in objeto){
+      resposta+=`<span class="badge bg-color-greenLight">${objeto['query']}</span>&nbsp;`;
+    }
+    if ('tag' in objeto){
+      resposta+=`<span class="badge bg-color-orange">${objeto['tag'][1]}</span>&nbsp;`;
+    }
+    if ('unidade' in objeto){
+      resposta+=`<span class="badge bg-color-default">${objeto['unidade'][1]}</span>&nbsp;`;
+    }
+    return resposta;
+  }
+
+  limpaFiltro(){
+    this.pesquisa = {};
+    this.getIndicadores();
+  }
+
+  isEmpty(objeto:Object){
+    return objeto && Object.keys(objeto).length==0;
+  }
+
 }

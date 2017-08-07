@@ -1,12 +1,19 @@
 ### 0.0.7
 
-* NEW: Persistencia da página de pesquisa na visualização de dados de indicadores (site)
-* NEW: Criação de um id numérico para indicador (para atender ao i3GEO)
-* NEW: Criação de área de armazenamento de perfil de usuário
+* Persistencia da página de pesquisa na visualização de dados de indicadores (site)
+* Criação de um id numérico para indicador (para atender ao i3GEO)
+* Criação de área de armazenamento de perfil de usuário
+* FIX: Aumento do campo de descrição do indicador para 255 caracteres
 * PLANNING: Armazenamento de log de mudanças na ficha de indicadores
 * PLANNING: Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
-* PLANNING: Fix da consulta de indicador na listagem por dado digitado campo pesquisa.
 * PLANNING: PDFKit para relatórios da ficha de indicadores
+* Melhoria da consulta de indicador na listagem por dado digitado campo pesquisa.
+* Busca por marcadores e unidades do MS na tela de listagem de indicadores
+* PLANNING: Tela de inclusão/alteração para Categoria de Análise
+* PLANNING: Validação da impressão a partir da tela
+* FIX: Inclusão do campo "Índice de Referência" para os indicadores
+* PLANNING: Inclusão de help de campo
+* FIX: Ajuste de campos da ficha: Troca de Específico para Universal (default true), Retirada de campo de importação (valor vai ser controlado pelo tipo de consulta), inclusão de campo de Índice de Referência.
 
 ### 0.0.6
 

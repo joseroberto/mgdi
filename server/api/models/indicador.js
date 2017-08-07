@@ -128,11 +128,10 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
-    carga_manual:{
-        type: DataTypes.BOOLEAN,
-        field: 'st_carga_manual',
-        allowNull: false,
-        defaultValue: 0
+    indice_referencia:{
+        type: DataTypes.INTEGER,
+        field: 'nu_indice_referencia',
+        allowNull: true
     },
     acumulativo:{
         type: DataTypes.BOOLEAN,
@@ -146,11 +145,11 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
-    especifico:{
+    universal:{
         type: DataTypes.BOOLEAN,
-        field: 'st_especifico',
+        field: 'st_universal',
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 1
     }
   },{
     classMethods: {

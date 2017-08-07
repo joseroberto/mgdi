@@ -60,11 +60,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean } = {
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number } = {
       codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:false, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null, especifico: false
+      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null,
+      especifico: true, indice_referencia: null
   };
 
   private colecaoClassificacao:any[] = [];

@@ -68,7 +68,7 @@
         <div class="row">
           <div class="col-lg-12">
               <span *ngFor="let item of listaIndicadorPorTag">
-                <a href="#" (click)="buscaPorTag(item.codigo, item.descricao )" data-toggle="tooltip" title="Quantidade: {{ item.numero_indicadores }}"><span class="badge badge-info">{{ item.descricao }}</span></a>
+                <a (click)="buscaPorTag(item.codigo, item.descricao )" data-toggle="tooltip" title="Quantidade: {{ item.numero_indicadores }}"><span class="badge badge-info">{{ item.descricao }}</span></a>
               </span>
           </div>
         </div>
@@ -103,7 +103,7 @@
           <div class="col-lg-12">
             <ul class="list-group no-margin">
               <li class="list-group-item" *ngFor="let item of listaIndicadorPorUnidade">
-                <a href="#" (click)="buscaPorUnidade(item.codigo, item.sigla)" data-toggle="tooltip" title="{{ item.nome }}"> <span class="badge pull-right">{{ item.numero_indicadores }}</span> {{ item.sigla }} </a>
+                <a (click)="buscaPorUnidade(item.codigo, item.sigla)" data-toggle="tooltip" title="{{ item.nome }}"> <span class="badge pull-right">{{ item.numero_indicadores }}</span> {{ item.sigla }} </a>
               </li>
             </ul>
           </div>

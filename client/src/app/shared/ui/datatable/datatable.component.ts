@@ -24,7 +24,7 @@ export class DatatableComponent implements OnInit {
   @Input() public columnsHide: boolean;
   @Input() public tableClass: string;
   @Input() public width: string = '100%';
-  @Output() onInit: EventEmitter<number> = new EventEmitter<number>();
+  @Output() public onInit: EventEmitter<number> = new EventEmitter<number>();
 
   private _dataTable:any;
   private row_selected:any;
@@ -102,11 +102,12 @@ export class DatatableComponent implements OnInit {
     if (this.filter) {
       // Apply the filter
       element.on('keyup change', 'thead th input[type=text]', function () {
-        this._dataTable
-          .column($(this).parent().index() + ':visible')
-          .search(this.value)
-          .draw();
-
+        console.log('Entrando na consulta', this.value);
+        this.onSearch(this.value);
+        //this._dataTable
+        //  .column($(this).parent().index() + ':visible')
+        //  .search(this.value)
+        //  .draw();
       });
     }
 
@@ -122,7 +123,6 @@ export class DatatableComponent implements OnInit {
         var tr = $(this).closest('tr');
         var row = data.row( tr );
         this.row_selected = $(this).parents('tr');
-        console.log('teste', $(this).parents('tr'));
         if ( row.child.isShown() ) {
           row.child.hide();
           tr.removeClass('shown');

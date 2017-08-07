@@ -82,3 +82,11 @@ COMMENT ON COLUMN dbesusgestor.tb_user_mgi.ar_perfis IS 'Array com perfis do usu
 
 create unique index tb_user_mgi_ds_email on dbesusgestor.tb_user_mgi (ds_email);
 create unique index tb_user_mgi_ds_cpf on dbesusgestor.tb_user_mgi (ds_cpf);
+
+
+alter table dbesusgestor.tb_indicador rename column st_especifico to st_universal;
+alter table dbesusgestor.tb_indicador alter column st_universal set default 'T';
+alter table dbesusgestor.tb_indicador add column nu_indice_referencia float null;
+alter table dbesusgestor.tb_indicador drop column st_carga_manual;
+
+insert into dbesusgestor.tb_tipo_consulta (co_tipo_consulta, ds_tipo_consulta) values (3,'Importação');

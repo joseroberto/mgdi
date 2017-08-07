@@ -50,7 +50,7 @@
                       data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
                   </div>
                 </div>
-                <label class="col-md-1 control-label">Título Resumido</label>
+                <label class="col-md-2 control-label">Título Resumido</label>
                 <div class="col-md-7">
                   <input id="descricao" class="form-control"
                     placeholder="Título do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
@@ -151,9 +151,9 @@
                          <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="granularidade">Granularidade
+                     <label class="col-md-2 control-label" for="granularidade">Estratificação
                        <popover-content #granularidade
-                                        title="Granularidade"
+                                        title="Estratificação"
                                         [closeOnClickOutside]="true">
                            Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
                        </popover-content>
@@ -165,17 +165,13 @@
                      </div>
                   </div>
                   <div class="form-group">
-                    <popover-content #criterio_agregacao
-                                     title="Critério de agregação"
-                                     [closeOnClickOutside]="true">
-                        Qual o critério de agregação para os dados do indicador. .
-                    </popover-content>
-                    <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
-                      <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="criterio_agregacao"></i></label>
+                    <label class="col-md-2 control-label">Índice de Referência</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao" required>
-                        <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
-                      </select>
+                      <input type="text" id="indice_referencia" name="indice_referencia" maxlength="5"
+                      [ngModel]="indicador.indice_referencia"
+                      class="form-control"
+                      placeholder="Índice"
+                      data-bv-notempty="false">
                     </div>
                   </div>
                   <div class="form-group">
@@ -314,29 +310,16 @@
                     </div>
                     <div class="col-md-2">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="carga_manual" class="onoffswitch-checkbox"
-                               id="carga_manual" [(ngModel)]="indicador.carga_manual">
-                        <label class="onoffswitch-label" for="manual">
+                        <input type="checkbox" name="universao" class="onoffswitch-checkbox"
+                               id="universal" [(ngModel)]="indicador.universal">
+                        <label class="onoffswitch-label" for="universal">
                             <span class="onoffswitch-inner"
                                   data-swchon-text="Sim"
                                   data-swchoff-text="Não"></span>
                             <span class="onoffswitch-switch"></span>
                         </label>
                       </span>
-                      <label class="control-label">Importa Dados</label>
-                    </div>
-                    <div class="col-md-2">
-                      <span class="onoffswitch">
-                        <input type="checkbox" name="especifico" class="onoffswitch-checkbox"
-                               id="especifico" [(ngModel)]="indicador.especifico">
-                        <label class="onoffswitch-label" for="especifico">
-                            <span class="onoffswitch-inner"
-                                  data-swchon-text="Sim"
-                                  data-swchoff-text="Não"></span>
-                            <span class="onoffswitch-switch"></span>
-                        </label>
-                      </span>
-                      <label class="control-label">Específico</label>
+                      <label class="control-label">Universal</label>
                     </div>
                   </div>
                   <div class="form-actions">
@@ -355,7 +338,12 @@
               </tab>
               <tab [active]="currenttab == 't2'">
                 <fieldset style="padding: 15px">
-                  <legend>Conceituação
+                  <popover-content #conceituacao
+                    title="Conceituacao"
+                    [closeOnClickOutside]="true">
+                      Informações que definem o indicador e a forma como ele se expressa, se necessário agregando elementos para a compreensão de seu conteúdo. Deve ser coerente com o método de cálculo, com a unidade de medida, o tipo de relação com as variáveis, a temporalidade e a abrangência geográfica.
+                  </popover-content>
+                  <legend>Conceituação <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="conceituacao"></i>
                         <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editConceituacao(true)" *ngIf="!isEditConceituacao"><i class="fa fa-edit"></i> Edita</a>
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
                   </legend>
@@ -379,7 +367,12 @@
                   </legend>
                   <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
                   <br/><br/>
-                  <legend>Fonte
+                  <popover-content #fonte
+                    title="Fonte"
+                    [closeOnClickOutside]="true">
+                      Instituições responsáveis pela produção dos dados utilizados no cálculo do indicador e pelos sistemas de informação a que correspondem p. ex: IBGE, SAS, SPO, etc.
+                  </popover-content>
+                  <legend>Fonte <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="fonte"></i>
                         <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editFonteDados(true)" *ngIf="!isEditFonteDados"><i class="fa fa-edit"></i> Edita</a>
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editFonteDados(false)" *ngIf="isEditFonteDados"><i class="fa fa-save"></i> Grava</a>
                   </legend>
@@ -454,7 +447,7 @@
               <tab [active]="currenttab == 't4'">
                 <fieldset style="padding: 15px">
                   <div class="form-group">
-                    <label class="col-md-2 control-label">Categoria Relacionada</label>
+                    <label class="col-md-2 control-label">Categoria de Análise</label>
                     <div class="col-md-8">
                       <div class="input-group">
                       <input class="form-control"
@@ -515,6 +508,22 @@
                        </select>
                      </div>
                      </div>
+                     <div class="form-group">
+                       <popover-content #criterio_agregacao
+                                        title="Critério de agregação"
+                                        [closeOnClickOutside]="true">
+                           Qual o critério de agregação para os dados do indicador. .
+                       </popover-content>
+                       <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
+                         <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="criterio_agregacao"></i></label>
+                       <div class="col-md-2">
+                         <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao" required>
+                           <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
+                         </select>
+                       </div>
+                     </div>
+
+
                      <div class="row">
                      <label class="col-md-2 control-label" for="referencia_consulta" *ngIf="indicador.tipo_consulta!=0" >{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }}</label>
                      <div class="col-md-10" *ngIf="indicador.tipo_consulta!=0">
@@ -522,15 +531,7 @@
                      </div>
                      </div>
                   </div>
-                     <div class="form-actions">
-                       <div class="row">
-                         <div class="col-md-12">
-                           <button class="btn btn-primary" type="submit">
-                             <i class="fa fa-save"></i>Grava
-                           </button>
-                         </div>
-                       </div>
-                     </div>
+
                   <div class="form-group">
                      <div class="row">
                      <div class="col-md-12">
@@ -541,6 +542,17 @@
                      </legend>
                      <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
                   </div>
+
+
+                     <div class="form-actions">
+                       <div class="row">
+                         <div class="col-md-12">
+                           <button class="btn btn-primary" type="submit">
+                             <i class="fa fa-save"></i>Grava
+                           </button>
+                         </div>
+                       </div>
+                     </div>
                      </div>
                   </div>
                 </fieldset>

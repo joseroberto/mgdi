@@ -1114,12 +1114,12 @@ definitions:
       privado:
         type: boolean
         description: Indica se precida ter privacidade de divulgação
-      especifico:
+      universal:
         type: boolean
-        description: Indica se é específico de uma área
-      carga_manual:
-        type: boolean
-        description: Indica se é utilizada a carga manual para um indicador
+        description: Indica se é universal de uma área
+      indice_referencia:
+        type: [number, 'null']
+        description: Índice que é considerado para o indicador
       secretaria:
         type: number
         description: Código da Secretaria Responsável
