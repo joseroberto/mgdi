@@ -354,8 +354,6 @@ paths:
       operationId: createIndicador
       tags:
         - Indicadores
-      security:
-        - Bearer: []
       parameters:
         - name: indicador
           in: body
@@ -1120,9 +1118,6 @@ definitions:
       indice_referencia:
         type: [number, 'null']
         description: Índice que é considerado para o indicador
-      secretaria:
-        type: number
-        description: Código da Secretaria Responsável
       unidade_responsavel:
         type: number
         description: Código da Unidade Responsável
@@ -1133,7 +1128,7 @@ definitions:
         type: number
         description: Código da granularidade do Indicador
       criterio_agregacao:
-        type: number
+        type: [number, 'null']
         description: Código do critério de agregacão do Indicador
   Conceituacao:
     type: object

@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {NgModule, LOCALE_ID} from "@angular/core";
 import { CommonModule } from '@angular/common';
 import {SmartadminModule} from "../shared/smartadmin.module";
 
@@ -16,7 +16,7 @@ import { PaginacaoComponent } from '../componentes/paginacao.component';
   imports: [
     routing,CommonModule, SmartadminModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: "pt-BR" }],
   entryComponents: []
 })
 export class SiteModule {}

@@ -75,20 +75,20 @@ export class IndicadorService extends REST {
     return super.patch(`/indicador/${codigo}/fonte_dados`,{fonte_dados: fonte_dados});
   }
 
-  adicionaIndicadorRelacionado(codigo_pai:string, codigo:string){
-    return super.patch(`/indicador/${codigo_pai}/indicador-relacionado/${codigo}`,'');
+  adicionaIndicadorRelacionado(id_pai:number, id:number){
+    return super.patch(`/indicador/${id_pai}/indicador-relacionado/${id}`,'');
   }
 
-  deleteIndicadorRelacionado(codigo_pai:string, codigo:string){
-    return super.delete(`/indicador/${codigo_pai}/indicador-relacionado/${codigo}`);
+  deleteIndicadorRelacionado(id_pai:number, id:number){
+    return super.delete(`/indicador/${id_pai}/indicador-relacionado/${id}`);
   }
 
-  adicionaCategoriaRelacionada(codigo:string,categoria_analise:string, ){
-    return super.patch(`/indicador/${codigo}/categoria-analise/${categoria_analise}`,'');
+  adicionaCategoriaRelacionada(id:number,categoria_analise:string, ){
+    return super.patch(`/indicador/${id}/categoria-analise/${categoria_analise}`,'');
   }
 
-  deleteCategoriaRelacionada(codigo:string, categoria_analise:string){
-    return super.delete(`/indicador/${codigo}/categoria-analise/${categoria_analise}`);
+  deleteCategoriaRelacionada(id:number, categoria_analise:string){
+    return super.delete(`/indicador/${id}/categoria-analise/${categoria_analise}`);
   }
 
   getCountPorUnidade(){

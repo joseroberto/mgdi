@@ -1,11 +1,12 @@
 require('../extensions/array');
 var models  = require('../models');
 var sequelize = require('sequelize');
+var unidade = require('./unidade');
 
 module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
-      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados' ],
+      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados', 'dt_inclusao' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
@@ -56,11 +57,23 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
-    //console.log('create', req.body);
-    models.Indicador.create(req.body).then((indicador)=> {
-      if(req.body.tags)
-        indicador.setTags(req.body.tags);
-      res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+    var entidade = req.body;
+    unidade.getCodigoUnidadePai(entidade['unidade_responsavel']).then(function(lista) {
+      //console.log('Lista', lista);
+      // Atualiza a secretaria nu_nivel=1
+      if(lista.nu_nivel==1){
+        entidade['secretaria'] = lista.codigo;
+      }else{
+        entidade['secretaria'] = lista.ancestors.find(item=> item.nu_nivel==1)['codigo'];
+      }
+      console.log('create', entidade);
+      models.Indicador.create(entidade).then((indicador)=> {
+        if(req.body.tags)
+          indicador.setTags(req.body.tags);
+        res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+      }).catch(err=>{
+        console.log('Erro', err);
+      });
     });
   },
   getIndicador: (req,res)=>{
@@ -173,7 +186,7 @@ module.exports = {
 
   deleteCategoriaAnalise: (req,res)=>{
     models.IndicadorCategoriaAnalise.destroy({ where: {
-      co_indicador:req.swagger.params.id.value,
+      co_seq_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
     });

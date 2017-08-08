@@ -129,7 +129,7 @@ module.exports = function(sequelize, DataTypes) {
         defaultValue: 0
     },
     indice_referencia:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         field: 'nu_indice_referencia',
         allowNull: true
     },
