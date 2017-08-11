@@ -55,16 +55,17 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       ['ctrl', ['undo', 'redo']]
     ]};
 
-  private indicador:{codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
+  private indicador:{id:number, codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
     periodicidade_monitoramento:number, periodicidade_avaliacao:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean } = {
-      codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number } = {
+      id:0, codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
-      limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:true, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null, especifico: false
+      limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:false, tags:[],
+      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: null,
+      especifico: true, indice_referencia: null
   };
 
   private colecaoClassificacao:any[] = [];
@@ -364,8 +365,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   private onSubmit(form){
     let valor: IndicadorAtualizacao= this.populaObjetoGravacao([this.indicador,form.value]);
-    console.log('Antes de gravar', valor);
-    if(form.valid)
+    console.log('Antes de gravar', valor, form.valid);
+    if(form.valid){
       //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
         this.indicadorService.update(valor).subscribe(resp=>{
@@ -378,14 +379,19 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }else{
         valor['codigo'] = form.value.codigo_edit.toUpperCase();
         this.indicadorService.create(valor).subscribe(resp=>{
+          console.log(resp);
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
             this.router.navigateByUrl('/admin/indicador/'+ valor.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }
-        }, err=>this.util.msgErroInfra(err));
+        }, (err)=>this.util.msgErroInfra(err)
+        );
       }
+    }else{
+      this.util.msgErro('Erro de validação de campos');
+    }
   }
 
   private populaObjetoGravacao(obj:any[]):IndicadorAtualizacao{
@@ -405,17 +411,19 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         if('privado' in item) valor['privado']=item['privado'];
         if('especifico' in item ) valor['especifico']=item['especifico'];
         if('unidade_responsavel' in item ) valor['unidade_responsavel']=item['unidade_responsavel'];
-        if('secretaria' in item ) valor['secretaria']=item['secretaria'];
-        if('carga_manual' in item ) valor['carga_manual']=item['carga_manual'];
+        //if('secretaria' in item ) valor['secretaria']=item['secretaria'];
+        //if('carga_manual' in item ) valor['carga_manual']=item['carga_manual'];
         if('tags' in item ) valor['tags']=item['tags'];
+        if('indice_referencia' in item && item['indice_referencia']!=null ) valor['indice_referencia']=parseFloat(String(item['indice_referencia']).replace(',','.'));
+        if('granularidade' in item) valor['granularidade'] = item['granularidade'];
       });
       return valor;
   }
   private adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
-    let codigo:string = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
-    if(codigo){
-        this.indicadorService.adicionaIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
+    let id:number = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
+    if(id){
+      this.indicadorService.adicionaIndicadorRelacionado(this.indicador.id, id).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         $('#item_relacionado').val('');
@@ -429,8 +437,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  private apagaItemRelacionado(codigo:string){
-    this.indicadorService.deleteIndicadorRelacionado(this.indicador.codigo, codigo).subscribe(resp=>{
+  private apagaItemRelacionado(id:number){
+    this.indicadorService.deleteIndicadorRelacionado(this.indicador.id, id).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         this.loadIndicador();
@@ -444,7 +452,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     let valorSelecionado = $('#categoria_relacionada').val();
     let codigo_categoria_analise:string = $(`#listacat option[value='${valorSelecionado}']`).attr('codigo');
     if(codigo_categoria_analise){
-      this.indicadorService.adicionaCategoriaRelacionada(this.indicador.codigo, codigo_categoria_analise).subscribe(resp=>{
+      this.indicadorService.adicionaCategoriaRelacionada(this.indicador.id, codigo_categoria_analise).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         $('#categoria_relacionada').val('');
@@ -459,7 +467,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   private apagaCategoriaRelacionada(codigo_categoria_analise:string){
-    this.indicadorService.deleteCategoriaRelacionada(this.indicador.codigo, codigo_categoria_analise).subscribe(resp=>{
+    this.indicadorService.deleteCategoriaRelacionada(this.indicador.id, codigo_categoria_analise).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
         this.loadIndicador();
@@ -496,5 +504,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       return `[${ this.indicador.UnidadeResponsavel.sigla }] - ${this.indicador.UnidadeResponsavel.nome}`;
     }
     return '';
+  }
+
+  formatTelaFloat(valor:number){
+    let ans = null;
+    if (valor){
+      ans = String(valor).replace('.',',');
+    }
+    return ans;
   }
 }

@@ -1,15 +1,15 @@
-<div class="page-footer">
+<div class="page-footer no-print">
     <div class="row">
-      <div class="col-xs-12 col-sm-6">
-          <span class="txt-color-white">Sage/SGI - Sala de Gestão Estratégica  © 2017 - Versão {{ version }} -
-            <a (click)="lgModal.show()">Release Notes</a>
+      <div class="col-xs-8 col-sm-8">
+          <span class="txt-color-white">{{ title }}  © 2017 - Versão {{ versionClient }}  -
+            <a (click)="lgModal.show()">Release Notes</a> - Ambiente {{ enviroment }}
           </span>
       </div>
 
-        <div class="col-xs-6 col-sm-6 text-right hidden-xs">
+        <div class="col-xs-4 col-sm-4 text-right hidden-xs">
             <div class="txt-color-white inline-block">
                 <i class="txt-color-blueLight hidden-mobile">Último login <i class="fa fa-clock-o"></i>
-                    <strong>52 min ar &nbsp;</strong> </i>
+                    <strong>{{ ultimo_login }}&nbsp;</strong> </i>
 
                 <div class="btn-group" dropdown dropup="true">
                     <button class="btn btn-xs dropdown-toggle bg-color-blue txt-color-white" dropdownToggle>
@@ -59,13 +59,14 @@
     </div>
 </div>
 
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #lgModal="bs-modal" class="modal fade no-print" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h3>Server: {{ titleServer }} - {{ versionServer }}</h3>
         <h4 class="modal-title">Release Notes</h4>
       </div>
       <div class="modal-body">

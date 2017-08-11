@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
             as: 'Indicadores',
             through: 'tb_indicador_tag',
             foreignKey: 'co_tag',
-            otherKey: 'co_indicador' });
+            otherKey: 'co_seq_indicador' });
         }
     },
     schema: 'dbesusgestor',

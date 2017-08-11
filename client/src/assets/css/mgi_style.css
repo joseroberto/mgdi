@@ -18,6 +18,14 @@
  * - CUSTOM STYLES
  */
 
- .popover {
+.popover {
      max-width: 900px;
  }
+
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}

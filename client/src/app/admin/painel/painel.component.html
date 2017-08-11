@@ -7,35 +7,48 @@
     <sa-widgets-grid>
         <!-- row -->
         <div class="row">
-            <!-- NEW WIDGET START -->
-            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <!-- Widget ID (each widget will need unique ID)-->
-                <sa-widget>
-                    <!-- widget options:
-                        usage: <sa-widget id="wid-id-0" [editbutton]="false">
-                        [colorbutton]="false"
-                        [editbutton]="false"
-                        [togglebutton]="false"
-                        [deletebutton]="false"
-                        [fullscreenbutton]="false"
-                        [custombutton]="false"
-                        [collapsed]="true"
-                        [sortable]="false"
-                    -->
-                    <header>
-                        <h2><strong>Gráficos</strong> <i>Monitorados</i></h2>
-                    </header>
-                    <!-- widget div-->
-                    <div>
-                        <!-- widget content -->
-                        <div class="widget-body">
-                            <p>Aqui vão ficar os gráficos monitorados, itens pendentes de aprovação, outros gauges.</p>
-                        </div>
-                        <!-- end widget content -->
-                    </div>
-                    <!-- end widget div -->
-                </sa-widget>
-            </article>
+          <div class="panel panel-default">
+            <div class="col-sm-6 col-lg-4" *ngIf="false">
+                <div class="panel-body status">
+                  <div class="who clearfix">
+                    <img src="assets/img/avatars/female.png" alt="img" class="online">
+                    <span class="name"><b>Rita de Cássia</b></span>
+                    <span class="from">Último cadastro: <b>1 dia atrás</b> </span>
+                  </div>
+                  <ul class="comments">
+                    <li>
+                      <span class="name">DSX10</span> Indicador 1
+                    </li>
+                    <li>
+                      <span class="name">DSX10</span> Indicador 1
+                    </li>
+                    <li>
+                      <span class="name">DSX10</span> Indicador 1
+                    </li>
+                  </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-4">
+                  <header>
+                      <h2><strong>Indicadores</strong> <i>Cadastrados</i></h2>
+                  </header>
+                  <!-- widget div-->
+                  <div>
+                      <!-- widget content -->
+                      <div class="widget-body">
+                        <sa-morris-graph [data]="listaIndicadores"
+                                       type="donut"
+                                       [options]="{
+                                      formater: percentageFormat
+                        }"></sa-morris-graph>
+                      </div>
+                      <!-- end widget content -->
+                  </div>
+                  <footer>
+                    <h2>Total: <span class="txt-color-blue">{{totalIndicadores}}</span></h2>
+                  </footer>
+            </div>
+          </div>
         </div>
     </sa-widgets-grid>
 </div>

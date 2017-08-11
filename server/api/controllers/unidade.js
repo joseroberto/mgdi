@@ -12,7 +12,7 @@ module.exports = {
     });
   },
   createUnidade: (req,res)=>{
-    console.log('createUnidade', req.body);
+    //console.log('createUnidade', req.body);
     delete req.body['codigo'];
     models.Unidade.create(req.body).then((indicador)=> {
       res.json({codret: 0, mensagem: "Unidade cadastrada com sucesso"});
@@ -57,42 +57,47 @@ module.exports = {
     res.json({unidades: lista});
   });
 },
-deleteUnidade: (req,res)=>{
-  models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
-    unidade.destroy();
-    res.json({codret: 0, mensagem: "Unidade apagada com sucesso"});
-  });
-},
-import_arquivo: (req,res)=>{
-    var arquivo = req.swagger.params.arquivo.value;
-    // Le arquivo
-    if(arquivo.mimetype=='text/csv'){
-      csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'unidade_pai']})
-      .fromString(arquivo.buffer.toString())
-      .on('json', (json)=>{
-          //console.log('original',json);
-          if('sigla' in json){
-            var uni = Object.assign(json, {isInformal: (json['informal']=='S')})
-            if(json['unidade_pai']){
-              uni = Object.assign(uni,{unidadepai:json['unidade_pai'] });
-            }
-            //console.log(uni);
-            models.Unidade.findOrCreate({where:{
-                codigo: json['codigo']
-              },
-              defaults: uni}).then((u, created)=>{
-                //console.log(u, created);
-              });
-            }
-      })
-      .on('error', (err)=>{
-        console.log(err);
-        res.status(500).send(err);
-      })
-      .on('done', ()=>{
-          res.json({codret: 0, mensagem: "Arquivo rescebido com sucesso."});
-      });
-    }
-
+  deleteUnidade: (req,res)=>{
+    models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
+      unidade.destroy();
+      res.json({codret: 0, mensagem: "Unidade apagada com sucesso"});
+    });
+  },
+  import_arquivo: (req,res)=>{
+      var arquivo = req.swagger.params.arquivo.value;
+      // Le arquivo
+      if(arquivo.mimetype=='text/csv'){
+        csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'unidade_pai']})
+        .fromString(arquivo.buffer.toString())
+        .on('json', (json)=>{
+            //console.log('original',json);
+            if('sigla' in json){
+              var uni = Object.assign(json, {isInformal: (json['informal']=='S')})
+              if(json['unidade_pai']){
+                uni = Object.assign(uni,{unidadepai:json['unidade_pai'] });
+              }
+              //console.log(uni);
+              models.Unidade.findOrCreate({where:{
+                  codigo: json['codigo']
+                },
+                defaults: uni}).then((u, created)=>{
+                  //console.log(u, created);
+                });
+              }
+        })
+        .on('error', (err)=>{
+          console.log(err);
+          res.status(500).send(err);
+        })
+        .on('done', ()=>{
+            res.json({codret: 0, mensagem: "Arquivo rescebido com sucesso."});
+        });
+      }
+  },
+  getCodigoUnidadePai(codigo){
+    return models.Unidade.findById(codigo,{
+      include: [ { model: models.Unidade, as: 'ancestors' } ],
+      order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]}
+    );
   }
 }

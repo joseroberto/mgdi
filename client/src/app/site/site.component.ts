@@ -100,7 +100,8 @@ export class SiteComponent implements OnInit {
   }
 
   isEmpty(objeto:Object){
-    return Object.keys(objeto).length==0;
+    console.log('Objeto', objeto);
+    return objeto && Object.keys(objeto).length==0;
   }
 
   loadIndicadorPorUnidade(){

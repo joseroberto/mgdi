@@ -2,10 +2,15 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Indicador = sequelize.define('Indicador', {
-    codigo: {
-        type: DataTypes.STRING(8),
+    id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        field: 'co_seq_indicador'
+    },
+    codigo: {
+        type: DataTypes.STRING(8),
+        allowNull: false,
         field: 'co_indicador'
     },
     titulo: {
@@ -123,11 +128,10 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
-    carga_manual:{
-        type: DataTypes.BOOLEAN,
-        field: 'st_carga_manual',
-        allowNull: false,
-        defaultValue: 0
+    indice_referencia:{
+        type: DataTypes.FLOAT,
+        field: 'nu_indice_referencia',
+        allowNull: true
     },
     acumulativo:{
         type: DataTypes.BOOLEAN,
@@ -141,11 +145,11 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
-    especifico:{
+    universal:{
         type: DataTypes.BOOLEAN,
-        field: 'st_especifico',
+        field: 'st_universal',
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 1
     }
   },{
     classMethods: {
@@ -177,17 +181,17 @@ module.exports = function(sequelize, DataTypes) {
         Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,
-           foreignKey: 'co_indicador_pai',
-           otherKey: 'co_indicador' });
+           foreignKey: 'co_seq_indicador_pai',
+           otherKey: 'co_seq_indicador' });
         Indicador.belongsToMany(models.CategoriaAnalise, {
            as: 'CategoriasAnalise',
            through: models.IndicadorCategoriaAnalise,
-           foreignKey: 'co_indicador',
+           foreignKey: 'co_seq_indicador',
            otherKey: 'co_categoria_analise' });
         Indicador.belongsToMany(models.Tag, {
            as: 'Tags',
            through: 'tb_indicador_tag',
-           foreignKey: 'co_indicador',
+           foreignKey: 'co_seq_indicador',
            onDelete: 'cascade' });
       }
     },

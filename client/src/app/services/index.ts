@@ -14,3 +14,4 @@ export * from './announce-user.service';
 export * from './unidade.service';
 export * from './granularidade.service';
 export * from './criterio-agregacao.service';
+export * from './version.service';

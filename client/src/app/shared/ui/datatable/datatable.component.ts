@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, AfterContentInit, OnInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ElementRef, AfterContentInit, OnInit} from '@angular/core';
 
 declare var $: any;
 
@@ -6,7 +6,7 @@ declare var $: any;
 
   selector: 'sa-datatable',
   template: `
-      <table class="dataTable responsive {{tableClass}}" width="{{width}}">
+      <table class="dataTable responsive {{tableClass}}" width="{{width}}" >
         <ng-content></ng-content>
       </table>
 `,
@@ -24,8 +24,10 @@ export class DatatableComponent implements OnInit {
   @Input() public columnsHide: boolean;
   @Input() public tableClass: string;
   @Input() public width: string = '100%';
+  @Output() public onInit: EventEmitter<number> = new EventEmitter<number>();
 
   private _dataTable:any;
+  private row_selected:any;
 
   constructor(private el: ElementRef) {
   }
@@ -35,12 +37,28 @@ export class DatatableComponent implements OnInit {
       System.import('script-loader!smartadmin-plugins/datatables/datatables.min.js'),
     ]).then(()=>{
       this.render()
-
+      this.onInit.emit();
     })
+  }
+
+  clear(){
+    this._dataTable.clear();
   }
 
   refresh(){
     this._dataTable.ajax.reload();
+  }
+
+  draw(){
+    this._dataTable.draw();
+  }
+
+  addRow(item){
+    this._dataTable.row.add(item);
+  }
+
+  deleteRow(item){
+    this._dataTable.row(`#${item}`).remove().draw();
   }
 
   render() {
@@ -84,11 +102,12 @@ export class DatatableComponent implements OnInit {
     if (this.filter) {
       // Apply the filter
       element.on('keyup change', 'thead th input[type=text]', function () {
-        this._dataTable
-          .column($(this).parent().index() + ':visible')
-          .search(this.value)
-          .draw();
-
+        console.log('Entrando na consulta', this.value);
+        this.onSearch(this.value);
+        //this._dataTable
+        //  .column($(this).parent().index() + ':visible')
+        //  .search(this.value)
+        //  .draw();
       });
     }
 
@@ -103,6 +122,7 @@ export class DatatableComponent implements OnInit {
       element.on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
         var row = data.row( tr );
+        this.row_selected = $(this).parents('tr');
         if ( row.child.isShown() ) {
           row.child.hide();
           tr.removeClass('shown');
@@ -113,8 +133,6 @@ export class DatatableComponent implements OnInit {
         }
       })
     }
-
-
   }
 
 }

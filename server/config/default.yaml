@@ -37,8 +37,8 @@ swagger:
 # any other values in this file are just loaded into the config for application access...
 config:
   host: localhost:8000
-  #wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
-  wsdl: http://aplicacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+  wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+  #wsdl: http://aplicacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
   system: SAGE
   secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89E=
   #bypass: true

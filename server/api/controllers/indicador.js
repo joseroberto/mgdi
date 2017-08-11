@@ -1,11 +1,12 @@
 require('../extensions/array');
 var models  = require('../models');
 var sequelize = require('sequelize');
+var unidade = require('./unidade');
 
 module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
-      attributes: [ 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados' ],
+      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados', 'dt_inclusao' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
@@ -16,6 +17,7 @@ module.exports = {
       where: {},
       order: ['titulo']
     };
+    //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
     if (!req.headers.authorization){
         attr.where['privado'] = false;
@@ -42,7 +44,7 @@ module.exports = {
     }
 
     if(req.swagger.params.secretaria.value){
-        console.log('Secretaria: ', req.swagger.params.secretaria.value);
+        //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
 
@@ -55,15 +57,40 @@ module.exports = {
     });
   },
   createIndicador: (req,res)=>{
-    console.log('create', req.body);
-    models.Indicador.create(req.body).then((indicador)=> {
-      if(req.body.tags)
-        indicador.setTags(req.body.tags);
-      res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+    var entidade = req.body;
+    unidade.getCodigoUnidadePai(entidade['unidade_responsavel']).then(function(lista) {
+      //console.log('Lista', lista);
+      // Atualiza a secretaria nu_nivel=1
+      if(lista.nu_nivel==1){
+        entidade['secretaria'] = lista.codigo;
+      }else{
+        entidade['secretaria'] = lista.ancestors.find(item=> item.nu_nivel==1)['codigo'];
+      }
+      console.log('create', entidade);
+      models.Indicador.create(entidade).then((indicador)=> {
+        if(req.body.tags)
+          indicador.setTags(req.body.tags);
+        res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+      }).catch(err=>{
+        console.log('Erro', err);
+      });
     });
   },
   getIndicador: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value,
+    models.Indicador.findAll(
+      { include: [ { model: models.Tag, as: 'Tags' },
+                   { model: models.Indicador, as: 'IndicadoresRelacionados' },
+                   { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+                    { model: models.Unidade , as: 'UnidadeResponsavel' }],
+        where: {codigo: req.swagger.params.codigo.value}
+      }
+    ).then((indicador)=> {
+      if(indicador && indicador.length>0)
+          res.json(indicador[0]);
+    });
+  },
+  getIndicadorPorId: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.id.value,
       { include: [ { model: models.Tag, as: 'Tags' },
                    { model: models.Indicador, as: 'IndicadoresRelacionados' },
                    { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
@@ -73,17 +100,31 @@ module.exports = {
     });
   },
   deleteIndicador: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value).then((indicador)=>{
-      indicador.setTags(null);
-      indicador.destroy();
-      res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+    models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((indicador)=>{
+
+      models.IndicadorCategoriaAnalise.destroy({ where: {
+        co_seq_indicador:indicador[0].id}}).then(()=>{
+
+          models.IndicadorRelacionado.destroy(
+            { where: {$or: [
+              { co_seq_indicador:indicador[0].id},
+              { co_seq_indicador_pai:indicador[0].id}]}
+              }).then(()=>{
+                console.log(indicador[0]);
+                indicador[0].setTags(null);
+                indicador[0].destroy();
+                res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+          });
+
+      });
+
     });
   },
   editaIndicador: (req,res)=>{
-    console.log(req.body);
+    //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-      models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
-        item.setTags(req.body.tags);
+      models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
+        item[0].setTags(req.body.tags);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
     });
@@ -99,7 +140,7 @@ module.exports = {
     });
   },
   updateUso: (req,res)=>{
-    console.log(req.body);
+    //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Usos do indicador ${req.swagger.params.codigo.value} atualizados com sucesso`});
     });
@@ -137,7 +178,7 @@ module.exports = {
   },
 
   addCategoriaAnalise: (req,res)=>{
-    models.Indicador.findById(req.swagger.params.codigo.value).then( item=>{
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
       item.addCategoriasAnalise(req.swagger.params.categoria_analise.value);
       res.json({codret: 0, mensagem: "Categoria de análise adicionada com sucesso"});
     });
@@ -145,7 +186,7 @@ module.exports = {
 
   deleteCategoriaAnalise: (req,res)=>{
     models.IndicadorCategoriaAnalise.destroy({ where: {
-      co_indicador:req.swagger.params.codigo.value,
+      co_seq_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
     });
@@ -153,11 +194,11 @@ module.exports = {
 
   addIndicadorRelacionado: (req,res)=>{
     Promise.all([
-      models.Indicador.findById(req.swagger.params.codigo_pai.value),
-      models.Indicador.findById(req.swagger.params.codigo.value)
+      models.Indicador.findById(req.swagger.params.id_pai.value),
+      models.Indicador.findById(req.swagger.params.id.value)
     ]).then((item)=>{
-      item[0].addIndicadoresRelacionados(req.swagger.params.codigo.value);
-      item[1].addIndicadoresRelacionados(req.swagger.params.codigo_pai.value);
+      item[0].addIndicadoresRelacionados(req.swagger.params.id.value);
+      item[1].addIndicadoresRelacionados(req.swagger.params.id_pai.value);
       res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
     });
     /*models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
@@ -174,10 +215,10 @@ module.exports = {
   deleteIndicadorRelacionado: (req,res)=>{
     models.IndicadorRelacionado.destroy(
       { where: {$or: [
-        { co_indicador:req.swagger.params.codigo.value,
-        co_indicador_pai:req.swagger.params.codigo_pai.value},
-        { co_indicador:req.swagger.params.codigo_pai.value,
-          co_indicador_pai:req.swagger.params.codigo.value}]}
+        { co_seq_indicador:req.swagger.params.id.value,
+        co_seq_indicador_pai:req.swagger.params.id_pai.value},
+        { co_seq_indicador:req.swagger.params.id_pai.value,
+          co_seq_indicador_pai:req.swagger.params.id.value}]}
         }).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
     });

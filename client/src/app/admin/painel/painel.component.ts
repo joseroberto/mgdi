@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NotificationService} from "../../shared/utils/notification.service";
+import {IndicadorService} from '../../services/index';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,11 @@ import {NotificationService} from "../../shared/utils/notification.service";
 })
 export class PainelComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private notificationService: NotificationService) { }
+  private totalIndicadores:number=0;
+  private listaIndicadores:any[]=[];
+
+  constructor(private route: ActivatedRoute, private notificationService: NotificationService,
+      private indicadorService:IndicadorService) { }
 
   ngOnInit() {
     //console.log('Teste', this.route.snapshot.queryParams);
@@ -20,8 +25,23 @@ export class PainelComponent implements OnInit {
         iconSmall: "fa fa-thumbs-up bounce animated",
         timeout: 4000
       });
+      this.loadIndicadorPorUnidade();
     }
   }
 
+  loadIndicadorPorUnidade(){
+    this.totalIndicadores=0;
+    this.listaIndicadores=[];
+    this.indicadorService.getCountPorUnidade().subscribe(resp=>{
+      console.log('Unidades',resp.unidades);
+      resp.unidades.forEach(item=>{
+          let obj={};
+          obj['label'] = item.sigla;
+          obj['value'] = item.numero_indicadores;
+          this.totalIndicadores = this.totalIndicadores + (+obj['value']);
+          this.listaIndicadores.push(obj);
+      });
+    });
+  }
 
 }

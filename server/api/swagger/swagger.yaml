@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.7"
-  title: SGI - Sistema de gestão de Indicadores
+  title: eSUSGestor - API de comunicação
 # during dev, should point to your local machine
 host: localhost:8000
 # basePath prefixes all resource paths
@@ -354,8 +354,6 @@ paths:
       operationId: createIndicador
       tags:
         - Indicadores
-      security:
-        - Bearer: []
       parameters:
         - name: indicador
           in: body
@@ -419,6 +417,28 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
+  /api/indicador-id/{id}:
+    x-swagger-router-controller: indicador
+    get:
+      description: Le um registro de indicador
+      summary: Retorna um registro de um indicador
+      operationId: getIndicadorPorId
+      tags:
+        - Indicadores
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigo}:
     x-swagger-router-controller: indicador
     get:
@@ -521,7 +541,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /api/indicador/{codigo_pai}/indicador-relacionado/{codigo}:
+  /api/indicador/{id_pai}/indicador-relacionado/{id}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona relação a um indicador
@@ -532,14 +552,14 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
-          type: string
+        - name: id_pai
+          type: number
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -558,14 +578,14 @@ paths:
       security:
         - Bearer: []
       parameters:
-        - name: codigo_pai
-          type: string
+        - name: id_pai
+          type: number
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -575,7 +595,7 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/indicador/{codigo}/categoria-analise/{categoria_analise}:
+  /api/indicador/{id}/categoria-analise/{categoria_analise}:
     x-swagger-router-controller: indicador
     patch:
       description: Adiciona categoria relacionada a um indicador
@@ -590,10 +610,10 @@ paths:
           type: string
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -616,10 +636,10 @@ paths:
           type: string
           in: path
           required: true
-        - name: codigo
+        - name: id
           in: path
           required: true
-          type: string
+          type: number
       responses:
         "200":
           description: Sucesso
@@ -1092,15 +1112,12 @@ definitions:
       privado:
         type: boolean
         description: Indica se precida ter privacidade de divulgação
-      especifico:
+      universal:
         type: boolean
-        description: Indica se é específico de uma área
-      carga_manual:
-        type: boolean
-        description: Indica se é utilizada a carga manual para um indicador
-      secretaria:
-        type: number
-        description: Código da Secretaria Responsável
+        description: Indica se é universal de uma área
+      indice_referencia:
+        type: [number, 'null']
+        description: Índice que é considerado para o indicador
       unidade_responsavel:
         type: number
         description: Código da Unidade Responsável
@@ -1111,7 +1128,7 @@ definitions:
         type: number
         description: Código da granularidade do Indicador
       criterio_agregacao:
-        type: number
+        type: [number, 'null']
         description: Código do critério de agregacão do Indicador
   Conceituacao:
     type: object
