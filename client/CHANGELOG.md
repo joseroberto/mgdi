@@ -1,5 +1,6 @@
 ### 0.0.8
 
+* Campos de categoria de análise, indicadores relacionados, periodicidades e classificação na tela da parte pública do painel de indicadores
 * PLANNING: Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
 * PLANNING: Tela de inclusão/alteração para Categoria de Análise
 * PLANNING: PDFKit para relatórios da ficha de indicadores

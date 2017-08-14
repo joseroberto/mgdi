@@ -3,23 +3,26 @@
     <sa-big-breadcrumbs icon="file-text-o" [items]="['Indicador',indicador.codigo ]" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></sa-big-breadcrumbs>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-9">
       <div class="well padding-10">
         <div class="row">
           <div class="col-md-9 padding-left-0">
             <h3 class="margin-top-0"><a (click)="(null)"> {{ indicador.titulo }} </a><br>
               <small class="font-xs"><i>Fonte: <a (click)="(null)">{{ indicador.fonte_dados }}</a></i></small></h3>
             <legend>Descrição</legend>
-            <span class="descricao" [innerHTML]="indicador.descricao||msg_padrao"></span>
+            <span [innerHTML]="indicador.descricao||msg_padrao"></span>
+            <br/><br/>
+            <legend>Classificação</legend>
+            <span [innerHTML]="indicador.ClassificacaoIndicador.descricao||msg_padrao"></span>
             <br/><br/>
             <legend>Conceituação</legend>
-            <span class="conceituacao" [innerHTML]="indicador.conceituacao||msg_padrao"></span>
+            <span [innerHTML]="indicador.conceituacao||msg_padrao"></span>
             <br/><br/>
             <legend>Limitações</legend>
-            <span class="limitacoes" [innerHTML]="indicador.limitacoes||msg_padrao"></span>
+            <span [innerHTML]="indicador.limitacoes||msg_padrao"></span>
             <br/><br/>
             <legend>Interpretação</legend>
-            <span class="interpretacao" [innerHTML]="indicador.interpretacao||msg_padrao"></span>
+            <span [innerHTML]="indicador.interpretacao||msg_padrao"></span>
             <br/><br/>
             <legend>Usos</legend>
             <span class="usos" [innerHTML]="indicador.usos||msg_padrao"></span>
@@ -33,6 +36,50 @@
             </div>
             <br/><br/>
             <a class="btn btn-primary no-print" routerLink="/"> Voltar </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-barcode"></i> Categorias de Análise</h5>
+        <div class="row">
+          <div class="col-lg-12">
+              <ul class="list-group no-margin">
+                <li class="list-group-item" *ngFor="let item of indicador.CategoriasAnalise">
+                  <a (click)="(null)" class="margin-top-0">{{ item.titulo }}</a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-file-text"></i> Indicadores relacionados</h5>
+        <div class="row">
+          <div class="col-lg-12">
+              <ul class="no-padding list-unstyled">
+                <li *ngFor="let item of indicador.IndicadoresRelacionados">
+                  <a routerLink="/item/{{ item.codigo }}" class="margin-top-0"> <i class="fa fa-angle-double-right"></i> {{ item.titulo }}</a><br>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="well padding-10">
+        <h5 class="margin-top-0"><i class="fa fa-hourglass-1"></i> Periodicidades</h5>
+        <div class="row">
+          <div class="col-lg-12">
+              <ul class="list-group no-margin">
+                <li class="list-group-item">
+                  Atualização: <a (click)="(null)" class="margin-top-0"> {{ indicador.PeriodicidadeAtualizacao.descricao }}</a>
+                </li>
+                <li class="list-group-item">
+                  Monitoramento: <a (click)="(null)" class="margin-top-0"> {{ indicador.PeriodicidadeMonitoramento.descricao }}</a>
+                </li>
+                <li class="list-group-item">
+                  Avaliação: <a (click)="(null)" class="margin-top-0"> {{ indicador.PeriodicidadeAvaliacao.descricao }}</a>
+                </li>
+              </ul>
           </div>
         </div>
       </div>
