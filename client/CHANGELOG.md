@@ -5,6 +5,9 @@
 * PLANNING: Tela de inclusão/alteração para Categoria de Análise
 * PLANNING: PDFKit para relatórios da ficha de indicadores
 * PLANNING: Armazenamento de log de mudanças na ficha de indicadores
+* PLANNING: Aumento do campo sigla do indicador para 10 caracteres
+* PLANNING: Hierarquia de programas e metas
+
 
 ### 0.0.7 - 08/Agosto/2017
 

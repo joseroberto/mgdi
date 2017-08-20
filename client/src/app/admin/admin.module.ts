@@ -17,7 +17,6 @@ import {SmartadminValidationModule} from "../shared/forms/validation/smartadmin-
 import {TreeViewModule} from "../shared/ui/tree-view/tree-view.module";
 
 import {PainelComponent} from "./painel/painel.component";
-import {GeneralElementsComponent} from "./teste/general-elements.component";
 
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
@@ -25,8 +24,11 @@ import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.compone
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
 
 // Itens de planos
-import {ExemploListaComponent} from './plano/exemplo-lista.component';
-import {PlanoComponent} from './plano/plano.component';
+import {ProgramaComponent} from './programa/programa.component';
+
+// Itens auxiliares
+import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
+import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
 
 import {WindowRef} from './indicador/WindowRef';
 
@@ -50,12 +52,12 @@ import {WindowRef} from './indicador/WindowRef';
   declarations: [PainelComponent,
     FlotChartsComponent,
     MorrisChartsComponent,
-    GeneralElementsComponent,
     IndicadorListaComponent,
     IndicadorCadastroComponent,
     IndicadorListaUnidadeComponent,
-    ExemploListaComponent,
-    PlanoComponent
+    CategoriaAnaliseComponent,
+    UsuarioComponent,
+    ProgramaComponent
   ],
   providers:[WindowRef]
 })

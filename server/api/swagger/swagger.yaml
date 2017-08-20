@@ -1029,9 +1029,144 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/programa:
+    x-swagger-router-controller: programa
+    get:
+      description: Lista programas e itens
+      summary: Lista programas
+      operationId: getProgramas
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryPrograma"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Inclui um programa
+      summary: Inclui um programa
+      operationId: createPrograma
+      parameters:
+        - name: programa
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Programa'
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/programa/{codigo}:
+    x-swagger-router-controller: programa
+    get:
+      description: Lista informações de um item de programa
+      summary: Lista informações de um programa
+      operationId: getPrograma
+      tags:
+        - Programas
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Programa"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita dados de um programa
+      summary: Atualiza dados de programa
+      operationId: editaPrograma
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Programa'
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma unidade
+      summary: Apaga uma unidade
+      operationId: deletePrograma
+      tags:
+        - Programas
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 definitions:
+  Programa:
+    description: Programa
+    type: object
+    properties:
+      codigo:
+        type: [integer,'null']
+      sigla:
+        type: string
+      titulo:
+        type: string
+      detalhamento:
+        type: [string, 'null']
+      programa_pai:
+        type: [number,'null']
+
+  QueryPrograma:
+    description: Programas
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
+      metadata:
+        type: array
+        items:
+          type: object
   Unidade:
     description: Unidade
+    type: object
     properties:
       codigo:
         type: [integer,'null']
@@ -1054,6 +1189,7 @@ definitions:
 
   QueryUnidade:
     description: Unidades
+    type: object
     properties:
       resultset:
         type: array
@@ -1067,6 +1203,7 @@ definitions:
           type: object
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
+    type: object
     properties:
       resultset:
         type: array
@@ -1081,6 +1218,7 @@ definitions:
 
   IndicadorAtualizacao:
     description: Objeto indicador
+    type: object
     properties:
       codigo:
         type: string

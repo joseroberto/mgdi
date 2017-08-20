@@ -1,7 +1,8 @@
 'use strict';
 
 var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
+var express = require('express');
+var app = express();
 var morgan = require('morgan');
 var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
@@ -40,6 +41,18 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
 
   var port = process.env.PORT || 8000;
+  var options = {
+  dotfiles: 'ignore',
+  etag: true,
+  extensions: ['htm', 'html'],
+  index: 'index.html',
+  lastModified: true,
+  maxAge: '1d',
+  setHeaders: function (res, path, stat) {
+      res.set('x-timestamp', Date.now());
+      res.header('Cache-Control', 'public, max-age=1d');
+    }
+  };
   theAppLog.info('Servidor REST %s', config_param.host);
   theAppLog.info('Porta %s', port);
   theAppLog.info('Ambiente %s', process.env.NODE_ENV );
@@ -51,6 +64,15 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
         response.header('Access-Control-Allow-Credentials', 'true');
         next();
     });
+  app.use('/', (request, response, next) => {
+    console.log('Passei por aqui');
+    next();
+  });
+  app.use(express.static('public'));
+  app.use(express.static('node_modules/redoc/dist'));
+  app.use(express.static('api/swagger'));
+  //app.use('/', express.static(__dirname + '/doc', options));
+
   swaggerExpress.register(app);
   app.listen(port);
 
