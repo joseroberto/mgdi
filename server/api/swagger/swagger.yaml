@@ -2,6 +2,24 @@ swagger: "2.0"
 info:
   version: "0.0.7"
   title: eSUSGestor - API de comunicação
+  description: |
+    A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
+    # Introdução
+    O projeto visa a criação de um barramento para intermediar o acesso a informações visando uma estratégia de negócio coerente e padronizada.  Esse barramento vai incorporar características de segurança como login no SCPA (ou outro sistema de segurança).  As funcionalidades previstas serão plugáveis e terá como início o módulo de gestão de indicadores MGI  e será extendido para as funcionalidades necessárias as consultas demandadas pelo eSUS Gestor.  O desenvolvimento segue os padrões requeridos pelo DATASUS em seu documento de definição [Diretriz arquitetural de software](https://integrams.saude.gov.br/uploadfile/getFile?coUploadFile=24907)
+    # Objetivo
+    *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
+    *  Utilização de metadados para criação de consultas dinâmicas as bases
+    *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
+    # Especificação API eSUSGestor
+    Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
+
+    Interface para acesso e lista de [endpoints](http://rest.demas.saude.gov).
+
+    # Autenticação
+    A API do eSUSGestor oferece como forma de autenticação:
+      - API Key validada com SCPA
+      - OAuth2 que utiliza o barramento do DATASUS.
+
 # during dev, should point to your local machine
 host: localhost:8000
 # basePath prefixes all resource paths
@@ -23,13 +41,10 @@ securityDefinitions:
    O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no
    campo 'Authorization'.
 
-
    Um token JWT válido é gerado pela API e retornado na resposta a rota
    /login uma vez que possua um email & senha válido.
 
-
    A seguinte sintaxe deve ser utilizada no cabeçalho das requisições 'Authorization' :
-
        Bearer: xxxxxx.yyyyyyy.zzzzzz
   type: apiKey
   name: Authorization
@@ -1317,8 +1332,10 @@ definitions:
     type: object
     properties:
       email:
+        description: Email do usuário
         type: string
       password:
+        description: Senha do usuário
         type: string
   Token:
     type: object

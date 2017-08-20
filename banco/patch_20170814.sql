@@ -35,6 +35,8 @@ alter table dbesusgestor.tb_programa_meta_hierarquia add CONSTRAINT tb_programa_
 alter table dbesusgestor.tb_programa_meta_hierarquia add CONSTRAINT tb_programa_meta_hierarquia_co_programa_superior_fkey FOREIGN KEY (co_programa_superior)
         REFERENCES dbesusgestor.tb_programa_meta (co_programa) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION;
+---------------------------------
+alter table dbesusgestor.tb_indicador alter COLUMN co_indicador type varchar(10);
 
 ---------------------------------
 alter table dbesusgestor.tb_resultado add CONSTRAINT tb_resultado_co_uf_fkey FOREIGN KEY (co_uf)

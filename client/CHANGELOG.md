@@ -1,12 +1,16 @@
-### 0.0.8
+### 0.0.9
 
-* Campos de categoria de análise, indicadores relacionados, periodicidades e classificação na tela da parte pública do painel de indicadores
-* PLANNING: Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
-* PLANNING: Tela de inclusão/alteração para Categoria de Análise
 * PLANNING: PDFKit para relatórios da ficha de indicadores
 * PLANNING: Armazenamento de log de mudanças na ficha de indicadores
-* PLANNING: Aumento do campo sigla do indicador para 10 caracteres
-* PLANNING: Hierarquia de programas e metas
+
+### 0.0.8 - 20/Agosto/2017
+
+* Campos de categoria de análise, indicadores relacionados, periodicidades e classificação na tela da parte pública do painel de indicadores
+* Melhoria na documentação da API eSUSGestor
+* Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
+* Tela de inclusão/alteração para Categoria de Análise
+* Aumento do campo sigla do indicador para 10 caracteres
+* Hierarquia de programas e metas
 
 
 ### 0.0.7 - 08/Agosto/2017

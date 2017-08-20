@@ -52,7 +52,7 @@
                       placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo_edit" #codigoedit
                       (input)="codigoedit.value=$event.target.value.toUpperCase().replace(' ','')"
                       data-bv-notempty="true"
-                      data-bv-notempty-message="O código do indicador é obrigatório" maxlength="8">
+                      data-bv-notempty-message="O código do indicador é obrigatório" maxlength="10">
                   </div>
                 </div>
                 <div>
