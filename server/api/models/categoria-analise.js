@@ -19,6 +19,16 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
+    classMethods:{
+        associate:function(models){
+            CategoriaAnalise.hasMany(models.CategoriaAnaliseItem,
+              {
+                as: 'Itens',
+                foreignKey: 'co_categoria_analise'
+              }
+            );
+        }
+    },
     schema: 'dbesusgestor',
     timestamps: false,
     freezeTableName: true,

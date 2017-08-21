@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.7"
+  version: "0.0.8"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -94,6 +94,23 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
+  /api/user-mgi:
+    x-swagger-router-controller: user
+    get:
+      description: Retorna a lista de usuários que utilizam o MGI - Módulo de Gestão de Indicadores
+      summary: Lista de Usuários do MGI
+      operationId: getUsers
+      tags:
+        - MGI
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetUserMgiListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"      
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -211,23 +228,6 @@ paths:
             $ref: "#/definitions/GetBancoDadosResponse"
         default:
           description: Erro
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /api/area:
-    x-swagger-router-controller: area
-    get:
-      description: Retorna as areas responsáveis pelos os indicadores
-      summary: Lista as áreas
-      operationId: getAreas
-      tags:
-        - Cadastros Auxiliares
-      responses:
-        "200":
-          description: Sucesso
-          schema:
-            $ref: "#/definitions/GetAreaResponse"
-        default:
-          description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /api/tag:
@@ -1151,6 +1151,10 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 definitions:
+  GetUserMgiListResponse:
+    description: Lista de Usuários do MGI
+    type: object
+    
   Programa:
     description: Programa
     type: object
@@ -1491,21 +1495,6 @@ definitions:
             codigo:
               type: number
             descricao:
-              type: string
-  GetAreaResponse:
-    required:
-      - areas
-    properties:
-      areas:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: number
-            descricao:
-              type: string
-            sigla:
               type: string
   GetIndicadorConsulta:
     required:

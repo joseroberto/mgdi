@@ -29,6 +29,8 @@ import {ProgramaComponent} from './programa/programa.component';
 // Itens auxiliares
 import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
 import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
+import {TagComponent} from './cadastros_auxiliares/tag.component';
+import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 import {WindowRef} from './indicador/WindowRef';
 
@@ -57,7 +59,9 @@ import {WindowRef} from './indicador/WindowRef';
     IndicadorListaUnidadeComponent,
     CategoriaAnaliseComponent,
     UsuarioComponent,
-    ProgramaComponent
+    ProgramaComponent,
+    TagComponent,
+    UnidadeMedidaComponent
   ],
   providers:[WindowRef]
 })

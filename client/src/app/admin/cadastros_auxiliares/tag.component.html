@@ -1,6 +1,6 @@
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Usuários', 'Lista']" icon="file-text-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="['Marcadores', 'Lista']" icon="file-text-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
   <sa-widgets-grid>
     <!-- row -->
@@ -28,19 +28,15 @@
           <div>
             <!-- widget content -->
             <div class="widget-body no-padding" data-sparkline-container="">
-              <sa-datatable #listaUsuario [options]="options"
+              <sa-datatable #listaTag [options]="options"
                          [detailsFormat]="detailsFormat"
                          tableClass="display projects-table table table-striped table-bordered table-hover"
                          width="100%"
-                         (onInit)="getUsuarios()">
+                         (onInit)="getTags()">
                 <thead>
                 <tr>
                   <th></th>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>Ramal</th>
-                  <th>Celular</th>
-                  <th>Último Login</th>
+                  <th>Descrição</th>
                 </tr>
                 </thead>
               </sa-datatable>

@@ -18,6 +18,8 @@ import {ProgramaComponent} from './programa/programa.component';
 // Itens auxiliares
 import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
 import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
+import {TagComponent} from './cadastros_auxiliares/tag.component';
+import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 export const homeRoutes: Routes = [
     {
@@ -64,6 +66,16 @@ export const homeRoutes: Routes = [
     path: 'categoria-analise',
     component: CategoriaAnaliseComponent,
     data: {pageTitle: 'Lista de categorias de análise'}
+    },
+    {
+    path: 'tag',
+    component: TagComponent,
+    data: {pageTitle: 'Lista marcadores'}
+    },
+    {
+    path: 'unidade-medida',
+    component: UnidadeMedidaComponent,
+    data: {pageTitle: 'Lista de Unidades de Medida'}
     },
 ];
 

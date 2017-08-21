@@ -22,11 +22,11 @@ import {LoginComponent} from './auth/login.component'
 
 
 // Servicos
-import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeService, AreaService,
+import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeService,
   UnidadeMedidaService, IndicadorService, UtilService,
   TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService,
   BancoDadosService, UnidadeService, GranularidadeService, CriterioAgregacaoService,
-  VersionService } from './services/index';
+  VersionService, UsuarioService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -65,7 +65,6 @@ type StoreType = {
     AuthenticationService,
     ClassificacaoIndicadorService,
     PeriodicidadeService,
-    AreaService,
     UnidadeMedidaService,
     UnidadeService,
     IndicadorService,
@@ -78,7 +77,8 @@ type StoreType = {
     CookieService,
     GranularidadeService,
     CriterioAgregacaoService,
-    VersionService
+    VersionService,
+    UsuarioService
   ]
 })
 export class AppModule {

@@ -108,29 +108,28 @@ select distinct co_agravo, co_grupo_agravo from morbi_mortalidade2.tb_casos_agra
 
 --> Inclui o indicador
 
-ok morbi_mortalidade2 | tb_casos_agravo_aids                    | table | postgres
-ok morbi_mortalidade2 | tb_casos_agravo_aparelho_circulatorio   | table | cristiano
-ok morbi_mortalidade2 | tb_casos_agravo_causa                   | table | cristiano
-ok morbi_mortalidade2 | tb_casos_agravo_causa_externa           | table | cristiano
-ok morbi_mortalidade2 | tb_casos_agravo_dengue                  | table | postgres
-ok morbi_mortalidade2 | tb_casos_agravo_especifica_crianca      | table | cristiano
-ok morbi_mortalidade2 | tb_casos_agravo_estado                  | table | luiscrneves
-ok morbi_mortalidade2 | tb_casos_agravo_febre_amarela           | table | postgres
-ok morbi_mortalidade2 | tb_casos_agravo_hanseniase              | table | postgres
 
-select distinct 'MOR' || ( co_agravo*1000+co_grupo_agravo)  from morbi_mortalidade2.tb_casos_agravo_febre_amarela;
+não compativel morbi_mortalidade2 | tb_casos_agravo_raca_cor                | table | cristiano
+ja carregado antes morbi_mortalidade2 | tb_casos_agravo_sifilis_congenita       | table | postgres
+ja crregado antes morbi_mortalidade2 | tb_casos_agravo_tuberculose             | table | postgres
+nao compativel morbi_mortalidade2 | tb_notificacao_violencia                | table | cristiano
+nao compativel morbi_mortalidade2 | tb_ofertas_educacionais                 | table | luiscrneves
+nao compativel morbi_mortalidade2 | tb_violencia_dom                        | table | luiscrneves
+
+select distinct 'MOR' || ( co_agravo*1000+co_grupo_agravo)  from morbi_mortalidade2.tb_casos_agravo_sifilis_congenita;
+select * from morbi_mortalidade2.tb_violencia_dom;
 
 insert into dbesusgestor.tb_indicador (co_indicador, ds_titulo,ds_descricao,
   co_periodicidade_atualizacao, co_periodicidade_avaliacao, co_periodicidade_monitoramento,
 co_unidade_medida, co_secretaria, co_unidade_responsavel, co_granularidade, co_criterio_agregacao)
 select 'MOR' || ( co_agravo*1000+a.co_grupo_agravo),
 (no_grupo_agravo || '-' || no_agravo) as titulo,
-no_graf_epid as ds_descricao, 360 as co_periodicidade_atualizacao, 360 as co_periodicidade_avaliacao, 360 as co_periodicidade_monitoramento,
+coalesce(no_graf_epid,no_agravo) as ds_descricao, 360 as co_periodicidade_atualizacao, 360 as co_periodicidade_avaliacao, 360 as co_periodicidade_monitoramento,
 4 as co_unidade_medida,
 3 as co_secretaria, 3 as co_unidade_responsavel, 3 as co_granularidade, 0 as co_criterio_agregacao
 from
 (select distinct co_agravo, co_grupo_agravo
-    from morbi_mortalidade2.tb_casos_agravo_febre_amarela) as a
+    from morbi_mortalidade2.tb_notificacao_violencia) as a
 inner join morbi_mortalidade2.tb_agravo b on b.co_seq_agravo=a.co_agravo
 inner join  morbi_mortalidade2.tb_grupo_agravo c on c.co_grupo_agravo=a.co_grupo_agravo;
 
@@ -138,7 +137,7 @@ inner join  morbi_mortalidade2.tb_grupo_agravo c on c.co_grupo_agravo=a.co_grupo
 begin transaction;
 insert into dbesusgestor.tb_resultado (co_seq_indicador, co_ibge, co_ano, nu_valor, dt_inclusao, dt_atualizacao)
 select co_seq_indicador, co_ibge, nu_ano_ref as co_ano, qt_casos_agravo as nu_valor, current_timestamp, current_timestamp
-from morbi_mortalidade2.tb_casos_agravo_febre_amarela a
+from morbi_mortalidade2.tb_notificacao_violencia a
 inner join dbesusgestor.tb_indicador b on b.co_indicador = 'MOR' || ( a.co_agravo*1000+a.co_grupo_agravo)
 where co_ibge in (select co_ibge from dbesusgestor.tb_municipio);
 commit;

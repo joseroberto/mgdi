@@ -1,5 +1,4 @@
 export * from './authentication.service';
-export * from './area.service';
 export * from './classificacao-indicador.service';
 export * from './indicador.service';
 export * from './periodicidade.service';
@@ -15,3 +14,4 @@ export * from './unidade.service';
 export * from './granularidade.service';
 export * from './criterio-agregacao.service';
 export * from './version.service';
+export * from './usuario.service';

@@ -64,10 +64,6 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
         response.header('Access-Control-Allow-Credentials', 'true');
         next();
     });
-  app.use('/', (request, response, next) => {
-    console.log('Passei por aqui');
-    next();
-  });
   app.use(express.static('public'));
   app.use(express.static('node_modules/redoc/dist'));
   app.use(express.static('api/swagger'));

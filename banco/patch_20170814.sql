@@ -42,6 +42,7 @@ alter table dbesusgestor.tb_indicador alter COLUMN co_indicador type varchar(10)
 alter table dbesusgestor.tb_resultado add CONSTRAINT tb_resultado_co_uf_fkey FOREIGN KEY (co_uf)
         REFERENCES dbesusgestor.tb_uf (co_uf);
 
+---------------------------------
 
 create table dbesusgestor.tb_categoria_analise_item(
   co_seq_categoria_analise_item serial not null,
@@ -57,3 +58,20 @@ COMMENT ON COLUMN dbesusgestor.tb_categoria_analise_item.ds_titulo IS 'Titulo do
 
 alter table dbesusgestor.tb_categoria_analise_item add CONSTRAINT tb_categoria_analise_item_co_seq_categoria_analise_item_fkey FOREIGN KEY (co_categoria_analise)
   REFERENCES dbesusgestor.tb_categoria_analise (co_categoria_analise);
+
+---------------------------------
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('FE1', '15 a 24 anos');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('FE1', '25 a 59 anos');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('FE1', '60 anos ou mais de idade');
+
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('SD', 'urbana');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('SD', 'rural');
+
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('COR', 'branca');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('COR', 'preta');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('COR', 'amarela');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('COR', 'parda');
+insert into dbesusgestor.tb_categoria_analise_item (co_categoria_analise, ds_titulo) values ('COR', 'indígena');
+
+---------------------------------
+delete from dbesusgestor.tb_categoria_analise where co_categoria_analise='UG';
