@@ -1,6 +1,20 @@
+# Desenvolvimento
+
+Existem 2 opções para desenvolver a API. A configuração para essas opções se encontra no diretório /config, nos arquivos default
+
+*  Utilizar uma base local
+
+ `swagger project start`
+
+*  Utilizar a base de dados em outra máquina (production ou test)
+
+`NODE_ENV=production swagger project start`
+ ou
+ `NODE_ENV=production swagger project start`
+
 # Instalação do server
 
-Utilize o pm2 para gerenciar o server
+A sugestão para gestão de nodes é utilizar o pm2 para gerenciar os processos.
 
 # Instalação do serviço sob o pm2
 

@@ -109,7 +109,7 @@ select distinct co_agravo, co_grupo_agravo from morbi_mortalidade2.tb_casos_agra
 --> Inclui o indicador
 
 
-não compativel morbi_mortalidade2 | tb_casos_agravo_raca_cor                | table | cristiano
+não compativel q | tb_casos_agravo_raca_cor                | table | cristiano
 ja carregado antes morbi_mortalidade2 | tb_casos_agravo_sifilis_congenita       | table | postgres
 ja crregado antes morbi_mortalidade2 | tb_casos_agravo_tuberculose             | table | postgres
 nao compativel morbi_mortalidade2 | tb_notificacao_violencia                | table | cristiano

@@ -281,6 +281,51 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{codigos}/resultset:
+    x-swagger-router-controller: resultset
+    get:
+      description: Retorna os valores do indicador
+      summary: Query para valores de indicadores
+      operationId: getResultado
+      tags:
+        - Indicadores
+        - Consulta Dados
+      parameters:
+        - name: codigos
+          type: array
+          items:
+            type: string
+          in: path
+          required: true
+          description: Codigos dos indicadores a serem pesquisados
+        - name: tipo
+          type: string
+          in: query
+          enum: [BR, REG, UF, MUN]
+          required: false
+          description: Tipo de consulta (BR - Brasil, MUN - Municipal, REG - Regional, UF - Estadual)
+        - name: filtro
+          type: string
+          in: query
+          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
+          required: false
+          description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
+        - name: valores_filtro
+          type: array
+          items:
+            type: string
+          in: query
+          required: false
+          description: Valores a serem filtrados
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/ResultIndicador"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigos}/query:
     x-swagger-router-controller: query
     get:
@@ -1220,6 +1265,16 @@ definitions:
         type: array
         items:
           type: object
+  ResultIndicador:
+    description: Resultado da consulta especifica de indicador
+    type: object
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
     type: object

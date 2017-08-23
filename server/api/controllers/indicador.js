@@ -232,5 +232,13 @@ module.exports = {
         }).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
     });
-  }
+  },
+
+  getIndicadorPesquisaPorCodigo: (codigos)=>
+    models.Indicador.findAll(
+      { attributes: [  'id', 'codigo' ],
+      //  where: {codigo: req.swagger.params.codigo.value}
+      where: {codigo: { $in: codigos}}
+      })
+
 }

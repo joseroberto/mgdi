@@ -10,7 +10,7 @@
 * Consulta dinâmica para valores do indicador (levando em consideração campos de Critério de agregação, categoria de análise e tipo de consulta na ficha técnica)
 * Tela de inclusão/alteração para Categoria de Análise
 * Aumento do campo sigla do indicador para 10 caracteres
-* Hierarquia de programas e
+* Hierarquia de programas e metas
 * Retirada da tabela de area.  O sistema ira utilizar a tb_unidade com as informações dos responsáveis bem como informações específicas das áreas do MS.
 
 
