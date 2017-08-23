@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
-  PeriodicidadeService, AreaService, UtilService,
+  PeriodicidadeService, UtilService,
   TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
   UnidadeService, GranularidadeService, CriterioAgregacaoService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -94,7 +94,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private indicadorService:IndicadorService,
       private periodicidadeService:PeriodicidadeService,
-      private areaService:AreaService,
       private unidadeMedidaService:UnidadeMedidaService,
       private util:UtilService,
       private tagCategoriaService:TagCategoriaService,

@@ -11,7 +11,8 @@ export class ItemComponent implements OnInit {
   private msg_padrao = 'Não há dados cadastrados';
 
   constructor(private location:Location, private route: ActivatedRoute, private indicadorService:IndicadorService) {
-    this.indicador = {titulo:''}
+    this.indicador = {titulo:'', descricao:'', ClassificacaoIndicador:{descricao:''},
+      PeriodicidadeAtualizacao:{descricao:''},PeriodicidadeMonitoramento:{descricao:''},PeriodicidadeAvaliacao:{descricao:''},}
   }
 
   ngOnInit() {

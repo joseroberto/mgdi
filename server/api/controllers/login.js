@@ -55,7 +55,7 @@ module.exports = {
                       temp['perfis'] = array_perfis;
                       if(resp){
                         resp.update(temp).then((result)=>{
-                          console.log("Dados de usuário atualizado:", result);
+                          //console.log("Dados de usuário atualizado:", result);
                         });
                         //models.User.update(temp, { where: { cpf: result.respostaBuscaPerfilUsuario.usuario.cpf }}).then((user)=> {
 

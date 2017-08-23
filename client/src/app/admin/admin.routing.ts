@@ -6,7 +6,6 @@ import {PainelComponent} from "./painel/painel.component";
 
 import { FlotChartsComponent } from './grafico/flot-charts.component';
 import { MorrisChartsComponent } from './grafico/morris-charts.component';
-import {GeneralElementsComponent} from "./teste/general-elements.component";
 
 // Itens de indicadores
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
@@ -14,8 +13,13 @@ import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.compone
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
 
 // Itens de planos
-import {PlanoComponent} from './plano/plano.component';
-import {ExemploListaComponent} from './plano/exemplo-lista.component';
+import {ProgramaComponent} from './programa/programa.component';
+
+// Itens auxiliares
+import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
+import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
+import {TagComponent} from './cadastros_auxiliares/tag.component';
+import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 export const homeRoutes: Routes = [
     {
@@ -49,30 +53,30 @@ export const homeRoutes: Routes = [
     data: {pageTitle: 'Lista Indicadores por Unidade'}
     },
     {
-    path: 'plano',
-    component: PlanoComponent,
-    data: {pageTitle: 'Exemplo de lista de planos'}
+    path: 'programa',
+    component: ProgramaComponent,
+    data: {pageTitle: 'Programas - Instrumentos de Gestão'}
     },
     {
-    path: 'exemplo',
-    component: ExemploListaComponent,
-    data: {pageTitle: 'Exemplo de lista de planos'}
+    path: 'usuario',
+    component: UsuarioComponent,
+    data: {pageTitle: 'Lista de usuários'}
     },
     {
-    path: 'importa',
-    component: GeneralElementsComponent,
-    data: {pageTitle: 'Importa Indicadores'}
+    path: 'categoria-analise',
+    component: CategoriaAnaliseComponent,
+    data: {pageTitle: 'Lista de categorias de análise'}
     },
     {
-    path: 'grafico',
-    component: FlotChartsComponent,
-    data: {pageTitle: 'Gráfico Indicadores'}
+    path: 'tag',
+    component: TagComponent,
+    data: {pageTitle: 'Lista marcadores'}
     },
     {
-    path: 'grafico2',
-    component: MorrisChartsComponent,
-    data: {pageTitle: 'Gráfico Indicadores'}
-  }
+    path: 'unidade-medida',
+    component: UnidadeMedidaComponent,
+    data: {pageTitle: 'Lista de Unidades de Medida'}
+    },
 ];
 
 export const AdminRouting:ModuleWithProviders = RouterModule.forChild(homeRoutes);

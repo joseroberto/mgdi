@@ -1,7 +1,25 @@
 swagger: "2.0"
 info:
-  version: "0.0.7"
+  version: "0.0.8"
   title: eSUSGestor - API de comunicação
+  description: |
+    A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
+    # Introdução
+    O projeto visa a criação de um barramento para intermediar o acesso a informações visando uma estratégia de negócio coerente e padronizada.  Esse barramento vai incorporar características de segurança como login no SCPA (ou outro sistema de segurança).  As funcionalidades previstas serão plugáveis e terá como início o módulo de gestão de indicadores MGI  e será extendido para as funcionalidades necessárias as consultas demandadas pelo eSUS Gestor.  O desenvolvimento segue os padrões requeridos pelo DATASUS em seu documento de definição [Diretriz arquitetural de software](https://integrams.saude.gov.br/uploadfile/getFile?coUploadFile=24907)
+    # Objetivo
+    *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
+    *  Utilização de metadados para criação de consultas dinâmicas as bases
+    *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
+    # Especificação API eSUSGestor
+    Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
+
+    Interface para acesso e lista de [endpoints](http://rest.demas.saude.gov).
+
+    # Autenticação
+    A API do eSUSGestor oferece como forma de autenticação:
+      - API Key validada com SCPA
+      - OAuth2 que utiliza o barramento do DATASUS.
+
 # during dev, should point to your local machine
 host: localhost:8000
 # basePath prefixes all resource paths
@@ -23,13 +41,10 @@ securityDefinitions:
    O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no
    campo 'Authorization'.
 
-
    Um token JWT válido é gerado pela API e retornado na resposta a rota
    /login uma vez que possua um email & senha válido.
 
-
    A seguinte sintaxe deve ser utilizada no cabeçalho das requisições 'Authorization' :
-
        Bearer: xxxxxx.yyyyyyy.zzzzzz
   type: apiKey
   name: Authorization
@@ -79,6 +94,23 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
+  /api/user-mgi:
+    x-swagger-router-controller: user
+    get:
+      description: Retorna a lista de usuários que utilizam o MGI - Módulo de Gestão de Indicadores
+      summary: Lista de Usuários do MGI
+      operationId: getUsers
+      tags:
+        - MGI
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetUserMgiListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"      
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -198,23 +230,6 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/area:
-    x-swagger-router-controller: area
-    get:
-      description: Retorna as areas responsáveis pelos os indicadores
-      summary: Lista as áreas
-      operationId: getAreas
-      tags:
-        - Cadastros Auxiliares
-      responses:
-        "200":
-          description: Sucesso
-          schema:
-            $ref: "#/definitions/GetAreaResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /api/tag:
     x-swagger-router-controller: tag
     get:
@@ -264,6 +279,51 @@ paths:
             $ref: "#/definitions/GetCategoriaAnaliseListResponse"
         default:
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{codigos}/resultset:
+    x-swagger-router-controller: resultset
+    get:
+      description: Retorna os valores do indicador
+      summary: Query para valores de indicadores
+      operationId: getResultado
+      tags:
+        - Indicadores
+        - Consulta Dados
+      parameters:
+        - name: codigos
+          type: array
+          items:
+            type: string
+          in: path
+          required: true
+          description: Codigos dos indicadores a serem pesquisados
+        - name: tipo
+          type: string
+          in: query
+          enum: [BR, REG, UF, MUN]
+          required: false
+          description: Tipo de consulta (BR - Brasil, MUN - Municipal, REG - Regional, UF - Estadual)
+        - name: filtro
+          type: string
+          in: query
+          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
+          required: false
+          description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
+        - name: valores_filtro
+          type: array
+          items:
+            type: string
+          in: query
+          required: false
+          description: Valores a serem filtrados
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/ResultIndicador"
+        default:
+          description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
   /api/indicador/{codigos}/query:
@@ -1029,9 +1089,148 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/programa:
+    x-swagger-router-controller: programa
+    get:
+      description: Lista programas e itens
+      summary: Lista programas
+      operationId: getProgramas
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/QueryPrograma"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Inclui um programa
+      summary: Inclui um programa
+      operationId: createPrograma
+      parameters:
+        - name: programa
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Programa'
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/programa/{codigo}:
+    x-swagger-router-controller: programa
+    get:
+      description: Lista informações de um item de programa
+      summary: Lista informações de um programa
+      operationId: getPrograma
+      tags:
+        - Programas
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Programa"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita dados de um programa
+      summary: Atualiza dados de programa
+      operationId: editaPrograma
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: unidade
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Programa'
+      tags:
+        - Programas
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma unidade
+      summary: Apaga uma unidade
+      operationId: deletePrograma
+      tags:
+        - Programas
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
 definitions:
+  GetUserMgiListResponse:
+    description: Lista de Usuários do MGI
+    type: object
+    
+  Programa:
+    description: Programa
+    type: object
+    properties:
+      codigo:
+        type: [integer,'null']
+      sigla:
+        type: string
+      titulo:
+        type: string
+      detalhamento:
+        type: [string, 'null']
+      programa_pai:
+        type: [number,'null']
+
+  QueryPrograma:
+    description: Programas
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
+      metadata:
+        type: array
+        items:
+          type: object
   Unidade:
     description: Unidade
+    type: object
     properties:
       codigo:
         type: [integer,'null']
@@ -1054,6 +1253,7 @@ definitions:
 
   QueryUnidade:
     description: Unidades
+    type: object
     properties:
       resultset:
         type: array
@@ -1065,8 +1265,19 @@ definitions:
         type: array
         items:
           type: object
+  ResultIndicador:
+    description: Resultado da consulta especifica de indicador
+    type: object
+    properties:
+      resultset:
+        type: array
+        items:
+          type: object
+      info:
+        type: object
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
+    type: object
     properties:
       resultset:
         type: array
@@ -1081,6 +1292,7 @@ definitions:
 
   IndicadorAtualizacao:
     description: Objeto indicador
+    type: object
     properties:
       codigo:
         type: string
@@ -1179,8 +1391,10 @@ definitions:
     type: object
     properties:
       email:
+        description: Email do usuário
         type: string
       password:
+        description: Senha do usuário
         type: string
   Token:
     type: object
@@ -1336,21 +1550,6 @@ definitions:
             codigo:
               type: number
             descricao:
-              type: string
-  GetAreaResponse:
-    required:
-      - areas
-    properties:
-      areas:
-        type: array
-        items:
-          type: object
-          properties:
-            id:
-              type: number
-            descricao:
-              type: string
-            sigla:
               type: string
   GetIndicadorConsulta:
     required:

@@ -71,7 +71,7 @@ pool.on('error', function (err, client) {
 
 module.exports = {
   getValores: (req, res)=>{
-    // Tipo nacional -> BR, UF, MUN TODO: Depois colocar por regiao e BR
+    // Tipo nacional -> BR, UF, MUN TODO: Depois colocar por regiao e BR, REG
     var tipo = '';
     var sql_from = ' SELECT * FROM IBGE ';
     var sql_with = '';
@@ -195,12 +195,55 @@ module.exports = {
         res.json({mensagem:err});
         return;
       }
+
       res.json({
         resultset: result.rows,
         info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao},
         metadata:addColIndex(meta)
       });
     });
+  },
+  getResultado: (req, res)=>{
+      var tipo = '';
+      var sql_with = '';
+      var campo_agregacao = '';
+      var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
+
+      if(req.swagger.params.tipo && req.swagger.params.tipo.value){
+        tipo = req.swagger.params.tipo.value;
+      }
+      // Filtro por uf, ibge, regiao,
+      var where = '';
+      //TODO: Trata o Filtro
+
+      /*req.swagger.params.codigos.value.forEach((item)=>{
+        if(indicador[item]){
+          sql_with = sql_with + ',' + item + ' AS (' + indicador[item].sql + ')';
+          sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.codigogeo=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
+          meta.push({colType: 'Numeric', titulo: indicador[item].desc, descricao: indicador[item].resumo, tipo: 'valor', colName: item.toLowerCase()});
+        }
+      });*/
+
+      // Trocas
+      //sql_with = sql_with.replace(new RegExp('XXX','g'), campo_agregacao+',');
+      //sql_with = sql_with.replace(new RegExp('TTT','g'), where);
+
+      //var sql = sql_with+sql_from + ' ORDER BY 1,2,3,4';
+
+      //console.log(sql);
+
+      /*pool.query(sql,null, (err, result)=>{
+        //console.log(result);
+        if(err) {
+          console.error('error running query', err);
+          res.json({mensagem:err});
+          return;
+        }*/
+      res.json({
+        resultset: null,
+        info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao},
+        metadata:addColIndex(meta)
+      });
   }
 }
 
