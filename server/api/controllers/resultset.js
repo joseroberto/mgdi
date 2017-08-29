@@ -24,7 +24,6 @@ pool.on('error', function (err, client) {
 module.exports = {
   getResultado: (req, res)=>{
       var tipo = '';
-      var sql_with = '';
       var campo_agregacao = '';
       var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
 
@@ -33,16 +32,38 @@ module.exports = {
       //  tipo = req.swagger.params.tipo.value;
       //}
       // Filtro por uf, ibge, regiao,
-      var where = '';
-
       convertCodigoIndicador(req.swagger.params.codigos.value).then( result=>{
+        var sql = '';
         console.log(result);
-        var ans = {
-          resultset: result,
-          info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
-        };
-        //console.log('Resultado', ans);
-        res.json(ans);
+        switch (result.granularidade) {
+          case 0:  // Nenhuma
+            break;
+          case 1:  // BR
+            break;
+          case 2:  // UF
+            sql = montaQueryGranularidadeEstadual(result.ids, req.swagger.params.tipo.value);
+            break;
+          case 3:
+            sql = montaQueryGranularidadeMunicipal(result.ids, req.swagger.params.tipo.value);
+            break;
+          default:
+            sql = montaQueryGranularidadeMunicipal(result.ids, req.swagger.params.tipo.value);
+        }
+        console.log(sql);
+        pool.query(sql,null, (err, result)=>{
+          //console.log(result);
+          if(err) {
+            console.error('error running query', err);
+            res.json({mensagem:err});
+            return;
+          }
+
+          res.json({
+            resultset: result.rows,
+            titulos: result.titulos,
+            info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
+          });
+        });
       });
       /*req.swagger.params.codigos.value.forEach((item)=>{
         if(indicador[item]){
@@ -71,18 +92,88 @@ module.exports = {
   }
 }
 
-function convertCodigoIndicador(arrValue){
-  cache.get( JSON.stringify(arrValue), function( err, value ){
-    if( !err ){
-      if(value == undefined){
-        indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
-          cache.set(value, result, (err, res)=>{
-            return new Promise((resolve)=>resolve(result));
-          });
+function convertCodigoIndicador(arrValue, granularidade){
+  return new Promise((resolve, reject) => {
+    var value = cache.get( JSON.stringify(arrValue));
+    var arrIds = [];
+    var arrTitulos = [];
+    var granularidade = 0;
+
+    if(value == undefined) {
+      indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
+        result.forEach(item=>{
+          arrIds.push(item.id);
+          arrTitulos.push(item.titulo);
         });
-      }else{
-        return new Promise((resolve)=>resolve(value));
-      }
+
+        var itemConsulta={
+          ids: JSON.stringify(arrIds).replace('[','(').replace(']',')'),
+          titulos: arrTitulos,
+          granularidade: item.granularidade,
+        };
+
+        cache.set(JSON.stringify(arrValue), itemConsulta)
+        resolve(cache.get( JSON.stringify(arrValue)));
+      }).catch(err=>reject(err));
+    }else {
+        resolve(value);
     }
   });
+}
+
+function montaQueryGranularidadeEstadual(ids, tipo){
+  var isTipoRegiao = (tipo == 'REG');
+  var isTipoUF = (tipo=='UF');
+  var isTipoBrasil = (tipo=='BR');
+
+  //TODO: Tornar dinamico o schema da tabela
+  var select='select a.co_seq as id';
+  var groupby = 'group by a.co_seq';
+  var from = 'from dbesusgestor.tb_resultado a';
+  var where = `where a.co_seq_indicador in ${ids}`;
+
+  //TODO: TOrnar dinamico a temporalidade
+  select += ',a.co_ano as ano';
+  groupby += ',a.co_ano';
+
+  //TODO: Tornar dinamico a granularidade
+  select += `,c.no_uf as uf,d.ds_regiao as regiao`;
+  groupby += `,c.no_uf,d.ds_regiao`;
+  from += ` right outer join dbesusgestor.tb_uf c on c.co_uf=a.co_uf
+                inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
+
+  //TODO: Tornar dinamico a agregação
+  select += ',sum(nu_valor) as valor';
+
+  return `${select} ${from} ${where} ${groupby};`;
+}
+
+
+function montaQueryGranularidadeMunicipal(ids, tipo){
+  var isTipoMunicipio = (tipo=='MUN');
+  var isTipoRegiao = (tipo == 'REG');
+  var isTipoUF = (tipo=='UF');
+  var isTipoBrasil = (tipo=='BR');
+
+  //TODO: Tornar dinamico o schema da tabela
+  var select='select a.co_seq as id';
+  var groupby = 'group by a.co_seq';
+  var from = 'from dbesusgestor.tb_resultado a';
+  var where = `where a.co_seq_indicador in ${ids}`;
+
+  //TODO: TOrnar dinamico a temporalidade
+  select += ',a.co_ano as ano';
+  groupby += ',a.co_ano';
+
+  //TODO: Tornar dinamico a granularidade
+  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')}`;
+  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?'.b.no_municipio':'')}`;
+  from += ` right outer join dbesusgestor.tb_municipio b on b.co_ibge=a.co_ibge
+                inner join dbesusgestor.tb_uf c on c.co_uf=b.co_uf
+                inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
+
+  //TODO: Tornar dinamico a agregação
+  select += ',sum(nu_valor) as valor';
+
+  return `${select} ${from} ${where} ${groupby};`;
 }

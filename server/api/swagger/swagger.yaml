@@ -10,15 +10,12 @@ info:
     *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
     *  Utilização de metadados para criação de consultas dinâmicas as bases
     *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
+    
     # Especificação API eSUSGestor
     Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
 
     Interface para acesso e lista de [endpoints](http://rest.demas.saude.gov).
 
-    # Autenticação
-    A API do eSUSGestor oferece como forma de autenticação:
-      - API Key validada com SCPA
-      - OAuth2 que utiliza o barramento do DATASUS.
 
 # during dev, should point to your local machine
 host: localhost:8000
@@ -38,8 +35,12 @@ produces:
 securityDefinitions:
  Bearer:
   description: |
-   O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no
-   campo 'Authorization'.
+   Autenticação do eSUS Gestor se baseia nos seguintes recursos:
+   
+   - API Key validada com SCPA
+   - OAuth2 que utiliza o barramento do DATASUS.
+   
+   O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no campo 'Authorization'.
 
    Um token JWT válido é gerado pela API e retornado na resposta a rota
    /login uma vez que possua um email & senha válido.
