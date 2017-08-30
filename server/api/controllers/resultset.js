@@ -28,9 +28,11 @@ module.exports = {
       var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
 
 
-      //if(req.swagger.params.tipo && req.swagger.params.tipo.value){
-      //  tipo = req.swagger.params.tipo.value;
-      //}
+      if(req.swagger.params.tipo && req.swagger.params.tipo.value){
+        tipo = req.swagger.params.tipo.value;
+      } else{
+        tipo = 'MUN';  // Default para tipo de pesquisa
+      }
       // Filtro por uf, ibge, regiao,
       convertCodigoIndicador(req.swagger.params.codigos.value).then( result=>{
         var sql = '';
@@ -41,13 +43,13 @@ module.exports = {
           case 1:  // BR
             break;
           case 2:  // UF
-            sql = montaQueryGranularidadeEstadual(result.ids, req.swagger.params.tipo.value);
+            sql = montaQueryGranularidadeEstadual(result.ids, tipo);
             break;
           case 3:
-            sql = montaQueryGranularidadeMunicipal(result.ids, req.swagger.params.tipo.value);
+            sql = montaQueryGranularidadeMunicipal(result.ids, tipo);
             break;
           default:
-            sql = montaQueryGranularidadeMunicipal(result.ids, req.swagger.params.tipo.value);
+            sql = montaQueryGranularidadeMunicipal(result.ids, tipo);
         }
         console.log(sql);
         pool.query(sql,null, (err, result)=>{
@@ -57,9 +59,10 @@ module.exports = {
             res.json({mensagem:err});
             return;
           }
-
+          var resultado = tabulaResultado(result.rows);
           res.json({
-            resultset: result.rows,
+            rows: resultado.length,
+            resultset: resultado,
             titulos: result.titulos,
             info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
           });
@@ -104,12 +107,13 @@ function convertCodigoIndicador(arrValue, granularidade){
         result.forEach(item=>{
           arrIds.push(item.id);
           arrTitulos.push(item.titulo);
+          granularidade = item.granularidade; //TODO: Repensar o que fazer se os itens pesquisados nao pertencerem a mesma granularidade
         });
 
         var itemConsulta={
           ids: JSON.stringify(arrIds).replace('[','(').replace(']',')'),
           titulos: arrTitulos,
-          granularidade: item.granularidade,
+          granularidade: granularidade,
         };
 
         cache.set(JSON.stringify(arrValue), itemConsulta)
@@ -155,25 +159,68 @@ function montaQueryGranularidadeMunicipal(ids, tipo){
   var isTipoUF = (tipo=='UF');
   var isTipoBrasil = (tipo=='BR');
 
-  //TODO: Tornar dinamico o schema da tabela
-  var select='select a.co_seq as id';
+  //TODO: Tornar dinamico a agregação
+  var select='select sum(nu_valor) as valor';
   var groupby = 'group by a.co_seq';
+  //TODO: Tornar dinamico o schema da tabela
   var from = 'from dbesusgestor.tb_resultado a';
   var where = `where a.co_seq_indicador in ${ids}`;
+  var orderby = '';
+
+
+
+  //TODO: Tornar dinamico a granularidade
+  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')}`;
+  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?',b.no_municipio':'')}`;
+  from += ` right outer join dbesusgestor.tb_municipio b on b.co_ibge=a.co_ibge
+                inner join dbesusgestor.tb_uf c on c.co_uf=b.co_uf
+                inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
+  orderby += `c.no_uf, d.ds_regiao${(isTipoMunicipio?',b.no_municipio':'')}`;
 
   //TODO: TOrnar dinamico a temporalidade
   select += ',a.co_ano as ano';
   groupby += ',a.co_ano';
+  orderby += ',a.co_ano';
 
-  //TODO: Tornar dinamico a granularidade
-  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')}`;
-  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?'.b.no_municipio':'')}`;
-  from += ` right outer join dbesusgestor.tb_municipio b on b.co_ibge=a.co_ibge
-                inner join dbesusgestor.tb_uf c on c.co_uf=b.co_uf
-                inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
+  return `${select} ${from} ${where} ${groupby} order by ${orderby};`;
+}
 
-  //TODO: Tornar dinamico a agregação
-  select += ',sum(nu_valor) as valor';
+/*
+  Funcao para tabular resulado
 
-  return `${select} ${from} ${where} ${groupby};`;
+  Objetivo: Tratar a saída do JSON onde o objeto está com o item detalhado
+            em linhas e alinhar a temporalidade como um conjunto interno
+
+  Premissa: Dados organizados em Ano e por municipio
+*/
+function tabulaResultado(result){
+  //TODO: Tornar dinamica a temporalidade
+  var ano;
+  var retorno=[];
+  var itemTratado = {municipio:null};
+
+  //TODO: Obedecer o tipo de consulta
+  result.forEach(item =>{
+    if(itemTratado.municipio==item.municipio){
+      itemTratado[item.ano] = +item.valor;
+    }else{
+      if(itemTratado.municipio){
+        retorno.push(itemTratado);
+        itemTratado = {municipio:item.municipio};
+      }
+
+      // Primeiro acesso
+      Object.keys(item).forEach(key=>{
+        if(key!='ano' && key!='valor'){
+          itemTratado[key] = item[key];
+        }
+      });
+    }
+  });
+
+  if(itemTratado.ano){
+    retorno.push(itemTratado);
+  }
+
+  return retorno;
 }

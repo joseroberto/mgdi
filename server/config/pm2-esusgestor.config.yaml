@@ -1,6 +1,6 @@
 apps:
   - script   : ./app.js
-    name: sgi-server
+    name: esusgestor-api
     instances: 4
     exec_mode: cluster
     watch  : true
