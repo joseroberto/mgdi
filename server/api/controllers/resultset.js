@@ -4,7 +4,7 @@ const util = require('util');
 const indicador = require('./indicador');
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
-
+const config_param = require('../helpers/config')();
 
 //TODO: Modificar par pegar configuracao da tabela tbBanco
 /*
@@ -36,35 +36,16 @@ pool.on('error', function (err, client) {
 
 module.exports = {
   getResultado: (req, res)=>{
-      var tipo = '';
-      var campo_agregacao = '';
-      var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
+      // Aplica filtros
+      var config = montaParametros(req.swagger.params);
 
-      console.log('Accept==>', req.headers.accept);
-      if(req.swagger.params.tipo && req.swagger.params.tipo.value){
-        tipo = req.swagger.params.tipo.value;
-      } else{
-        tipo = 'MUN';  // Default para tipo de pesquisa
-      }
       // Filtro por uf, ibge, regiao,
-      convertCodigoIndicador(req.swagger.params.codigos.value).then( result=>{
-        var sql = '';
-        console.log(result);
-        switch (result.granularidade) {
-          case 0:  // Nenhuma
-            break;
-          case 1:  // BR
-            break;
-          case 2:  // UF
-            sql = montaQueryGranularidadeEstadual(result.ids, tipo);
-            break;
-          case 3:
-            sql = montaQueryGranularidadeMunicipal(result.ids, tipo);
-            break;
-          default:
-            sql = montaQueryGranularidadeMunicipal(result.ids, tipo);
-        }
+      // TODO: Checar como estará vindo...
+      convertCodigoIndicador(config.codigos).then(result=>{
+        var sql = montaQuery(result, config);
         console.log(sql);
+        res.json({}); //TODO: Temporariamente
+        /*
         pool.query(sql,null, (err, result)=>{
           //console.log(result);
           if(err) {
@@ -73,41 +54,16 @@ module.exports = {
             return;
           }
           if(req.headers.accept === 'application/cda'){
-            console.log('Formato==> application/cda');
             res.json(formataCDAResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
           }else if (req.headers.accept === 'application/json') {
-            console.log('Formato==> application/json');
             res.json(formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
           }else{
             res.status(500).send({codret: -1, mensagem: "Formato inválido"});
           }
 
         });
-      });
-      /*req.swagger.params.codigos.value.forEach((item)=>{
-        if(indicador[item]){
-          sql_with = sql_with + ',' + item + ' AS (' + indicador[item].sql + ')';
-          sql_from = sql_from + ' left JOIN ' + item + ' ON IBGE.codigogeo=' + item + '.' + campo_agregacao + ' AND IBGE.ano=' + item + '.ano' ;
-          meta.push({colType: 'Numeric', titulo: indicador[item].desc, descricao: indicador[item].resumo, tipo: 'valor', colName: item.toLowerCase()});
-        }
-      });*/
-
-      // Trocas
-      //sql_with = sql_with.replace(new RegExp('XXX','g'), campo_agregacao+',');
-      //sql_with = sql_with.replace(new RegExp('TTT','g'), where);
-
-      //var sql = sql_with+sql_from + ' ORDER BY 1,2,3,4';
-
-      //console.log(sql);
-
-      /*pool.query(sql,null, (err, result)=>{
-        //console.log(result);
-        if(err) {
-          console.error('error running query', err);
-          res.json({mensagem:err});
-          return;
-        }*/
-
+        */
+      }, err=>{ console.log('Erro==>', err); res.status(500).send({message: err});});
   }
 }
 
@@ -127,35 +83,101 @@ function formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao){
   };
 }
 
-function convertCodigoIndicador(arrValue, granularidade){
+/*
+  Monta os uma saida de configuracao com o que e necessario
+  para a consulta dinamica
+*/
+function montaParametros(paramEntrada){
+  var ans = {};
+  if(paramEntrada.tipo && paramEntrada.tipo.value){
+    ans['tipo'] = paramEntrada.tipo.value;
+  } else{
+    ans['tipo'] = 'MUN';  // Default para tipo de pesquisa
+  }
+  if(paramEntrada.codigos){
+    ans['codigos'] = paramEntrada.codigos.value;
+  }
+  return ans;
+}
+
+function convertCodigoIndicador(arrValue){
   return new Promise((resolve, reject) => {
-    var value = cache.get( JSON.stringify(arrValue));
-    var arrIds = [];
-    var arrTitulos = [];
-    var arrCodigos = [];
+    var ans = {};
+    var arrBusca = [];
     var granularidade = 0;
+    var periodicidade = 0;
 
-    if(value == undefined) {
-      indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
+    if(!arrValue){
+      reject('Parametro de consulta vazio');
+    }
+    arrValue.forEach((itemArr)=>{
+        // Recupera do cache aqueles que são possíveis
+        var value = cache.get(itemArr.trim());
+        if(value != undefined) {
+          console.log('Recuperando do cache:', itemArr, value, value.granularidade);
+          ans[itemArr.trim()] = value;
+          // Testa granularidade.  Se difere deve dar um erro
+          if(granularidade==0){
+            granularidade = value.granularidade;
+          }
+          if(value.granularidade!=granularidade){
+            reject('Conjunto de indicadores com granularidade diferentes');
+          }
+          // Testa periodicidade.  Se difere deve dar um erro
+          if(periodicidade==0){
+            periodicidade = value.periodicidade;
+          }
+          if(value.periodicidade!=periodicidade){
+            reject('Conjunto de indicadores com periodicidades diferentes');
+          }
+        }else{
+          console.log('Repassando para busca', itemArr);
+          arrBusca.push(itemArr.trim());
+        }
+    });
+    if(arrBusca) {
+      // Pesquisa no banco o que nao tiver no cache
+      indicador.getIndicadorPesquisaPorCodigo(arrBusca).then(result=>{
         result.forEach(item=>{
-          arrIds.push(item.id);
-          arrTitulos.push(item.titulo);
-          arrCodigos.push(item.codigo);
-          granularidade = item.granularidade; //TODO: Repensar o que fazer se os itens pesquisados nao pertencerem a mesma granularidade
+          ans[item.codigo] = {
+            id: item.id,
+            titulo: item.titulo,
+            granularidade: item.granularidade,
+            banco: item.banco_dados,  //TODO: trocar pela entidade completa
+            tipoConsulta: item.tipo_consulta,
+            sql: item.referencia_consulta,
+            criterioAgregacao: item.criterio_agregacao,
+            periodicidade: item.periodicidade_atualizacao
+          };
+          // Testa tipos de consulta
+          if(item.tipo_consulta!=2 && item.tipo_consulta!=3){ // Tratar depois a formula
+            reject('Tipo de consulta incompatível ou indicador sem informação');
+          }
+          // Testa tipos de periodicidade
+          if(item.periodicidade_atualizacao!=30 && item.periodicidade_atualizacao!=360){ // Tratar depois a periodicidade
+            reject('Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida');
+          }
+
+          cache.set(item.codigo, ans[item.codigo]);
+          // Testa granularidade.  Se difere deve dar um erro
+          if(granularidade==0){
+            granularidade = item.granularidade;
+          }
+          if(item.granularidade!=granularidade){
+            reject('Conjunto de indicadores com granularidade diferentes');
+          }
+          // Testa periodicidade.  Se difere deve dar um erro
+          if(periodicidade==0){
+            periodicidade = item.periodicidade;
+          }
+          if(item.periodicidade!=periodicidade){
+            reject('Conjunto de indicadores com periodicidades diferentes');
+          }
         });
-
-        var itemConsulta={
-          ids: JSON.stringify(arrIds).replace('[','(').replace(']',')'),
-          titulos: arrTitulos,
-          granularidade: granularidade,
-          codigos: arrCodigos
-        };
-
-        cache.set(JSON.stringify(arrValue), itemConsulta)
-        resolve(cache.get( JSON.stringify(arrValue)));
+        resolve(ans);
       }).catch(err=>reject(err));
     }else {
-        resolve(value);
+        resolve(ans);
     }
   });
 }
@@ -187,12 +209,27 @@ function montaQueryGranularidadeEstadual(ids, tipo){
   return `${select} ${from} ${where} ${groupby};`;
 }
 
+function montaQuery(indicadores, config){
+  console.log('montaQuery', indicadores);
+  (Object.keys(indicadores)).forEach(key=>{
+      var sql_width='';
+      // monta query conforme o tipo de consulta
+      switch (indicadores[key].tipoConsulta) {
+        case 2: // Query
+          sql_width = `WITH ${key} AS ( ${indicadores[key].sql} ) `;
+          break;
+        case 3: // Importação
+            sql_width += `WITH ${key} AS ( ${ montaQueryValorIndicador(indicadores[key])} ) `;
+            break;
+        default:
 
-function montaQueryGranularidadeMunicipal(ids, tipo){
-  var isTipoMunicipio = (tipo=='MUN');
-  var isTipoRegiao = (tipo == 'REG');
-  var isTipoUF = (tipo=='UF');
-  var isTipoBrasil = (tipo=='BR');
+      }
+  });
+
+  var isTipoMunicipio = (config.tipo=='MUN');
+  var isTipoRegiao = (config.tipo == 'REG');
+  var isTipoUF = (config.tipo=='UF');
+  var isTipoBrasil = (config.tipo=='BR');
 
   //TODO: Tornar dinamico a agregação
   var select='select sum(nu_valor) as valor';
@@ -220,6 +257,64 @@ function montaQueryGranularidadeMunicipal(ids, tipo){
   return `${select} ${from} ${where} ${groupby} order by ${orderby};`;
 }
 
+function montaQueryValorIndicador(indicador){
+  var sql_select = 'select ';
+  var sql_group = 'group by ';
+
+  console.log('montaQueryValorIndicador', indicador);
+
+  switch (indicador.criterioAgregacao) {
+    case 0: // Sem agregacao
+      sql_select += 'nu_valor as valor';
+      break;
+    case 1: // Maior valor
+      sql_select += 'MAX(nu_valor) as valor';
+      break;
+    case 2: // Menor valor
+      sql_select += 'MIN(nu_valor) as valor';
+      break;
+    case 3: // Media
+      sql_select += 'AVG(nu_valor) as valor';
+      break;
+    case 4: // Soma
+      sql_select += 'SUM(nu_valor) as valor';
+      break;
+  }
+
+  switch (indicador.granularidade) {
+    case 3:  // Municipio
+      sql_select += ', co_ibge as ibge';
+      sql_group += (indicador.criterioAgregacao!=0 ? ', co_ibge':'');
+      break;
+    case 4:  // CNES
+      sql_select += ', co_cnes';
+      sql_group += (indicador.criterioAgregacao!=0? ', co_cnes':'');
+      break;
+  }
+
+  switch (indicador.periodicidade) {
+    case 360:
+      sql_select += ', co_ano as ano';
+      sql_group += (indicador.criterioAgregacao!=0? ', co_ano':'');
+      break;
+    case 30:
+      sql_select += ', co_anomes as anomes';
+      sql_group += (indicador.criterioAgregacao!=0? ', co_anomes':'');
+      break;
+    case 1:
+      sql_select += ', co_anomesdia as anomesdia';
+      sql_group += (indicador.criterioAgregacao!=0? ', co_anomesdia':'');
+      break;
+    default:
+  }
+
+  if(indicador.criterioAgregacao==0){
+    sql_group='';
+  }
+
+  return `${sql_select} from ${config_param.schema_esusgestor}.${config_param.tabela_indicadores} where co_seq_indicador=${indicador.id} ${sql_group}`;
+
+}
 /*
   Funcao para tabular resulado
 
