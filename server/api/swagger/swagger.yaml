@@ -288,6 +288,9 @@ paths:
       description: Retorna os valores do indicador
       summary: Query para valores de indicadores
       operationId: getResultado
+      produces:
+        - application/json
+        - application/cda
       tags:
         - Indicadores
         - Consulta Dados

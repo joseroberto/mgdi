@@ -7,6 +7,7 @@ const cache = new NodeCache();
 
 
 //TODO: Modificar par pegar configuracao da tabela tbBanco
+/*
 const config = {
   user: 'vasconcelos', //env var: PGUSER
   database: 'dbspo', //env var: PGDATABASE
@@ -16,6 +17,18 @@ const config = {
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
+*/
+
+const config = {
+  user: 'vasconcelos', //env var: PGUSER
+  database: 'dbspo', //env var: PGDATABASE
+  password: 'serenaya',
+  host: 'localhost', // Server hosting the postgres database
+  port: 5432, //env var: PGPORT
+  max: 10, // max number of clients in the pool
+  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+};
+
 const pool = new pg.Pool(config);
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack);
@@ -27,7 +40,7 @@ module.exports = {
       var campo_agregacao = '';
       var tipoFiltro = '', tipoRegiao = '', codigoRegiao = '';
 
-
+      console.log('Accept==>', req.headers.accept);
       if(req.swagger.params.tipo && req.swagger.params.tipo.value){
         tipo = req.swagger.params.tipo.value;
       } else{
@@ -59,13 +72,16 @@ module.exports = {
             res.json({mensagem:err});
             return;
           }
-          var resultado = tabulaResultado(result.rows);
-          res.json({
-            rows: resultado.length,
-            resultset: resultado,
-            titulos: result.titulos,
-            info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
-          });
+          if(req.headers.accept === 'application/cda'){
+            console.log('Formato==> application/cda');
+            res.json(formataCDAResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
+          }else if (req.headers.accept === 'application/json') {
+            console.log('Formato==> application/json');
+            res.json(formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
+          }else{
+            res.status(500).send({codret: -1, mensagem: "Formato inválido"});
+          }
+
         });
       });
       /*req.swagger.params.codigos.value.forEach((item)=>{
@@ -95,11 +111,28 @@ module.exports = {
   }
 }
 
+function formataCDAResult(result, tipoFiltro, tipoRegiao, codigoRegiao){
+  return {
+    resultset: result.rows,
+  };
+}
+
+function formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao){
+  var resultado = tabulaResultado(result.rows);
+  return {
+    rows: resultado.length,
+    resultset: resultado,
+    titulos: result.titulos,
+    info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
+  };
+}
+
 function convertCodigoIndicador(arrValue, granularidade){
   return new Promise((resolve, reject) => {
     var value = cache.get( JSON.stringify(arrValue));
     var arrIds = [];
     var arrTitulos = [];
+    var arrCodigos = [];
     var granularidade = 0;
 
     if(value == undefined) {
@@ -107,6 +140,7 @@ function convertCodigoIndicador(arrValue, granularidade){
         result.forEach(item=>{
           arrIds.push(item.id);
           arrTitulos.push(item.titulo);
+          arrCodigos.push(item.codigo);
           granularidade = item.granularidade; //TODO: Repensar o que fazer se os itens pesquisados nao pertencerem a mesma granularidade
         });
 
@@ -114,6 +148,7 @@ function convertCodigoIndicador(arrValue, granularidade){
           ids: JSON.stringify(arrIds).replace('[','(').replace(']',')'),
           titulos: arrTitulos,
           granularidade: granularidade,
+          codigos: arrCodigos
         };
 
         cache.set(JSON.stringify(arrValue), itemConsulta)
@@ -170,8 +205,8 @@ function montaQueryGranularidadeMunicipal(ids, tipo){
 
 
   //TODO: Tornar dinamico a granularidade
-  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')}`;
-  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?',b.no_municipio':'')}`;
+  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')} ${(isTipoMunicipio?',b.co_ibge as ibge':'')}`;
+  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?',b.no_municipio':'')}${(isTipoMunicipio?',b.co_ibge':'')}`;
   from += ` right outer join dbesusgestor.tb_municipio b on b.co_ibge=a.co_ibge
                 inner join dbesusgestor.tb_uf c on c.co_uf=b.co_uf
                 inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
