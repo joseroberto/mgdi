@@ -39,13 +39,11 @@ module.exports = {
       // Aplica filtros
       var config = montaParametros(req.swagger.params);
 
-      // Filtro por uf, ibge, regiao,
-      // TODO: Checar como estará vindo...
-      convertCodigoIndicador(config.codigos).then(result=>{
-        var sql = montaQuery(result, config);
+      // Filtro por ano, uf, ibge, regiao,
+      convertCodigoIndicador(config.codigos).then(indicadores=>{
+        var sql = montaQuery(indicadores, config);
         console.log(sql);
-        res.json({}); //TODO: Temporariamente
-        /*
+
         pool.query(sql,null, (err, result)=>{
           //console.log(result);
           if(err) {
@@ -54,32 +52,32 @@ module.exports = {
             return;
           }
           if(req.headers.accept === 'application/cda'){
-            res.json(formataCDAResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
+            res.json(formataCDAResult(result, config));
           }else if (req.headers.accept === 'application/json') {
-            res.json(formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao));
+            res.json(formataJSONResult(result, config, Object.keys(indicadores)));
           }else{
             res.status(500).send({codret: -1, mensagem: "Formato inválido"});
           }
 
         });
-        */
+
       }, err=>{ console.log('Erro==>', err); res.status(500).send({message: err});});
   }
 }
 
-function formataCDAResult(result, tipoFiltro, tipoRegiao, codigoRegiao){
+function formataCDAResult(result, config){
   return {
     resultset: result.rows,
   };
 }
 
-function formataJSONResult(result, tipoFiltro, tipoRegiao, codigoRegiao){
-  var resultado = tabulaResultado(result.rows);
+function formataJSONResult(result, config, indicadores){
+  var resultado = tabulaResultado(result.rows, indicadores);
   return {
     rows: resultado.length,
     resultset: resultado,
     titulos: result.titulos,
-    info: { tipoFiltro: tipoFiltro, tipoRegiao: tipoRegiao, codigoRegiao: codigoRegiao}
+    info: { tipoFiltro: config.tipo, tipoRegiao: null, codigoRegiao: null}
   };
 }
 
@@ -210,74 +208,117 @@ function montaQueryGranularidadeEstadual(ids, tipo){
 }
 
 function montaQuery(indicadores, config){
-  console.log('montaQuery', indicadores);
+
+  var sql_with='WITH ';
+
   (Object.keys(indicadores)).forEach(key=>{
-      var sql_width='';
       // monta query conforme o tipo de consulta
       switch (indicadores[key].tipoConsulta) {
         case 2: // Query
-          sql_width = `WITH ${key} AS ( ${indicadores[key].sql} ) `;
+          sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
           break;
         case 3: // Importação
-            sql_width += `WITH ${key} AS ( ${ montaQueryValorIndicador(indicadores[key])} ) `;
-            break;
-        default:
-
+          sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key])} ),`;
+          break;
       }
   });
+  sql_with = sql_with.substr(0,sql_with.length - 1);
 
-  var isTipoMunicipio = (config.tipo=='MUN');
-  var isTipoRegiao = (config.tipo == 'REG');
-  var isTipoUF = (config.tipo=='UF');
-  var isTipoBrasil = (config.tipo=='BR');
+  var sql = montaQueryComplemento(indicadores, config);
 
-  //TODO: Tornar dinamico a agregação
-  var select='select sum(nu_valor) as valor';
-  var groupby = 'group by a.co_seq';
-  //TODO: Tornar dinamico o schema da tabela
-  var from = 'from dbesusgestor.tb_resultado a';
-  var where = `where a.co_seq_indicador in ${ids}`;
-  var orderby = '';
+  return `${sql_with} ${sql}`
 
-
-
-  //TODO: Tornar dinamico a granularidade
-  select += `,c.no_uf as uf,d.ds_regiao as regiao ${(isTipoMunicipio?',b.no_municipio as municipio':'')} ${(isTipoMunicipio?',b.co_ibge as ibge':'')}`;
-  groupby += `,c.no_uf,d.ds_regiao ${(isTipoMunicipio?',b.no_municipio':'')}${(isTipoMunicipio?',b.co_ibge':'')}`;
-  from += ` right outer join dbesusgestor.tb_municipio b on b.co_ibge=a.co_ibge
-                inner join dbesusgestor.tb_uf c on c.co_uf=b.co_uf
-                inner join dbesusgestor.tb_regiao d on d.co_regiao=c.co_regiao`;
-  orderby += `c.no_uf, d.ds_regiao${(isTipoMunicipio?',b.no_municipio':'')}`;
-
-  //TODO: TOrnar dinamico a temporalidade
-  select += ',a.co_ano as ano';
-  groupby += ',a.co_ano';
-  orderby += ',a.co_ano';
-
-  return `${select} ${from} ${where} ${groupby} order by ${orderby};`;
 }
 
-function montaQueryValorIndicador(indicador){
+function montaQueryComplemento(indicadores, config){
+    var isTipoMunicipio = (config.tipo=='MUN');
+    var isTipoRegiao = (config.tipo == 'REG');
+    var isTipoUF = (config.tipo=='UF');
+    var isTipoBrasil = (config.tipo=='BR');
+
+    var select = 'select ';
+    var from = 'from ';
+    //var where = 'where '; //Essa vai ficar para os filtros
+    var groupby = 'group by ';
+    var orderby = '';
+
+    var varPeriodicidade = '';
+    var indicadorAnterior = '';
+    var referencia = indicadores[Object.keys(indicadores)[0]];
+
+    switch (referencia.periodicidade) {
+      case 360:
+        varPeriodicidade = 'ano';
+        break;
+      case 30:
+        varPeriodicidade = 'anomes';
+        break;
+      case 1:
+        varPeriodicidade = 'anomesdia';
+        break;
+      default:
+    }
+
+    select += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
+
+    switch (referencia.granularidade) {
+      case 3:  // Municipio
+        // Testar o parametro
+        select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as municipio ,mun.co_ibge as ibge`;
+        from += `${config_param.schema_esusgestor}.tb_municipio mun
+                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge`;
+        orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio`;
+
+        break;
+    }
+
+    (Object.keys(indicadores)).forEach(key=>{
+        select += `,${key}`;
+        from += ` LEFT OUTER JOIN ${key} `;
+        // granularidade
+        switch (referencia.granularidade) {
+          case 3: //Municipio
+            from += `ON ${key}.ibge = mun.co_ibge `;
+            break;
+        }
+        // ano
+        if(indicadorAnterior){
+          from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
+        }
+        indicadorAnterior = key;
+    });
+
+    if(referencia.criterioAgregacao==0){
+      groupby='';
+    }
+
+    //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
+    return `${select} ${from} ${groupby} order by ${orderby};`;
+}
+
+function montaQueryValorIndicador(codigo, indicador){
   var sql_select = 'select ';
   var sql_group = 'group by ';
 
-  console.log('montaQueryValorIndicador', indicador);
+  //console.log('montaQueryValorIndicador', indicador);
 
   switch (indicador.criterioAgregacao) {
     case 0: // Sem agregacao
-      sql_select += 'nu_valor as valor';
+      sql_select += ` nu_valor as ${codigo}`;
       break;
     case 1: // Maior valor
-      sql_select += 'MAX(nu_valor) as valor';
+      sql_select += ` MAX(nu_valor) as${codigo}`;
       break;
     case 2: // Menor valor
-      sql_select += 'MIN(nu_valor) as valor';
+      sql_select += ` MIN(nu_valor) ${codigo}`;
       break;
     case 3: // Media
-      sql_select += 'AVG(nu_valor) as valor';
+      sql_select += ` AVG(nu_valor) ${codigo}`;
       break;
     case 4: // Soma
-      sql_select += 'SUM(nu_valor) as valor';
+      sql_select += ` SUM(nu_valor) ${codigo}`;
       break;
   }
 
@@ -323,7 +364,7 @@ function montaQueryValorIndicador(indicador){
 
   Premissa: Dados organizados em Ano e por municipio
 */
-function tabulaResultado(result){
+function tabulaResultado(result, indicadores){
   //TODO: Tornar dinamica a temporalidade
   var ano;
   var retorno=[];
@@ -332,7 +373,11 @@ function tabulaResultado(result){
   //TODO: Obedecer o tipo de consulta
   result.forEach(item =>{
     if(itemTratado.municipio==item.municipio){
-      itemTratado[item.ano] = +item.valor;
+      var obj = {};
+      indicadores.forEach((key)=>{
+        obj[key.toLowerCase()] = item[key.toLowerCase()];
+      });
+      itemTratado[item.ano] = obj;
     }else{
       if(itemTratado.municipio){
         retorno.push(itemTratado);
@@ -341,7 +386,7 @@ function tabulaResultado(result){
 
       // Primeiro acesso
       Object.keys(item).forEach(key=>{
-        if(key!='ano' && key!='valor'){
+        if(key!='ano' && indicadores.indexOf(key.toUpperCase())==-1){
           itemTratado[key] = item[key];
         }
       });
