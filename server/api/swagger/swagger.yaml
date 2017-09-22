@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.8"
+  version: "0.0.9"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -10,7 +10,7 @@ info:
     *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
     *  Utilização de metadados para criação de consultas dinâmicas as bases
     *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
-    
+
     # Especificação API eSUSGestor
     Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
 
@@ -36,10 +36,10 @@ securityDefinitions:
  Bearer:
   description: |
    Autenticação do eSUS Gestor se baseia nos seguintes recursos:
-   
+
    - API Key validada com SCPA
    - OAuth2 que utiliza o barramento do DATASUS.
-   
+
    O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no campo 'Authorization'.
 
    Um token JWT válido é gerado pela API e retornado na resposta a rota
@@ -111,7 +111,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"      
+            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -1200,7 +1200,7 @@ definitions:
   GetUserMgiListResponse:
     description: Lista de Usuários do MGI
     type: object
-    
+
   Programa:
     description: Programa
     type: object

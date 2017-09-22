@@ -1,6 +1,6 @@
 export const config: any = {
 
-  version: "0.0.8",
+  version: "0.0.9",
   title: "MGI - Módulo de Gestão de Indicadores",
   defaultLocale: "br",
   API_URL: "assets/api", //Usado para carregar itens de API como languages
