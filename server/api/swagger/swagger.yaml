@@ -306,6 +306,7 @@ paths:
           in: query
           enum: [BR, REG, UF, MUN]
           required: false
+          default: MUN
           description: Tipo de consulta (BR - Brasil, MUN - Municipal, REG - Regional, UF - Estadual)
         - name: filtro
           type: string
@@ -325,6 +326,7 @@ paths:
           in: query
           enum: [LIN, CDA, TAB]
           required: false
+          default: LIN
           description: |
               Indica o tipo de formatação a ser utilizado na saída dos dados: 
               * LIN: Formato linear (Default)

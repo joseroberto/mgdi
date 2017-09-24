@@ -52,7 +52,6 @@ module.exports = {
             return;
           }
           // req.headers.accept === 'application/json'
-          console.log('FILTRO==>', config.formato);
           switch (config.formato) {
             case 'LIN':
               res.json(result.rows);
@@ -99,7 +98,6 @@ function formataCDAResult(result, config, indicadores){
 
   result.fields.forEach(item=>{
     var key = item.name.toUpperCase();
-    console.log('KEY==>', key, 'VALUE==>', indicadores[key]);
     var meta = {
         colType: item.dataTypeID == 23? "Numeric": "String",
         colName: item.name,
@@ -113,18 +111,21 @@ function formataCDAResult(result, config, indicadores){
 
   return {
     resultset: result.rows,
-    info: {tipoFiltro: (config.tipo=='MUN'? 'municipal':''), tipoRegiao: tipoRegiao, codigoRegiao: ''},
+    info: {tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro},
     metadata: metadata
   };
 }
 
+/*
+  Formatador de saída para consultas TABulares.
+*/
 function formataJSONResult(result, config, indicadores){
   var resultado = tabulaResultado(result.rows, indicadores);
   return {
     rows: resultado.length,
     resultset: resultado,
     titulos: result.titulos,
-    info: { tipoFiltro: config.tipo, tipoRegiao: null, codigoRegiao: null}
+    info: { tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro}
   };
 }
 
@@ -134,23 +135,16 @@ function formataJSONResult(result, config, indicadores){
 */
 function montaParametros(paramEntrada){
   var ans = {};
-  if(paramEntrada.tipo && paramEntrada.tipo.value){
-    ans['tipo'] = paramEntrada.tipo.value;
-  } else{
-    ans['tipo'] = 'MUN';  // Default para tipo de pesquisa
-  }
-  if(paramEntrada.codigos){
-    ans['codigos'] = paramEntrada.codigos.value;
-  }
-  if(paramEntrada.formato && paramEntrada.formato.value){
-    ans['formato'] = paramEntrada.formato.value;
-  } else{
-    ans['formato'] = 'LIN';  // Default para tipo de pesquisa
-  }
-
+  Object.keys(paramEntrada).forEach(key=>{
+    ans[key] = paramEntrada[key].value;
+  });
   return ans;
 }
 
+/*
+  Converte o codigo alfanumerico do indicador em metadados
+  necessarios para montagem dinamica da query de consulta.
+*/
 function convertCodigoIndicador(arrValue){
   return new Promise((resolve, reject) => {
     var ans = {};
@@ -235,6 +229,9 @@ function convertCodigoIndicador(arrValue){
   });
 }
 
+/*
+  Montador de query de consulta genérica.
+*/
 function montaQuery(indicadores, config){
 
   var sql_with='WITH ';
@@ -252,7 +249,6 @@ function montaQuery(indicadores, config){
   sql_with = sql_with.substr(0,sql_with.length - 1);
 
   var sql = montaQueryComplemento(indicadores, config);
-
   return `${sql_with} ${sql}`
 
 }
@@ -318,12 +314,74 @@ function montaQueryComplemento(indicadores, config){
         indicadorAnterior = key;
     });
 
+    // Filtro por uf, ibge, regiao,
+    var where = 'where 1=1';
+    switch (config.filtro) {
+      case 'UF':
+        if(config.valores_filtro){
+          where = where + ' AND uf.co_uf IN ('+ config.valores_filtro+')';
+        }
+        break;
+      case 'MUN':
+        if(config.valores_filtro){
+          where = where + ' AND mun.ibge IN (' + config.valores_filtro+')';
+          codigoRegiao = config.valores_filtro;
+        }
+        break;
+      case 'CID':
+        //if(req.swagger.params.valores_filtro.value){
+        //  where = where + ' AND tb_ibge.co_tr_cidadania IN (' + req.swagger.params.valores_filtro.value + ')';
+        //}else{
+        //  where = where + ' AND tb_ibge.co_tr_cidadania >0';
+        //}
+        break;
+      case 'CCL':
+        //if(req.swagger.params.valores_filtro.value){
+        //  where = where + ' AND tb_ibge.co_colegiado in (' + req.swagger.params.valores_filtro.value + ')'
+        //}
+        break;
+      case 'REG':
+          if(config.valores_filtro){
+            where = where + ' AND floor(mun.co_uf/10)  IN (' + config.valores_filtro+')';
+          }
+          break;
+      case 'MET':
+          //if(req.swagger.params.valores_filtro.value){
+          //  where = where + ' AND tb_ibge.codigo_id_metropolitana IN (' + req.swagger.params.valores_filtro.value + ')';
+          //}else{
+          //  where = where + ' AND tb_ibge.codigo_id_metropolitana >0';
+          //}
+          break;
+      case 'FRT':
+          //where = where + 'tb_ibge.sis_fronteiras = 1';
+          break;
+      case 'QUA':
+          //where = where + 'tb_ibge.habilitados_qualifar = 1';
+          break;
+      case 'SA':
+          //where = where + 'tb_ibge.semi_arido = 1';
+          break;
+      case 'AL':
+          //where = where + 'tb_ibge.amazonia_legal = 1';
+          break;
+      case 'RIB':
+          //where = where + 'tb_ibge.co_ride = 1';
+          break;
+      case 'QSU':
+          //if(req.swagger.params.valores_filtro.value){
+          //  where = where + ' AND tb_ibge.co_id_qualisus IN (' + req.swagger.params.valores_filtro.value + ')';
+          //}else{
+          //  where = where + ' AND tb_ibge.co_id_qualisus >0';
+          //}
+          break;
+    }
+
     if(referencia.criterioAgregacao==0){
       groupby='';
     }
 
     //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
-    return `${select} ${from} ${groupby} order by ${orderby};`;
+    return `${select} ${from} ${where} ${groupby} order by ${orderby};`;
 }
 
 function montaQueryValorIndicador(codigo, indicador){
