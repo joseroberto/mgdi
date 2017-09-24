@@ -290,7 +290,6 @@ paths:
       operationId: getResultado
       produces:
         - application/json
-        - application/cda
       tags:
         - Indicadores
         - Consulta Dados
@@ -321,6 +320,17 @@ paths:
           in: query
           required: false
           description: Valores a serem filtrados
+        - name: formato
+          type: string
+          in: query
+          enum: [LIN, CDA, TAB]
+          required: false
+          description: |
+              Indica o tipo de formatação a ser utilizado na saída dos dados: 
+              * LIN: Formato linear (Default)
+              * CDA: Padrão CDA - Community Data Access
+              * TAB: Formato tabular (Indicador => { tempo })
+  
       responses:
         "200":
           description: Sucesso
@@ -1271,14 +1281,8 @@ definitions:
           type: object
   ResultIndicador:
     description: Resultado da consulta especifica de indicador
-    type: object
-    properties:
-      resultset:
-        type: array
-        items:
-          type: object
-      info:
-        type: object
+    type: [object, array]
+
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
     type: object
