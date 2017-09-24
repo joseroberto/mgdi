@@ -332,6 +332,11 @@ paths:
               * LIN: Formato linear (Default)
               * CDA: Padrão CDA - Community Data Access
               * TAB: Formato tabular (Indicador => { tempo })
+        - name: data
+          type: number
+          in: query
+          required: false
+          description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
   
       responses:
         "200":

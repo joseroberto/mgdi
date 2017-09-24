@@ -275,7 +275,7 @@ function montaQuery(indicadores, config){
           sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
           break;
         case 3: // Importação
-          sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key])} ),`;
+          sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key], config)} ),`;
           break;
       }
   });
@@ -290,7 +290,7 @@ function montaQueryComplemento(indicadores, config){
     var select = 'select ';
     var from = 'from ';
     //var where = 'where '; //Essa vai ficar para os filtros
-    var groupby = 'group by ';
+    var groupby = '';
     var orderby = '';
 
     var varPeriodicidade = '';
@@ -316,59 +316,66 @@ function montaQueryComplemento(indicadores, config){
     switch (config.tipo) {
       case 'REG':
         // Testar o parametro
-        select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo`;
+        select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
                       inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
-        groupby += `reg.ds_regiao, reg.co_regiao`;
-        orderby += `reg.ds_regiao`;
+        groupby += `reg.ds_regiao, reg.co_regiao,`;
+        orderby += `reg.ds_regiao,`;
         break;
       case 'UF':
         // Testar o parametro
-        select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo`;
+        select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo,`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
                       inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
-        groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf`;
-        orderby += `uf.no_uf, reg.ds_regiao`;
+        groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
+        orderby += `uf.no_uf, reg.ds_regiao,`;
         break;
       case 'MUN':
         // Testar o parametro
-        select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo`;
+        select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
                       inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
-        groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge`;
-        orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio`;
+        groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
+        orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
     }
-    orderby += `,${Object.keys(indicadores)[0]}.${varPeriodicidade}`;
+    orderby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
 
     (Object.keys(indicadores)).forEach(key=>{
         switch (indicadores[key].criterioAgregacao) {
           case 0: // Sem agregacao
-            sql_select += `, ${key}::int`;
+            sql_select += ` ${key}::int`;
             break;
           case 1: // Maior valor
-            sql_select += `, MAX(${key})::int  as${key}`;
+            sql_select += ` MAX(${key})::int  as${key}`;
             break;
           case 2: // Menor valor
-            sql_select += `, MIN(${key})::int  ${key}`;
+            sql_select += ` MIN(${key})::int  ${key}`;
             break;
           case 3: // Media
-            sql_select += `, AVG(${key})::int  ,${key}`;
+            sql_select += ` AVG(${key})::int  ,${key}`;
             break;
           case 4: // Soma
-            select += `, SUM(${key})::int ${key}`;
+            select += ` SUM(${key})::int ${key}`;
             break;
         }
-        from += ` LEFT OUTER JOIN ${key} `;
-        // granularidade
-        switch (referencia.granularidade) {
-          case 3: //Municipio
-            from += `ON ${key}.ibge = mun.co_ibge `;
-            break;
-        }
+        if(!(referencia.granularidade==0 || config.tipo=='BR')){
+          from += ` LEFT OUTER JOIN ${key} `;
+          // granularidade
+          switch (referencia.granularidade) {
+            case 2: //UF
+              from += `ON ${key}.co_uf = uf.co_uf `;
+              break;
+            case 3: //Municipio
+              from += `ON ${key}.ibge = mun.co_ibge `;
+              break;
+          }
+        }else
+          from += ` ${key} `;
+
         // ano
         if(indicadorAnterior){
           from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
@@ -438,15 +445,28 @@ function montaQueryComplemento(indicadores, config){
           break;
     }
 
+    // Filtro de ano, anomes ou anomesdia
+    if(config.data){
+      where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${config.data}`;
+    }
+
     if(referencia.criterioAgregacao==0){
       groupby='';
     }
 
+    if(orderby){
+      orderby = 'order by ' + orderby.substr(0,orderby.length - 1); // Retira a ultima virgula
+    }
+
+    if(groupby){
+      groupby = 'group by ' + groupby.substr(0,groupby.length - 1); // Retira a ultima virgula
+    }
+
     //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
-    return `${select} ${from} ${where} ${groupby} order by ${orderby};`;
+    return `${select} ${from} ${where} ${groupby} ${orderby};`;
 }
 
-function montaQueryValorIndicador(codigo, indicador){
+function montaQueryValorIndicador(codigo, indicador, config){
   var sql_select = 'select ';
   var sql_group = 'group by ';
 
@@ -470,15 +490,17 @@ function montaQueryValorIndicador(codigo, indicador){
       break;
   }
 
-  switch (indicador.granularidade) {
-    case 3:  // Municipio
-      sql_select += ', co_ibge::int  as ibge';
-      sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
-      break;
-    case 4:  // CNES
-      sql_select += ', co_cnes';
-      sql_group += (indicador.criterioAgregacao!=0? 'co_cnes,':'');
-      break;
+  if(!(indicador.granularidade==0 || config.tipo=='BR')){
+    switch (indicador.granularidade) {
+      case 3:  // Municipio
+        sql_select += ', co_ibge::int  as ibge';
+        sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
+        break;
+      case 4:  // CNES
+        sql_select += ', co_cnes';
+        sql_group += (indicador.criterioAgregacao!=0? 'co_cnes,':'');
+        break;
+    }
   }
 
   switch (indicador.periodicidade) {
