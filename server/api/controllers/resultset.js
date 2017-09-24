@@ -41,7 +41,7 @@ module.exports = {
       console.log('config', config);
 
       // Filtro por ano, uf, ibge, regiao,
-      convertCodigoIndicador(config.codigos).then(indicadores=>{
+      convertCodigoIndicador(config).then(indicadores=>{
         var sql = montaQuery(indicadores, config);
         console.log(sql);
         pool.query(sql,null, (err, result)=>{
@@ -89,6 +89,9 @@ function formataCDAResult(result, config, indicadores){
   // Acrescenta os dados da consulta
   var referencia = indicadores[Object.keys(indicadores)[0]];
   switch (referencia.granularidade) {
+    case 2: //UF
+      tipoRegiao='uf';
+      break;
     case 3: //Municipio
       tipoRegiao='municipal';
       break;
@@ -145,12 +148,29 @@ function montaParametros(paramEntrada){
   Converte o codigo alfanumerico do indicador em metadados
   necessarios para montagem dinamica da query de consulta.
 */
-function convertCodigoIndicador(arrValue){
+function convertCodigoIndicador(config){
   return new Promise((resolve, reject) => {
     var ans = {};
     var arrBusca = [];
     var granularidade = 0;
     var periodicidade = 0;
+    var tipoGranularidade = 0;
+    var arrValue = config.codigos;
+
+    switch (config.tipo){
+        case 'BR':
+          tipoGranularidade = 1;
+          break;
+        case 'REG':
+          tipoGranularidade = 1;
+          break;
+        case 'UF':
+          tipoGranularidade = 2;
+          break;
+        case 'MUN':
+          tipoGranularidade = 3;
+          break;
+    }
 
     if(!arrValue){
       reject('Parametro de consulta vazio');
@@ -167,6 +187,13 @@ function convertCodigoIndicador(arrValue){
           }
           if(value.granularidade!=granularidade){
             reject('Conjunto de indicadores com granularidade diferentes');
+          }
+          if(value.granularidade<tipoGranularidade){
+            reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
+          }
+
+          if(value.granularidade>tipoGranularidade && value.criterioAgregacao==0){
+            reject(`Indicador ${itemArr} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
           }
           // Testa periodicidade.  Se difere deve dar um erro
           if(periodicidade==0){
@@ -213,6 +240,12 @@ function convertCodigoIndicador(arrValue){
           if(item.granularidade!=granularidade){
             reject('Conjunto de indicadores com granularidade diferentes');
           }
+          if(item.granularidade<tipoGranularidade){
+            reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
+          }
+          if(item.granularidade>tipoGranularidade && item.criterio_agregacao==0){
+            reject(`Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
+          }
           // Testa periodicidade.  Se difere deve dar um erro
           if(periodicidade==0){
             periodicidade = item.periodicidade;
@@ -254,11 +287,6 @@ function montaQuery(indicadores, config){
 }
 
 function montaQueryComplemento(indicadores, config){
-    var isTipoMunicipio = (config.tipo=='MUN');
-    var isTipoRegiao = (config.tipo == 'REG');
-    var isTipoUF = (config.tipo=='UF');
-    var isTipoBrasil = (config.tipo=='BR');
-
     var select = 'select ';
     var from = 'from ';
     //var where = 'where '; //Essa vai ficar para os filtros
@@ -283,9 +311,28 @@ function montaQueryComplemento(indicadores, config){
     }
 
     select += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
+    groupby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
 
-    switch (referencia.granularidade) {
-      case 3:  // Municipio
+    switch (config.tipo) {
+      case 'REG':
+        // Testar o parametro
+        select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo`;
+        from += `${config_param.schema_esusgestor}.tb_municipio mun
+                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        groupby += `reg.ds_regiao, reg.co_regiao`;
+        orderby += `reg.ds_regiao`;
+        break;
+      case 'UF':
+        // Testar o parametro
+        select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo`;
+        from += `${config_param.schema_esusgestor}.tb_municipio mun
+                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf`;
+        orderby += `uf.no_uf, reg.ds_regiao`;
+        break;
+      case 'MUN':
         // Testar o parametro
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
@@ -293,13 +340,28 @@ function montaQueryComplemento(indicadores, config){
                       inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
         groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge`;
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio`;
-
         break;
     }
     orderby += `,${Object.keys(indicadores)[0]}.${varPeriodicidade}`;
 
     (Object.keys(indicadores)).forEach(key=>{
-        select += `,${key}`;
+        switch (indicadores[key].criterioAgregacao) {
+          case 0: // Sem agregacao
+            sql_select += `, ${key}::int`;
+            break;
+          case 1: // Maior valor
+            sql_select += `, MAX(${key})::int  as${key}`;
+            break;
+          case 2: // Menor valor
+            sql_select += `, MIN(${key})::int  ${key}`;
+            break;
+          case 3: // Media
+            sql_select += `, AVG(${key})::int  ,${key}`;
+            break;
+          case 4: // Soma
+            select += `, SUM(${key})::int ${key}`;
+            break;
+        }
         from += ` LEFT OUTER JOIN ${key} `;
         // granularidade
         switch (referencia.granularidade) {
@@ -411,35 +473,38 @@ function montaQueryValorIndicador(codigo, indicador){
   switch (indicador.granularidade) {
     case 3:  // Municipio
       sql_select += ', co_ibge::int  as ibge';
-      sql_group += (indicador.criterioAgregacao!=0 ? ', co_ibge':'');
+      sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
       break;
     case 4:  // CNES
       sql_select += ', co_cnes';
-      sql_group += (indicador.criterioAgregacao!=0? ', co_cnes':'');
+      sql_group += (indicador.criterioAgregacao!=0? 'co_cnes,':'');
       break;
   }
 
   switch (indicador.periodicidade) {
     case 360:
       sql_select += ', co_ano::int  as ano';
-      sql_group += (indicador.criterioAgregacao!=0? ', co_ano':'');
+      sql_group += (indicador.criterioAgregacao!=0? 'co_ano,':'');
       break;
     case 30:
       sql_select += ', co_anomes::int  as anomes';
-      sql_group += (indicador.criterioAgregacao!=0? ', co_anomes':'');
+      sql_group += (indicador.criterioAgregacao!=0? 'co_anomes,':'');
       break;
     case 1:
       sql_select += ', co_anomesdia::int  as anomesdia';
-      sql_group += (indicador.criterioAgregacao!=0? ', co_anomesdia':'');
+      sql_group += (indicador.criterioAgregacao!=0? 'co_anomesdia,':'');
       break;
     default:
   }
 
   if(indicador.criterioAgregacao==0){
     sql_group='';
+  }else{
+    sql_group = sql_group.substr(0,sql_group.length - 1);
   }
 
-  return `${sql_select} from ${config_param.schema_esusgestor}.${config_param.tabela_indicadores} where co_seq_indicador=${indicador.id} ${sql_group}`;
+  return `${sql_select} from ${config_param.schema_esusgestor}.${config_param.tabela_indicadores}
+  where co_seq_indicador=${indicador.id} ${sql_group}`;
 
 }
 /*
