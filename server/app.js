@@ -6,10 +6,14 @@ var app = express();
 var morgan = require('morgan');
 var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
+var job = require('./api/helpers/job');
 
 module.exports = app; // for testing
 
 var theAppLog = log4js.getLogger();
+
+// Programa os jobs de execucao
+job.cron();
 
 app.use(morgan("combined",{
   "stream": {

@@ -237,7 +237,7 @@ module.exports = {
   getIndicadorPesquisaPorCodigo: (codigos)=>
     models.Indicador.findAll(
       { attributes: [  'id', 'codigo', 'titulo', 'descricao','granularidade', 'banco_dados',
-      'tipo_consulta', 'referencia_consulta', 'criterio_agregacao', 'periodicidade_atualizacao' ],
+      'tipo_consulta', 'referencia_consulta', 'criterio_agregacao', 'periodicidade_atualizacao', 'ultima_atualizacao' ],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
       })

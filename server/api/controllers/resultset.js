@@ -42,6 +42,12 @@ module.exports = {
 
       // Filtro por ano, uf, ibge, regiao,
       convertCodigoIndicador(config).then(indicadores=>{
+        if(Object.keys(indicadores).length==0){
+          console.log('Sem dados');
+          res.json({codret: -1, mensagem: "Indicador não encontrado"});
+          return;
+        }
+
         var sql = montaQuery(indicadores, config);
         console.log(sql);
         pool.query(sql,null, (err, result)=>{
@@ -63,7 +69,7 @@ module.exports = {
                 res.json(formataJSONResult(result, config, Object.keys(indicadores)));
                 break;
             default:
-                res.status(500).send({codret: -1, mensagem: "Formato inválido"});
+                res.status(500).send({mensagem: "Formato inválido"});
           }
         });
 
@@ -221,6 +227,7 @@ function convertCodigoIndicador(config){
             sql: item.referencia_consulta,
             criterioAgregacao: item.criterio_agregacao,
             periodicidade: item.periodicidade_atualizacao,
+            ultima_atualizacao: item.ultima_atualizacao,
             tipo: 'valor'
           };
           // Testa tipos de consulta
@@ -254,8 +261,9 @@ function convertCodigoIndicador(config){
             reject('Conjunto de indicadores com periodicidades diferentes');
           }
         });
+        console.log('ans', ans);
         resolve(ans);
-      }).catch(err=>reject(err));
+      });
     }else {
         resolve(ans);
     }
@@ -447,7 +455,10 @@ function montaQueryComplemento(indicadores, config){
 
     // Filtro de ano, anomes ou anomesdia
     if(config.data){
-      where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${config.data}`;
+      if(config.data==-1)
+        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${referencia.ultima_atualizacao}`;
+      else
+        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${config.data}`;
     }
 
     if(referencia.criterioAgregacao==0){

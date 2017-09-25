@@ -150,6 +150,11 @@ module.exports = function(sequelize, DataTypes) {
         field: 'st_universal',
         allowNull: false,
         defaultValue: 1
+    },
+    ultima_atualizacao:{
+        type: DataTypes.STRING(8),
+        field: 'ds_ultima_atualizacao',
+        allowNull: true
     }
   },{
     classMethods: {
