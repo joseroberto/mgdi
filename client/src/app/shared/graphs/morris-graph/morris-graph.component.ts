@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, AfterContentInit, Input} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, ElementRef, AfterContentInit, Input} from '@angular/core';
 
 declare var Morris:any;
 
@@ -15,36 +15,46 @@ export class MorrisGraphComponent implements AfterContentInit {
   @Input() public data:any;
   @Input() public options:any;
   @Input() public type:string;
+  @Output() public onInit: EventEmitter<number> = new EventEmitter<number>();
+
+  private graph;
 
   constructor(private el:ElementRef) {
   }
 
   ngAfterContentInit() {
-
     System.import('script-loader!raphael').then(()=> {
       return System.import('morris.js/morris.js')
     }).then(()=> {
-      options.element = this.el.nativeElement.children[0];
-      options.data = this.data;
-
-      switch (this.type) {
-        case 'area':
-          Morris.Area(options);
-          break;
-        case 'bar':
-          Morris.Bar(options);
-          break;
-        case 'line':
-          Morris.Line(options);
-          break;
-        case 'donut':
-          Morris.Donut(options);
-          break;
-      }
+      this.render();
+      this.onInit.emit();
     });
+  }
+
+  render(){
     let options = this.options || {};
+    options.element = this.el.nativeElement.children[0];
+    options.data = this.data || [];
 
+    switch (this.type) {
+      case 'area':
+        this.graph = Morris.Area(options);
+        break;
+      case 'bar':
+        this.graph = Morris.Bar(options);
+        break;
+      case 'line':
+        this.graph = Morris.Line(options);
+        break;
+      case 'donut':
+        this.graph = Morris.Donut(options);
+        break;
+    }
+  }
 
+  add(arr){
+    this.graph.setData(arr);
+    this.graph.redraw();
   }
 
 }

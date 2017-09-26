@@ -19,3 +19,7 @@ on a.co_seq_indicador=b.co_seq_indicador
 group by a.co_seq_indicador) as sq
 where dbesusgestor.tb_indicador.co_seq_indicador = sq.co_seq_indicador
 and co_periodicidade_atualizacao=30;
+
+
+update dbesusgestor.tb_indicador set co_tipo_consulta=3, co_criterio_agregacao=4
+where co_periodicidade_atualizacao=360 and ds_ultima_atualizacao::int < 2500;

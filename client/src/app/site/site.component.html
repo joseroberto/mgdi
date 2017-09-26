@@ -15,13 +15,22 @@
               <div class="col-md-4">
                 <div>
                   <div class="list-inline padding-10">
-                      <img src="assets/img/sem-dados.png">
+                    <sa-morris-graph #graph (onInit)="loadData(item.codigo, item.granularidade, item.criterio_agregacao, this.graph)"
+                       type="bar"
+                       [options]="{
+                          xkey: 'uf',
+                          ykeys: [item.codigo.toLowerCase()],
+                          labels: [item.codigo],
+                          barColors: barColorsDemo
+                      }" *ngIf="item.ultima_atualizacao"></sa-morris-graph>
+
+                      <img src="assets/img/sem-dados.png" *ngIf="!item.ultima_atualizacao" >
                   </div>
                 </div>
                 <ul class="list-inline padding-10">
                   <li>
                     <i class="fa fa-calendar"></i>
-                    <a (click)="(null)"> {{ item.dt_inclusao|date:'yMMMd' }} </a>
+                    <a (click)="(null)"> {{ formatData(item.ultima_atualizacao) }} </a>
                   </li>
                   <li>
                     <i class="fa fa-comments"></i>

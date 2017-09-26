@@ -15,3 +15,4 @@ export * from './granularidade.service';
 export * from './criterio-agregacao.service';
 export * from './version.service';
 export * from './usuario.service';
+export * from './consulta.service';

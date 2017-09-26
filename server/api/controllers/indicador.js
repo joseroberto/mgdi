@@ -6,7 +6,8 @@ var unidade = require('./unidade');
 module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
-      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados', 'dt_inclusao' ],
+      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao',
+      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'granularidade', 'criterio_agregacao' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
@@ -16,7 +17,7 @@ module.exports = {
         //{ model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
         //{ model: models.Tag, as: 'Tags'}
       ],
-      where: {},
+      where: {},  
       order: ['titulo']
     };
     //console.log("Usuario autenticado:",req.headers.authorization);

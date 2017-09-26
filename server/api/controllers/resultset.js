@@ -6,24 +6,11 @@ const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 const config_param = require('../helpers/config')();
 
-//TODO: Modificar par pegar configuracao da tabela tbBanco
-/*
 const config = {
-  user: 'vasconcelos', //env var: PGUSER
-  database: 'dbspo', //env var: PGDATABASE
-  password: 'serenaya',
-  host: '10.1.2.25', // Server hosting the postgres database
-  port: 5432, //env var: PGPORT
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-};
-*/
-
-const config = {
-  user: 'vasconcelos', //env var: PGUSER
-  database: 'dbspo', //env var: PGDATABASE
-  password: 'serenaya',
-  host: 'localhost', // Server hosting the postgres database
+  user: config_param.user, //env var: PGUSER
+  database: config_param.database, //env var: PGDATABASE
+  password: config_param.password,
+  host: config_param.hostdb, // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
@@ -213,7 +200,7 @@ function convertCodigoIndicador(config){
           arrBusca.push(itemArr.trim());
         }
     });
-    if(arrBusca) {
+    if(arrBusca && arrBusca.length>0) {
       // Pesquisa no banco o que nao tiver no cache
       indicador.getIndicadorPesquisaPorCodigo(arrBusca).then(result=>{
         result.forEach(item=>{
@@ -248,7 +235,7 @@ function convertCodigoIndicador(config){
             reject('Conjunto de indicadores com granularidade diferentes');
           }
           if(item.granularidade<tipoGranularidade){
-            reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
+            reject(`Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`);
           }
           if(item.granularidade>tipoGranularidade && item.criterio_agregacao==0){
             reject(`Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
@@ -375,7 +362,7 @@ function montaQueryComplemento(indicadores, config){
           // granularidade
           switch (referencia.granularidade) {
             case 2: //UF
-              from += `ON ${key}.co_uf = uf.co_uf `;
+              from += `ON ${key}.uf = uf.co_uf `;
               break;
             case 3: //Municipio
               from += `ON ${key}.ibge = mun.co_ibge `;
@@ -503,6 +490,10 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   if(!(indicador.granularidade==0 || config.tipo=='BR')){
     switch (indicador.granularidade) {
+      case 2:  // UF
+        sql_select += ', co_uf::int  as uf';
+        sql_group += (indicador.criterioAgregacao!=0 ? 'co_uf,':'');
+        break;
       case 3:  // Municipio
         sql_select += ', co_ibge::int  as ibge';
         sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
