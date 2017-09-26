@@ -42,3 +42,7 @@ config:
   secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89A=
   tabela_indicadores: tb_resultado
   schema_esusgestor: dbesusgestor
+  database: dbspo
+  user: postgres
+  password: pass
+  hostdb: localhost
