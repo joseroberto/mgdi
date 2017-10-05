@@ -40,7 +40,7 @@ process.on('SIGINT', function() {
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
-  swaggerExpress.runner.swagger.host = config_param.host;
+  swaggerExpress.runner.swagger.host = process.env.HOST || config_param.host;
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
 

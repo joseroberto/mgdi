@@ -43,6 +43,6 @@ config:
   tabela_indicadores: tb_resultado
   schema_esusgestor: dbesusgestor
   database: dbspo
-  user: postgres
+  user: user
   password: pass
-  hostdb: localhost
+  hostdb: banco
