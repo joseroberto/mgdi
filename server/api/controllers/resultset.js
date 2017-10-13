@@ -7,9 +7,9 @@ const cache = new NodeCache();
 const config_param = require('../helpers/config')();
 
 const config = {
-  user: process.env.USER || config_param.user, //env var: PGUSER
+  user: process.env.USER_DB || config_param.user, //env var: PGUSER
   database: process.env.DATABASE || config_param.database, //env var: PGDATABASE
-  password: process.env.PASSWORD || config_param.password,
+  password: process.env.PASSWORD_DB || config_param.password,
   host: process.env.HOSTDB || config_param.hostdb, // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool

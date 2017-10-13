@@ -37,3 +37,19 @@ pm2 restart sgi-server --update-env prod
 '''
 pm2 monit
 '''
+
+# Configuração para variáveis de ambiente
+
+Se for mais conveniente, a configuração do serviço poderá ser feita utilizando variáveis de ambiente.
+
+As seguintes variáveis poderão ser definidas:
+
+* HOSTDB - IP/Host da máquina de banco de dados
+* DATABASE - Nome do banco de dados
+* USER_DB - Usuário do banco de dados
+* PASSWORD_DB - Senha do usuário do banco de dados
+
+
+
+
+(*) A configuração por variável de ambiente bypass aquela por arquivo config.

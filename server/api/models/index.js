@@ -14,7 +14,9 @@ var db        = {};
 //if (config.use_env_variable) {
 //  var sequelize = new Sequelize(process.env[config.use_env_variable]);
 //} else {
-  var sequelize = new Sequelize(process.env.DATABASE || config_param.database, process.env.USER || config_param.user, process.env.PASSWORD || config_param.password, {
+  var sequelize = new Sequelize(process.env.DATABASE || config_param.database,
+    process.env.USER_DB || config_param.user,
+    process.env.PASSWORD_DB || config_param.password, {
     "host": process.env.HOSTDB || config_param.hostdb,
     "dialect": "postgres",
     "omitNull": true

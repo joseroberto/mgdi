@@ -44,7 +44,7 @@ config:
   tabela_indicadores: tb_resultado
   schema_esusgestor: dbesusgestor
   database: dbspo
-  user: postgres
-  password: pass
+  user: vasconcelos
+  password: serenaya
   hostdb: localhost
   #bypass: true
