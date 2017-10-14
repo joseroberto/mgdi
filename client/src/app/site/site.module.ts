@@ -10,9 +10,11 @@ import {SmartadminLayoutModule} from "../shared/layout/layout.module";
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
 
 import { PaginacaoComponent } from '../componentes/paginacao.component';
+import { ResultsetComponent } from '../componentes/resultset.component';
+
 
 @NgModule({
-  declarations: [SiteComponent, ItemComponent, PaginacaoComponent],
+  declarations: [SiteComponent, ItemComponent, PaginacaoComponent, ResultsetComponent],
   imports: [
     routing,CommonModule, SmartadminModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
   ],

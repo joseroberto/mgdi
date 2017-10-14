@@ -26,7 +26,7 @@ export class ItemComponent implements OnInit {
   loadIndicador(codigo:string){
     this.indicadorService.get(codigo).subscribe(resp=>{
       if (resp){
-        console.log(resp);
+        //console.log(resp);
         this.indicador = resp;
       }
     });

@@ -34,6 +34,8 @@ import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.comp
 
 import {WindowRef} from './indicador/WindowRef';
 
+import { ResultsetComponent } from '../componentes/resultset.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import {WindowRef} from './indicador/WindowRef';
     UsuarioComponent,
     ProgramaComponent,
     TagComponent,
-    UnidadeMedidaComponent
+    UnidadeMedidaComponent,
+    ResultsetComponent
   ],
   providers:[WindowRef]
 })

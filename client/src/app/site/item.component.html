@@ -34,6 +34,11 @@
               <legend>Observações</legend>
               <span class="observacoes" [innerHTML]="indicador.observacoes||msg_padrao"></span>
             </div>
+            <div>
+              <br/><br/>
+              <legend>Resultados</legend>
+              <resultset [codigo]="indicador.codigo"></resultset>
+            </div>
             <br/><br/>
             <a class="btn btn-primary no-print" routerLink="/"> Voltar </a>
           </div>

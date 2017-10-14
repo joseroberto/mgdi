@@ -8,7 +8,7 @@ export class ConsultaService extends REST {
     super(http);
   }
 
-  async search(codigo:string, data:string, tipo:string){
+  async search(codigo:string, data:string='', tipo:string='', formato:string='LIN'){
     var search='';
     if(data){
       search += `data=${data}&`;
@@ -16,8 +16,11 @@ export class ConsultaService extends REST {
     if(tipo){
       search += `tipo=${tipo}&`;
     }
+    if(formato){
+      search += `formato=${formato}&`;
+    }
+    console.log(`/indicador/${codigo}/resultset?${search}`);
     const response = await this.get(`/indicador/${codigo}/resultset?${search}`).toPromise();
-    //console.log('Response', response);
     return response;
   }
 }
