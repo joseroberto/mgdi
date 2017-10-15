@@ -8,6 +8,11 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey: true,
         field: 'co_granularidade'
     },
+    sigla: {
+        type: DataTypes.STRING,
+        field: 'ds_sigla',
+        allowNull: false
+    },
     descricao: {
         type: DataTypes.STRING,
         field: 'ds_granularidade',

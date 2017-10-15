@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import {SmartadminModule} from "../shared/smartadmin.module";
 
 import {routing} from "./site.routing";
-import {NgxPaginationModule} from 'ngx-pagination';
+
 import { SiteComponent } from './site.component';
 import { ItemComponent } from './item.component';
 import {SmartadminLayoutModule} from "../shared/layout/layout.module";
 import {MorrisGraphModule} from "../shared/graphs/morris-graph/morris-graph.module";
+import {NgxPaginationModule} from 'ngx-pagination';
 
-import { PaginacaoComponent } from '../componentes/paginacao.component';
-import { ResultsetComponent } from '../componentes/resultset.component';
-
+import { ComponentesModule } from '../componentes/componentes.module';
 
 @NgModule({
-  declarations: [SiteComponent, ItemComponent, PaginacaoComponent, ResultsetComponent],
+  declarations: [SiteComponent, ItemComponent],
   imports: [
-    routing,CommonModule, SmartadminModule, SmartadminLayoutModule,MorrisGraphModule,NgxPaginationModule
+    routing,CommonModule, NgxPaginationModule, SmartadminModule, SmartadminLayoutModule, ComponentesModule,
+    MorrisGraphModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: "pt-BR" }],
   entryComponents: []

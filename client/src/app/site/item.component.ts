@@ -12,7 +12,9 @@ export class ItemComponent implements OnInit {
 
   constructor(private location:Location, private route: ActivatedRoute, private indicadorService:IndicadorService) {
     this.indicador = {titulo:'', descricao:'', ClassificacaoIndicador:{descricao:''},
-      PeriodicidadeAtualizacao:{descricao:''},PeriodicidadeMonitoramento:{descricao:''},PeriodicidadeAvaliacao:{descricao:''},}
+      PeriodicidadeAtualizacao:{descricao:''},PeriodicidadeMonitoramento:{descricao:''},
+      PeriodicidadeAvaliacao:{descricao:''}, Granularidade:{descricao:''}, CriterioAgregacao:{descricao:''},
+      UnidadeMedida:{descricao:''}}
   }
 
   ngOnInit() {
@@ -26,7 +28,7 @@ export class ItemComponent implements OnInit {
   loadIndicador(codigo:string){
     this.indicadorService.get(codigo).subscribe(resp=>{
       if (resp){
-        //console.log(resp);
+        console.log('Indicador:',resp);
         this.indicador = resp;
       }
     });

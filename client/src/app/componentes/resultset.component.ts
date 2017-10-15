@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ConsultaService } from '../services/consulta.service';
+import { Component, Input, OnInit, NgZone, OnChanges, SimpleChanges } from '@angular/core';
+import { ConsultaService, GranularidadeService, UtilService } from '../services/index';
 import {WindowRef} from './WindowRef';
 
 declare var $: any;
@@ -17,11 +17,24 @@ declare var $: any;
     </div>`})
 export class ResultsetComponent implements OnChanges, OnInit {
     @Input() codigo: string;
+    @Input() granularidade:string = '';
+    @Input() criterio:number = 0;
 
     private _dataTable:any;
     private enable:boolean = false;
+    private colecaoGranularidade:any[] = [];
+    private tipo:string;
 
-    constructor(private consulta:ConsultaService){}
+    constructor(private zone:NgZone, private winRef: WindowRef, private consulta:ConsultaService,
+        private granularidadeService: GranularidadeService,
+        private util:UtilService){
+        winRef.nativeWindow.angularComponentRef = {
+          zone: this.zone,
+          componentFn: (value) => this.selectGranularidade(value),
+          component: this
+        };
+
+    }
 
     ngOnInit(){
       Promise.all([
@@ -29,34 +42,67 @@ export class ResultsetComponent implements OnChanges, OnInit {
       ]).then(()=>{
         this.enable = true;
       });
+      this.granularidadeService.getAll().subscribe(resp=>{
+          this.colecaoGranularidade = resp.granularidade;
+      }, err => this.util.msgErroInfra(err));
     }
 
     ngOnChanges(changes: SimpleChanges) {
+      if(changes.granularidade.currentValue){
+          this.tipo = changes.granularidade.currentValue;
+      }
       if(changes.codigo.currentValue){
-        this.loadData(changes.codigo.currentValue);
+          this.codigo = changes.codigo.currentValue;
+      }
+      this.loadData();
+    }
+
+    loadData(){
+      if(this.codigo){
+        this.consulta.search(this.codigo,null,this.tipo, 'TAB').then((resp)=>{
+            console.log('Resultset',resp);
+            if(this.enable){
+              this.render(resp.resultset);
+            }
+        });
       }
     }
 
-    loadData(codigo:string){
-      //this._dataTable.row.add({'uf': 'AC', 'local': 'Teste'});
-      this.consulta.search(codigo,null,null, 'TAB').then((resp)=>{
-          console.log('Resultset',resp);
-          if(this.enable){
-            this.render(resp.resultset);
-          }
-      });
-    }
-
     render(itens){
-      let columns:Object[] = [
-        {"title":'UF',"data": "uf"},
-        {"title":'Município',"data": "local"}
-      ];
+      let columns:Object[];
+      //if(this._dataTable){
+      //  console.log('Destruindo a tabela');
+      //  this._dataTable.destroy();
+      //}
+      $('#lista').empty();
+      $('#lista').unbind('draw.dt');
+      switch(this.tipo){
+        case 'MN':
+          columns = [
+            {"title":'UF',"data": "uf"},
+            {"title":'Região',"data": "regiao"},
+            {"title":'Município',"data": "local"}
+          ];
+          break;
+        case 'UF':
+          columns = [
+            {"title":'UF',"data": "uf"},
+            {"title":'Região',"data": "regiao"}
+          ];
+          break;
+        case 'RG':
+          columns = [
+            {"title":'Região',"data": "regiao"}
+          ];
+          break;
+      }
+
       let cod = this.codigo.toLowerCase();
 
+      // Renderiza coluna de dados (com os itens retornados - por exemplo os anos)
       Object.keys(itens[0]).forEach((key)=>{
-          //console.log(key, typeof(itens[0][key]));
-          if(typeof(itens[0][key])=='object'){
+          if(key!='null' && typeof(itens[0][key])=='object'){
+              //console.log('Construindo coluna: ',key, typeof(itens[0][key]));
               columns.push({"title":key, "data": key, "render":
               function ( data, type, row ) {
                 if(!data)
@@ -73,14 +119,57 @@ export class ResultsetComponent implements OnChanges, OnInit {
           }
       });
 
+      console.log('Columns:', columns);
+      // Associa os dados a tabela de resulados
       this._dataTable = $('#lista').DataTable({
-        "iDisplayLength": 50,
-        "bLengthChange": false,
+        "aLengthMenu": [[25,50,100, -1], [25,50, 100, "Todas"]],
+        "bProcessing": true,
         "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
         "columns": columns,
         "order": [[0, 'asc']]
         });
+
         this._dataTable.rows.add(itens);
         this._dataTable.draw();
+
+        if(this.criterio!=0 && this.granularidade){
+          var granularidades = this.getGranularidades();
+
+          $('#lista').on( 'draw.dt', function () {
+              var tmp = $("#lista_length").html();
+              $("#lista_length").parent().html( granularidades + '&nbsp;&nbsp;' + tmp);
+              $('select#lista_granularidade').change(function (e) {
+                  window['angularComponentRef'].zone.run(() => {
+                    window['angularComponentRef'].component.selectGranularidade(e.currentTarget.value);
+                  });
+              });
+          });
+
+        }
+    }
+
+    private getGranularidades():string{
+      let ans:string = '<label>Estratificação: <select id="lista_granularidade" name="granularidade" aria-controls="lista" class="form-control input-sm">';
+      let selected:string = '';
+      console.log('Tipo', this.tipo);
+      for(var item of this.colecaoGranularidade){
+        if(item.codigo!=0){
+          selected = (item.sigla == this.tipo)? 'selected':'';
+          ans += `<option value="${item.sigla}" ${selected}>${item.descricao}</option>`;
+        }
+        if(item.sigla==this.granularidade){
+          break;
+        }
+      };
+      return ans + '</select></label> ';
+    }
+
+    private selectGranularidade(valor:string){
+      console.log('Valor repassado:', valor);
+      this.tipo = valor;
+      this._dataTable.destroy();
+      //this._dataTable.clear();
+      //this._dataTable.draw();
+      this.loadData();
     }
 }

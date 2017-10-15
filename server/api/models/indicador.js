@@ -183,6 +183,12 @@ module.exports = function(sequelize, DataTypes) {
         Indicador.belongsTo(models.Unidade,{
            as: 'UnidadeResponsavel',
            foreignKey: 'co_unidade_responsavel'});
+       Indicador.belongsTo(models.Granularidade,{
+          as: 'Granularidade',
+          foreignKey: 'co_granularidade'});
+       Indicador.belongsTo(models.Criterio_Agregacao,{
+          as: 'CriterioAgregacao',
+          foreignKey: 'co_criterio_agregacao'});
         Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,

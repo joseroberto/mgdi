@@ -11,13 +11,13 @@ module.exports = {
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         { model: models.Unidade, as: 'UnidadeResponsavel' },
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         //{ model: models.Indicador, as: 'IndicadoresRelacionados' },
         //{ model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
         //{ model: models.Tag, as: 'Tags'}
       ],
-      where: {},  
+      where: {},
       order: ['titulo']
     };
     //console.log("Usuario autenticado:",req.headers.authorization);
@@ -88,7 +88,10 @@ module.exports = {
                    { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-                   { model: models.Unidade , as: 'UnidadeResponsavel' }],
+                   { model: models.Unidade , as: 'UnidadeResponsavel' },
+                   { model: models.Granularidade , as: 'Granularidade' },
+                   { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
+                   { model: models.UnidadeMedida, as: 'UnidadeMedida' }],
         where: {codigo: req.swagger.params.codigo.value}
       }
     ).then((indicador)=> {

@@ -1,7 +1,14 @@
-### 0.0.9
+### 0.1.0
+* Novo: Componente de construção de tabela de resultados
+* Mudança: Tipo de consulta - Vai ser pelos parametros: BR - Brasil, RG - Região, UF - Estado, MN - Municipio e CN - CNES
+* Novo: Área de dados gerais na visualização de itens da ficha de indicadores do site. Lá consta: Estratificação, Critério de agregação, Unidade de medida e Índice de referência
+* Correção: Formato de retorno tabular para consulta do tipo UF
 
-* PLANNING: PDFKit para relatórios da ficha de indicadores
-* PLANNING: Armazenamento de log de mudanças na ficha de indicadores
+### 0.0.9 - 06/Outubro/2017
+
+* Busca dinamica de dados de indicadores (SQL dinamico)
+* Carga de indicadores da morbidade para teste
+* Gráfico de pré-visualização de dados por UF na listagem de indicadores no painel de visualização público
 
 ### 0.0.8 - 20/Agosto/2017
 

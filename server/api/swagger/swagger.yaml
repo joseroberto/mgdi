@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.9"
+  version: "0.1.0"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -304,10 +304,10 @@ paths:
         - name: tipo
           type: string
           in: query
-          enum: [BR, REG, UF, MUN]
+          enum: [BR, RG, UF, MN, CN]
           required: false
-          default: MUN
-          description: Tipo de consulta (BR - Brasil, MUN - Municipal, REG - Regional, UF - Estadual)
+          default: MN
+          description: Tipo de consulta (BR - Brasil, MN - Municipal, RG - Região, UF - Estadual, CN = CNES)
         - name: filtro
           type: string
           in: query
@@ -328,7 +328,7 @@ paths:
           required: false
           default: LIN
           description: |
-              Indica o tipo de formatação a ser utilizado na saída dos dados: 
+              Indica o tipo de formatação a ser utilizado na saída dos dados:
               * LIN: Formato linear (Default)
               * CDA: Padrão CDA - Community Data Access
               * TAB: Formato tabular (Indicador => { tempo })
@@ -337,7 +337,7 @@ paths:
           in: query
           required: false
           description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
-  
+
       responses:
         "200":
           description: Sucesso

@@ -50,10 +50,10 @@ module.exports = {
               res.json(result.rows);
               break;
             case 'CDA':
-                res.json(formataCDAResult(result, config, indicadores));
+                res.json(formataCDAResult(result.rows, config, indicadores));
                 break;
             case 'TAB':
-                res.json(formataJSONResult(result, config, Object.keys(indicadores)));
+                res.json(formataJSONResult(result.rows, config, Object.keys(indicadores)));
                 break;
             default:
                 res.status(500).send({mensagem: "Formato inválido"});
@@ -106,7 +106,7 @@ function formataCDAResult(result, config, indicadores){
   });
 
   return {
-    resultset: result.rows,
+    resultset: result,
     info: {tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro},
     metadata: metadata
   };
@@ -116,7 +116,7 @@ function formataCDAResult(result, config, indicadores){
   Formatador de saída para consultas TABulares.
 */
 function formataJSONResult(result, config, indicadores){
-  var resultado = tabulaResultado(result.rows, indicadores);
+  var resultado = tabulaResultado(result, indicadores, config);
   return {
     rows: resultado.length,
     resultset: resultado,
@@ -154,14 +154,17 @@ function convertCodigoIndicador(config){
         case 'BR':
           tipoGranularidade = 1;
           break;
-        case 'REG':
-          tipoGranularidade = 1;
-          break;
-        case 'UF':
+        case 'RG':
           tipoGranularidade = 2;
           break;
-        case 'MUN':
+        case 'UF':
           tipoGranularidade = 3;
+          break;
+        case 'MN':
+          tipoGranularidade = 4;
+          break;
+        case 'CN':
+          tipoGranularidade = 5;
           break;
     }
 
@@ -309,7 +312,7 @@ function montaQueryComplemento(indicadores, config){
     groupby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
 
     switch (config.tipo) {
-      case 'REG':
+      case 'RG':
         // Testar o parametro
         select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
@@ -327,7 +330,7 @@ function montaQueryComplemento(indicadores, config){
         groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
         orderby += `uf.no_uf, reg.ds_regiao,`;
         break;
-      case 'MUN':
+      case 'MN':
         // Testar o parametro
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
         from += `${config_param.schema_esusgestor}.tb_municipio mun
@@ -361,10 +364,10 @@ function montaQueryComplemento(indicadores, config){
           from += ` LEFT OUTER JOIN ${key} `;
           // granularidade
           switch (referencia.granularidade) {
-            case 2: //UF
+            case 3: //UF
               from += `ON ${key}.uf = uf.co_uf `;
               break;
-            case 3: //Municipio
+            case 4: //Municipio
               from += `ON ${key}.ibge = mun.co_ibge `;
               break;
           }
@@ -490,15 +493,15 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   if(!(indicador.granularidade==0 || config.tipo=='BR')){
     switch (indicador.granularidade) {
-      case 2:  // UF
+      case 3:  // UF
         sql_select += ', co_uf::int  as uf';
         sql_group += (indicador.criterioAgregacao!=0 ? 'co_uf,':'');
         break;
-      case 3:  // Municipio
+      case 4:  // Municipio
         sql_select += ', co_ibge::int  as ibge';
         sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
         break;
-      case 4:  // CNES
+      case 5:  // CNES
         sql_select += ', co_cnes';
         sql_group += (indicador.criterioAgregacao!=0? 'co_cnes,':'');
         break;
@@ -539,32 +542,49 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   Premissa: Dados organizados em Ano e por municipio
 */
-function tabulaResultado(result, indicadores){
+function tabulaResultado(result, indicadores, config){
   //TODO: Tornar dinamica a temporalidade
   var ano;
   var retorno=[];
-  var itemTratado = {local:null};
+  var itemTratado = {};
+  var field = '';
+
   console.log('Formatando tabular');
   //TODO: Obedecer o tipo de consulta
+  switch (config.tipo) {
+    case 'RG':
+      field = 'regiao';
+      break;
+    case 'UF':
+      field = 'uf';
+      break;
+    case 'MN':
+      field = 'local';
+      break;
+  }
+  itemTratado[field] = null;
   result.forEach(item =>{
-    if(itemTratado.local==item.local){
+    if(itemTratado[field]==item[field]){
       var obj = {};
       indicadores.forEach((key)=>{
         obj[key.toLowerCase()] = +item[key.toLowerCase()];
       });
+
       itemTratado[item.ano] = obj;
     }else{
-      if(itemTratado.local){
+      if(itemTratado[field]){
         retorno.push(itemTratado);
-        itemTratado = {municipio:item.local};
+        console.log('Trocando ident', item[field]);
+        itemTratado = {};
+        itemTratado[field] = item[field];
       }
-
       // Primeiro acesso
       Object.keys(item).forEach(key=>{
         if(key!='ano' && indicadores.indexOf(key.toUpperCase())==-1){
           itemTratado[key] = item[key];
         }
       });
+
     }
   });
 
