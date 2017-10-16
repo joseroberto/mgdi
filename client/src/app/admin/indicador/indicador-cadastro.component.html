@@ -93,6 +93,9 @@
                 <a (click)="currenttab = 't6'"><span
                   class="badge bg-color-purple txt-color-white">5</span> Histórico de Carga</a>
               </li>
+              <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+                <a (click)="currenttab = 't7'">Resultados</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -690,6 +693,13 @@
                       </tbody>
                     </table>
                   </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't7'">
+                <fieldset style="padding: 15px">
+                  <resultset *ngIf="indicador.Granularidade" [codigo]="indicador.codigo"
+                  [granularidade]="indicador.Granularidade.sigla"
+                  [criterio]="indicador.criterio_agregacao"></resultset>
                 </fieldset>
               </tab>
             </tabset>

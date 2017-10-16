@@ -48,10 +48,10 @@ export class ResultsetComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      if(changes.granularidade.currentValue){
+      if(changes.granularidade && changes.granularidade.currentValue){
           this.tipo = changes.granularidade.currentValue;
       }
-      if(changes.codigo.currentValue){
+      if(changes.codigo && changes.codigo.currentValue){
           this.codigo = changes.codigo.currentValue;
       }
       this.loadData();
@@ -64,6 +64,8 @@ export class ResultsetComponent implements OnChanges, OnInit {
             if(this.enable){
               this.render(resp.resultset);
             }
+        }).catch((err)=>{
+          console.log('Erro na consulta:', err);
         });
       }
     }

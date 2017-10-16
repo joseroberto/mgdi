@@ -4,6 +4,7 @@
 * Novo: Área de dados gerais na visualização de itens da ficha de indicadores do site. Lá consta: Estratificação, Critério de agregação, Unidade de medida e Índice de referência
 * Correção: Formato de retorno tabular para consulta do tipo UF
 * Mudança: Na área de visualização, o campo classificação foi para o quadro "GERAL".
+* Correção: Construção dinâmica de SQL para agregação BR.
 
 
 ### 0.0.9 - 06/Outubro/2017
