@@ -70,13 +70,13 @@ export class ResultsetComponent implements OnChanges, OnInit {
 
     render(itens){
       let columns:Object[];
-      //if(this._dataTable){
-      //  console.log('Destruindo a tabela');
-      //  this._dataTable.destroy();
-      //}
+
       $('#lista').empty();
       $('#lista').unbind('draw.dt');
       switch(this.tipo){
+        case 'BR':
+          columns = [];
+          break;
         case 'MN':
           columns = [
             {"title":'UF',"data": "uf"},
@@ -103,12 +103,12 @@ export class ResultsetComponent implements OnChanges, OnInit {
       Object.keys(itens[0]).forEach((key)=>{
           if(key!='null' && typeof(itens[0][key])=='object'){
               //console.log('Construindo coluna: ',key, typeof(itens[0][key]));
-              columns.push({"title":key, "data": key, "render":
+              columns.push({"title":key, "className": "text-right", "data": key, "render":
               function ( data, type, row ) {
                 if(!data)
                   return '';
                 if(type === 'display'){
-                    return data[cod];
+                    return data[cod].toLocaleString("pt-BR");
                 }else if(type === 'sort'){
                     return data[cod];
                 }else{
@@ -122,7 +122,9 @@ export class ResultsetComponent implements OnChanges, OnInit {
       console.log('Columns:', columns);
       // Associa os dados a tabela de resulados
       this._dataTable = $('#lista').DataTable({
-        "aLengthMenu": [[25,50,100, -1], [25,50, 100, "Todas"]],
+        //"aLengthMenu": [[25,50,100, -1], [25,50, 100, "Todas"]],
+        "bLengthChange": false,
+        "iDisplayLength": 50,
         "bProcessing": true,
         "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
         "columns": columns,
@@ -136,8 +138,7 @@ export class ResultsetComponent implements OnChanges, OnInit {
           var granularidades = this.getGranularidades();
 
           $('#lista').on( 'draw.dt', function () {
-              var tmp = $("#lista_length").html();
-              $("#lista_length").parent().html( granularidades + '&nbsp;&nbsp;' + tmp);
+              $("#lista_filter").parent().parent().children().first().html( granularidades);
               $('select#lista_granularidade').change(function (e) {
                   window['angularComponentRef'].zone.run(() => {
                     window['angularComponentRef'].component.selectGranularidade(e.currentTarget.value);

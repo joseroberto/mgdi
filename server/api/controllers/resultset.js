@@ -345,23 +345,23 @@ function montaQueryComplemento(indicadores, config){
     (Object.keys(indicadores)).forEach(key=>{
         switch (indicadores[key].criterioAgregacao) {
           case 0: // Sem agregacao
-            sql_select += ` ${key}::int`;
+            sql_select += ` ${key}::float`;
             break;
           case 1: // Maior valor
-            sql_select += ` MAX(${key})::int  as${key}`;
+            sql_select += ` MAX(${key})::float  as${key}`;
             break;
           case 2: // Menor valor
-            sql_select += ` MIN(${key})::int  ${key}`;
+            sql_select += ` MIN(${key})::float  ${key}`;
             break;
           case 3: // Media
-            sql_select += ` AVG(${key})::int  ,${key}`;
+            sql_select += ` AVG(${key})::float  ,${key}`;
             break;
           case 4: // Soma
-            select += ` SUM(${key})::int ${key}`;
+            select += ` SUM(${key})::float ${key}`;
             break;
         }
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
-          from += ` LEFT OUTER JOIN ${key} `;
+          from += ` INNER JOIN ${key} `;
           // granularidade
           switch (referencia.granularidade) {
             case 3: //UF
@@ -475,19 +475,19 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   switch (indicador.criterioAgregacao) {
     case 0: // Sem agregacao
-      sql_select += ` nu_valor::int  as ${codigo}`;
+      sql_select += ` nu_valor::float  as ${codigo}`;
       break;
     case 1: // Maior valor
-      sql_select += ` MAX(nu_valor)::int  as${codigo}`;
+      sql_select += ` MAX(nu_valor)::float  as${codigo}`;
       break;
     case 2: // Menor valor
-      sql_select += ` MIN(nu_valor)::int  ${codigo}`;
+      sql_select += ` MIN(nu_valor)::float  ${codigo}`;
       break;
     case 3: // Media
-      sql_select += ` AVG(nu_valor)::int  ${codigo}`;
+      sql_select += ` AVG(nu_valor)::float  ${codigo}`;
       break;
     case 4: // Soma
-      sql_select += ` SUM(nu_valor)::int  ${codigo}`;
+      sql_select += ` SUM(nu_valor)::float  ${codigo}`;
       break;
   }
 
@@ -552,6 +552,9 @@ function tabulaResultado(result, indicadores, config){
   console.log('Formatando tabular');
   //TODO: Obedecer o tipo de consulta
   switch (config.tipo) {
+    case 'BR':
+      field = 'ano';
+      break;
     case 'RG':
       field = 'regiao';
       break;
@@ -559,38 +562,30 @@ function tabulaResultado(result, indicadores, config){
       field = 'uf';
       break;
     case 'MN':
-      field = 'local';
+      field = 'codigogeo';
       break;
   }
   itemTratado[field] = null;
   result.forEach(item =>{
-    if(itemTratado[field]==item[field]){
-      var obj = {};
-      indicadores.forEach((key)=>{
-        obj[key.toLowerCase()] = +item[key.toLowerCase()];
-      });
-
-      itemTratado[item.ano] = obj;
-    }else{
-      if(itemTratado[field]){
-        retorno.push(itemTratado);
-        console.log('Trocando ident', item[field]);
-        itemTratado = {};
-        itemTratado[field] = item[field];
-      }
-      // Primeiro acesso
+    if(itemTratado[field]!=item[field]){
+      //console.log('Trocando ident', item[field]);
+      itemTratado = {};
+      retorno.push(itemTratado);
+      itemTratado[field] = item[field];
+      // Complementa cos campos que não sejam nem ano nem um valor de indicador
       Object.keys(item).forEach(key=>{
         if(key!='ano' && indicadores.indexOf(key.toUpperCase())==-1){
           itemTratado[key] = item[key];
         }
       });
-
     }
-  });
+    var obj = {};
+    indicadores.forEach((key)=>{
+      obj[key.toLowerCase()] = +item[key.toLowerCase()];
+    });
 
-  if(itemTratado.ano){
-    retorno.push(itemTratado);
-  }
+    itemTratado[item.ano] = obj;
+  });
 
   return retorno;
 }
