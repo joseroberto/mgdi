@@ -12,9 +12,6 @@
             <legend>Descrição</legend>
             <span [innerHTML]="indicador.descricao||msg_padrao"></span>
             <br/><br/>
-            <legend>Classificação</legend>
-            <span [innerHTML]="indicador.ClassificacaoIndicador.descricao||msg_padrao"></span>
-            <br/><br/>
             <legend>Conceituação</legend>
             <span [innerHTML]="indicador.conceituacao||msg_padrao"></span>
             <br/><br/>
@@ -95,13 +92,16 @@
         <div class="row">
           <div class="col-lg-12">
               <ul class="list-group no-margin">
-                <li class="list-group-item">
+                <li class="list-group-item" *ngIf="indicador.ClassificacaoIndicador">
+                  Classificação: <a (click)="(null)" class="margin-top-0"> {{ indicador.ClassificacaoIndicador.descricao }}</a>
+                </li>
+                <li class="list-group-item" *ngIf="indicador.Granularidade">
                   Estratificação: <a (click)="(null)" class="margin-top-0"> {{ indicador.Granularidade.descricao }}</a>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" *ngIf="indicador.CriterioAgregacao">
                   Critério de Agregação: <a (click)="(null)" class="margin-top-0"> {{ indicador.CriterioAgregacao.descricao }}</a>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" *ngIf="indicador.UnidadeMedida">
                   Unidade de Medida: <a (click)="(null)" class="margin-top-0"> {{ indicador.UnidadeMedida.descricao }}</a>
                 </li>
               </ul>
