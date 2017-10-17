@@ -6,10 +6,14 @@ var app = express();
 var morgan = require('morgan');
 var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
+var job = require('./api/helpers/job');
 
 module.exports = app; // for testing
 
 var theAppLog = log4js.getLogger();
+
+// Programa os jobs de execucao
+job.cron();
 
 app.use(morgan("combined",{
   "stream": {
@@ -36,7 +40,7 @@ process.on('SIGINT', function() {
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
-  swaggerExpress.runner.swagger.host = config_param.host;
+  swaggerExpress.runner.swagger.host = process.env.HOST || config_param.host;
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
 

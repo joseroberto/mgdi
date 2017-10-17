@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
-  PeriodicidadeService, UtilService,
+  PeriodicidadeService, UtilService, ConsultaService,
   TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
   UnidadeService, GranularidadeService, CriterioAgregacaoService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -104,7 +104,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private router: Router,
       private unidadeService: UnidadeService,
       private granularidadeService: GranularidadeService,
-      private criterioAgregacaoService: CriterioAgregacaoService) {
+      private criterioAgregacaoService: CriterioAgregacaoService,
+      private consultaService: ConsultaService) {
         this.breadcrumb = ['Indicador', 'Novo'];
       }
 
@@ -134,7 +135,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.colecaoBancoDados = resp.banco_dados;
     }, err => this.util.msgErroInfra(err));
     this.indicadorService.getAll().subscribe(resp => {
-        this.colecaoIndicadores = resp.rows.filter(item=>item.codigo!=this.indicador.codigo);
+        this.colecaoIndicadores = resp.rows.filter(item=>item.codigo!=this.indicador.codigo);   //TODO: modificar para aplicar um filtro de codigo
     }, err => this.util.msgErroInfra(err));
     this.unidadeService.getAll().subscribe(resp=>{
         this.colecaoUnidades = resp.unidades;
@@ -166,7 +167,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.indicador.codigo = params['codigo'];
         if(this.indicador.codigo){
           this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
-              //console.log('Registro em edicao:', this.indicador);
+              console.log('Registro em edicao:', this.indicador);
               this.tituloForm = this.indicador.codigo;
               this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
@@ -415,6 +416,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         if('tags' in item ) valor['tags']=item['tags'];
         if('indice_referencia' in item && item['indice_referencia']!=null ) valor['indice_referencia']=parseFloat(String(item['indice_referencia']).replace(',','.'));
         if('granularidade' in item) valor['granularidade'] = item['granularidade'];
+
+        if('referencia_consulta' in item) valor['referencia_consulta'] = item['referencia_consulta'];
+        if('criterio_agregacao' in item) valor['criterio_agregacao'] = item['criterio_agregacao'];
+        if('banco_dados' in item) valor['banco_dados'] = item['banco_dados'];
+        if('tipo_consulta' in item) valor['tipo_consulta'] = item['tipo_consulta'];
+
       });
       return valor;
   }
@@ -511,5 +518,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       ans = String(valor).replace('.',',');
     }
     return ans;
+  }
+
+  loadData(codigo, tipo, componente){
+    console.log('Codigo', codigo);
+    this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
+      console.log('Resp', resp);
+      componente.add(resp);
+    });
   }
 }

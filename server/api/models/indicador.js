@@ -150,6 +150,11 @@ module.exports = function(sequelize, DataTypes) {
         field: 'st_universal',
         allowNull: false,
         defaultValue: 1
+    },
+    ultima_atualizacao:{
+        type: DataTypes.STRING(8),
+        field: 'ds_ultima_atualizacao',
+        allowNull: true
     }
   },{
     classMethods: {
@@ -178,6 +183,12 @@ module.exports = function(sequelize, DataTypes) {
         Indicador.belongsTo(models.Unidade,{
            as: 'UnidadeResponsavel',
            foreignKey: 'co_unidade_responsavel'});
+       Indicador.belongsTo(models.Granularidade,{
+          as: 'Granularidade',
+          foreignKey: 'co_granularidade'});
+       Indicador.belongsTo(models.Criterio_Agregacao,{
+          as: 'CriterioAgregacao',
+          foreignKey: 'co_criterio_agregacao'});
         Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,

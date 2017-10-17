@@ -93,6 +93,12 @@
                 <a (click)="currenttab = 't6'"><span
                   class="badge bg-color-purple txt-color-white">5</span> Histórico de Carga</a>
               </li>
+              <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+                <a (click)="currenttab = 't7'">Resultados</a>
+              </li>
+              <li [class.active]="currenttab=='t8'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+                <a (click)="currenttab = 't8'">Gráfico</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -562,86 +568,101 @@
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't5'">
-                <popover-content #tipo_extracao
-                  title="Tipos de Extração"
-                  [closeOnClickOutside]="true">
-                    Informações técnica de onde provem os dados originais do indicador.
-                </popover-content>
                 <fieldset style="padding: 15px">
+                  <popover-content #tipo_extracao
+                    title="Tipos de Extração"
+                    [closeOnClickOutside]="true">
+                      Informações técnica de onde provem os dados originais do indicador.
+                  </popover-content>
                   <legend>&nbsp;&nbsp;Tipos de Extração <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="tipo_extracao"></i></legend>
-
+                  <!-- Informacoes Tipo extracao -->
                   <div class="form-group">
-                     <div class="row">
-                       <popover-content #tipo_consulta
-                         title="Tipo de Consulta"
-                         [closeOnClickOutside]="true">
-                           Tipo de consulta: ETL, Query, Importação.
-                       </popover-content>
-                     <label class="col-md-2 control-label" for="tipo_consulta" >Tipo de Consulta <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tipo_consulta"></i></label>
-                     <div class="col-md-2">
-                       <select class="form-control" id="tipo_consulta" name="tipo_consulta" [(ngModel)]="indicador.tipo_consulta" required>
-                         <option *ngFor="let itemTipoConsulta of colecaoTipoConsulta" [ngValue]="itemTipoConsulta.codigo">{{ itemTipoConsulta.descricao }}</option>
-                       </select>
-                     </div>
-                     <popover-content #banco
-                       title="Banco de Dados"
-                       [closeOnClickOutside]="true">
-                         Cadastro de cada um dos bancos possíveis de se buscar dados de origem.
-                     </popover-content>
-                     <label class="col-md-2 control-label" for="banco_dados" *ngIf="indicador.tipo_consulta==2">Banco de Dados <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="banco"></i></label>
-                     <div class="col-md-2" *ngIf="indicador.tipo_consulta==2">
-                       <select class="form-control" id="banco_dados" name="banco_dados" [ngModel]="indicador.banco_dados" required>
-                         <option *ngFor="let itemBancoDados of colecaoBancoDados" [ngValue]="itemBancoDados.codigo">{{ itemBancoDados.descricao }}</option>
-                       </select>
-                     </div>
-                     </div>
+                    <div class="row">
+                        <!-- Componente 1 -->
+                        <popover-content #tipo_consulta
+                            title="Tipo de Consulta"
+                            [closeOnClickOutside]="true">
+                              Tipo de consulta: ETL, Query, Importação.
+                        </popover-content>
+                        <label class="col-md-2 control-label" for="tipo_consulta" >Tipo de Consulta <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tipo_consulta"></i></label>
+                        <div class="col-md-2">
+                          <select class="form-control" id="tipo_consulta" name="tipo_consulta" [(ngModel)]="indicador.tipo_consulta" required>
+                            <option *ngFor="let itemTipoConsulta of colecaoTipoConsulta" [ngValue]="itemTipoConsulta.codigo">{{ itemTipoConsulta.descricao }}</option>
+                          </select>
+                        </div>
+                        <!-- Fim Componente 1 -->
+                        <!-- Componente 2 -->
+                        <div *ngIf="indicador.tipo_consulta==2">
+                          <popover-content #banco
+                              title="Banco de Dados"
+                              [closeOnClickOutside]="true">
+                              Cadastro de cada um dos bancos possíveis de se buscar dados de origem.
+                          </popover-content>
+                          <label class="col-md-2 control-label" for="banco_dados" >Banco de Dados <i class="fa fa-question-circle" popoverPlacement="top" popoverOnHover="true" [popover]="banco"></i></label>
 
-                     <popover-content #criterio_agregacao
-                                      title="Critério de agregação"
-                                      [closeOnClickOutside]="true">
-                         Qual o critério de agregação para os dados do indicador.
-                     </popover-content>
-                     <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
-                       <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="criterio_agregacao"></i></label>
-                     <div class="col-md-2">
-                       <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao">
-                         <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
-                       </select>
-                     </div>
-                     <div class="row">
-                       <popover-content #referencia
-                                        title="Referência"
-                                        [closeOnClickOutside]="true">
-                           Para o tipo query a ser executada, nome da ETL, nome do processo para importação.
-                       </popover-content>
-                       <label class="col-md-2 control-label" for="referencia_consulta" *ngIf="indicador.tipo_consulta!=0" >{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }}
-                       <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i></label>
-                       <div class="col-md-10" *ngIf="indicador.tipo_consulta!=0">
+                           <div class="col-md-2">
+                             <select class="form-control" id="banco_dados" name="banco_dados" [ngModel]="indicador.banco_dados" required>
+                               <option *ngFor="let itemBancoDados of colecaoBancoDados" [ngValue]="itemBancoDados.codigo">{{ itemBancoDados.descricao }}</option>
+                             </select>
+                           </div>
+                        </div>
+                        <!-- FIm Componente 2 -->
+                        <!-- Componente 3 -->
+                        <div>
+                            <popover-content #criterio_agregacao_label
+                                          title="Critério de agregação"
+                                          [closeOnClickOutside]="true">
+                             Qual o critério de agregação para os dados do indicador.
+                           </popover-content>
+                           <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
+                              <i class="fa fa-question-circle" popoverPlacement="top" popoverOnHover="true" [popover]="criterio_agregacao_label"></i></label>
+                            <div class="col-md-2">
+                             <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao">
+                               <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
+                             </select>
+                            </div>
+                        </div>
+                        <!-- Fim Cmponente 3 -->
+                    </div>
+                  </div>
+                  <!-- Fim Informacoes Tipo extracao -->
+                  <popover-content #referencia
+                                title="Referência"
+                                [closeOnClickOutside]="true">
+                   De acordo com o tipo query a ser executada, nome da ETL, nome do processo para importação, ou SQL a ser executado.
+                  </popover-content>
+                  <legend *ngIf="indicador.tipo_consulta!=0">&nbsp;&nbsp;{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }} <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i>
+                  </legend>
+                  <!-- Formula -->
+                  <div class="row"  *ngIf="indicador.tipo_consulta!=0">
+                       <div class="col-md-10" >
                         <textarea id="referencia_consulta" name="referencia_consulta" style="width:90%" rows='5' [ngModel]="indicador.referencia_consulta"></textarea>
                        </div>
-                     </div>
-
-                     <br/><br/>
-                     <popover-content #procedimento
-                                      title="Procedimento Operacional"
-                                      [closeOnClickOutside]="true">
-                         Procedimento a ser seguido para extração dos dados.
-                     </popover-content>
-                     <legend>Procedimento Extração dos Dados <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="procedimento"></i>
-                          <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editProcedimentoOperacional(true)" *ngIf="!isEditProcedimentoOperacional"><i class="fa fa-edit"></i> Edita</a>
-                          <a (click)="(null)" class="btn btn-success btn-xs" (click)="editProcedimentoOperacional(false)" *ngIf="isEditProcedimentoOperacional"><i class="fa fa-save"></i> Grava</a>
-                     </legend>
-                     <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
-
-                     <div class="form-actions">
-                       <div class="row">
-                         <div class="col-md-12">
-                           <button class="btn btn-primary" type="submit">
-                             <i class="fa fa-save"></i>Grava
-                           </button>
-                         </div>
-                       </div>
-                     </div>
+                  </div>
+                  <br/><br/>
+                  <!-- Fim da Formula -->
+                  <popover-content #procedimento
+                                  title="Procedimento Operacional"
+                                  [closeOnClickOutside]="true">
+                     Procedimento a ser seguido para extração dos dados.
+                  </popover-content>
+                  <legend>Procedimento Extração dos Dados <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="procedimento"></i>
+                    <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editProcedimentoOperacional(true)" *ngIf="!isEditProcedimentoOperacional"><i class="fa fa-edit"></i> Edita</a>
+                    <a (click)="(null)" class="btn btn-success btn-xs" (click)="editProcedimentoOperacional(false)" *ngIf="isEditProcedimentoOperacional"><i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <!-- Procedimento extracao -->
+                  <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
+                  <!-- Fim do Procedimento de extracao -->
+                  <div class="row">
+                    <div class="form-actions">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-save"></i>Grava
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </fieldset>
               </tab>
@@ -675,6 +696,25 @@
                       </tbody>
                     </table>
                   </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't7'">
+                <fieldset style="padding: 15px">
+                  <resultset *ngIf="indicador.Granularidade" [codigo]="indicador.codigo"
+                  [granularidade]="indicador.Granularidade.sigla"
+                  [criterio]="indicador.criterio_agregacao"></resultset>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't8'">
+                <fieldset style="padding: 15px">
+                      <grafico #graph (onInit)="loadData(indicador.codigo, 'UF', this.graph)"
+                     type="bar"
+                     [options]="{
+                        xkey: 'uf',
+                        ykeys: [indicador.codigo.toLowerCase()],
+                        labels: [indicador.codigo],
+                        barColors: barColorsDemo
+                    }" *ngIf="indicador.ultima_atualizacao && indicador.granularidade>2 && (indicador.criterio_agregacao!=0 || indicador.granularidade == 3)"></grafico>
                 </fieldset>
               </tab>
             </tabset>

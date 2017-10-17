@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.8"
+  version: "0.1.0"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -10,7 +10,7 @@ info:
     *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
     *  Utilização de metadados para criação de consultas dinâmicas as bases
     *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
-    
+
     # Especificação API eSUSGestor
     Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
 
@@ -36,10 +36,10 @@ securityDefinitions:
  Bearer:
   description: |
    Autenticação do eSUS Gestor se baseia nos seguintes recursos:
-   
+
    - API Key validada com SCPA
    - OAuth2 que utiliza o barramento do DATASUS.
-   
+
    O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no campo 'Authorization'.
 
    Um token JWT válido é gerado pela API e retornado na resposta a rota
@@ -111,7 +111,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"      
+            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -288,6 +288,8 @@ paths:
       description: Retorna os valores do indicador
       summary: Query para valores de indicadores
       operationId: getResultado
+      produces:
+        - application/json
       tags:
         - Indicadores
         - Consulta Dados
@@ -302,9 +304,10 @@ paths:
         - name: tipo
           type: string
           in: query
-          enum: [BR, REG, UF, MUN]
+          enum: [BR, RG, UF, MN, CN]
           required: false
-          description: Tipo de consulta (BR - Brasil, MUN - Municipal, REG - Regional, UF - Estadual)
+          default: MN
+          description: Tipo de consulta (BR - Brasil, MN - Municipal, RG - Região, UF - Estadual, CN = CNES)
         - name: filtro
           type: string
           in: query
@@ -318,6 +321,23 @@ paths:
           in: query
           required: false
           description: Valores a serem filtrados
+        - name: formato
+          type: string
+          in: query
+          enum: [LIN, CDA, TAB]
+          required: false
+          default: LIN
+          description: |
+              Indica o tipo de formatação a ser utilizado na saída dos dados:
+              * LIN: Formato linear (Default)
+              * CDA: Padrão CDA - Community Data Access
+              * TAB: Formato tabular (Indicador => { tempo })
+        - name: data
+          type: number
+          in: query
+          required: false
+          description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
+
       responses:
         "200":
           description: Sucesso
@@ -1200,7 +1220,7 @@ definitions:
   GetUserMgiListResponse:
     description: Lista de Usuários do MGI
     type: object
-    
+
   Programa:
     description: Programa
     type: object
@@ -1268,14 +1288,8 @@ definitions:
           type: object
   ResultIndicador:
     description: Resultado da consulta especifica de indicador
-    type: object
-    properties:
-      resultset:
-        type: array
-        items:
-          type: object
-      info:
-        type: object
+    type: [object, array]
+
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
     type: object

@@ -6,12 +6,13 @@ var unidade = require('./unidade');
 module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
-      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao', 'fonte_dados', 'dt_inclusao' ],
+      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao',
+      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'granularidade', 'criterio_agregacao' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         { model: models.Unidade, as: 'UnidadeResponsavel' },
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         //{ model: models.Indicador, as: 'IndicadoresRelacionados' },
         //{ model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
         //{ model: models.Tag, as: 'Tags'}
@@ -87,7 +88,10 @@ module.exports = {
                    { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-                   { model: models.Unidade , as: 'UnidadeResponsavel' }],
+                   { model: models.Unidade , as: 'UnidadeResponsavel' },
+                   { model: models.Granularidade , as: 'Granularidade' },
+                   { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
+                   { model: models.UnidadeMedida, as: 'UnidadeMedida' }],
         where: {codigo: req.swagger.params.codigo.value}
       }
     ).then((indicador)=> {
@@ -236,7 +240,8 @@ module.exports = {
 
   getIndicadorPesquisaPorCodigo: (codigos)=>
     models.Indicador.findAll(
-      { attributes: [  'id', 'codigo', 'titulo', 'granularidade' ],
+      { attributes: [  'id', 'codigo', 'titulo', 'descricao','granularidade', 'banco_dados',
+      'tipo_consulta', 'referencia_consulta', 'criterio_agregacao', 'periodicidade_atualizacao', 'ultima_atualizacao' ],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
       })

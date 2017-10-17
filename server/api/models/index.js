@@ -6,14 +6,22 @@ var Sequelize = require('sequelize-hierarchy')();
 
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../../config/config.json')[env];
+const config_param = require('../helpers/config')();
+//var config    = require(__dirname + '/../../config/config.json')[env];
+
 var db        = {};
 
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
-} else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+//if (config.use_env_variable) {
+//  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+//} else {
+  var sequelize = new Sequelize(process.env.DATABASE || config_param.database,
+    process.env.USER_DB || config_param.user,
+    process.env.PASSWORD_DB || config_param.password, {
+    "host": process.env.HOSTDB || config_param.hostdb,
+    "dialect": "postgres",
+    "omitNull": true
+  });
+//}
 
 fs
   .readdirSync(__dirname)

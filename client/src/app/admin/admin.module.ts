@@ -33,12 +33,14 @@ import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 import {WindowRef} from './indicador/WindowRef';
+import { ComponentesModule } from '../componentes/componentes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AdminRouting,
     SmartadminModule,
+    ComponentesModule,
     SmartadminValidationModule,
     SmartadminLayoutModule,
     StatsModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FadeInTop} from "../shared/animations/fade-in-top.decorator";
-import { IndicadorService, UtilService } from '../services/index';
+import { IndicadorService, UtilService, ConsultaService } from '../services/index';
 
 @FadeInTop()
 @Component({
@@ -22,7 +22,7 @@ export class SiteComponent implements OnInit {
     this.pageChanged(1);
   }
 
-  constructor(private indicadorService:IndicadorService) { }
+  constructor(private indicadorService:IndicadorService, private consultaService:ConsultaService) { }
 
   ngOnInit() {
     if(localStorage.getItem('pesquisa_site')){
@@ -42,7 +42,7 @@ export class SiteComponent implements OnInit {
     this.loadIndicador(pagina);
   }
 
-  loadIndicador(pagina:number){
+  async loadIndicador(pagina:number){
     this.page = pagina;
     var offset = (pagina-1) * this.itensPorPagina;
 
@@ -52,9 +52,17 @@ export class SiteComponent implements OnInit {
     localStorage.setItem('pagina_site', String(this.page));
 
     console.log('Armazenado:', localStorage.getItem('pesquisa_site'));
-    this.indicadorService.getAll(this.itensPorPagina, offset, this.formataPesquisa(this.pesquisa)).subscribe(resp=>{
-        this.total = resp.count;
-        this.listaIndicadores=resp.rows;
+
+    let resp = await this.indicadorService.getAllSync(this.itensPorPagina, offset, this.formataPesquisa(this.pesquisa));
+    //console.log('resp', resp);
+    this.total = resp.count;
+    this.listaIndicadores=resp.rows;
+  }
+
+  loadData(codigo, tipo, componente){
+    console.log('Codigo', codigo);
+    this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
+      componente.add(resp);
     });
   }
 
@@ -100,7 +108,7 @@ export class SiteComponent implements OnInit {
   }
 
   isEmpty(objeto:Object){
-    console.log('Objeto', objeto);
+    //console.log('Objeto', objeto);
     return objeto && Object.keys(objeto).length==0;
   }
 
@@ -128,13 +136,57 @@ export class SiteComponent implements OnInit {
       this.pageChanged(1);
   }
 
-  dateFormat(d) {
-    return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+  formatData(d){
+    var ans:string = '';
+    if(d){
+      switch(d.length){
+        case 4:
+          ans = `ano ${d}`;
+          break;
+        case 6:
+          ans = d;
+          break
+      }
+    }
+    return ans;
   }
 
   limpaFiltro(){
     this.pesquisa = {};
     this.pageChanged(1);
+  }
+
+  getData(codigo: string, ultima_atualizacao:string, objPeriodicidade: Object, granularidade: number, criterio_agregacao:number){
+    //console.log(codigo, ultima_atualizacao, objPeriodicidade, granularidade, criterio_agregacao);
+
+    /*if(!ultima_atualizacao)
+      return null;
+    if(this.vardata[codigo] && this.vardata[codigo].length>0)
+      return this.vardata[codigo];
+
+    console.log(codigo);
+    switch(granularidade){
+      case 3: // Municipal
+        this.vardata[codigo] = [];
+        if(criterio_agregacao!=0){
+          this.vardata[codigo]= await this.consultaService.search(codigo, '-1', 'UF');
+          console.log('Resultdo:',this.vardata[codigo]);
+        }
+        break;
+    }
+    return this.vardata[codigo];*/
+    //console.log('getData', codigo);
+    return [{ano: 2014, uf: 'AL', y: 100}, {ano: 2013, uf: 'SE', y:110}];
+    //return [{"x":"2011 Q1","y":3,"z":2,"a":3},{"x":"2011 Q2","y":2,"z":null,"a":1},{"x":"2011 Q3","y":0,"z":2,"a":4},{"x":"2011 Q4","y":2,"z":4,"a":3}];
+  }
+
+  barColorsDemo(row, series, type) {
+    if (type === 'bar') {
+      var red = Math.ceil(150 * row.y / 8);
+      return 'rgb(' + red + ',0,0)';
+    } else {
+      return '#000';
+    }
   }
 
 }

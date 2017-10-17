@@ -23,6 +23,20 @@ export class IndicadorService extends REST {
     return super.get(path);
   }
 
+  async getAllSync(limit?:number, offset?:number, query?:string){
+    if(!limit){
+      limit = 9999;
+    }
+    if(!offset){
+      offset=0;
+    }
+    if(!query){
+      query='';
+    }
+    console.log('query', query);
+    let path = `/indicador?limit=${limit}&offset=${offset}&${query}`;
+    return await super.get(path).toPromise();
+  }
   get(codigo:string){
     return super.get(`/indicador/${codigo}`);
   }

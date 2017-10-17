@@ -18,8 +18,8 @@ module.exports = {
 
     try {
       if(!config_param.bypass){
-        console.log('Acessando:', config_param.wsdl);
-        soap.createClient(config_param.wsdl, function(err, client) {
+        console.log('Acessando:', process.env.WSDL || config_param.wsdl);
+        soap.createClient(process.env.WSDL || config_param.wsdl, function(err, client) {
           if(!err){
             client.buscaPerfilUsuario(
               {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},

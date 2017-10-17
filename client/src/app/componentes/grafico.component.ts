@@ -4,13 +4,17 @@ declare var Morris:any;
 
 @Component({
 
-  selector: 'sa-morris-graph',
+  selector: 'grafico',
   template: `
-     <div class="chart no-padding" ></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="grafico" style="width:1317;height:342"></div>
+      </div>
+     </div>
   `,
   styles: []
 })
-export class MorrisGraphComponent implements AfterContentInit {
+export class GraficoComponent implements AfterContentInit {
 
   @Input() public data:any;
   @Input() public options:any;
@@ -33,7 +37,8 @@ export class MorrisGraphComponent implements AfterContentInit {
 
   render(){
     let options = this.options || {};
-    options.element = this.el.nativeElement.children[0];
+    //options.element = this.el.nativeElement.children[0];
+    options.element = 'grafico';
     options.data = this.data || [];
 
     switch (this.type) {
