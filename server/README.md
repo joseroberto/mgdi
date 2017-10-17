@@ -48,6 +48,7 @@ As seguintes variáveis poderão ser definidas:
 * DATABASE - Nome do banco de dados
 * USER_DB - Usuário do banco de dados
 * PASSWORD_DB - Senha do usuário do banco de dados
+* WSDL - Endereço de acesso da API de validação.
 
 
 

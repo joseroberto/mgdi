@@ -96,6 +96,9 @@
               <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
                 <a (click)="currenttab = 't7'">Resultados</a>
               </li>
+              <li [class.active]="currenttab=='t8'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+                <a (click)="currenttab = 't8'">Gráfico</a>
+              </li>
             </ul>
             <tabset class="padding-10">
               <tab [active]="currenttab == 't1'">
@@ -700,6 +703,18 @@
                   <resultset *ngIf="indicador.Granularidade" [codigo]="indicador.codigo"
                   [granularidade]="indicador.Granularidade.sigla"
                   [criterio]="indicador.criterio_agregacao"></resultset>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't8'">
+                <fieldset style="padding: 15px">
+                      <grafico #graph (onInit)="loadData(indicador.codigo, 'UF', this.graph)"
+                     type="bar"
+                     [options]="{
+                        xkey: 'uf',
+                        ykeys: [indicador.codigo.toLowerCase()],
+                        labels: [indicador.codigo],
+                        barColors: barColorsDemo
+                    }" *ngIf="indicador.ultima_atualizacao && indicador.granularidade>2 && (indicador.criterio_agregacao!=0 || indicador.granularidade == 3)"></grafico>
                 </fieldset>
               </tab>
             </tabset>

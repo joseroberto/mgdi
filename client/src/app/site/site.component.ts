@@ -59,16 +59,11 @@ export class SiteComponent implements OnInit {
     this.listaIndicadores=resp.rows;
   }
 
-  loadData(codigo, granularidade, criterio_agregacao, componente){
-    switch(granularidade){
-      case 3: // Municipal
-        if(criterio_agregacao!=0){
-          this.consultaService.search(codigo, '-1', 'UF').then((resp)=>{
-            componente.add(resp);
-          });
-        }
-        break;
-    }
+  loadData(codigo, tipo, componente){
+    console.log('Codigo', codigo);
+    this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
+      componente.add(resp);
+    });
   }
 
   formataPesquisa(objeto: Object):string{

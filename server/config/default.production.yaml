@@ -43,6 +43,6 @@ config:
   tabela_indicadores: tb_resultado
   schema_esusgestor: dbesusgestor
   database: dbspo
-  user: user
-  password: pass
-  hostdb: banco
+  user: vasconcelos
+  password: serenaya
+  hostdb: 10.1.2.25

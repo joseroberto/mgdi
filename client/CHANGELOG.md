@@ -5,6 +5,7 @@
 * Correção: Formato de retorno tabular para consulta do tipo UF
 * Mudança: Na área de visualização, o campo classificação foi para o quadro "GERAL".
 * Correção: Construção dinâmica de SQL para agregação BR.
+* Novo: Aba de visualização de resultados na ficha de indicador
 
 
 ### 0.0.9 - 06/Outubro/2017

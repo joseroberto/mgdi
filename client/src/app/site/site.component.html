@@ -15,14 +15,14 @@
               <div class="col-md-4">
                 <div>
                   <div class="list-inline padding-10">
-                    <sa-morris-graph #graph (onInit)="loadData(item.codigo, item.granularidade, item.criterio_agregacao, this.graph)"
+                    <sa-morris-graph #graph (onInit)="loadData(item.codigo, 'UF', this.graph)"
                        type="bar"
                        [options]="{
                           xkey: 'uf',
                           ykeys: [item.codigo.toLowerCase()],
                           labels: [item.codigo],
                           barColors: barColorsDemo
-                      }" *ngIf="item.ultima_atualizacao"></sa-morris-graph>
+                      }" *ngIf="item.ultima_atualizacao && item.granularidade>2 && (item.criterio_agregacao!=0 || item.granularidade == 3)"></sa-morris-graph>
 
                       <img src="assets/img/sem-dados.png" *ngIf="!item.ultima_atualizacao" >
                   </div>
