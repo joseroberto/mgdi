@@ -707,10 +707,11 @@
               </tab>
               <tab [active]="currenttab == 't8'">
                 <fieldset style="padding: 15px">
-                      <grafico #graph (onInit)="loadData(indicador.codigo, 'UF', this.graph)"
+                      <grafico #graph (onInit)="loadData(indicador.codigo, 'MN', this.graph)"
                      type="bar"
                      [options]="{
-                        xkey: 'uf',
+                        xkey: 'local',
+                        resize: true,
                         ykeys: [indicador.codigo.toLowerCase()],
                         labels: [indicador.codigo],
                         barColors: barColorsDemo

@@ -1,4 +1,5 @@
 import {Component, OnInit, EventEmitter, Output, ElementRef, AfterContentInit, Input} from '@angular/core';
+import {WindowRef} from './WindowRef';
 
 declare var Morris:any;
 declare var $: any;
@@ -24,7 +25,7 @@ export class GraficoComponent implements AfterContentInit {
 
   private graph;
 
-  constructor(private el:ElementRef) {
+  constructor(private el:ElementRef, private winRef: WindowRef,) {
   }
 
   ngAfterContentInit() {
@@ -58,10 +59,19 @@ export class GraficoComponent implements AfterContentInit {
     }
 
     $("#grafico svg").css('width', '100%');
+    console.log('Conteudo', $("#grafico svg"));
+    //$(window).on('resize', function() {
+    //  this.graph.redraw()
+    //});
 
   }
 
+  redraw(){
+    this.graph.redraw();
+  }
+
   add(arr){
+    console.log('data source:', arr);
     this.graph.setData(arr);
     this.graph.redraw();
   }
