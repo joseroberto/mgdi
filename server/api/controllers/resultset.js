@@ -50,7 +50,7 @@ module.exports = {
               res.json(result.rows);
               break;
             case 'CDA':
-                res.json(formataCDAResult(result.rows, config, indicadores));
+                res.json(formataCDAResult(result.rows, result.fields, config, indicadores));
                 break;
             case 'TAB':
                 res.json(formataJSONResult(result.rows, config, Object.keys(indicadores)));
@@ -67,7 +67,7 @@ module.exports = {
 /*
   Formatador de saída para consultas CDA.
 */
-function formataCDAResult(result, config, indicadores){
+function formataCDAResult(result, fields, config, indicadores){
   var metadata=[];
   var filtro={};
   var tipoRegiao='';
@@ -81,7 +81,22 @@ function formataCDAResult(result, config, indicadores){
 
   // Acrescenta os dados da consulta
   var referencia = indicadores[Object.keys(indicadores)[0]];
-  switch (referencia.granularidade) {
+  switch (config.tipo) {
+    case 'BR':
+      tipoRegiao='br';
+      break;
+    case 'RG':
+      tipoRegiao='regiao';
+      break;
+    case 'UF':
+      tipoRegiao='uf';
+      break;
+    case 'MN':
+      tipoRegiao='municipio';
+      break;
+    case 'CN':
+      tipoRegiao='cnes';
+      break;
     case 2: //UF
       tipoRegiao='uf';
       break;
@@ -92,7 +107,7 @@ function formataCDAResult(result, config, indicadores){
 
   var numIndex = 0;
 
-  result.fields.forEach(item=>{
+  fields.forEach(item=>{
     var key = item.name.toUpperCase();
     var meta = {
         colType: item.dataTypeID == 23? "Numeric": "String",
@@ -285,7 +300,7 @@ function montaQuery(indicadores, config){
 }
 
 function montaQueryComplemento(indicadores, config){
-    var select = 'select ';
+    var select = '';
     var from = 'from ';
     //var where = 'where '; //Essa vai ficar para os filtros
     var groupby = '';
@@ -345,19 +360,19 @@ function montaQueryComplemento(indicadores, config){
     (Object.keys(indicadores)).forEach(key=>{
         switch (indicadores[key].criterioAgregacao) {
           case 0: // Sem agregacao
-            sql_select += ` ${key}::float`;
+            select += ` ${key}::float,`;
             break;
           case 1: // Maior valor
-            sql_select += ` MAX(${key})::float  as${key}`;
+            select += ` MAX(${key})::float  as${key},`;
             break;
           case 2: // Menor valor
-            sql_select += ` MIN(${key})::float  ${key}`;
+            select += ` MIN(${key})::float  ${key},`;
             break;
           case 3: // Media
-            sql_select += ` AVG(${key})::float  ,${key}`;
+            select += ` AVG(${key})::float  ,${key},`;
             break;
           case 4: // Soma
-            select += ` SUM(${key})::float ${key}`;
+            select += ` SUM(${key})::float ${key},`;
             break;
         }
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
@@ -453,6 +468,10 @@ function montaQueryComplemento(indicadores, config){
 
     if(referencia.criterioAgregacao==0){
       groupby='';
+    }
+
+    if(select){
+      select = 'select ' + select.substr(0,select.length - 1); // Retira a ultima virgula
     }
 
     if(orderby){

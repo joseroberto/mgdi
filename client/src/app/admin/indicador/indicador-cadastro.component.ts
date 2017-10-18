@@ -522,9 +522,20 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   loadData(codigo, tipo, componente){
     console.log('Codigo', codigo);
+
     this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
-      console.log('Resp', resp);
-      componente.add(resp);
+      componente.add(this.agruparesultindicador(codigo,resp));
+      //let lcodigo = arr.toLowerCase();
+      //componente.add(resp.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1));
     });
+  }
+
+  agruparesultindicador(codigo,arr){
+    let lcodigo = codigo.toLowerCase();
+    let ans = arr.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1);
+    if(ans.length > 50){
+      ans = ans.slice(0,50);
+    }
+    return ans;
   }
 }
