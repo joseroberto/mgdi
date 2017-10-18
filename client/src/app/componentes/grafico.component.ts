@@ -1,6 +1,7 @@
 import {Component, OnInit, EventEmitter, Output, ElementRef, AfterContentInit, Input} from '@angular/core';
 
 declare var Morris:any;
+declare var $: any;
 
 @Component({
 
@@ -55,6 +56,9 @@ export class GraficoComponent implements AfterContentInit {
         this.graph = Morris.Donut(options);
         break;
     }
+
+    $("#grafico svg").css('width', '100%');
+
   }
 
   add(arr){
