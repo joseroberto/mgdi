@@ -1,3 +1,4 @@
+
 alter table dbesusgestor.tb_municipio_agrupamento drop column co_categoria;
 
 CREATE SEQUENCE dbesusgestor.sk_agrupamento;
