@@ -97,12 +97,6 @@ function formataCDAResult(result, fields, config, indicadores){
     case 'CN':
       tipoRegiao='cnes';
       break;
-    case 2: //UF
-      tipoRegiao='uf';
-      break;
-    case 3: //Municipio
-      tipoRegiao='municipal';
-      break;
   }
 
   var numIndex = 0;
@@ -404,58 +398,37 @@ function montaQueryComplemento(indicadores, config){
           where = where + ' AND uf.co_uf IN ('+ config.valores_filtro+')';
         }
         break;
+      case 'REG':
+        if(config.valores_filtro){
+          where = where + ' AND floor(mun.co_uf/10)  IN (' + config.valores_filtro+')';
+        }
+        break;
       case 'MUN':
         if(config.valores_filtro){
-          where = where + ' AND mun.ibge IN (' + config.valores_filtro+')';
+          where = where + ' AND mun.co_ibge IN (' + config.valores_filtro+')';
           codigoRegiao = config.valores_filtro;
         }
         break;
-      case 'CID':
-        //if(req.swagger.params.valores_filtro.value){
-        //  where = where + ' AND tb_ibge.co_tr_cidadania IN (' + req.swagger.params.valores_filtro.value + ')';
-        //}else{
-        //  where = where + ' AND tb_ibge.co_tr_cidadania >0';
-        //}
-        break;
-      case 'CCL':
-        //if(req.swagger.params.valores_filtro.value){
-        //  where = where + ' AND tb_ibge.co_colegiado in (' + req.swagger.params.valores_filtro.value + ')'
-        //}
-        break;
-      case 'REG':
-          if(config.valores_filtro){
-            where = where + ' AND floor(mun.co_uf/10)  IN (' + config.valores_filtro+')';
-          }
-          break;
       case 'MET':
-          //if(req.swagger.params.valores_filtro.value){
-          //  where = where + ' AND tb_ibge.codigo_id_metropolitana IN (' + req.swagger.params.valores_filtro.value + ')';
-          //}else{
-          //  where = where + ' AND tb_ibge.codigo_id_metropolitana >0';
-          //}
-          break;
+      case 'CID':
+      case 'CCL':
       case 'FRT':
-          //where = where + 'tb_ibge.sis_fronteiras = 1';
-          break;
       case 'QUA':
-          //where = where + 'tb_ibge.habilitados_qualifar = 1';
-          break;
       case 'SA':
-          //where = where + 'tb_ibge.semi_arido = 1';
-          break;
       case 'AL':
-          //where = where + 'tb_ibge.amazonia_legal = 1';
-          break;
       case 'RIB':
-          //where = where + 'tb_ibge.co_ride = 1';
-          break;
       case 'QSU':
-          //if(req.swagger.params.valores_filtro.value){
-          //  where = where + ' AND tb_ibge.co_id_qualisus IN (' + req.swagger.params.valores_filtro.value + ')';
-          //}else{
-          //  where = where + ' AND tb_ibge.co_id_qualisus >0';
-          //}
-          break;
+        if(config.valores_filtro){
+          filtro = ' AND agr.co_agrupamento IN (' + config.valores_filtro+')';
+        }else{
+          filtro = '';
+        }
+        where = where +  ` AND mun.co_ibge IN ( select co_ibge from dbesusgestor.tb_municipio_agrupamento mua
+          inner join dbesusgestor.tb_agrupamento agr on mua.co_agrupamento = agr.co_agrupamento
+          inner join dbesusgestor.tb_categoria cat on cat.co_categoria = agr.co_categoria
+          where cat.ds_sigla = '${config.filtro}' ${filtro})`
+        break;
+
     }
 
     // Filtro de ano, anomes ou anomesdia
