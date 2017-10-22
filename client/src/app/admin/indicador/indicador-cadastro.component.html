@@ -93,10 +93,10 @@
                 <a (click)="currenttab = 't6'"><span
                   class="badge bg-color-purple txt-color-white">5</span> Histórico de Carga</a>
               </li>
-              <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+              <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.ultima_atualizacao)">
                 <a (click)="currenttab = 't7'">Resultados</a>
               </li>
-              <li [class.active]="currenttab=='t8'"  *ngIf="indicador.codigo && (indicador.tipo_consulta!=0)">
+              <li [class.active]="currenttab=='t8'"  *ngIf="indicador.codigo && (indicador.ultima_atualizacao)">
                 <a (click)="currenttab = 't8'">Gráfico</a>
               </li>
             </ul>
@@ -631,28 +631,30 @@
                                 [closeOnClickOutside]="true">
                    De acordo com o tipo query a ser executada, nome da ETL, nome do processo para importação, ou SQL a ser executado.
                   </popover-content>
-                  <legend *ngIf="indicador.tipo_consulta!=0">&nbsp;&nbsp;{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }} <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i>
+                  <legend *ngIf="indicador.tipo_consulta==1 || indicador.tipo_consulta==2">&nbsp;&nbsp;{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }} <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i>
                   </legend>
                   <!-- Formula -->
-                  <div class="row"  *ngIf="indicador.tipo_consulta!=0">
+                  <div class="row"  *ngIf="indicador.tipo_consulta==1 || indicador.tipo_consulta==2">
                        <div class="col-md-10" >
                         <textarea id="referencia_consulta" name="referencia_consulta" style="width:90%" rows='5' [ngModel]="indicador.referencia_consulta"></textarea>
                        </div>
                   </div>
                   <br/><br/>
                   <!-- Fim da Formula -->
-                  <popover-content #procedimento
-                                  title="Procedimento Operacional"
-                                  [closeOnClickOutside]="true">
-                     Procedimento a ser seguido para extração dos dados.
-                  </popover-content>
-                  <legend>Procedimento Extração dos Dados <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="procedimento"></i>
-                    <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editProcedimentoOperacional(true)" *ngIf="!isEditProcedimentoOperacional"><i class="fa fa-edit"></i> Edita</a>
-                    <a (click)="(null)" class="btn btn-success btn-xs" (click)="editProcedimentoOperacional(false)" *ngIf="isEditProcedimentoOperacional"><i class="fa fa-save"></i> Grava</a>
-                  </legend>
-                  <!-- Procedimento extracao -->
-                  <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
-                  <!-- Fim do Procedimento de extracao -->
+                  <div *ngIf="indicador.tipo_consulta==4">
+                      <popover-content #procedimento
+                                      title="Procedimento Operacional"
+                                      [closeOnClickOutside]="true">
+                         Procedimento a ser seguido para extração dos dados.
+                      </popover-content>
+                      <legend>Procedimento Extração dos Dados <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="procedimento"></i>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" (click)="editProcedimentoOperacional(true)" *ngIf="!isEditProcedimentoOperacional"><i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" (click)="editProcedimentoOperacional(false)" *ngIf="isEditProcedimentoOperacional"><i class="fa fa-save"></i> Grava</a>
+                      </legend>
+                      <!-- Procedimento extracao -->
+                      <span class="procedimento_operacional" [innerHTML]="indicador.procedimento_operacional||msg_padrao"></span>
+                      <!-- Fim do Procedimento de extracao -->
+                  </div>
                   <div class="row">
                     <div class="form-actions">
                       <div class="row">
@@ -715,7 +717,7 @@
                         ykeys: [indicador.codigo.toLowerCase()],
                         labels: [indicador.codigo],
                         barColors: barColorsDemo
-                    }" *ngIf="indicador.ultima_atualizacao && indicador.granularidade>2 && (indicador.criterio_agregacao!=0 || indicador.granularidade == 3)"></grafico>
+                    }" *ngIf="isIndicadorTemGrafico()"></grafico>
                 </fieldset>
               </tab>
             </tabset>
