@@ -10,4 +10,7 @@ export class TagCategoriaService extends REST {
   getAll(){
     return this.get('/tag-categoria');
   }
+  apaga(codigo:string){
+    return super.delete(`/tag-categoria/${codigo}`);
+  }
 }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
 import { IndicadorService, UtilService } from '../../services/index';
-import {WindowRef} from './WindowRef';
+import {WindowRef} from '../WindowRef';
 import { environment } from '../../../environments/environment';
 
 @FadeInTop()

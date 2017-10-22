@@ -1,0 +1,101 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="breadcrumb" icon="pencil-square-o" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+
+  <sa-widget [colorbutton]="false" [editbutton]="false" [fullscreenbutton]="false" [custombutton]="false"
+             [sortable]="false">
+    <!-- widget options:
+    usage: <sa-widget [editbutton]="false">
+
+    [colorbutton]="false"
+    [editbutton]="false"
+    [togglebutton]="false"
+    [deletebutton]="false"
+    [fullscreenbutton]="false"
+    [custombutton]="false"
+    [collapsed]="true"
+    [sortable]="false"
+
+    -->
+    <header>
+      <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+      <h2>{{ titulo }} </h2>
+    </header>
+
+    <!-- widget div-->
+    <div>
+
+      <!-- widget content -->
+      <div class="widget-body no-padding">
+
+        <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
+          novalidate="novalidate" saBootstrapValidator
+          class="form-horizontal"
+          data-bv-message="O valor é inválido"
+          data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+          data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+          <fieldset style="margin: 15px">
+              <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
+              <div class="form-group" >
+                <input type="hidden" name="codigo" id="codigo" [ngModel]="novacategoria.codigo">
+                <div *ngIf="!novacategoria.codigo">
+                  <popover-content #codigo
+                     title="Código"
+                     [closeOnClickOutside]="true">
+                          Identificação do indicador em forma de código (dado pelo usuário). Até 8 caracteres.
+                  </popover-content>
+                  <label class="col-md-2 control-label">Código
+                    <i class="fa fa-question-circle codigo" popoverPlacement="right" popoverOnHover="true" [popover]="codigo"></i>
+                  </label>
+                  <div class="col-md-2">
+                    <input id="codigo_edit" class="form-control"
+                      placeholder="Código" type="text" maxlength="10" [ngModel]="novacategoria.codigo" name="codigo_edit" #codigoedit
+                      (input)="codigoedit.value=$event.target.value.toUpperCase().replace(' ','')"
+                      data-bv-notempty="true"
+                      data-bv-notempty-message="O código da categoria de análise é obrigatória" maxlength="10">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" >
+                <div>
+                  <popover-content #descricao
+                     title="Descrição"
+                     [closeOnClickOutside]="true">
+                          Descrição da categoria de análise. É necessário que se tenha um título com o mínimo possível de tamanho já que ele será utilizado em títulos de gráficos, planilhas e afins. Limite de 50 caracteres.
+                  </popover-content>
+                  <label class="col-md-2 control-label">Descrição
+                    <i class="fa fa-question-circle descricao" popoverPlacement="right" popoverOnHover="true" [popover]="descricao"></i>
+                  </label>
+                  <div class="col-md-5">
+                    <input id="titulo" class="form-control"
+                      placeholder="Descrição da categoria de análise" type="text" [ngModel]="novacategoria.descricao" name="descricao" required maxlength="200">
+                  </div>
+                </div>
+              </div>
+          </fieldset>
+          <fieldset style="margin: 15px">
+              <legend>&nbsp;&nbsp;Subcategorias</legend>
+
+          </fieldset>
+          <div class="form-actions">
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-default" type='button' (click)="newCategoriaAnalise(f)">
+                  <i class="fa fa-plus"></i>Novo
+                </button>
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa fa-save"></i>Grava
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- end widget content -->
+
+    </div>
+    <!-- end widget div -->
+  </sa-widget>

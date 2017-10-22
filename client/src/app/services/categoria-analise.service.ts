@@ -10,4 +10,8 @@ export class CategoriaAnaliseService extends REST {
   getAll(){
     return this.get('/categoria-analise');
   }
+
+  apaga(codigo:string){
+    return super.delete(`/categoria-analise/${codigo}`);
+  }
 }
