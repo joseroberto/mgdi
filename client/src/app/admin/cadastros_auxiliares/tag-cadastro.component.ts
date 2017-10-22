@@ -11,15 +11,15 @@ import { TagCategoria } from '../../model/tag-categoria';
 })
 export class TagCadastroComponent implements OnInit, OnDestroy{
     private sub: any;
-    private tituloForm = 'Marcadores';
-    private titulo = 'Novo Marcador';
+    private tituloForm = 'Grupo de Marcadores';
+    private titulo = 'Novo Grupo de Marcador';
     private codigo:number = 0;
     private breadcrumb = [];
     private novatagcategoria:TagCategoria;
 
     constructor(private route: ActivatedRoute,
           private router: Router){
-            this.breadcrumb = ['Marcador', 'Novo'];
+            this.breadcrumb = ['Grupo de Marcador', 'Novo'];
             this.novatagcategoria = new TagCategoria();
           }
 

@@ -77,8 +77,42 @@
               </div>
           </fieldset>
           <fieldset style="margin: 15px">
-              <legend>&nbsp;&nbsp;Subcategorias</legend>
-
+              <legend>&nbsp;&nbsp;Itens</legend>
+              <div class="form-group">
+                <label class="col-md-2 control-label">Item Descrição</label>
+                <div class="col-md-8">
+                  <div class="input-group">
+                  <input class="form-control"
+                  placeholder="Item da categoria de análise"
+                  type="text" id="item">
+                  <div class="input-group-btn">
+                  <button class="btn btn-primary" type="button" (click)="adicionaItemCategoriaAnalise()">
+                    <i class="fa fa-plus"></i>Adiciona Item
+                  </button>
+                  </div>
+                  </div>
+                  <p class="note"><strong>Nota:</strong> discrimine os itens da categoria de análise.</p>
+                </div>
+              </div>
+              <div class="table-responsive col-md-10">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th>Itens da categoria de análise</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let itemCat of novacategoria.Itens">
+                    <td>{{ itemCat.titulo }}</td>
+                    <td> <a class="btn btn-danger btn-sm icon white"
+                          (click)="apagaItemCategoriaAnalise(itemCat.codigo)"
+                          href="javascript:void(0);"><i class="fa fa-times "></i></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
           </fieldset>
           <div class="form-actions">
             <div class="row">
