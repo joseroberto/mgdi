@@ -1,4 +1,6 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var Tag = sequelize.define('Tag', {
@@ -33,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
             otherKey: 'co_seq_indicador' });
         }
     },
-    schema: 'dbesusgestor',
+    schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_tag'

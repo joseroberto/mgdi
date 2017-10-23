@@ -15,7 +15,7 @@ const config = {
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
-
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 const pool = new pg.Pool(config);
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack);
@@ -324,27 +324,27 @@ function montaQueryComplemento(indicadores, config){
       case 'RG':
         // Testar o parametro
         select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
-        from += `${config_param.schema_esusgestor}.tb_municipio mun
-                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        from += `${schema}.tb_municipio mun
+                      inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
         groupby += `reg.ds_regiao, reg.co_regiao,`;
         orderby += `reg.ds_regiao,`;
         break;
       case 'UF':
         // Testar o parametro
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo,`;
-        from += `${config_param.schema_esusgestor}.tb_municipio mun
-                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        from += `${schema}.tb_municipio mun
+                      inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
         groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
         orderby += `uf.no_uf, reg.ds_regiao,`;
         break;
       case 'MN':
         // Testar o parametro
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
-        from += `${config_param.schema_esusgestor}.tb_municipio mun
-                      inner join ${config_param.schema_esusgestor}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${config_param.schema_esusgestor}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+        from += `${schema}.tb_municipio mun
+                      inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
         groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
@@ -522,7 +522,7 @@ function montaQueryValorIndicador(codigo, indicador, config){
     sql_group = sql_group.substr(0,sql_group.length - 1);
   }
 
-  return `${sql_select} from ${config_param.schema_esusgestor}.${config_param.tabela_indicadores}
+  return `${sql_select} from ${schema}.${config_param.tabela_indicadores}
   where co_seq_indicador=${indicador.id} ${sql_group}`;
 
 }

@@ -282,6 +282,100 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma nova categoria de analise
+      summary: Cria uma nova categoria de análise
+      operationId: createCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: categoria_analise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/IndicadorAtualizacao'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
+  /api/categoria-analise/{codigo}:
+    x-swagger-router-controller: categoria-analise
+    get:
+      description: Retorna as categorias de análises possíveis
+      summary: Recupera uma categoria de análise
+      operationId: getCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma categoria de análise
+      summary: Apaga um registro de categoria de análise
+      operationId: apagaCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Atualiza as informações de uma categoria de análise
+      summary: Atualiza as informações de uma categoria de análise
+      operationId: editaCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: categoria_analise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/IndicadorAtualizacao'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /api/indicador/{codigos}/resultset:
     x-swagger-router-controller: resultset
     get:

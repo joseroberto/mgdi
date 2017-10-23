@@ -1,4 +1,6 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var Unidade = sequelize.define('Unidade', {
@@ -68,7 +70,7 @@ module.exports = function(sequelize, DataTypes) {
       throughForeignKey:'co_unidade_superior',
       throughKey: 'co_unidade'
     },
-    schema: 'dbesusgestor',
+    schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_unidade'
