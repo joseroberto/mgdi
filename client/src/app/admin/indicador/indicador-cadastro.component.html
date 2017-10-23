@@ -709,10 +709,11 @@
               </tab>
               <tab [active]="currenttab == 't8'">
                 <fieldset style="padding: 15px">
-                      <grafico #graph (onInit)="loadData(indicador.codigo, 'MN', this.graph)"
+                      <grafico #graph (onInit)="loadData(indicador.codigo, indicador.Granularidade.sigla, this.graph)"
                      type="bar"
                      [options]="{
-                        xkey: 'local',
+                        xkey: getLabel(),
+                        xLabelAngle: 45,
                         resize: true,
                         ykeys: [indicador.codigo.toLowerCase()],
                         labels: [indicador.codigo],

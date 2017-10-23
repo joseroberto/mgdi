@@ -58,7 +58,7 @@ export class ResultsetComponent implements OnChanges, OnInit {
     }
 
     loadData(){
-      if(this.codigo){
+      if(this.codigo && this.tipo){
         this.consulta.search(this.codigo,null,this.tipo, 'TAB').then((resp)=>{
             console.log('Resultset',resp);
             if(this.enable){
