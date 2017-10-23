@@ -81,7 +81,7 @@
                           </thead>
                           <tbody>
                           <tr *ngFor="let itemCat of novatagcategoria.Tags">
-                            <td>{{ itemCat.titulo }}</td>
+                            <td>{{ itemCat.descricao }}</td>
                             <td> <a class="btn btn-danger btn-sm icon white"
                                   (click)="apagaItemCategoriaAnalise(itemCat.codigo)"
                                   href="javascript:void(0);"><i class="fa fa-times "></i></a>
@@ -95,7 +95,7 @@
                   <div class="form-actions">
                     <div class="row">
                       <div class="col-md-12">
-                        <button class="btn btn-default" type='button' (click)="newGrupoMarcador(f)">
+                        <button class="btn btn-default" type='button' (click)="newCategoriaTag(f)">
                           <i class="fa fa-plus"></i>Novo
                         </button>
                         <button class="btn btn-primary" type="submit">

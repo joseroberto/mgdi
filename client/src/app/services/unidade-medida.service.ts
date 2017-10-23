@@ -10,7 +10,9 @@ export class UnidadeMedidaService extends REST {
   getAll(){
     return this.get('/unidade-medida');
   }
-
+  getItem(codigo:number){
+    return super.get(`/unidade-medida/${codigo}`);
+  }
   apaga(codigo:number){
     return super.delete(`/unidade-medida/${codigo}`);
   }

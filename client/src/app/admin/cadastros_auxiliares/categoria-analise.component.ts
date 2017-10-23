@@ -46,7 +46,6 @@ export class CategoriaAnaliseComponent {
     this.tabelaCategorias.clear();
     this.categoriaAnaliseService.getAll().subscribe((resp)=>{
       resp.categorias_analise.forEach(item=>{
-        console.log(item);
         this.tabelaCategorias.addRow(item);
       });
       this.tabelaCategorias.draw();

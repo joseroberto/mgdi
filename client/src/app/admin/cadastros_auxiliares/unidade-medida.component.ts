@@ -103,4 +103,6 @@ export class UnidadeMedidaComponent {
             this.util.msgErro(resp.mensagem);
         }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
     }
+
+
 }

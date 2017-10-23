@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { UnidadeMedida } from '../../model/unidade-medida';
+import { UnidadeMedidaService, UtilService } from '../../services/index';
 
 @FadeInTop()
 @Component({
@@ -19,7 +20,9 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
 
 
     constructor(private route: ActivatedRoute,
-          private router: Router){
+          private router: Router,
+          private unidadeMedidaService:UnidadeMedidaService,
+          private util: UtilService){
             this.breadcrumb = ['Unidade de Medida', 'Nova'];
             this.novaunidademedida = new UnidadeMedida();
           }
@@ -28,10 +31,7 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
         this.sub = this.route.params.subscribe(params => {
             this.codigo = params['codigo'];
             console.log('Codigo unidade de medida em edicao:', this.codigo);
-            if(this.codigo){
-              this.titulo = 'Atualiza Unidade de Medida';
-              this.breadcrumb = ['Unidade de Medida', 'Teste'];
-            }
+            this.loadUnidadeMedida();
         });
     }
 
@@ -39,5 +39,23 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
       this.sub.unsubscribe();
     }
 
+    private newUnidadeMedida(form){
+      if(!form.pristine){
+        this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+      }else{
+        this.router.navigateByUrl('/admin/unidade-medida');
+      }
+    }
+
+    private loadUnidadeMedida(){
+        if(this.codigo){
+          this.unidadeMedidaService.getItem(this.codigo).subscribe(resp=>{
+              this.novaunidademedida = Object.assign(new UnidadeMedida(), resp);
+              console.log('Registro em edicao:', this.novaunidademedida);
+              this.titulo = 'Atualiza ' + this.novaunidademedida.codigo;
+              this.breadcrumb = ['Categoria de Análise', this.novaunidademedida.codigo];
+            }, (err)=> this.util.msgErroInfra(err));
+        }
+    }
 
 }

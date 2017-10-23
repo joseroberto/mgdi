@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { TagCategoria } from '../../model/tag-categoria';
+import { UtilService, TagCategoriaService } from '../../services/index';
 
 @FadeInTop()
 @Component({
@@ -18,7 +19,9 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     private novatagcategoria:TagCategoria;
 
     constructor(private route: ActivatedRoute,
-          private router: Router){
+          private router: Router,
+          private tagCategoriaService:TagCategoriaService,
+          private util:UtilService){
             this.breadcrumb = ['Grupo de Marcador', 'Novo'];
             this.novatagcategoria = new TagCategoria();
           }
@@ -27,10 +30,7 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
         this.sub = this.route.params.subscribe(params => {
             this.codigo = params['codigo'];
             console.log('Codigo marcador em edicao:', this.codigo);
-            if(this.codigo){
-              this.titulo = 'Atualiza Marcador';
-              this.breadcrumb = ['Categoria de Análise', 'Teste'];
-            }
+            this.loadCategoriaTag();
         });
     }
 
@@ -38,5 +38,23 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
       this.sub.unsubscribe();
     }
 
+    private newCategoriaTag(form){
+      if(!form.pristine){
+        this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+      }else{
+        this.router.navigateByUrl('/admin/tag');
+      }
+    }
+
+    private loadCategoriaTag(){
+        if(this.codigo){
+          this.tagCategoriaService.getItem(this.codigo).subscribe(resp=>{
+              this.novatagcategoria = Object.assign(new TagCategoria(), resp);
+              console.log('Registro em edicao:', this.novatagcategoria);
+              this.titulo = 'Atualiza ' + this.novatagcategoria.codigo;
+              this.breadcrumb = ['Categoria de Análise', this.novatagcategoria.codigo];
+            }, (err)=> this.util.msgErroInfra(err));
+        }
+    }
 
 }
