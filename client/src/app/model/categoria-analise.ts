@@ -1,5 +1,8 @@
 export class CategoriaAnalise{
   codigo: string;
   descricao: string;
-  Itens: any[];
+  Itens: Object[];
+  constructor(){
+    this.Itens = [];
+  }
 }

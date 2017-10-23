@@ -4,6 +4,8 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { TagCategoria } from '../../model/tag-categoria';
 import { UtilService, TagCategoriaService } from '../../services/index';
 
+declare var $: any;
+
 @FadeInTop()
 @Component({
   selector: 'sa-form-elements',
@@ -57,4 +59,13 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
         }
     }
 
+    private adicionaMarcador(){
+      let valorSelecionado = $('#item').val();
+      if(valorSelecionado){
+        this.novatagcategoria.Tags.push({codigo:0, descricao: valorSelecionado});
+        $('#item').val('');
+      }else{
+        this.util.msgErro('Marcador não pode ser vazio');
+      }
+    }
 }

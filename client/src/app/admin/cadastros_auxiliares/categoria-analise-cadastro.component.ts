@@ -4,6 +4,8 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { CategoriaAnalise } from '../../model/index';
 import { UtilService, CategoriaAnaliseService } from '../../services/index';
 
+declare var $: any;
+
 @FadeInTop()
 @Component({
   selector: 'sa-form-elements',
@@ -56,5 +58,15 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
               this.breadcrumb = ['Categoria de Análise', this.novacategoria.codigo];
             }, (err)=> this.util.msgErroInfra(err));
         }
+    }
+
+    private adicionaItemCategoriaAnalise(){
+      let valorSelecionado = $('#item').val();
+      if(valorSelecionado){
+        this.novacategoria.Itens.push({codigo:0, descricao: valorSelecionado});
+        $('#item').val('');
+      }else{
+        this.util.msgErro('Item de um categoria de análise não pode ser vazio');
+      }
     }
 }

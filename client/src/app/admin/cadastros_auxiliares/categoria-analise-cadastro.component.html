@@ -82,8 +82,8 @@
                 <label class="col-md-2 control-label">Item Descrição</label>
                 <div class="col-md-8">
                   <div class="input-group">
-                  <input class="form-control"
-                  placeholder="Item da categoria de análise"
+                  <input class="form-control" name="item"
+                  placeholder="Item da categoria de análise" #item
                   type="text" id="item">
                   <div class="input-group-btn">
                   <button class="btn btn-primary" type="button" (click)="adicionaItemCategoriaAnalise()">
@@ -98,15 +98,21 @@
                 <table class="table table-hover">
                   <thead>
                   <tr>
+                    <td>#</td>
                     <th>Itens da categoria de análise</th>
                     <th>&nbsp;</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let itemCat of novacategoria.Itens">
+                  <tr *ngFor="let itemCat of novacategoria.Itens; let i=index">
+                    <td>{{ i+1 }}</td>
                     <td>{{ itemCat.descricao }}</td>
-                    <td> <a class="btn btn-danger btn-sm icon white"
-                          (click)="apagaItemCategoriaAnalise(itemCat.codigo)"
+                    <td>
+                      <a class="btn btn-primary btn-sm icon white"
+                        (click)="editItemCategoriaAnalise(i, itemCat.codigo)"
+                        href="javascript:void(0);" title="Alterar"><i class="fa fa-pencil "></i></a>
+                      <a class="btn btn-danger btn-sm icon white"
+                          (click)="apagaItemCategoriaAnalise(i, itemCat.codigo)"
                           href="javascript:void(0);" title="Apaga item"><i class="fa fa-times "></i></a>
                     </td>
                   </tr>
