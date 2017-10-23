@@ -16,4 +16,11 @@ export class TagCategoriaService extends REST {
   apaga(codigo:string){
     return super.delete(`/tag-categoria/${codigo}`);
   }
+  create(tagcategoria:any){
+    console.log('Gravando...', tagcategoria);
+    return super.post('/tag-categoria', tagcategoria);
+  }
+  update(tagcategoria:any){
+    return super.post(`/tag-categoria/${tagcategoria.codigo}`, tagcategoria);
+  }
 }

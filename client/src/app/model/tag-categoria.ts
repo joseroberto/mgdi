@@ -1,5 +1,5 @@
 export class TagCategoria{
-  codigo: number;
+  codigo: number=0;
   descricao: string;
   Tags: any[];
   constructor(){

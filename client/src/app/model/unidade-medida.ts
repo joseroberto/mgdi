@@ -1,4 +1,4 @@
 export class UnidadeMedida{
-  codigo: number;
+  codigo: number=0;
   descricao: string;
 }

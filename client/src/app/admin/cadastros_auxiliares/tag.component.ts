@@ -108,4 +108,6 @@ export class TagComponent {
             this.util.msgErro(resp.mensagem);
         }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
     }
+
+    
 }

@@ -69,4 +69,28 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
         this.util.msgErro('Item de um categoria de análise não pode ser vazio');
       }
     }
+
+    private onSubmit(form){
+      console.log('onsubmit', form.value);
+      this.novacategoria = Object.assign(this.novacategoria, form.value);
+      if(this.novacategoria.codigo){
+        this.categoriaAnaliseService.update(this.novacategoria).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucessoEdicao(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
+      }else{
+        this.novacategoria['codigo'] = form.value.codigo_edit.toUpperCase();
+        this.categoriaAnaliseService.create(this.novacategoria).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+            this.router.navigateByUrl('/admin/categoria-analise/'+ this.novacategoria.codigo);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, (err)=>this.util.msgErroInfra(err));
+      }
+    }
 }

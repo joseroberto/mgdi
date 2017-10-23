@@ -16,4 +16,11 @@ export class CategoriaAnaliseService extends REST {
   apaga(codigo:string){
     return super.delete(`/categoria-analise/${codigo}`);
   }
+  create(categoria:any){
+    console.log('Gravando...', categoria);
+    return super.post('/categoria-analise', categoria);
+  }
+  update(categoria:any){
+    return super.post(`/categoria-analise/${categoria.codigo}`, categoria);
+  }
 }

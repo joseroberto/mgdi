@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.1.0"
+  version: "0.1.1"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -174,7 +174,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/IndicadorAtualizacao'
+            $ref: '#/definitions/UnidadeMedida'
       responses:
         "200":
           description: Sucesso
@@ -359,11 +359,11 @@ paths:
       tags:
         - Cadastros Auxiliares
       parameters:
-        - name: categoria_analise
+        - name: body
           in: body
           required: true
           schema:
-            $ref: '#/definitions/IndicadorAtualizacao'
+            $ref: '#/definitions/TagCategoria'
       responses:
         "200":
           description: Sucesso
@@ -451,7 +451,7 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/GetCategoriaAnaliseListResponse"
+            $ref: "#/definitions/CategoriaAnalise"
         default:
           description: Error
           schema:
@@ -467,7 +467,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/IndicadorAtualizacao'
+            $ref: '#/definitions/CategoriaAnalise'
       responses:
         "200":
           description: Sucesso
@@ -477,7 +477,7 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-    
+
   /api/categoria-analise/{codigo}:
     x-swagger-router-controller: categoria-analise
     get:
@@ -1700,21 +1700,6 @@ definitions:
         type: string
       title:
         type: string
-  GetCategoriaAnaliseListResponse:
-    required:
-      - categorias_analise
-    properties:
-      categorias_analise:
-        type: array
-        items:
-          type: object
-          properties:
-            codigo:
-              type: string
-            titulo:
-              type: string
-            referencia:
-              type: string
   GetTagCategoriaListResponse:
     required:
       - tag_categorias
@@ -1834,6 +1819,47 @@ definitions:
               type: number
             descricao:
               type: string
+  TagCategoria:
+    description: Objeto categoria de marcadores
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código da categoria de tags
+      descricao:
+        type: string
+        description: Descrição da categoria de tags
+      Tags:
+        type: array
+        items:
+          type: object
+  CategoriaAnalise:
+    description: Objeto categoria de análise
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: mnemonico da categoria de análise
+      titulo:
+        type: string
+        description: Titulo da categoria de análise
+      referencia:
+        type: string
+        description: Referencia da categoria de analise
+      Itens:
+        type: array
+        items:
+          type: object
+  UnidadeMedida:
+    description: Objeto unidade de medida
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código da categoria de tags
+      descricao:
+        type: string
+        description: Descrição da categoria de tags
   GetIndicadorConsulta:
     required:
       - count

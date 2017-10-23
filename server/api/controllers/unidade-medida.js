@@ -16,7 +16,7 @@ module.exports = {
     });
   },
   createUnidadeMedida: (req,res)=>{
-    models.UnidadeMedida.create(req.body).then((indicador)=> {
+    models.UnidadeMedida.create(req.body).then((unidade_medida)=> {
       res.json({codret: 0, mensagem: "Unidade de Medida cadastrada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
@@ -29,8 +29,8 @@ module.exports = {
     });
   },
   apagaUnidadeMedida: (req,res)=>{
-    models.UnidadeMedida.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
-
+    models.UnidadeMedida.destroy({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
+      res.json({codret: 0, mensagem: "Unidade de Medida apagada com sucesso"});
     });
   }
 }

@@ -16,4 +16,11 @@ export class UnidadeMedidaService extends REST {
   apaga(codigo:number){
     return super.delete(`/unidade-medida/${codigo}`);
   }
+  create(unidademedida:any){
+    console.log('Gravando...', unidademedida);
+    return super.post('/unidade-medida', unidademedida);
+  }
+  update(unidademedida:any){
+    return super.post(`/unidade-medida/${unidademedida.codigo}`, unidademedida);
+  }
 }

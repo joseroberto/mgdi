@@ -68,4 +68,27 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
         this.util.msgErro('Marcador não pode ser vazio');
       }
     }
+
+    private onSubmit(form){
+      console.log('onsubmit', form.value);
+      this.novatagcategoria = Object.assign(this.novatagcategoria, form.value);
+      if(this.novatagcategoria.codigo){
+        this.tagCategoriaService.update(this.novatagcategoria).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucessoEdicao(resp.mensagem);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, err=>this.util.msgErroInfra(err));
+      }else{
+        this.tagCategoriaService.create(this.novatagcategoria).subscribe(resp=>{
+          if(resp.codret==0){
+            this.util.msgSucesso(resp.mensagem);
+            this.router.navigateByUrl('/admin/tag/'+ this.novatagcategoria.codigo);
+          }else{
+            this.util.msgErro(resp.mensagem);
+          }
+        }, (err)=>this.util.msgErroInfra(err));
+      }
+    }
 }

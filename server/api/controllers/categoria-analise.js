@@ -19,9 +19,9 @@ module.exports = {
     });
   },
   createCategoriaAnalise: (req,res)=>{
-    models.CategoriaAnalise.create(req.body).then((indicador)=> {
-      if(req.body.tags)
-        indicador.setTags(req.body.tags);
+    models.CategoriaAnalise.create(req.body).then((categoria)=> {
+      if(req.body.Itens)
+        categoria.setItens(req.body.Itens);
       res.json({codret: 0, mensagem: "Categoria de Análise cadastrada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
@@ -34,8 +34,10 @@ module.exports = {
     });
   },
   apagaCategoriaAnalise: (req,res)=>{
-    models.CategoriaAnalise.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
-
+    models.CategoriaAnalise.destroy({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
+      res.json({codret: 0, mensagem: "Categoria de Análise apagada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
     });
   }
 }
