@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { CategoriaAnalise } from '../../model/index';
+import {ModalDirective} from "ngx-bootstrap";
 import { UtilService, CategoriaAnaliseService } from '../../services/index';
 
 declare var $: any;
@@ -19,6 +20,10 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     private codigo:string = '';
     private breadcrumb = [];
     private novacategoria:CategoriaAnalise;
+    private tituloModal:string = '';
+    private editCategoriaAnalise:any = {codigo:0, titulo:''};
+
+    @ViewChild('categoriaAnaliseModal') private categoriaAnaliseModal:ModalDirective;
 
     constructor(private route: ActivatedRoute,
           private router: Router,
@@ -71,9 +76,8 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      console.log('onsubmit', form.value);
-      this.novacategoria = Object.assign(this.novacategoria, form.value);
       if(this.novacategoria.codigo){
+        console.log('Reg a atualizar', this.novacategoria);
         this.categoriaAnaliseService.update(this.novacategoria).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
@@ -95,9 +99,19 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private apagaItemCategoriaAnalise(i){
-      if(this.novacategoria.Itens[i]['codigo']>0){
-        //TODO: Apaga na base de dados
-      }
-      this.novacategoria.Itens.splice(i,1);
+      //this.novacategoria.Itens.splice(i,1);
+      this.novacategoria.Itens[i]['deleted'] = 1;
+    }
+
+    private editItemCategoriaAnalise(i){
+      console.log('Edita', this.novacategoria.Itens[i]);
+      this.editCategoriaAnalise = Object.assign({}, this.novacategoria.Itens[i], {indice: i});
+      this.tituloModal = `Atualizando ${this.editCategoriaAnalise.codigo} - ${this.editCategoriaAnalise.descricao}`;
+      this.categoriaAnaliseModal.show();
+    }
+
+    private atualizaItemCategoriaAnalise(){
+      this.novacategoria.Itens[this.editCategoriaAnalise.indice] = Object.assign({}, this.editCategoriaAnalise);
+      this.categoriaAnaliseModal.hide();
     }
 }

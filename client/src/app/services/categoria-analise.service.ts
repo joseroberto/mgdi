@@ -21,6 +21,6 @@ export class CategoriaAnaliseService extends REST {
     return super.post('/categoria-analise', categoria);
   }
   update(categoria:any){
-    return super.post(`/categoria-analise/${categoria.codigo}`, categoria);
+    return super.put(`/categoria-analise/${categoria.codigo}`, categoria);
   }
 }

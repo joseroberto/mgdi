@@ -71,7 +71,7 @@
                   </label>
                   <div class="col-md-5">
                     <input id="titulo" class="form-control"
-                      placeholder="Título da categoria de análise" type="text" [ngModel]="novacategoria.titulo" name="titulo" required maxlength="255">
+                      placeholder="Título da categoria de análise" type="text" [(ngModel)]="novacategoria.titulo" name="titulo" required maxlength="255">
                   </div>
                 </div>
               </div>
@@ -105,16 +105,18 @@
                   </thead>
                   <tbody>
                   <tr *ngFor="let itemCat of novacategoria.Itens; let i=index">
-                    <td>{{ i+1 }}</td>
-                    <td>{{ itemCat.descricao }}</td>
-                    <td>
-                      <a class="btn btn-primary btn-sm icon white"
-                        (click)="editItemCategoriaAnalise(i)"
-                        href="javascript:void(0);" title="Alterar"><i class="fa fa-pencil "></i></a>
-                      <a class="btn btn-danger btn-sm icon white"
-                          (click)="apagaItemCategoriaAnalise(i)"
-                          href="javascript:void(0);" title="Apaga item"><i class="fa fa-times "></i></a>
-                    </td>
+                    <ng-template [ngIf]="itemCat && !itemCat.deleted">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ itemCat.descricao }}</td>
+                        <td>
+                          <a class="btn btn-primary btn-sm icon white"
+                            (click)="editItemCategoriaAnalise(i)"
+                            href="javascript:void(0);" title="Alterar"><i class="fa fa-pencil "></i></a>
+                          <a class="btn btn-danger btn-sm icon white"
+                              (click)="apagaItemCategoriaAnalise(i)"
+                              href="javascript:void(0);" title="Apaga item"><i class="fa fa-times "></i></a>
+                        </td>
+                    </ng-template>
                   </tr>
                   </tbody>
                 </table>
@@ -139,3 +141,36 @@
     </div>
     <!-- end widget div -->
   </sa-widget>
+
+  <div bsModal #categoriaAnaliseModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form #f="ngForm" >
+        <div class="modal-header">
+          <button type="button" class="close" (click)="categoriaAnaliseModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">{{ tituloModal }}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <input name="titulo" id="descricao" type="text" class="form-control" [(ngModel)]="editCategoriaAnalise.descricao" placeholder="Descrição do Item da Categoria de Análise" maxlength="100" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="categoriaAnaliseModal.hide()">
+            <i class="fa fa-ban"></i> Fecha
+          </button>
+          <button type="butten" class="btn btn-primary" (click)="atualizaItemCategoriaAnalise()">
+            <i class="fa fa-save"></i> Grava
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>

@@ -39,9 +39,34 @@ module.exports = {
     });
   },
   editaTagCategoria: (req,res)=>{
-    //console.log(req.body);
+    console.log('editaTagCategoria', req.body);
     models.TagCategoria.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-
+      if(req.body.Tags){
+          var promises = [];
+          req.body.Tags.forEach((item)=>{
+            item['CategoriaCodigo'] = req.swagger.params.codigo.value;
+            if(item.codigo!=0){
+              if(item.deleted){
+                promises.push(models.Tag.destroy({ where: { codigo: item.codigo }}));
+              }else{
+                promises.push(models.Tag.update(item, { where: { codigo: item.codigo }}));
+              }
+            }else{
+              promises.push(models.Tag.create(item));
+            }
+          });
+          Promise.all(promises).then(result=>{
+              res.json({codret: 0, mensagem: "Grupo de marcadores e suas tags atualizadas com sucesso"});
+          }).catch(err=>{
+            console.log('Erro', err);
+            res.status(503).json(err);
+          })
+      }else{
+        res.json({codret: 0, mensagem: "Grupo de marcadores atualizado com sucesso"});
+      }
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(503).json(err);
     });
   },
   apagaTagCategoria: (req,res)=>{

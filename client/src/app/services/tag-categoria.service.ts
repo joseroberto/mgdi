@@ -21,6 +21,6 @@ export class TagCategoriaService extends REST {
     return super.post('/tag-categoria', tagcategoria);
   }
   update(tagcategoria:any){
-    return super.post(`/tag-categoria/${tagcategoria.codigo}`, tagcategoria);
+    return super.put(`/tag-categoria/${tagcategoria.codigo}`, tagcategoria);
   }
 }

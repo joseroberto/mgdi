@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     codigo: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'co_seq_categoria_analise_item'
     },

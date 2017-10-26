@@ -1,12 +1,14 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import {WindowRef} from '../WindowRef';
 import { Router } from '@angular/router';
+import {ModalDirective} from "ngx-bootstrap";
 import { CategoriaAnaliseService, UtilService } from '../../services/index';
 
 @Component({
   templateUrl: 'categoria-analise.component.html',
 })
 export class CategoriaAnaliseComponent {
+
   public options = {
   "iDisplayLength": 15,
   "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
