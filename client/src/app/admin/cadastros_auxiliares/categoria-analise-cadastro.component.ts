@@ -93,4 +93,11 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
         }, (err)=>this.util.msgErroInfra(err));
       }
     }
+
+    private apagaItemCategoriaAnalise(i){
+      if(this.novacategoria.Itens[i]['codigo']>0){
+        //TODO: Apaga na base de dados
+      }
+      this.novacategoria.Itens.splice(i,1);
+    }
 }

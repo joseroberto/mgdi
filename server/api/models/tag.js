@@ -7,13 +7,9 @@ module.exports = function(sequelize, DataTypes) {
     codigo: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'co_tag'
-    },
-    categoria: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'co_tag_categoria'
     },
     descricao: {
         type: DataTypes.STRING(255),
@@ -26,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
           Tag.belongsTo(models.TagCategoria,
             {
               as: 'Categoria',
-              foreignKey: 'co_tag'
+              foreignKey: { field: 'co_tag_categoria', allowNull:false}
             });
           Tag.belongsToMany(models.Indicador, {
             as: 'Indicadores',

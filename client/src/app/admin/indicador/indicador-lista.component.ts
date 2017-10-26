@@ -93,7 +93,7 @@ apagaIndicador(codigo:string){
         this.tabelaIndicadores.deleteRow(codigo);
       }else
         this.util.msgErro(resp.mensagem);
-    }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+    }, err=>{ this.util.msgErroInfra(err._body.message)});
 }
 
 editaIndicador(codigo:string){

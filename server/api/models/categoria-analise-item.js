@@ -16,6 +16,13 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
+      classMethods:{
+        associate:function(models){
+            CategoriaAnaliseItem.belongsTo(models.CategoriaAnalise, {
+              foreignKey: { field: 'co_categoria_analise', allowNull:false}
+            });
+        }
+    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,

@@ -25,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         associate:function(models){
             CategoriaAnalise.hasMany(models.CategoriaAnaliseItem,
               {
+                onDelete: 'cascade',
                 as: 'Itens',
                 foreignKey: 'co_categoria_analise'
               }

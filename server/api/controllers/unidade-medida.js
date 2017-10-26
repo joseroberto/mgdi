@@ -20,17 +20,24 @@ module.exports = {
       res.json({codret: 0, mensagem: "Unidade de Medida cadastrada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
+      res.status(503).json(err);
     });
   },
   editaUnidadeMedida: (req,res)=>{
-    //console.log(req.body);
+    console.log('edita unidade medida', req.body, req.swagger.params.codigo.value);
     models.UnidadeMedida.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-
+      res.json({codret: 0, mensagem: "Unidade de Medida atualizada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(503).json(err);
     });
   },
   apagaUnidadeMedida: (req,res)=>{
     models.UnidadeMedida.destroy({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
       res.json({codret: 0, mensagem: "Unidade de Medida apagada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(503).json(err);
     });
   }
 }

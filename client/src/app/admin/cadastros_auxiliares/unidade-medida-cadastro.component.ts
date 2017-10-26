@@ -59,7 +59,6 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      console.log('onsubmit', form.value);
       this.novaunidademedida = Object.assign(this.novaunidademedida, form.value);
       if(this.novaunidademedida.codigo){
         this.unidadeMedidaService.update(this.novaunidademedida).subscribe(resp=>{

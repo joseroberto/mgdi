@@ -19,12 +19,27 @@ module.exports = {
     });
   },
   createCategoriaAnalise: (req,res)=>{
-    models.CategoriaAnalise.create(req.body).then((categoria)=> {
-      if(req.body.Itens)
-        categoria.setItens(req.body.Itens);
-      res.json({codret: 0, mensagem: "Categoria de Análise cadastrada com sucesso"});
-    }).catch(err=>{
+    models.CategoriaAnalise.create(req.body)
+    .then((categoria)=> {
+      if(req.body.Itens){
+        var promises = [];
+        req.body.Itens.forEach((item)=>{
+          item['CategoriaCodigo'] = categoria.codigo;
+          promises.push(models.CategoriaAnaliseItem.create(item));
+        });
+        Promise.all(promises).then(result=>{
+            res.json({codret: 0, mensagem: "Categoria de Análise e itens cadastrados com sucesso"});
+        }).catch(err=>{
+          console.log('Erro', err);
+          res.status(503).json(err);
+        });
+      }else{
+        res.json({codret: 0, mensagem: "Categoria de Análise cadastrada com sucesso"});
+      }
+    })
+    .catch(err=>{
       console.log('Erro', err);
+      res.status(503).json(err);
     });
   },
   editaCategoriaAnalise: (req,res)=>{
@@ -38,6 +53,12 @@ module.exports = {
       res.json({codret: 0, mensagem: "Categoria de Análise apagada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
+      if('original' in err){
+        console.log('Tratado', {codret: err.original.code, mensagem: err.original.detail});
+        res.status(503).json({codret: err.original.code, mensagem: err.original.detail});
+      }else{
+        res.status(503).json(err);
+      }
     });
   }
 }

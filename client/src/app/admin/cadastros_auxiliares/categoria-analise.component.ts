@@ -104,6 +104,8 @@ export class CategoriaAnaliseComponent {
             this.tabelaCategorias.deleteRow(codigo);
           }else
             this.util.msgErro(resp.mensagem);
-        }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+        }, err=>{
+          console.log('Erro', err);
+          this.util.msgErroInfra("Erro ao apagar Categoria de Análise")});
     }
 }

@@ -59,12 +59,24 @@ export class UtilService {
   }
 
   msgAlerta(mensagem:string, evento:string){
+    /*this.notificationService.smartMessageBox({
+      title: "Smart Alert!",
+        content: "This is a confirmation box. Can be programmed for button callback",
+        buttons: '[Não][Sim]',
+        icon: "fa fa-bell swing animated",
+        color: "#296191"
+    },(teste) =>{
+      console.log('valor kkk:', teste);
+    })*/
+
     this.notificationService.smallBox({
       title: "Ding Dong!",
       content: mensagem + " <p class='text-align-right'><a href-void class='btn btn-primary btn-sm'>Sim</a> <a href-void class='btn btn-danger btn-sm'>Não</a></p>",
       color: "#296191",
       //timeout: 8000,
       icon: "fa fa-bell swing animated"
+    },(teste) =>{
+      console.log('valor kkk:', teste);
     });
   }
 }

@@ -91,4 +91,11 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
         }, (err)=>this.util.msgErroInfra(err));
       }
     }
+
+    private apagaItemTagCategoria(i){
+      if(this.novatagcategoria.Tags[i]['codigo']>0){
+        //TODO: Apaga na base de dados
+      }
+      this.novatagcategoria.Tags.splice(i,1);
+    }
 }

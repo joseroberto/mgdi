@@ -21,6 +21,7 @@ export class UnidadeMedidaService extends REST {
     return super.post('/unidade-medida', unidademedida);
   }
   update(unidademedida:any){
-    return super.post(`/unidade-medida/${unidademedida.codigo}`, unidademedida);
+    console.log('Atualizando...', unidademedida);
+    return super.put(`/unidade-medida/${unidademedida.codigo}`, unidademedida);
   }
 }

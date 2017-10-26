@@ -219,6 +219,11 @@ paths:
           type: number
           in: path
           required: true
+        - name: unidade_medida
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UnidadeMedida'
       responses:
         "200":
           description: Success
@@ -462,6 +467,8 @@ paths:
       operationId: createCategoriaAnalise
       tags:
         - Cadastros Auxiliares
+      security:
+        - Bearer: []
       parameters:
         - name: categoria_analise
           in: body
@@ -499,7 +506,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponseTratado"
     delete:
       description: Apaga uma categoria de análise
       summary: Apaga um registro de categoria de análise
@@ -1880,6 +1887,10 @@ definitions:
         type: number
       mensagem:
         type: string
+  ErrorResponseTratado:
+    description: Programa
+    type: object
+
   ErrorResponse:
     required:
       - message

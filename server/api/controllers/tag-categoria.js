@@ -19,12 +19,23 @@ module.exports = {
     });
   },
   createTagCategoria: (req,res)=>{
-    models.TagCategoria.create(req.body).then((tagcategoria)=> {
-      if(req.body.Tags)
-        tagcategoria.setTags(req.body.Tags);
-      res.json({codret: 0, mensagem: "Grupo de marcadores cadastrado com sucesso"});
+      console.log('Recebido', req.body);
+      models.TagCategoria.create(req.body).then((tagcategoria)=> {
+      var promises = [];
+      req.body.Tags.forEach((item)=>{
+        //console.log('Item', item, tagcategoria);
+        item['CategoriaCodigo'] = tagcategoria.codigo;
+        promises.push(models.Tag.create(item));
+      });
+      Promise.all(promises).then(result=>{
+          res.json({codret: 0, mensagem: "Grupo de marcadores cadastrado com sucesso"});
+      }).catch(err=>{
+        console.log('Erro', err);
+        res.status(503).json(err);
+      });
     }).catch(err=>{
       console.log('Erro', err);
+      res.status(503).json(err);
     });
   },
   editaTagCategoria: (req,res)=>{
@@ -38,6 +49,7 @@ module.exports = {
       res.json({codret: 0, mensagem: "Grupo de marcadores apagado com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
+      res.status(503).json(err);
     });
   }
 }
