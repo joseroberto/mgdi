@@ -26,6 +26,7 @@ class IndicadorAtualizacao{
   unidade_responsavel: number;
   secretaria: number;
   tags:any[];
+  ultima_atualizacao: any;
 }
 
 @FadeInTop()
@@ -60,12 +61,12 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number } = {
+    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number, ultima_atualizacao:any, Granularidade:{sigla:string} } = {
       id:0, codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:false, tags:[],
       IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: 0,
-      especifico: true, indice_referencia: null
+      especifico: true, indice_referencia: null, ultima_atualizacao: null, Granularidade:{sigla:''}
   };
 
   private colecaoClassificacao:any[] = [];
@@ -196,7 +197,10 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   private newIndicador(form){
     if(!form.pristine){
-      this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+      this.util.msgQuestion('Tem certeza que vai sair sem gravar?').then(
+        ()=>{ this.router.navigateByUrl('/admin/indicador'); },
+        ()=>{  }
+      );
     }else{
       this.router.navigateByUrl('/admin/indicador');
     }
@@ -522,12 +526,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   loadData(codigo, tipo, componente){
     console.log('Codigo', codigo);
-
-    this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
-      componente.add(this.agruparesultindicador(codigo,resp));
-      //let lcodigo = arr.toLowerCase();
-      //componente.add(resp.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1));
-    });
+    if(this.isIndicadorTemGrafico()){
+      this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
+        componente.add(this.agruparesultindicador(codigo,resp));
+        //let lcodigo = arr.toLowerCase();
+        //componente.add(resp.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1));
+      });
+    }
   }
 
   agruparesultindicador(codigo,arr){
@@ -535,6 +540,23 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     let ans = arr.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1);
     if(ans.length > 50){
       ans = ans.slice(0,50);
+    }
+    return ans;
+  }
+
+  isIndicadorTemGrafico(){
+    return this.indicador.ultima_atualizacao && this.indicador.granularidade>2 && (this.indicador.criterio_agregacao!=0 || this.indicador.granularidade == 3);
+  }
+
+  getLabel(){
+    let ans:string = '';
+    switch(this.indicador.Granularidade.sigla){
+      case 'MN':
+        ans = 'local'
+        break;
+      case 'UF':
+        ans = 'uf'
+        break;
     }
     return ans;
   }

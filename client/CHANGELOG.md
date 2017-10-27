@@ -1,4 +1,10 @@
-### 0.1.0
+### 0.1.1 - 27/Outubro/2017
+* Novo: Casos de uso de cadastros auxiliares: Categoria de analise, Unidade de medida, Marcadores.
+* Melhoria: Transformação na indicação dos esquemas em dinâmico e configurável.
+* Melhoria: Performance de carga do cadastro de um indicador
+* Correção: Comportamento da tela de informações técnicas
+
+### 0.1.0 - 10/Outubro/2017
 * Novo: Componente de construção de tabela de resultados
 * Mudança: Tipo de consulta - Vai ser pelos parametros: BR - Brasil, RG - Região, UF - Estado, MN - Municipio e CN - CNES
 * Novo: Área de dados gerais na visualização de itens da ficha de indicadores do site. Lá consta: Estratificação, Critério de agregação, Unidade de medida e Índice de referência

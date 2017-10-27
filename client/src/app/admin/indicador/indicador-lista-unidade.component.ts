@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, NgZone} from '@angular/core';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 import {ModalDirective} from "ngx-bootstrap";
-import {WindowRef} from './WindowRef';
+import {WindowRef} from '../WindowRef';
 
 import { UnidadeService, UtilService } from '../../services/index';
 

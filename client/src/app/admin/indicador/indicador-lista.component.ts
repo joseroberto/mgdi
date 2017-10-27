@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
 import { IndicadorService, UtilService } from '../../services/index';
-import {WindowRef} from './WindowRef';
+import {WindowRef} from '../WindowRef';
 import { environment } from '../../../environments/environment';
 
 @FadeInTop()
@@ -86,18 +86,22 @@ getIndicadores(){
 }
 
 apagaIndicador(codigo:string){
-  this.indicadorService.delete(codigo).subscribe(resp=>{
-      console.log(resp);
-      if(!resp.codret){
-        this.util.msgSucessoDelete(resp.mensagem);
-        this.tabelaIndicadores.deleteRow(codigo);
-      }else
-        this.util.msgErro(resp.mensagem);
-    }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+  this.util.msgQuestion(`Tem certeza que vai apagar o indicador ${codigo}?`).then(
+    ()=>{
+      this.indicadorService.delete(codigo).subscribe(resp=>{
+          console.log(resp);
+          if(!resp.codret){
+            this.util.msgSucessoDelete(resp.mensagem);
+            this.tabelaIndicadores.deleteRow(codigo);
+          }else
+            this.util.msgErro(resp.mensagem);
+        }, err=>{ this.util.msgErroInfra(err._body.message)});
+    }
+  );
 }
 
 editaIndicador(codigo:string){
-      this.router.navigate(['/admin/indicador', codigo]);
+  this.router.navigate(['/admin/indicador', codigo]);
 }
 
 detailsFormat(d) {

@@ -1,0 +1,8 @@
+ALTER TABLE dbesusgestor.tb_categoria_analise_item drop CONSTRAINT tb_categoria_analise_item_co_seq_categoria_analise_item_fkey;
+ALTER TABLE dbesusgestor.tb_categoria_analise_item add CONSTRAINT tb_categoria_analise_item_co_seq_categoria_analise_item_fkey FOREIGN KEY (co_categoria_analise) REFERENCES dbesusgestor.tb_categoria_analise(co_categoria_analise) ON DELETE CASCADE;
+
+ALTER TABLE dbesusgestor.tb_tag drop CONSTRAINT tb_tag_co_tag_categoria_fkey;
+ALTER TABLE dbesusgestor.tb_tag add CONSTRAINT tb_tag_co_tag_categoria_fkey FOREIGN KEY (co_tag_categoria) REFERENCES dbesusgestor.tb_tag_categoria(co_tag_categoria) ON DELETE CASCADE;
+
+create sequence dbesusgestor.tb_unidade_medida_co_unidade_medida start with 6;
+ALTER TABLE dbesusgestor.tb_unidade_medida ALTER COLUMN co_unidade_medida SET DEFAULT nextval('dbesusgestor.tb_unidade_medida_co_unidade_medida');

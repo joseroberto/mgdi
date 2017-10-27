@@ -8,6 +8,19 @@ export class CategoriaAnaliseService extends REST {
     super(http);
   }
   getAll(){
-    return this.get('/categoria-analise');
+    return super.get('/categoria-analise');
+  }
+  get(codigo:string){
+    return super.get(`/categoria-analise/${codigo}`);
+  }
+  apaga(codigo:string){
+    return super.delete(`/categoria-analise/${codigo}`);
+  }
+  create(categoria:any){
+    console.log('Gravando...', categoria);
+    return super.post('/categoria-analise', categoria);
+  }
+  update(categoria:any){
+    return super.put(`/categoria-analise/${categoria.codigo}`, categoria);
   }
 }

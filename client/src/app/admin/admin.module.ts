@@ -28,11 +28,15 @@ import {ProgramaComponent} from './programa/programa.component';
 
 // Itens auxiliares
 import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
+import {CategoriaAnaliseCadastroComponent} from './cadastros_auxiliares/categoria-analise-cadastro.component';
 import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
+import {TagCadastroComponent} from './cadastros_auxiliares/tag-cadastro.component';
 import {TagComponent} from './cadastros_auxiliares/tag.component';
+import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
-import {WindowRef} from './indicador/WindowRef';
+
+import {WindowRef} from './WindowRef';
 import { ComponentesModule } from '../componentes/componentes.module';
 
 @NgModule({
@@ -59,10 +63,13 @@ import { ComponentesModule } from '../componentes/componentes.module';
     IndicadorListaComponent,
     IndicadorCadastroComponent,
     IndicadorListaUnidadeComponent,
+    CategoriaAnaliseCadastroComponent,
     CategoriaAnaliseComponent,
     UsuarioComponent,
     ProgramaComponent,
+    TagCadastroComponent,
     TagComponent,
+    UnidadeMedidaCadastroComponent,
     UnidadeMedidaComponent
   ],
   providers:[WindowRef]

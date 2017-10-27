@@ -49,6 +49,7 @@ As seguintes variáveis poderão ser definidas:
 * USER_DB - Usuário do banco de dados
 * PASSWORD_DB - Senha do usuário do banco de dados
 * WSDL - Endereço de acesso da API de validação.
+* SCHEMA - Schema utilizado para o sistema MGI na base de dados
 
 
 

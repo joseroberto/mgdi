@@ -1,4 +1,6 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var Indicador = sequelize.define('Indicador', {
@@ -206,7 +208,7 @@ module.exports = function(sequelize, DataTypes) {
            onDelete: 'cascade' });
       }
     },
-    schema: 'dbesusgestor',
+    schema: schema,
     timestamps: true,
     createdAt: 'dt_inclusao',
     updatedAt: 'dt_atualizacao',

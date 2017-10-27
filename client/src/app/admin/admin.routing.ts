@@ -17,8 +17,11 @@ import {ProgramaComponent} from './programa/programa.component';
 
 // Itens auxiliares
 import {UsuarioComponent} from './cadastros_auxiliares/usuario.component';
+import {CategoriaAnaliseCadastroComponent} from './cadastros_auxiliares/categoria-analise-cadastro.component';
 import {CategoriaAnaliseComponent} from './cadastros_auxiliares/categoria-analise.component';
+import {TagCadastroComponent} from './cadastros_auxiliares/tag-cadastro.component';
 import {TagComponent} from './cadastros_auxiliares/tag.component';
+import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 export const homeRoutes: Routes = [
@@ -64,19 +67,50 @@ export const homeRoutes: Routes = [
     },
     {
     path: 'categoria-analise',
+    component: CategoriaAnaliseCadastroComponent,
+    data: {pageTitle: 'Nova categoria de análise'}
+    },
+    {
+    path: 'categoria-analise/:codigo',
+    component: CategoriaAnaliseCadastroComponent,
+    data: {pageTitle: 'Edita categoria de análise'}
+    },
+    {
+    path: 'lista-categoria-analise',
     component: CategoriaAnaliseComponent,
     data: {pageTitle: 'Lista de categorias de análise'}
     },
     {
     path: 'tag',
+    component: TagCadastroComponent,
+    data: {pageTitle: 'Novo marcador'}
+    },
+    {
+    path: 'tag/:codigo',
+    component: TagCadastroComponent,
+    data: {pageTitle: 'Edita marcador'}
+    },
+    {
+    path: 'lista-tag',
     component: TagComponent,
     data: {pageTitle: 'Lista marcadores'}
     },
     {
     path: 'unidade-medida',
-    component: UnidadeMedidaComponent,
-    data: {pageTitle: 'Lista de Unidades de Medida'}
+    component: UnidadeMedidaCadastroComponent,
+    data: {pageTitle: 'Nova unidade de medida'}
     },
+    {
+    path: 'unidade-medida/:codigo',
+    component: UnidadeMedidaCadastroComponent,
+    data: {pageTitle: 'Edita unidade de medida'}
+    },
+    {
+    path: 'lista-unidade-medida',
+    component: UnidadeMedidaComponent,
+    data: {pageTitle: 'Lista de unidades de medida'}
+    },
+
 ];
 
 export const AdminRouting:ModuleWithProviders = RouterModule.forChild(homeRoutes);

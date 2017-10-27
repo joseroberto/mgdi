@@ -1,17 +1,15 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var Tag = sequelize.define('Tag', {
     codigo: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
         field: 'co_tag'
-    },
-    categoria: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'co_tag_categoria'
     },
     descricao: {
         type: DataTypes.STRING(255),
@@ -24,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
           Tag.belongsTo(models.TagCategoria,
             {
               as: 'Categoria',
-              foreignKey: 'co_tag'
+              foreignKey: { field: 'co_tag_categoria', allowNull:false}
             });
           Tag.belongsToMany(models.Indicador, {
             as: 'Indicadores',
@@ -33,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
             otherKey: 'co_seq_indicador' });
         }
     },
-    schema: 'dbesusgestor',
+    schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_tag'

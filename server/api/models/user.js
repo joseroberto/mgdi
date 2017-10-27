@@ -1,4 +1,6 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
@@ -45,7 +47,7 @@ module.exports = function(sequelize, DataTypes) {
     //  field: 'dt_atualizacao'
     //}
   },{
-    schema: 'dbesusgestor',
+    schema: schema,
     freezeTableName: true,
     timestamps: true,
     createdAt: 'dt_inclusao',

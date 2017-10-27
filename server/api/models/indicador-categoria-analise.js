@@ -1,9 +1,11 @@
 'use strict';
+const config_param = require('../helpers/config')();
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 module.exports = function(sequelize, DataTypes) {
   var IndicadorCategoriaAnalise = sequelize.define('IndicadorCategoriaAnalise', {
   },{
-    schema: 'dbesusgestor',
+    schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_indicador_categoria_analise'

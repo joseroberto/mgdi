@@ -10,4 +10,5 @@ export class TagService extends REST {
   getAll(){
     return this.get('/tag');
   }
+
 }

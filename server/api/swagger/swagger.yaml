@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.1.0"
+  version: "0.1.1"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -163,6 +163,98 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma nova unidade de medida
+      summary: Cria uma nova unidade de medida
+      operationId: createUnidadeMedida
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: unidade_medida
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UnidadeMedida'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/unidade-medida/{codigo}:
+    x-swagger-router-controller: unidade-medida
+    get:
+      description: Retorna uma unidade de medida
+      summary: Recupera uma unidade de medida
+      operationId: getUnidadesMedidaItem
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita uma unidade de medida
+      summary: Edita um registro de uma unidade de medida
+      operationId: editaUnidadeMedida
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+        - name: unidade_medida
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UnidadeMedida'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma unidade de medida
+      summary: Apaga um registro de uma unidade de medida
+      operationId: apagaUnidadeMedida
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/tipo-consulta:
     x-swagger-router-controller: tipo-consulta
     get:
@@ -265,6 +357,98 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma nova categoria de tags
+      summary: Cria uma nova categoria de tags
+      operationId: createTagCategoria
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TagCategoria'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tag-categoria/{codigo}:
+    x-swagger-router-controller: tag-categoria
+    get:
+      description: Retorna as categorias de tag possíveis
+      summary: Recupera uma categoria de tag
+      operationId: getTagCategoriaItem
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita uma categoria de tag
+      summary: Edita um registro de categoria de tag
+      operationId: editaTagCategoria
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TagCategoria'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma categoria de tag
+      summary: Apaga um registro de categoria de tag
+      operationId: apagaTagCategoria
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/categoria-analise:
     x-swagger-router-controller: categoria-analise
     get:
@@ -277,11 +461,107 @@ paths:
         "200":
           description: Sucesso
           schema:
-            $ref: "#/definitions/GetCategoriaAnaliseListResponse"
+            $ref: "#/definitions/CategoriaAnalise"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma nova categoria de analise
+      summary: Cria uma nova categoria de análise
+      operationId: createCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: categoria_analise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CategoriaAnalise'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /api/categoria-analise/{codigo}:
+    x-swagger-router-controller: categoria-analise
+    get:
+      description: Retorna as categorias de análises possíveis
+      summary: Recupera uma categoria de análise
+      operationId: getCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponseTratado"
+    delete:
+      description: Apaga uma categoria de análise
+      summary: Apaga um registro de categoria de análise
+      operationId: apagaCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Atualiza as informações de uma categoria de análise
+      summary: Atualiza as informações de uma categoria de análise
+      operationId: editaCategoriaAnalise
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: categoria_analise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/IndicadorAtualizacao'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /api/indicador/{codigos}/resultset:
     x-swagger-router-controller: resultset
     get:
@@ -1432,21 +1712,6 @@ definitions:
         type: string
       title:
         type: string
-  GetCategoriaAnaliseListResponse:
-    required:
-      - categorias_analise
-    properties:
-      categorias_analise:
-        type: array
-        items:
-          type: object
-          properties:
-            codigo:
-              type: string
-            titulo:
-              type: string
-            referencia:
-              type: string
   GetTagCategoriaListResponse:
     required:
       - tag_categorias
@@ -1566,6 +1831,47 @@ definitions:
               type: number
             descricao:
               type: string
+  TagCategoria:
+    description: Objeto categoria de marcadores
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código da categoria de tags
+      descricao:
+        type: string
+        description: Descrição da categoria de tags
+      Tags:
+        type: array
+        items:
+          type: object
+  CategoriaAnalise:
+    description: Objeto categoria de análise
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: mnemonico da categoria de análise
+      titulo:
+        type: string
+        description: Titulo da categoria de análise
+      referencia:
+        type: string
+        description: Referencia da categoria de analise
+      Itens:
+        type: array
+        items:
+          type: object
+  UnidadeMedida:
+    description: Objeto unidade de medida
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código da categoria de tags
+      descricao:
+        type: string
+        description: Descrição da categoria de tags
   GetIndicadorConsulta:
     required:
       - count
@@ -1586,6 +1892,10 @@ definitions:
         type: number
       mensagem:
         type: string
+  ErrorResponseTratado:
+    description: Programa
+    type: object
+
   ErrorResponse:
     required:
       - message

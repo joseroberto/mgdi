@@ -29,6 +29,7 @@
             <!-- widget content -->
             <div class="widget-body no-padding" data-sparkline-container="">
               <sa-datatable #listUnidadeMedida [options]="options"
+                         [detailsFormat]="detailsFormat"
                          tableClass="display projects-table table table-striped table-bordered table-hover"
                          width="100%"
                          (onInit)="getUnidades()">
