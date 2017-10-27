@@ -13,7 +13,7 @@ import { UnidadeMedidaService, UtilService } from '../../services/index';
 export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
     private sub: any;
     private tituloForm = 'Unidade de Medida';
-    private titulo = 'Unidade de Medida';
+    private tituloinit = 'Nova Unidade de Medida';
     private codigo:number = 0;
     private breadcrumb = [];
     private novaunidademedida:UnidadeMedida;
@@ -24,6 +24,7 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
           private unidadeMedidaService:UnidadeMedidaService,
           private util: UtilService){
             this.breadcrumb = ['Unidade de Medida', 'Nova'];
+            this.tituloinit = 'Nova Unidade de Medida';
             this.novaunidademedida = new UnidadeMedida();
           }
 
@@ -41,7 +42,10 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
 
     private newUnidadeMedida(form){
       if(!form.pristine){
-        this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+        this.util.msgQuestion('Tem certeza que vai sair sem gravar?').then(
+          ()=>{ this.router.navigateByUrl('/admin/unidade-medida'); },
+          ()=>{  }
+        );
       }else{
         this.router.navigateByUrl('/admin/unidade-medida');
       }
@@ -52,7 +56,7 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
           this.unidadeMedidaService.getItem(this.codigo).subscribe(resp=>{
               this.novaunidademedida = Object.assign(new UnidadeMedida(), resp);
               console.log('Registro em edicao:', this.novaunidademedida);
-              this.titulo = 'Atualiza ' + this.novaunidademedida.codigo;
+              this.tituloinit = `Atualiza ${this.novaunidademedida.descricao}`;
               this.breadcrumb = ['Categoria de Análise', this.novaunidademedida.codigo];
             }, (err)=> this.util.msgErroInfra(err));
         }
@@ -72,7 +76,7 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
         this.unidadeMedidaService.create(this.novaunidademedida).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
-            this.router.navigateByUrl('/admin/unidade-medida/'+ this.novaunidademedida.codigo);
+            this.router.navigateByUrl('/admin/unidade-medida/'+ resp.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }

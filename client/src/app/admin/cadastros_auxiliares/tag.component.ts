@@ -99,15 +99,18 @@ export class TagComponent {
     }
 
     apagaMarcadores(codigo:string){
-      this.tagService.apaga(codigo).subscribe(resp=>{
-          console.log(resp);
-          if(!resp.codret){
-            this.util.msgSucessoDelete(resp.mensagem);
-            this.tabelaTags.deleteRow(codigo);
-          }else
-            this.util.msgErro(resp.mensagem);
-        }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+      this.util.msgQuestion(`Tem certeza que vai apagar a categoria ${codigo}?`).then(
+        ()=>{
+          this.tagService.apaga(codigo).subscribe(resp=>{
+              console.log(resp);
+              if(!resp.codret){
+                this.util.msgSucessoDelete(resp.mensagem);
+                this.tabelaTags.deleteRow(codigo);
+              }else
+                this.util.msgErro(resp.mensagem);
+            }, err=>{ this.util.msgErroInfra(JSON.parse(err._body).message)});
+      });
     }
 
-    
+
 }

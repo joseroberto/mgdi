@@ -1,5 +1,5 @@
 export class CategoriaAnalise{
-  codigo: string;
+  codigo: string='';
   descricao: string;
   referencia: string='';
   Itens: Object[];

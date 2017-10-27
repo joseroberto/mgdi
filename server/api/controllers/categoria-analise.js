@@ -26,8 +26,9 @@ module.exports = {
           item['CategoriaAnaliseCodigo'] = categoria.codigo;
           promises.push(models.CategoriaAnaliseItem.create(item));
         });
+        var cod = categoria.codigo;
         Promise.all(promises).then(result=>{
-            res.json({codret: 0, mensagem: "Categoria de Análise e itens cadastrados com sucesso"});
+            res.json({codret: 0, mensagem: "Categoria de Análise e itens cadastrados com sucesso", codigo: cod});
         }).catch(err=>{
           console.log('Erro', err);
           res.status(503).json(err);
@@ -69,7 +70,6 @@ module.exports = {
             console.log('Erro', err);
             res.status(503).json(err);
           });
-          console.log('categoria', categoria, req.body.Itens);
       }else{
         res.json({codret: 0, mensagem: "Categoria de Análise atualizada com sucesso"});
       }

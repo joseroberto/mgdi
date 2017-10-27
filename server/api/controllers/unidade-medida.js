@@ -17,7 +17,7 @@ module.exports = {
   },
   createUnidadeMedida: (req,res)=>{
     models.UnidadeMedida.create(req.body).then((unidade_medida)=> {
-      res.json({codret: 0, mensagem: "Unidade de Medida cadastrada com sucesso"});
+      res.json({codret: 0, mensagem: "Unidade de Medida cadastrada com sucesso", codigo: unidade_medida.codigo});
     }).catch(err=>{
       console.log('Erro', err);
       res.status(503).json(err);

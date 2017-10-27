@@ -47,7 +47,10 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
 
     private newCategoriaAnalise(form){
       if(!form.pristine){
-        this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+        this.util.msgQuestion('Tem certeza que vai sair sem gravar?').then(
+          ()=>{ this.router.navigateByUrl('/admin/categoria-analise'); },
+          ()=>{  }
+        );
       }else{
         this.router.navigateByUrl('/admin/categoria-analise');
       }
@@ -66,6 +69,8 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private adicionaItemCategoriaAnalise(){
+      $('.form-horizontal').find("input").change();
+      $('.btn-submit').prop('disabled', false);
       let valorSelecionado = $('#item').val();
       if(valorSelecionado){
         this.novacategoria.Itens.push({codigo:0, descricao: valorSelecionado});
@@ -76,7 +81,7 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      if(this.novacategoria.codigo){
+      if(this.codigo){
         console.log('Reg a atualizar', this.novacategoria);
         this.categoriaAnaliseService.update(this.novacategoria).subscribe(resp=>{
           if(resp.codret==0){
@@ -86,11 +91,12 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
           }
         }, err=>this.util.msgErroInfra(err));
       }else{
-        this.novacategoria['codigo'] = form.value.codigo_edit.toUpperCase();
+        console.log('Reg a inserir', this.novacategoria);
+        this.novacategoria['codigo'] = this.novacategoria.codigo.toUpperCase();
         this.categoriaAnaliseService.create(this.novacategoria).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
-            this.router.navigateByUrl('/admin/categoria-analise/'+ this.novacategoria.codigo);
+            this.router.navigateByUrl('/admin/categoria-analise/'+ resp.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }
@@ -99,7 +105,7 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private apagaItemCategoriaAnalise(i){
-      //this.novacategoria.Itens.splice(i,1);
+      $('.btn-submit').prop('disabled', false);
       this.novacategoria.Itens[i]['deleted'] = 1;
     }
 
@@ -111,6 +117,7 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private atualizaItemCategoriaAnalise(){
+      $('.btn-submit').prop('disabled', false);
       this.novacategoria.Itens[this.editCategoriaAnalise.indice] = Object.assign({}, this.editCategoriaAnalise);
       this.categoriaAnaliseModal.hide();
     }

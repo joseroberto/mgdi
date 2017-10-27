@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NotificationService } from "../shared/utils/notification.service";
+declare var $: any;
 
 @Injectable()
 export class UtilService {
@@ -58,25 +59,25 @@ export class UtilService {
     });
   }
 
-  msgAlerta(mensagem:string, evento:string){
-    /*this.notificationService.smartMessageBox({
-      title: "Smart Alert!",
-        content: "This is a confirmation box. Can be programmed for button callback",
-        buttons: '[Não][Sim]',
-        icon: "fa fa-bell swing animated",
-        color: "#296191"
-    },(teste) =>{
-      console.log('valor kkk:', teste);
-    })*/
-
+  msgQuestion(mensagem:string){
     this.notificationService.smallBox({
-      title: "Ding Dong!",
-      content: mensagem + " <p class='text-align-right'><a href-void class='btn btn-primary btn-sm'>Sim</a> <a href-void class='btn btn-danger btn-sm'>Não</a></p>",
+      title: "Pergunta",
+      content: mensagem + " <p class='text-align-right'><a href-void class='btn btn-primary btn-sm btn-sim'>Sim</a> <a href-void class='btn btn-danger btn-sm btn-nao'>Não</a></p>",
       color: "#296191",
       //timeout: 8000,
       icon: "fa fa-bell swing animated"
-    },(teste) =>{
-      console.log('valor kkk:', teste);
     });
+
+    let promise = new Promise((resolve, reject)=>{
+        $('.btn-sim').click(()=>{
+          resolve('sim');
+        });
+
+        $('.btn-nao').click(()=>{
+          reject('nao');
+        });
+    });
+
+    return promise;
   }
 }

@@ -46,8 +46,9 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     }
 
     private newCategoriaTag(form){
+      console.log('Form', form.pristine);
       if(!form.pristine){
-        this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+        this.util.msgQuestion('Tem certeza que vai sair sem gravar?');
       }else{
         this.router.navigateByUrl('/admin/tag');
       }
@@ -65,6 +66,7 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     }
 
     private adicionaMarcador(){
+      $('.form-horizontal').find("input").change();
       let valorSelecionado = $('#item').val();
       if(valorSelecionado){
         this.novatagcategoria.Tags.push({codigo:0, descricao: valorSelecionado});
@@ -99,6 +101,7 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     }
 
     private apagaItemTagCategoria(i){
+      $('.form-horizontal').find("input").change();
       this.novatagcategoria.Tags[i]['deleted'] = 1;
     }
 

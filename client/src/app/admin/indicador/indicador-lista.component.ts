@@ -86,18 +86,22 @@ getIndicadores(){
 }
 
 apagaIndicador(codigo:string){
-  this.indicadorService.delete(codigo).subscribe(resp=>{
-      console.log(resp);
-      if(!resp.codret){
-        this.util.msgSucessoDelete(resp.mensagem);
-        this.tabelaIndicadores.deleteRow(codigo);
-      }else
-        this.util.msgErro(resp.mensagem);
-    }, err=>{ this.util.msgErroInfra(err._body.message)});
+  this.util.msgQuestion(`Tem certeza que vai apagar o indicador ${codigo}?`).then(
+    ()=>{
+      this.indicadorService.delete(codigo).subscribe(resp=>{
+          console.log(resp);
+          if(!resp.codret){
+            this.util.msgSucessoDelete(resp.mensagem);
+            this.tabelaIndicadores.deleteRow(codigo);
+          }else
+            this.util.msgErro(resp.mensagem);
+        }, err=>{ this.util.msgErroInfra(err._body.message)});
+    }
+  );
 }
 
 editaIndicador(codigo:string){
-      this.router.navigate(['/admin/indicador', codigo]);
+  this.router.navigate(['/admin/indicador', codigo]);
 }
 
 detailsFormat(d) {

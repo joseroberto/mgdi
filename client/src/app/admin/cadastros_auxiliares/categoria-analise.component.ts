@@ -99,15 +99,20 @@ export class CategoriaAnaliseComponent {
     }
 
     apagaCategoriaAnalise(codigo:string){
-      this.categoriaAnaliseService.apaga(codigo).subscribe(resp=>{
-          console.log(resp);
-          if(!resp.codret){
-            this.util.msgSucessoDelete(resp.mensagem);
-            this.tabelaCategorias.deleteRow(codigo);
-          }else
-            this.util.msgErro(resp.mensagem);
-        }, err=>{
-          console.log('Erro', err);
-          this.util.msgErroInfra("Erro ao apagar Categoria de Análise")});
+      this.util.msgQuestion(`Tem certeza que vai apagar a categoria ${codigo}?`).then(
+        ()=>{
+          this.categoriaAnaliseService.apaga(codigo).subscribe(resp=>{
+              console.log(resp);
+              if(!resp.codret){
+                this.util.msgSucessoDelete(resp.mensagem);
+                this.tabelaCategorias.deleteRow(codigo);
+              }else
+                this.util.msgErro(resp.mensagem);
+            }, err=>{
+              console.log('Erro', err);
+              this.util.msgErroInfra("Erro ao apagar Categoria de Análise")});
+        }
+      );
+
     }
 }

@@ -197,7 +197,10 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   private newIndicador(form){
     if(!form.pristine){
-      this.util.msgAlerta('Tem certeza que vai sair sem gravar?','');
+      this.util.msgQuestion('Tem certeza que vai sair sem gravar?').then(
+        ()=>{ this.router.navigateByUrl('/admin/indicador'); },
+        ()=>{  }
+      );
     }else{
       this.router.navigateByUrl('/admin/indicador');
     }
