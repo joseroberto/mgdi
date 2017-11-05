@@ -44,12 +44,14 @@
                           <popover-content #titulo
                              title="Descrição"
                              [closeOnClickOutside]="true">
-                                  Descrição da unidade de medida para os indicadores.
+                                  Descrição de uma unidade de medida a ser utilizada no cadastro de metadados de indicadores.
                           </popover-content>
-                          <label class="col-md-2 control-label">Descrição <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
+                          <label class="col-md-2 control-label">Descrição <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="titulo"></i></label>
                           <div class="col-md-5">
                             <input id="titulo" class="form-control"
-                              placeholder="Descrição do grupo de marcador" type="text" [ngModel]="novaunidademedida.descricao" name="descricao" required maxlength="300">
+                              placeholder="Descrição do grupo de marcador" type="text" [ngModel]="novaunidademedida.descricao" name="descricao" required maxlength="300"
+                              data-bv-notempty="true"
+                              data-bv-notempty-message="A descrição da unidade de medida é obrigatória">
                           </div>
                         </div>
                       </div>

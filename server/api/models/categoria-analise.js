@@ -7,13 +7,15 @@ module.exports = function(sequelize, DataTypes) {
     codigo: {
         type: DataTypes.STRING(8),
         allowNull: false,
+        notEmpty: true,
         primaryKey: true,
         field: 'co_categoria_analise'
     },
     titulo: {
         type: DataTypes.STRING(255),
         field: 'ds_titulo',
-        allowNull: false
+        allowNull: false,
+        notEmpty: true
     },
     referencia: {
         type: DataTypes.TEXT,

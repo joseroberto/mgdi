@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     codigo: {
         type: DataTypes.STRING(8),
         allowNull: false,
+        notEmpty: true,
         field: 'co_indicador'
     },
     titulo: {

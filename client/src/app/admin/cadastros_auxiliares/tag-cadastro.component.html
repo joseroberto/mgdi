@@ -43,12 +43,14 @@
                           <popover-content #titulo
                              title="Descrição do grupo"
                              [closeOnClickOutside]="true">
-                                  Descrição do grupo do marcador.
+                                  Descrição do grupo do marcadores a serem utilizados para os metadados de indicadores.
                           </popover-content>
-                          <label class="col-md-2 control-label">Descrição do grupo <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
+                          <label class="col-md-2 control-label">Descrição do grupo <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="titulo"></i></label>
                           <div class="col-md-5">
                             <input id="descricao" class="form-control"
-                              placeholder="Descrição do grupo de marcador" type="text" [(ngModel)]="novatagcategoria.descricao" name="descricao" required maxlength="200">
+                              placeholder="Descrição do grupo de marcador" type="text" [(ngModel)]="novatagcategoria.descricao" name="descricao" required maxlength="200"
+                              data-bv-notempty="true"
+                              data-bv-notempty-message="A descrição do grupo de marcadores é obrigatória">
                           </div>
                         </div>
                       </div>

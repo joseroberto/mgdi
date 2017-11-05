@@ -64,23 +64,27 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
 
     private onSubmit(form){
       this.novaunidademedida = Object.assign(this.novaunidademedida, form.value);
-      if(this.novaunidademedida.codigo){
-        this.unidadeMedidaService.update(this.novaunidademedida).subscribe(resp=>{
-          if(resp.codret==0){
-            this.util.msgSucessoEdicao(resp.mensagem);
-          }else{
-            this.util.msgErro(resp.mensagem);
-          }
-        }, err=>this.util.msgErroInfra(err));
+      if(form.valid){
+        if(this.novaunidademedida.codigo){
+          this.unidadeMedidaService.update(this.novaunidademedida).subscribe(resp=>{
+            if(resp.codret==0){
+              this.util.msgSucessoEdicao(resp.mensagem);
+            }else{
+              this.util.msgErro(resp.mensagem);
+            }
+          }, err=>this.util.msgErroInfra(err));
+        }else{
+          this.unidadeMedidaService.create(this.novaunidademedida).subscribe(resp=>{
+            if(resp.codret==0){
+              this.util.msgSucesso(resp.mensagem);
+              this.router.navigateByUrl('/admin/unidade-medida/'+ resp.codigo);
+            }else{
+              this.util.msgErro(resp.mensagem);
+            }
+          }, (err)=>this.util.msgErroInfra(err));
+        }
       }else{
-        this.unidadeMedidaService.create(this.novaunidademedida).subscribe(resp=>{
-          if(resp.codret==0){
-            this.util.msgSucesso(resp.mensagem);
-            this.router.navigateByUrl('/admin/unidade-medida/'+ resp.codigo);
-          }else{
-            this.util.msgErro(resp.mensagem);
-          }
-        }, (err)=>this.util.msgErroInfra(err));
+        this.util.msgErro('Erro de validação de campos');
       }
     }
 

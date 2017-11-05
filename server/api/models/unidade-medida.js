@@ -13,7 +13,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     descricao: {
         type: DataTypes.STRING,
-        field: 'ds_unidade_medida'
+        field: 'ds_unidade_medida',
+        notEmpty: true,
+        allowNull: false
       }
   },{
     schema: schema,

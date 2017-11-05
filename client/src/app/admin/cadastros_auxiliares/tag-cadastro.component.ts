@@ -79,24 +79,28 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     private onSubmit(form){
       //this.novatagcategoria = Object.assign(this.novatagcategoria, form.value);
       console.log('onSubmit', this.novatagcategoria);
-      if(this.novatagcategoria.codigo){
+      if(form.valid){
+        if(this.novatagcategoria.codigo){
 
-        this.tagCategoriaService.update(this.novatagcategoria).subscribe(resp=>{
-          if(resp.codret==0){
-            this.util.msgSucessoEdicao(resp.mensagem);
-          }else{
-            this.util.msgErro(resp.mensagem);
-          }
-        }, err=>this.util.msgErroInfra(err));
+          this.tagCategoriaService.update(this.novatagcategoria).subscribe(resp=>{
+            if(resp.codret==0){
+              this.util.msgSucessoEdicao(resp.mensagem);
+            }else{
+              this.util.msgErro(resp.mensagem);
+            }
+          }, err=>this.util.msgErroInfra(err));
+        }else{
+          this.tagCategoriaService.create(this.novatagcategoria).subscribe(resp=>{
+            if(resp.codret==0){
+              this.util.msgSucesso(resp.mensagem);
+              this.router.navigateByUrl('/admin/tag/'+ this.novatagcategoria.codigo);
+            }else{
+              this.util.msgErro(resp.mensagem);
+            }
+          }, (err)=>this.util.msgErroInfra(err));
+        }
       }else{
-        this.tagCategoriaService.create(this.novatagcategoria).subscribe(resp=>{
-          if(resp.codret==0){
-            this.util.msgSucesso(resp.mensagem);
-            this.router.navigateByUrl('/admin/tag/'+ this.novatagcategoria.codigo);
-          }else{
-            this.util.msgErro(resp.mensagem);
-          }
-        }, (err)=>this.util.msgErroInfra(err));
+        this.util.msgErro('Erro de validação de campos');
       }
     }
 

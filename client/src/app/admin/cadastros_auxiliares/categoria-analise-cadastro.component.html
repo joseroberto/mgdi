@@ -44,7 +44,7 @@
                   <popover-content #codigo
                      title="Código"
                      [closeOnClickOutside]="true">
-                          Identificação do indicador em forma de código (dado pelo usuário). Até 8 caracteres.
+                          Identificação da categoria de análise em forma de código (dado pelo usuário). Até 8 caracteres.
                   </popover-content>
                   <label class="col-md-2 control-label">Código
                     <i class="fa fa-question-circle codigo" popoverPlacement="right" popoverOnHover="true" [popover]="codigo"></i>
@@ -70,7 +70,9 @@
                   </label>
                   <div class="col-md-5">
                     <input id="titulo" class="form-control"
-                      placeholder="Título da categoria de análise" type="text" [(ngModel)]="novacategoria.titulo" name="titulo" required maxlength="255">
+                      placeholder="Título da categoria de análise" type="text" [(ngModel)]="novacategoria.titulo" name="titulo" required maxlength="255"
+                      data-bv-notempty="true"
+                      data-bv-notempty-message="A descrição do critério de análise é obrigatório">
                   </div>
                 </div>
               </div>

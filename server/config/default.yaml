@@ -36,7 +36,7 @@ swagger:
 
 # any other values in this file are just loaded into the config for application access...
 config:
-  host: localhost:8000
+  host: esus.synapsys.com.br
   wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
   #wsdl: http://aplicacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
   system: SAGE
@@ -45,6 +45,7 @@ config:
   schema_esusgestor: dbesusgestor
   database: dbspo
   user: vasconcelos
-  password: serenaya
-  hostdb: localhost
+  password: serenaya00
+  ##hostdb: localhost
+  hostdb: banco
   #bypass: true
