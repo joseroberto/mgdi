@@ -10,6 +10,7 @@ const swagger = require('../helpers/swagger')();
 const  models  = require('../models');
 
 module.exports = {
+
   authenticate: (req, res)=>{
     var log = log4js.getLogger();
     var user = req.body.email;

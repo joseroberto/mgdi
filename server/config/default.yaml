@@ -46,6 +46,6 @@ config:
   database: dbspo
   user: vasconcelos
   password: serenaya00
-  ##hostdb: localhost
-  hostdb: banco
+  hostdb: localhost
+  ##hostdb: banco
   #bypass: true
