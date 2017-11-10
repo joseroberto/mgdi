@@ -46,3 +46,4 @@ config:
   user: postgres
   password: pass
   hostdb: localhost
+  schema_login: scpa

@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.1.1"
+  version: "0.1.2"
   title: eSUSGestor - API de comunicação
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
@@ -80,6 +80,10 @@ paths:
         '403':
          description: >-
           Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
+         schema:
+          $ref: '#/definitions/Error'
+        '503':
+         description: Erro de infraestrutura.
          schema:
           $ref: '#/definitions/Error'
   /api/version:
@@ -1685,7 +1689,7 @@ definitions:
   Login:
     type: object
     properties:
-      email:
+      username:
         description: Email do usuário
         type: string
       password:

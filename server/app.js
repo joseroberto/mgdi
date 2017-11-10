@@ -8,12 +8,13 @@ var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
 var job = require('./api/helpers/job');
 var passport = require("passport");
+var bodyParser = require('body-parser');
 
 
 module.exports = app; // for testing
 
 var theAppLog = log4js.getLogger();
-require('./api/helpers/passport.js')(passport, theAppLog); // pass passport for configuration
+
 // Programa os jobs de execucao
 job.cron();
 
@@ -39,21 +40,23 @@ var config = {
 process.on('SIGINT', function() {
      process.exit(0);
 });
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(passport.initialize());
-//app.use(passport.session()); // persistent login sessions
+app.use(passport.session()); // persistent login sessions
 //app.use('/pathYouWantProtect', passport.authenticate('jwt-strategy'),function(req,res,next){
 //
 //});
 
-app.post('/login2', (req, res, next) =>{
+/*app.post('/login2', (req, res, next) =>{
   console.log('dentro do login2');
-  passport.authenticate('local-login', (err, user, info)=>{
-    console.log('dentro', err, user, info);
-    res.status(500).json({mensagem: 'passei aqui'});
+  passport.authenticate('local-login', passport.authenticate('local', { failureRedirect: '/login' }), (req,res)=>{
+    console.log('dentro', req, res);
+    //res.send(JSON.stringify(info)).status(200);
     //next();
-  })(req,res,next);
-});
+  });
+});*/
+
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }

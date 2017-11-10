@@ -1,14 +1,13 @@
-// config/passport.js
+const soap = require('soap'),
+      LocalStrategy   = require('passport-local').Strategy,
+      LdapStrategy    = require('passport-ldapauth').Strategy;
+      JsonStrategy    = require('passport-json').Strategy;
+const config_param = require('./config')();
+const crypto = require('crypto');
+//var parseString = require('xml2js').parseString;
 
-// load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
-var LdapStrategy    = require('passport-ldapauth').Strategy;
 
-// load up the user model
-//var User            = require('../app/models/user');
-
-// expose this function to our app using module.exports
-module.exports = function(passport, log) {
+module.exports = function(passport) {
 
     // =========================================================================
     // passport session setup ==================================================
@@ -17,79 +16,29 @@ module.exports = function(passport, log) {
     // passport needs ability to serialize and unserialize users out of session
 
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
+    /*passport.serializeUser(function(user, done) {
+        done(null, user);
+    });*/
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
+    /*passport.deserializeUser(function(id, done) {
         //User.findById(id, function(err, user) {
             done(err, user);
         //});
-    });
+    });*/
 
-    // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
 
-    passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
-    },
-    function(req, email, password, done) {
-
-        // asynchronous
-        // User.findOne wont fire unless data is sent back
-        process.nextTick(function() {
-
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.email' :  email }, function(err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return done(err);
-
-            // check to see if theres already a user with that email
-            if (user) {
-                return done(null, false, null);
-            } else {
-
-                // if there is no user with that email
-                // create the user
-                var newUser            = new User();
-
-                // set the user's local credentials
-                newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password);
-
-                // save the user
-                newUser.save(function(err) {
-                    if (err)
-                        throw err;
-                    return done(null, newUser);
-                });
-            }
-
-        });
-
-        });
-
-    }));
 
     // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
-
-    passport.use('local-login', new LocalStrategy(
-    function(username, password, done) { // callback with email and password from our form
-        console.log('local-login');
-        log.info('Oi');
+    // Valida o usuario na base local (username/password)
+    passport.use('local', new LocalStrategy((username, password, done) =>{
+        console.log('local', username, password);
+        if(username=='user@teste.com' && password=='teste'){
+          return done(null, {nome:'Nome do usuario', email:username});
+        }
+        return done(null, false, null);
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         /*User.findOne({ 'local.email' :  email }, function(err, user) {
@@ -108,9 +57,92 @@ module.exports = function(passport, log) {
             // all is well, return successful user
             return done(null, user);
         });*/
-
     }));
 
+    // =========================================================================
+    // SCPA Login ==============================================================
+    // =========================================================================
+    passport.use('scpa', new JsonStrategy((username, password, done) =>{
+        console.log('Acessando scpa:', process.env.WSDL || config_param.wsdl);
+        soap.createClient(process.env.WSDL || config_param.wsdl, function(err, client) {
+          if(err){
+            console.log(err);
+            return res.status(500).send(err);
+          }
+
+          var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest().toString('hex');
+
+          client.buscaPerfilUsuario(
+              {autenticacao: {email: username, senha: password_hash, siglaSistema: config_param.system}},
+              (err, result)=>{
+                if(err){
+                  var erroSCPA = err.body.substring(err.body.indexOf('<detalhamento>')+14,err.body.indexOf('</detalhamento>'));
+                  done(erroSCPA);
+                  return;
+                }
+
+                done(null, {
+                              cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
+                              nome: result.respostaBuscaPerfilUsuario.usuario.nome,
+                              email: result.respostaBuscaPerfilUsuario.usuario.email
+                          });
+                // Busca os perfis so SCPA e mapeia com os perfis do sistema.
+
+                /*if(err!=result.respostaBuscaPerfilUsuario || !result.respostaBuscaPerfilUsuario.perfis || !result.respostaBuscaPerfilUsuario.perfis.perfil){
+                  if(String(err).indexOf('Error')!== -1){
+                    res.status(403).send({codret:1000, message:'Login/Senha inválida'});
+                  }else{
+                    res.status(403).send({codret:1000, message:'Usuário não possui perfil para login no sistema SAGE'});
+                  }
+                }else{
+
+                }
+
+                if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
+                  var perfis = {}
+                  var array_perfis = [];
+                  result.respostaBuscaPerfilUsuario.perfis.perfil.forEach((item)=>{
+                    var esferas = [];
+                    item.esferas.esferasPerfil.forEach((esfera)=>{
+                        esferas.push(esfera.configuracao);
+                    });
+                    perfis[item.perfil.sigla]=esferas;
+                    array_perfis.push(item.perfil.sigla);
+                  });
+                  var temp = {
+                      cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
+                      nome: result.respostaBuscaPerfilUsuario.usuario.nome,
+                      email: result.respostaBuscaPerfilUsuario.usuario.email,
+                      perfis: perfis
+                  };
+
+                  // Salva dados usuario
+                  models.User.findOne({email:result.respostaBuscaPerfilUsuario.usuario.email}).then((resp)=>{
+                      temp['perfis'] = array_perfis;
+                      if(resp){
+                        resp.update(temp).then((result)=>{
+                          //console.log("Dados de usuário atualizado:", result);
+                        });
+                        //models.User.update(temp, { where: { cpf: result.respostaBuscaPerfilUsuario.usuario.cpf }}).then((user)=> {
+
+                        //});
+                      }else{
+                        models.User.create(temp).then((user)=> {
+                          console.log("Dados de usuário criado:", user);
+                        });
+                      }
+
+                      temp['ultimo_login']=resp['dt_atualizacao'];
+                      var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
+                      res.json({token: util.format('Bearer %s', token), user: temp});
+
+                  }).catch(err=>{
+                      console.log('Erro na atualização de dados de usuário', err);
+                  });
+                  */
+              });
+        });
+    }));
     // =========================================================================
     // LDAP Login ==============================================================
     // =========================================================================

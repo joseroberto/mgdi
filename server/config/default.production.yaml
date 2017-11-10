@@ -46,3 +46,4 @@ config:
   user: vasconcelos
   password: serenaya
   hostdb: 10.1.2.25
+  schema_login: scpa
