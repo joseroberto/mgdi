@@ -40,7 +40,7 @@ pm2 monit
 
 # Configuração para variáveis de ambiente
 
-Se for mais conveniente, a configuração do serviço poderá ser feita utilizando variáveis de ambiente.
+Se for mais conveniente, a configuração do serviço poderá ser feita utilizando variáveis de ambiente, ou nos arquivos de configuração 'config/default.yaml'
 
 As seguintes variáveis poderão ser definidas:
 
@@ -49,9 +49,24 @@ As seguintes variáveis poderão ser definidas:
 * USER_DB - Usuário do banco de dados
 * PASSWORD_DB - Senha do usuário do banco de dados
 * WSDL - Endereço de acesso da API de validação.
-* SCHEMA - Schema utilizado para o sistema MGI na base de dados
+* SCHEMA - Schema da base de dados utilizado para o sistema MGI na base de dados
 
+Dependendo da escolha do tipo de esquema de validação:
 
+* SCHEMA_LOGIN - pode assumir os seguintes valores: ldap, scpa, local.
+
+##LDAP
+
+* URL - Url do serviço de LDAP.  Por exemplo: ldap://localhost.
+* BIND_DN - Domain name do usuário que fará a consulta LDAP. Por exemplo: cn=admin, dc=exemplo, dc=com, dc=br
+* BIND_CREDENTIALS - Senha do usuário de consulta LDAP
+* SEARCH_BASE - Qual a base de busca do usuário do login no serviço de diretório. Por exemplo: DC=exemplo, DC=com, DC=br
+* SEARCH_FILTER - Qual o filtro. Por exemplo: (uid={{username}}).  O nome username é o utilizado pelo sistema para retornar a identificação do usuário que está logando.
+
+##SCPA
+
+* WSDL - Qual o endereço utilizado para consulta de usuário no SCPA. Por exemplo: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+* SISTEMA - Qual o nome do sistema a ser utilizado para login.
 
 
 (*) A configuração por variável de ambiente bypass aquela por arquivo config.

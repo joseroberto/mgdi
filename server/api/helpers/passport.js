@@ -149,20 +149,21 @@ module.exports = function(passport) {
 
     var opts = {
         server: {
-                url: 'ldap://localhost',
-                bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br',
-                bindCredentials: 'gFGcZxyrnc8pT8se',
-                searchBase: 'DC=synapsys, DC=com, DC=br',
-                searchFilter: '(uid={{username}})',
-                usernameField: 'username',
-                passwordField: 'password'
-               // passReqToCallback : true
+                url:  process.env.URL || config_param.url,
+                bindDn: process.env.BIND_DN || config_param.bindDn,
+                bindCredentials: process.env.BIND_CREDENTIALS || config_param.bindCredentials,
+                searchBase: process.env.SEARCH_BASE || config_param.searchBase,
+                searchFilter: process.env.SEARCH_FILTER || config_param.searchFilter
               }
-    };
+    }
 
     passport.use('ldap', new LdapStrategy(opts,(user,done)=>{
       console.log('Autenticacao LDAP', user);
-      done(null,user);
+      done(null,{
+                    cpf: user['cpf'],
+                    nome: user['givenName'],
+                    email: user['mail']
+                });
     }));
 
     /*passport.use('ldap', new LdapStrategy(opts, (req, user, done)=> {

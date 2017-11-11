@@ -15,7 +15,7 @@ module.exports = {
     var log = log4js.getLogger();
     try {
       if(!config_param.bypass){
-        passport.authenticate(config_param.schema_login, function (err, user,info){
+        passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, function (err, user,info){
             if(err){
               console.log('Erro:',err);
               return res.status(403).send({message: err});
