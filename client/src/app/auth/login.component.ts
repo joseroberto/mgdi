@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService, UtilService } from '../services/index';
-import {NotificationService} from "../shared/utils/notification.service";
+import { NotificationService } from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -19,16 +19,15 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-      this.auth.login(this.model.email, this.model.senha).subscribe(resp =>{
+      this.auth.login(this.model.usuario, this.model.senha).subscribe(resp =>{
         console.log("Sucesso no login",resp);
         this.router.navigate(['/admin'], {queryParams: {q:'login'}});
       },err =>{
         console.log("Erro no login", err);
         let mensagem = JSON.parse(err._body);
-        if (err.status == 403){
+        if ([403,500].indexOf(err.status)> -1){
           this.util.msgErro(mensagem.message);
         }else{
-
           this.util.msgErroInfra("Erro no acesso ao login. Tente mais tarde!");
         }
       });

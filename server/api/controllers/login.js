@@ -21,7 +21,7 @@ module.exports = {
               return res.status(403).send({message: err});
             }
             if(info){
-              return res.status(500).send({message: info});
+              return res.status(500).send(info);
             }
             var token = jwt.sign(user, config_param.secret, { expiresIn: '7d' });
             res.json({token: util.format('Bearer %s', token), user: user});
