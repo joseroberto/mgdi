@@ -47,6 +47,7 @@ config:
   user: vasconcelos
   password: serenaya00
   hostdb: localhost
-  schema_login: scpa
+  #schema_login: scpa
+  schema_login: ldap
   ##hostdb: banco
   #bypass: true
