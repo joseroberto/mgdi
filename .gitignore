@@ -7,7 +7,7 @@
 # compiled output
 /dist
 /tmp
-client/dist
+#client/dist
 
 node_modules
 
