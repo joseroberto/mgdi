@@ -1628,6 +1628,9 @@ definitions:
       periodicidade_monitoramento:
         type: number
         description: Periodicidade de monitoramento dos dados
+      polaridade:
+        type: number
+        description: Polaridade da medida do indicador
       unidade_medida:
         type: number
         description: Código da unidade de medida

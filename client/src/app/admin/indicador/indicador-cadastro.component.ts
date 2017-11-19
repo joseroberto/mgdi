@@ -11,26 +11,6 @@ import '../../extensions/array.extension';
 
 declare var $: any;
 
-/*class IndicadorAtualizacao{
-  codigo: string;
-  titulo: string;
-  descricao: string;
-  classificacao: number;
-  periodicidade_atualizacao: number;
-  periodicidade_avaliacao: number;
-  periodicidade_monitoramento: number;
-  unidade_medida: number;
-  ativo: boolean;
-  acumulativo: boolean;
-  privado: boolean;
-  especifico: boolean;
-  carga_manual: boolean;
-  unidade_responsavel: number;
-  secretaria: number;
-  tags:any[];
-  ultima_atualizacao: any;
-}*/
-
 @FadeInTop()
 @Component({
   selector: 'sa-form-elements',
@@ -58,19 +38,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       ['ctrl', ['undo', 'redo']]
     ]};
 
-  /*private indicador:{id:number, codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
-    periodicidade_monitoramento:number, periodicidade_avaliacao:number, unidade_medida:number,
-    metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
-    limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
-    acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
-    referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number, ultima_atualizacao:any, Granularidade:{sigla:string} } = {
-      id:0, codigo: '', titulo: '', descricao:'', classificacao:0, referencia_consulta:'',
-      periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
-      limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:false, tags:[],
-      IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: 0,
-      especifico: true, indice_referencia: null, ultima_atualizacao: null, Granularidade:{sigla:''}
-  };
-  */
   private indicador:Indicador;
 
   private colecaoClassificacao:any[] = [];
@@ -427,6 +394,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         if('especifico' in item ) valor['especifico']=item['especifico'];
         if('unidade_responsavel' in item ) valor['unidade_responsavel']=item['unidade_responsavel'];
         if('secretaria' in item ) valor['secretaria']=item['secretaria'];
+        if('polaridade' in item ) valor['polaridade']=item['polaridade'];
         if('tags' in item ) valor['tags']=item['tags'];
         if('indice_referencia' in item && item['indice_referencia']!=null ) valor['indice_referencia']=parseFloat(String(item['indice_referencia']).replace(',','.'));
         if('granularidade' in item) valor['granularidade'] = item['granularidade'];
