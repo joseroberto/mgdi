@@ -29,7 +29,7 @@
 
       <!-- widget content -->
       <div class="widget-body no-padding">
-        <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)"
           novalidate="novalidate" saBootstrapValidator
           class="form-horizontal"
           data-bv-message="O valor é inválido"
@@ -55,7 +55,6 @@
                       data-bv-notempty-message="O código do indicador é obrigatório" maxlength="10">
                   </div>
                 </div>
-                <div>
                   <popover-content #titulo
                      title="Título Resumido"
                      [closeOnClickOutside]="true">
@@ -66,7 +65,6 @@
                     <input id="titulo" class="form-control"
                       placeholder="Título resumido do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
                   </div>
-                </div>
               </div>
           </fieldset>
 
@@ -157,11 +155,11 @@
                      <label class="col-md-2 control-label" for="classificacao" >Classificação
                        <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="classificacao"></i></label>
                      <div class="col-md-2">
-                       <select class="form-control" id="classificacao" name="classificacao" [ngModel]="indicador.classificacao" required>
+                       <select class="form-control" id="classificacao" name="classificacao"
+                       [ngModel]="indicador.classificacao" required>
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-
                      <label class="col-md-2 control-label" for="unidade_medida">Unidade de medida
                        <popover-content #unidade_medida
                                         title="Unidade de Medida Utilizada"
@@ -174,37 +172,55 @@
                          <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
                      </div>
-                     <div>
-                       <popover-content #granularidade
-                                        title="Estratificação"
-                                        [closeOnClickOutside]="true">
-                           Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
-                       </popover-content>
-                       <label class="col-md-2 control-label" for="granularidade">Estratificação
-                       <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="granularidade"></i></label>
-                     </div>
+                       <label class="col-md-2 control-label">Índice de Referência
+                         <popover-content #indice_referencia
+                           title="Índice de Referência"
+                           [closeOnClickOutside]="true">
+                             Situação que se deseja atingir.
+                         </popover-content>
+                         <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="indice_referencia">
+                         </i>
+                       </label>
                      <div class="col-md-2">
-                       <select class="form-control" id="granularidade" name="granularidade" [ngModel]="indicador.granularidade" required>
-                         <option *ngFor="let itemGranularidade of colecaoGranularidades" [ngValue]="itemGranularidade.codigo">{{ itemGranularidade.descricao }}</option>
-                       </select>
+                       <input type="text" id="indice_referencia" name="indice_referencia" maxlength="5"
+                       [ngModel]="formatTelaFloat(indicador.indice_referencia)"
+                       class="form-control"
+                       placeholder="Índice"
+                       data-bv-notempty="false"
+                       data-bv-numeric="true"
+                       data-bv-numeric-separator=","
+                       data-bv-numeric-message="Valor deve ser numérico">
                      </div>
                   </div>
                   <div class="form-group">
-                    <popover-content #indice_referencia
-                      title="Índice de Referência"
-                      [closeOnClickOutside]="true">
-                        Situação que se deseja atingir.
-                    </popover-content>
-                    <label class="col-md-2 control-label">Índice de Referência <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="indice_referencia"></i></label>
+                    <div>
+                      <popover-content #granularidade
+                                       title="Estratificação"
+                                       [closeOnClickOutside]="true">
+                          Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
+                      </popover-content>
+                      <label class="col-md-2 control-label" for="granularidade">Estratificação
+                      <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="granularidade"></i></label>
+                    </div>
                     <div class="col-md-2">
-                      <input type="text" id="indice_referencia" name="indice_referencia" maxlength="5"
-                      [ngModel]="formatTelaFloat(indicador.indice_referencia)"
-                      class="form-control"
-                      placeholder="Índice"
-                      data-bv-notempty="false"
-                      data-bv-numeric="true"
-                      data-bv-numeric-separator=","
-                      data-bv-numeric-message="Valor deve ser numérico">
+                      <select class="form-control" id="granularidade" name="granularidade" [ngModel]="indicador.granularidade" required>
+                        <option *ngFor="let itemGranularidade of colecaoGranularidades" [ngValue]="itemGranularidade.codigo">{{ itemGranularidade.descricao }}</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="col-md-2 control-label" for="polaridade">Polaridade
+                        <popover-content #polaridade
+                                         title="Polaridade"
+                                         [closeOnClickOutside]="true">
+                            Escolha a polaridade para os dados do indicador.
+                        </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="polaridade">
+                      </i></label>
+                    </div>
+                    <div class="col-md-2">
+                      <select class="form-control" id="polaridade" name="polaridade" [ngModel]="indicador.polaridade" required>
+                        <option *ngFor="let itemPolaridade of colecaoPolaridades" [ngValue]="itemPolaridade.codigo">{{ itemPolaridade.descricao }}</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -284,21 +300,28 @@
                   <div class="form-group">
                     <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade" name="periodicidade_atualizacao" [ngModel]="indicador.periodicidade_atualizacao" required>
+                      <select class="form-control" id="periodicidade"
+                      name="periodicidade_atualizacao"
+                      [ngModel]="indicador.periodicidade_atualizacao" required
+                      data-bv-notempty-message="O valor é obrigatório">
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
                     </div>
                     <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao" [ngModel]="indicador.periodicidade_avaliacao" required>
+                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao"
+                      data-bv-notempty-message="O valor é obrigatório"
+                      [ngModel]="indicador.periodicidade_avaliacao" required>
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
                     </div>
                     <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento" [ngModel]="indicador.periodicidade_monitoramento" required>
+                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento"
+                      [ngModel]="indicador.periodicidade_monitoramento" required
+                      data-bv-notempty-message="O valor é obrigatório">
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
@@ -704,7 +727,8 @@
                 <fieldset style="padding: 15px">
                   <resultset *ngIf="indicador.Granularidade" [codigo]="indicador.codigo"
                   [granularidade]="indicador.Granularidade.sigla"
-                  [criterio]="indicador.criterio_agregacao"></resultset>
+                  [criterio]="indicador.criterio_agregacao"
+                  [tipo]="indicador.tipo_consulta"></resultset>
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't8'">

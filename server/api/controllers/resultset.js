@@ -15,7 +15,7 @@ const config = {
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 const pool = new pg.Pool(config);
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack);
@@ -423,9 +423,9 @@ function montaQueryComplemento(indicadores, config){
         }else{
           filtro = '';
         }
-        where = where +  ` AND mun.co_ibge IN ( select co_ibge from dbesusgestor.tb_municipio_agrupamento mua
-          inner join dbesusgestor.tb_agrupamento agr on mua.co_agrupamento = agr.co_agrupamento
-          inner join dbesusgestor.tb_categoria cat on cat.co_categoria = agr.co_categoria
+        where = where +  ` AND mun.co_ibge IN ( select co_ibge from ${schema}.tb_municipio_agrupamento mua
+          inner join ${schema}.tb_agrupamento agr on mua.co_agrupamento = agr.co_agrupamento
+          inner join ${schema}.tb_categoria cat on cat.co_categoria = agr.co_categoria
           where cat.ds_sigla = '${config.filtro}' ${filtro})`
         break;
 

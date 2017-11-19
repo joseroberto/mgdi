@@ -76,6 +76,7 @@ module.exports = {
         res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
       }).catch(err=>{
         console.log('Erro', err);
+        res.status(500).json({codret: 1001, message: "Erro no cadastramento do indicador"});
       });
     });
   },
@@ -91,7 +92,8 @@ module.exports = {
                    { model: models.Unidade , as: 'UnidadeResponsavel' },
                    { model: models.Granularidade , as: 'Granularidade' },
                    { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
-                   { model: models.UnidadeMedida, as: 'UnidadeMedida' }],
+                   { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+                   { model: models.Polaridade, as: 'Polaridade' }],
         where: {codigo: req.swagger.params.codigo.value}
       }
     ).then((indicador)=> {
@@ -135,12 +137,15 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
-    //console.log(req.body);
+    //console.log('Update indicador',req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
         item[0].setTags(req.body.tags);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na atualização do indicador"});
     });
   },
   updateConceituacao: (req,res)=>{

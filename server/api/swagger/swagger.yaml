@@ -327,6 +327,23 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/polaridade:
+    x-swagger-router-controller: polaridade
+    get:
+      description: Retorna os tipos de polaridade previstos para os indicadores
+      summary: Lista de polaridades possíveis para consulta
+      operationId: getPolaridades
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetPolaridadesResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/tag:
     x-swagger-router-controller: tag
     get:
@@ -1747,6 +1764,19 @@ definitions:
       - granularidade
     properties:
       granularidade:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetPolaridadesResponse:
+    required:
+      - polaridades
+    properties:
+      polaridades:
         type: array
         items:
           type: object

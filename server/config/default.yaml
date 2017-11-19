@@ -42,16 +42,18 @@ config:
   # -------------------------------------------
   # | Banco de dados do MGI                   |
   # -------------------------------------------
-  database: dbspo
+  #database: dbspo
+  database: dbses
   user: vasconcelos
   password: serenaya00
   hostdb: localhost
+  #schema: dbesusgestor
+  schema: dbmgi
   ##hostdb: banco
   # -------------------------------------------
   # | Tabela interna de resultados            |
   # -------------------------------------------
   tabela_indicadores: tb_resultado
-  schema_esusgestor: dbesusgestor
 
   # -------------------------------------------
   # | SCPA                                    |
@@ -68,3 +70,4 @@ config:
   bindCredentials: 'gFGcZxyrnc8pT8se'
   searchBase: 'DC=synapsys, DC=com, DC=br'
   searchFilter: '(uid={{username}})'
+  mailfield: 'mail'

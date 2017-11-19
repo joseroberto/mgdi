@@ -19,11 +19,12 @@ export class ResultsetComponent implements OnChanges, OnInit {
     @Input() codigo: string;
     @Input() granularidade:string = '';
     @Input() criterio:number = 0;
+    @Input() tipo:number = 0;
 
     private _dataTable:any;
     private enable:boolean = false;
     private colecaoGranularidade:any[] = [];
-    private tipo:string;
+    private tipo_granularidade:string;
 
     constructor(private zone:NgZone, private winRef: WindowRef, private consulta:ConsultaService,
         private granularidadeService: GranularidadeService,
@@ -49,17 +50,18 @@ export class ResultsetComponent implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges) {
       if(changes.granularidade && changes.granularidade.currentValue){
-          this.tipo = changes.granularidade.currentValue;
+          this.tipo_granularidade = changes.granularidade.currentValue;
       }
       if(changes.codigo && changes.codigo.currentValue){
           this.codigo = changes.codigo.currentValue;
       }
-      this.loadData();
+      if(!changes.tipo && changes.tipo.currentValue && !this.tipo)
+        this.loadData();
     }
 
     loadData(){
-      if(this.codigo && this.tipo){
-        this.consulta.search(this.codigo,null,this.tipo, 'TAB').then((resp)=>{
+      if(this.codigo && this.tipo_granularidade){
+        this.consulta.search(this.codigo,null,this.tipo_granularidade, 'TAB').then((resp)=>{
             console.log('Resultset',resp);
             if(this.enable){
               this.render(resp.resultset);
@@ -75,7 +77,7 @@ export class ResultsetComponent implements OnChanges, OnInit {
 
       $('#lista').empty();
       $('#lista').unbind('draw.dt');
-      switch(this.tipo){
+      switch(this.tipo_granularidade){
         case 'BR':
           columns = [];
           break;
@@ -169,7 +171,7 @@ export class ResultsetComponent implements OnChanges, OnInit {
 
     private selectGranularidade(valor:string){
       console.log('Valor repassado:', valor);
-      this.tipo = valor;
+      this.tipo_granularidade = valor;
       this._dataTable.destroy();
       //this._dataTable.clear();
       //this._dataTable.draw();

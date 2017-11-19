@@ -1,5 +1,6 @@
 ### 0.1.2
 * Novo: Esquema e login independente.  Pode ser: local, scpa ou ldap.
+* Correção: Tratamento de erro de cadastro/edição de indicador
 
 ### 0.1.1 - 27/Outubro/2017
 * Novo: Casos de uso de cadastros auxiliares: Categoria de analise, Unidade de medida, Marcadores.

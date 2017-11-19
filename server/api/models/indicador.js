@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var Indicador = sequelize.define('Indicador', {
@@ -85,6 +85,12 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
+    polaridade: {
+        type: DataTypes.INTEGER,
+        field: 'co_polaridade',
+        allowNull: false,
+        defaultValue: 0
+    },
     metodo_calculo:{
         type: DataTypes.TEXT,
         field: 'ds_metodo_calculo'
@@ -162,9 +168,9 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods: {
       associate: function(models) {
-         //Indicador.belongsTo(models.BancoDados,{
-        //   as: 'BancoDados',
-        //   foreignKey: 'co_banco_dados'});
+         Indicador.belongsTo(models.Polaridade,{
+          as: 'Polaridade',
+          foreignKey: 'co_polaridade'});
          //Indicador.belongsTo(models.TipoConsulta,{
         //  as: 'TipoConsulta',
         //  foreignKey: 'co_tipo_consulta'});

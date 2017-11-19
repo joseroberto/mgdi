@@ -72,9 +72,6 @@ svg {
   display: none;
 }
 
-.select2-container-multi .select2-choices, .select2-selection--multiple{
-  border-color: transparent;
-}
 
 .ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
   display: none;
@@ -91,4 +88,3 @@ svg {
 .sa-cloak:not(.sa-hidden){
   opacity: 1;
 }
-

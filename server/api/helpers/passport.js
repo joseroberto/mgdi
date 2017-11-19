@@ -162,7 +162,7 @@ module.exports = function(passport) {
       done(null,{
                     cpf: user['cpf'],
                     nome: user['givenName'],
-                    email: user['mail']
+                    email: user[process.env.MAILFIELD || config_param.mailfield]
                 });
     }));
 

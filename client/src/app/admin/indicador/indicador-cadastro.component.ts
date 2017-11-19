@@ -3,13 +3,15 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
   PeriodicidadeService, UtilService, ConsultaService,
   TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
-  UnidadeService, GranularidadeService, CriterioAgregacaoService} from '../../services/index';
+  UnidadeService, GranularidadeService, CriterioAgregacaoService, PolaridadeService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Indicador } from '../../model/index';
+
 import '../../extensions/array.extension';
 
 declare var $: any;
 
-class IndicadorAtualizacao{
+/*class IndicadorAtualizacao{
   codigo: string;
   titulo: string;
   descricao: string;
@@ -27,7 +29,7 @@ class IndicadorAtualizacao{
   secretaria: number;
   tags:any[];
   ultima_atualizacao: any;
-}
+}*/
 
 @FadeInTop()
 @Component({
@@ -56,18 +58,20 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       ['ctrl', ['undo', 'redo']]
     ]};
 
-  private indicador:{id:number, codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
+  /*private indicador:{id:number, codigo:string, titulo:string, descricao:string, classificacao:number, periodicidade_atualizacao:number,
     periodicidade_monitoramento:number, periodicidade_avaliacao:number, unidade_medida:number,
     metodo_calculo:string, conceituacao:string, interpretacao:string, usos:string,
     limitacoes:string, notas:string, observacoes:string, fonte_dados:string, carga_manual:boolean,
     acumulativo: boolean, ativo:boolean, privado:boolean, tags:any[], IndicadoresRelacionados:any[], CategoriasAnalise:any[], UnidadeResponsavel:{sigla:string, nome:string}, tipo_consulta:number, banco_dados:number,
     referencia_consulta:string, procedimento_operacional:string, secretaria:number, unidade_responsavel:number, granularidade:number, criterio_agregacao:number, especifico:boolean, indice_referencia: number, ultima_atualizacao:any, Granularidade:{sigla:string} } = {
-      id:0, codigo: '', titulo: '', descricao:'', classificacao:null, referencia_consulta:'',
+      id:0, codigo: '', titulo: '', descricao:'', classificacao:0, referencia_consulta:'',
       periodicidade_atualizacao:null, periodicidade_monitoramento:null, periodicidade_avaliacao:null,unidade_medida:null, metodo_calculo:'', conceituacao:'', interpretacao:'', usos:'',
       limitacoes:'', notas:'', procedimento_operacional:'', observacoes:'', fonte_dados:'', carga_manual:false, acumulativo:false, ativo:true, privado:false, tags:[],
       IndicadoresRelacionados:[], CategoriasAnalise:[], UnidadeResponsavel:null, tipo_consulta:0, banco_dados:0, secretaria:null, unidade_responsavel:null, granularidade:null, criterio_agregacao: 0,
       especifico: true, indice_referencia: null, ultima_atualizacao: null, Granularidade:{sigla:''}
   };
+  */
+  private indicador:Indicador;
 
   private colecaoClassificacao:any[] = [];
   private colecaoPeriodicidade:any[] = [];
@@ -81,6 +85,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoUnidades:any[] = [];
   private colecaoGranularidades:any[] = [];
   private colecaoCriteriosAgregacao:any[] = [];
+  private colecaoPolaridades:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -106,14 +111,16 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private unidadeService: UnidadeService,
       private granularidadeService: GranularidadeService,
       private criterioAgregacaoService: CriterioAgregacaoService,
-      private consultaService: ConsultaService) {
+      private consultaService: ConsultaService,
+      private polaridadeService:PolaridadeService) {
         this.breadcrumb = ['Indicador', 'Novo'];
+
       }
 
   ngOnInit() {
     System.import('script-loader!summernote/dist/summernote.min.js');
     this.flag_update = false;
-
+    this.indicador = new Indicador();
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
         this.colecaoClassificacao = resp.classificacoes;
     }, err => this.util.msgErroInfra(err));
@@ -146,6 +153,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.criterioAgregacaoService.getAll().subscribe(resp=>{
         this.colecaoCriteriosAgregacao = resp.criterio_agregacao;
+    }, err => this.util.msgErroInfra(err));
+    this.polaridadeService.getAll().subscribe(resp=>{
+        this.colecaoPolaridades = resp.polaridades;
     }, err => this.util.msgErroInfra(err));
   }
 
@@ -368,7 +378,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   private onSubmit(form){
-    let valor: IndicadorAtualizacao= this.populaObjetoGravacao([this.indicador,form.value]);
+    let valor: Indicador= this.populaObjetoGravacao([this.indicador,form.value]);
     console.log('Antes de gravar', valor, form.valid);
     if(form.valid){
       //var obj = Object.assign(form.value, this.indicador.tags);
@@ -379,7 +389,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }else{
             this.util.msgErro(resp.mensagem);
           }
-        }, err=>this.util.msgErroInfra(err));
+        }, err=>this.util.msgErro(JSON.parse(err._body).message));
       }else{
         valor['codigo'] = form.value.codigo_edit.toUpperCase();
         this.indicadorService.create(valor).subscribe(resp=>{
@@ -390,7 +400,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }else{
             this.util.msgErro(resp.mensagem);
           }
-        }, (err)=>this.util.msgErroInfra(err)
+        }, (err)=>this.util.msgErro(JSON.parse(err._body).message)
         );
       }
     }else{
@@ -398,10 +408,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  private populaObjetoGravacao(obj:any[]):IndicadorAtualizacao{
+  private populaObjetoGravacao(obj:any[]):Indicador{
       console.log('obj', obj);
-      let valor:IndicadorAtualizacao = new IndicadorAtualizacao();
+      let valor:Indicador = new Indicador();
       obj.forEach(item=>{
+        if('id' in item) valor['id'] = item ['id'];
         if('codigo' in item ) valor['codigo']=item['codigo'];
         if('titulo' in item ) valor['titulo']=item['titulo'];
         if('descricao' in item ) valor['descricao']=item['descricao'];
@@ -415,8 +426,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         if('privado' in item) valor['privado']=item['privado'];
         if('especifico' in item ) valor['especifico']=item['especifico'];
         if('unidade_responsavel' in item ) valor['unidade_responsavel']=item['unidade_responsavel'];
-        //if('secretaria' in item ) valor['secretaria']=item['secretaria'];
-        //if('carga_manual' in item ) valor['carga_manual']=item['carga_manual'];
+        if('secretaria' in item ) valor['secretaria']=item['secretaria'];
         if('tags' in item ) valor['tags']=item['tags'];
         if('indice_referencia' in item && item['indice_referencia']!=null ) valor['indice_referencia']=parseFloat(String(item['indice_referencia']).replace(',','.'));
         if('granularidade' in item) valor['granularidade'] = item['granularidade'];
@@ -529,8 +539,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     if(this.isIndicadorTemGrafico()){
       this.consultaService.search(codigo, '-1', tipo).then((resp)=>{
         componente.add(this.agruparesultindicador(codigo,resp));
-        //let lcodigo = arr.toLowerCase();
-        //componente.add(resp.sort((a,b)=> a[lcodigo]<b[lcodigo]? 1: -1));
       });
     }
   }
