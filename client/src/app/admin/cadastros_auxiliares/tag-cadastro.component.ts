@@ -77,8 +77,9 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      //this.novatagcategoria = Object.assign(this.novatagcategoria, form.value);
-      console.log('onSubmit', this.novatagcategoria);
+      console.log('onSubmit123', form.value);
+      this.novatagcategoria = Object.assign(this.novatagcategoria, form.value);
+
       if(form.valid){
         if(this.novatagcategoria.codigo){
 
@@ -100,6 +101,7 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
           }, (err)=>this.util.msgErroInfra(err));
         }
       }else{
+        console.log(form);
         this.util.msgErro('Erro de validação de campos');
       }
     }

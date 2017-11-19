@@ -32,7 +32,6 @@
 
         <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
                   novalidate="novalidate" saBootstrapValidator
-                  class="form-horizontal"
                   data-bv-message="O valor é inválido"
                   data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                   data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
@@ -49,7 +48,9 @@
                           <label class="col-md-2 control-label">Descrição <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="titulo"></i></label>
                           <div class="col-md-5">
                             <input id="titulo" class="form-control"
-                              placeholder="Descrição do grupo de marcador" type="text" [ngModel]="novaunidademedida.descricao" name="descricao" required maxlength="300"
+                              placeholder="Descrição do grupo de marcador" type="text"
+                              [ngModel]="novaunidademedida.descricao" name="descricao"
+                              required maxlength="300"
                               data-bv-notempty="true"
                               data-bv-notempty-message="A descrição da unidade de medida é obrigatória">
                           </div>

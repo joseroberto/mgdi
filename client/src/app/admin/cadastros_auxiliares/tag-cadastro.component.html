@@ -31,7 +31,6 @@
       <div class="widget-body no-padding">
         <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
                   novalidate="novalidate" saBootstrapValidator
-                  class="form-horizontal"
                   data-bv-message="O valor é inválido"
                   data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                   data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
@@ -48,8 +47,9 @@
                           <label class="col-md-2 control-label">Descrição do grupo <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="titulo"></i></label>
                           <div class="col-md-5">
                             <input id="descricao" class="form-control"
-                              placeholder="Descrição do grupo de marcador" type="text" [(ngModel)]="novatagcategoria.descricao" name="descricao" required maxlength="200"
-                              data-bv-notempty="true"
+                              placeholder="Descrição do grupo de marcador" type="text"
+                              [(ngModel)]="novatagcategoria.descricao" name="descricao"
+                              required maxlength="200"
                               data-bv-notempty-message="A descrição do grupo de marcadores é obrigatória">
                           </div>
                         </div>
@@ -63,7 +63,7 @@
                           <div class="input-group">
                           <input class="form-control"
                           placeholder="Marcador"
-                          type="text" id="item">
+                          type="text" id="item" name="item">
                           <div class="input-group-btn">
                           <button class="btn btn-primary" type="button" (click)="adicionaMarcador()">
                             <i class="fa fa-plus"></i>Adiciona Item
@@ -126,14 +126,14 @@
      aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form #f="ngForm" >
-      <div class="modal-header">
-        <button type="button" class="close" (click)="grupoTagModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">{{ tituloModal }}</h4>
-      </div>
-      <div class="modal-body">
+      <form #f1="ngForm" >
+        <div class="modal-header">
+          <button type="button" class="close" (click)="grupoTagModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">{{ tituloModal }}</h4>
+        </div>
+        <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -142,7 +142,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+        <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="grupoTagModal.hide()">
           <i class="fa fa-ban"></i> Fecha
         </button>
