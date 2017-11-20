@@ -15,14 +15,15 @@ const pg = require('pg');
 //└───────────────────────── second (0 - 59, OPTIONAL)
 
 const config = {
-  user: 'vasconcelos', //env var: PGUSER
-  database: 'dbspo', //env var: PGDATABASE
-  password: 'serenaya',
-  host: 'localhost', // Server hosting the postgres database
+  user: process.env.USER_DB || config_param.user, //env var: PGUSER
+  database: process.env.DATABASE || config_param.database, //env var: PGDATABASE
+  password: process.env.PASSWORD_DB || config_param.password,
+  host: process.env.HOSTDB || config_param.hostdb, // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 const pool = new pg.Pool(config);
 pool.on('error', function (err, client) {
@@ -36,7 +37,7 @@ exports.cron = ()=>{
       switch (item.codigo) {
         case 360:
           schedule.scheduleJob('42 * 1 * * *', ()=>{
-              var sql = `update dbesusgestor.tb_indicador set ds_ultima_atualizacao=maior_data
+              var sql = `update ${schema}.tb_indicador set ds_ultima_atualizacao=maior_data
               from (select a.co_seq_indicador, max(co_ano) as maior_data from dbesusgestor.tb_indicador a inner join ${config_param.schema_esusgestor}.${config_param.tabela_indicadores} b
               on a.co_seq_indicador=b.co_seq_indicador
               group by a.co_seq_indicador) as sq
@@ -53,11 +54,11 @@ exports.cron = ()=>{
             break;
           case 30:
             schedule.scheduleJob('42 * 2 * * *', ()=>{
-                var sql = `update dbesusgestor.tb_indicador set ds_ultima_atualizacao=maior_data
-                from (select a.co_seq_indicador, max(co_anomes) as maior_data from dbesusgestor.tb_indicador a inner join ${config_param.schema_esusgestor}.${config_param.tabela_indicadores} b
+                var sql = `update ${schema}.tb_indicador set ds_ultima_atualizacao=maior_data
+                from (select a.co_seq_indicador, max(co_anomes) as maior_data from ${schema}.tb_indicador a inner join ${schema}.${config_param.tabela_indicadores} b
                 on a.co_seq_indicador=b.co_seq_indicador
                 group by a.co_seq_indicador) as sq
-                where dbesusgestor.tb_indicador.co_seq_indicador = sq.co_seq_indicador
+                where ${schema}.tb_indicador.co_seq_indicador = sq.co_seq_indicador
                 and co_periodicidade_atualizacao=${item.codigo};`;
                 pool.query(sql,null, (err, result)=>{
                     if(err) {
