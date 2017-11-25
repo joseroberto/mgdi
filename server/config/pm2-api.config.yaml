@@ -1,6 +1,6 @@
 apps:
   - script   : ./app.js
-    name: esusgestor-api
+    name: barramento-api
     instances: 4
     exec_mode: cluster
     watch  : true
