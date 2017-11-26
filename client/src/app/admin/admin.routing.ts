@@ -24,6 +24,8 @@ import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
+import {PerfilComponent} from './perfil/perfil.component';
+
 export const homeRoutes: Routes = [
     {
         path: '',
@@ -110,7 +112,11 @@ export const homeRoutes: Routes = [
     component: UnidadeMedidaComponent,
     data: {pageTitle: 'Lista de unidades de medida'}
     },
-
+    {
+    path: 'perfil',
+    component: PerfilComponent,
+    data: {pageTitle: 'Perfil do usuário'}
+    },
 ];
 
 export const AdminRouting:ModuleWithProviders = RouterModule.forChild(homeRoutes);
