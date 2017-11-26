@@ -16,7 +16,7 @@
                       <h4 class="txt-color-black font-md">{{ getDate() }}</h4>
                     </div>
                     <div class="air air-bottom-right padding-10">
-                      <a href="" class="btn txt-color-white bg-color-teal btn-sm"><i class="fa fa-check"></i> Edita</a>&#xA0;
+                      <button type="button" class="btn txt-color-white bg-color-teal btn-sm" (click)="editItemPerfil()"><i class="fa fa-check"></i> Edita</button>&#xA0;
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -82,8 +82,6 @@
                         cumque nihil impedit quo minus id quod maxime placeat facere
                       </p>
                       <br>
-                      <a href="" class="btn btn-default btn-xs"><i class="fa fa-envelope-o"></i> Send Message</a>
-                      <br>
                       <br>
                     </div>
 
@@ -97,31 +95,13 @@
                     <div class="tab-content padding-top-10">
                         <div class="row">
                           <div class="col-xs-2 col-sm-1">
-                            <time datetime="2014-09-20" class="icon">
-                              <strong>Jan</strong>
-                              <span>10</span>
+                            <time datetime="2017-11-01" class="icon">
+                              <strong>Nov</strong>
+                              <span>01</span>
                             </time>
                           </div>
                           <div class="col-xs-10 col-sm-11">
-                            <h6 class="no-margin"><a href="">Allice in Wonderland</a></h6>
-
-                            <p>
-                              Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi Nam eget dui.
-                              Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
-                              sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel.
-                            </p>
-                          </div>
-                          <div class="col-sm-12">
-                            <hr>
-                          </div>
-                          <div class="col-xs-2 col-sm-1">
-                            <time datetime="2014-09-20" class="icon">
-                              <strong>Jan</strong>
-                              <span>10</span>
-                            </time>
-                          </div>
-                          <div class="col-xs-10 col-sm-11">
-                            <h6 class="no-margin"><a href="">World Report</a></h6>
+                            <h6 class="no-margin"><a href="">Mudança no indicador XADC</a></h6>
 
                             <p>
                               Morning our be dry. Life also third land after first beginning to evening cattle created
@@ -132,6 +112,25 @@
                               unto She'd doesn't. Replenish brought kind gathering Meat.
                             </p>
                           </div>
+                          <div class="col-sm-12">
+                            <hr>
+                          </div>
+                          <div class="col-xs-2 col-sm-1">
+                            <time datetime="2017-09-20" class="icon">
+                              <strong>Set</strong>
+                              <span>20</span>
+                            </time>
+                          </div>
+                          <div class="col-xs-10 col-sm-11">
+                            <h6 class="no-margin"><a href="">Mudança no indicador ACPA</a></h6>
+
+                            <p>
+                              Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi Nam eget dui.
+                              Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero,
+                              sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel.
+                            </p>
+                          </div>
+
                           <div class="col-sm-12">
                             <br>
                           </div>
@@ -153,10 +152,10 @@
 
 <div bsModal #perfilModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form #f="ngForm" >
-      <div class="modal-header">
+      <form #fedit="ngForm" >
+      <div class="modal-header bg-primary text-white">
         <button type="button" class="close" (click)="perfilModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -165,7 +164,7 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="perfil.hide()">
+        <button type="button" class="btn btn-danger" (click)="perfilModal.hide()">
           <i class="fa fa-ban"></i> Fecha
         </button>
         <button type="butten" class="btn btn-primary" (click)="atualizaPerfil()">

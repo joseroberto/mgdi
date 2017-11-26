@@ -59,6 +59,24 @@ module.exports = {
       res.json(resp);
     });
   },
+  getIndicadoresImportacao: (req, res)=>{
+    var attr = {
+      attributes: [ 'id', 'codigo', 'titulo', 'descricao',
+      'fonte_dados', 'ultima_atualizacao', 'granularidade' ],
+      include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
+        { model: models.Unidade, as: 'UnidadeResponsavel' },
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' }
+      ],
+      where: { 'ativo': true },
+      order: ['titulo']
+    };
+    if(req.swagger.params.tipo.value){
+        attr.where['tipo_consulta'] = req.swagger.params.tipo.value;
+    }
+    models.Indicador.findAndCountAll(attr).then(function(resp) {
+      res.json(resp);
+    });
+  },
   createIndicador: (req,res)=>{
     var entidade = req.body;
     unidade.getCodigoUnidadePai(entidade['unidade_responsavel']).then(function(lista) {

@@ -679,6 +679,30 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/importacao:
+    x-swagger-router-controller: indicador
+    get:
+      description: Retorna os dados de importação dos indicadores cadastrados no sistema (3 - Importação e 4 - Formulário)
+      summary: Lista de indicadores que podem ser importados
+      operationId: getIndicadoresImportacao
+      tags:
+        - Indicadores
+        - Importação
+      parameters:
+        - name: tipo
+          in: query
+          required: true
+          enum: [3, 4]
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetIndicadorConsulta"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador:
     x-swagger-router-controller: indicador
     get:

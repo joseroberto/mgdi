@@ -6,7 +6,7 @@ import {ModalDirective} from "ngx-bootstrap";
 })
 
 export class PerfilComponent implements OnInit{
-  @ViewChild('perfilModal') private perfilModal:ModalDirective;
+  @ViewChild('perfilModal') perfilModal:ModalDirective;
   private user:Object = {};
   constructor() {
   }
@@ -22,6 +22,10 @@ export class PerfilComponent implements OnInit{
     //return data.toLocaleDateString('pt-BR') + ' - ' + data.toLocaleTimeString('pt-BR');
     return data.toLocaleString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
+  }
+
+  private editItemPerfil(){
+    this.perfilModal.show();
   }
 
 }

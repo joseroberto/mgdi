@@ -22,6 +22,7 @@ import {PainelComponent} from "./painel/painel.component";
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
+import {IndicadorImportaListaComponent} from './indicador/indicador-importa-lista.component';
 
 // Itens de planos
 import {ProgramaComponent} from './programa/programa.component';
@@ -65,6 +66,7 @@ import { ComponentesModule } from '../componentes/componentes.module';
     IndicadorListaComponent,
     IndicadorCadastroComponent,
     IndicadorListaUnidadeComponent,
+    IndicadorImportaListaComponent,
     CategoriaAnaliseCadastroComponent,
     CategoriaAnaliseComponent,
     UsuarioComponent,

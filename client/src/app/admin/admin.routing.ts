@@ -11,6 +11,7 @@ import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
+import {IndicadorImportaListaComponent} from './indicador/indicador-importa-lista.component';
 
 // Itens de planos
 import {ProgramaComponent} from './programa/programa.component';
@@ -116,6 +117,11 @@ export const homeRoutes: Routes = [
     path: 'perfil',
     component: PerfilComponent,
     data: {pageTitle: 'Perfil do usuário'}
+    },
+    {
+    path: 'importa/:tipo',
+    component: IndicadorImportaListaComponent,
+    data: {pageTitle: 'Importação de dados'}
     },
 ];
 

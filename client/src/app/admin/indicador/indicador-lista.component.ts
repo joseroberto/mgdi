@@ -4,7 +4,7 @@ import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
 import { IndicadorService, UtilService } from '../../services/index';
 import {WindowRef} from '../WindowRef';
-import { environment } from '../../../environments/environment';
+//import { environment } from '../../../environments/environment';
 
 @FadeInTop()
 @Component({
@@ -65,7 +65,7 @@ export class IndicadorListaComponent implements OnInit {
     }}
   ],
   "order": [[1, 'asc']]
-}
+  }
 
 ngOnInit(){
     this.loadIndicadorPorTag();

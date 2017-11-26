@@ -112,4 +112,8 @@ export class IndicadorService extends REST {
   getCountPorTag(){
     return super.get('/indicador-portag');
   }
+
+  getPorTipoConsulta(tipo:number){
+    return super.get(`/indicador/importacao?tipo=${tipo}`)
+  }
 }
