@@ -71,3 +71,55 @@
   </sa-widgets-grid>
   <!-- end widget grid -->
 </div>
+
+<div bsModal #importaModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form #fimport="ngForm" >
+      <div class="modal-header bg-warning text-white">
+        <button type="button" class="close" (click)="importaModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Importação</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="importaModal.hide()">
+          <i class="fa fa-ban"></i> Fecha
+        </button>
+        <button type="butten" class="btn btn-primary" (click)="atualizaImportacao()">
+          <i class="fa fa-save"></i> Grava
+        </button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form #fimport="ngForm" >
+      <div class="modal-header bg-primary text-white">
+        <button type="button" class="close" (click)="formModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Formulário</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="formModal.hide()">
+          <i class="fa fa-ban"></i> Fecha
+        </button>
+        <button type="butten" class="btn btn-primary" (click)="atualizaFormulario()">
+          <i class="fa fa-save"></i> Grava
+        </button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

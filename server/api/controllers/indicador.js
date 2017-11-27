@@ -62,7 +62,7 @@ module.exports = {
   getIndicadoresImportacao: (req, res)=>{
     var attr = {
       attributes: [ 'id', 'codigo', 'titulo', 'descricao',
-      'fonte_dados', 'ultima_atualizacao', 'granularidade' ],
+      'fonte_dados', 'ultima_atualizacao', 'granularidade', 'tipo_consulta' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Unidade, as: 'UnidadeResponsavel' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' }
