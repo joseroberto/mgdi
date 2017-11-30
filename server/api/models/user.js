@@ -36,16 +36,16 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: true,
         field: 'ds_celular'
     },
+    cargo: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        field: 'ds_cargo'
+    },
     perfis: {
       type : DataTypes.ARRAY(DataTypes.STRING(20)),
       defaultValue:null,
       field: 'ar_perfis'
-    },
-    //ultimo_login: {
-    //  type: DataTypes.DATE,
-    //  noUpdate:true,
-    //  field: 'dt_atualizacao'
-    //}
+    }
   },{
     schema: schema,
     freezeTableName: true,

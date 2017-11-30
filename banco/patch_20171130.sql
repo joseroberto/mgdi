@@ -1,9 +1,17 @@
 update dbesusgestor.tb_tipo_consulta set ds_tipo_consulta='Formulário' where co_tipo_consulta=4;
 insert into dbesusgestor.tb_tipo_consulta (co_tipo_consulta, ds_tipo_consulta) values (5, 'ETL');
 
+alter table dbesusgestor.tb_user_mgi add column ds_cargo varchar(100);
+
 -----  Estrutura para os programs
 DROP TABLE dbesusgestor.tb_programa_meta_hierarquia;
 DROP TABLE dbesusgestor.tb_programa_meta;
+
+----------------------------------------
+-- Estrutura para carga
+
+
+
 
 ----------------------------------------
 CREATE TABLE dbesusgestor.tb_plano

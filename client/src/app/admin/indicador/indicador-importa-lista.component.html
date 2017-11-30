@@ -84,6 +84,50 @@
         <h4 class="modal-title">Importação</h4>
       </div>
       <div class="modal-body">
+        <div id="documento-form">
+                <form role="form">
+                  <fieldset>
+                      <legend>&nbsp;&nbsp;[{{ codigoIndicador }} - {{ tituloIndicador }}] </legend>
+                        <div class="form-group">
+                          <label class="col-md-2 control-label" for="arquivo">Arquivo</label>
+                          <div class="col-md-10">
+                            <input type="file" class="btn btn-default" id="arquivo"
+                              name="arquivo"
+                              accept="text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                              title="Escolha um arquivo"
+                              (change)="fileChangeEvent($event)"
+                              style="width: 100%">
+                            <p class="help-block">
+                              selecione o arquivo a ser carregado (CSV).
+                            </p>
+                          </div>
+                        </div>
+                    </fieldset>
+                    <hr />
+                    <table class="table table-striped" *ngIf="newArquivo.nameFile">
+                  <thead>
+                      <tr>
+                          <th>Nome</th>
+                          <th>Tipo</th>
+                          <th>Tamanho</th>
+                          <th>Data</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>{{ newArquivo.nameFile }}</td>
+                          <td><img src="{{ newArquivo.formato | imgtype }}"/></td>
+                          <td>{{ newArquivo.tamanhoFile | fileSize }}</td>
+                          <td>{{ newArquivo.dataFile | date:'dd/MM/yyyy - HH:mm:ss'}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              </form>
+          </div>
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" (click)="importaModal.hide()">

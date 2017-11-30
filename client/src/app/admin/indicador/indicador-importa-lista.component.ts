@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 import {ModalDirective} from 'ngx-bootstrap';
 import { IndicadorService, UtilService } from '../../services/index';
+import { Arquivo } from '../../model/arquivo';
 import {WindowRef} from '../WindowRef';
 
 @FadeInTop()
@@ -20,6 +21,9 @@ export class IndicadorImportaListaComponent implements OnInit {
     private sub: any;
     private tipo: number=3;
     private colecaoIndicadores: any[]=[];
+    private newArquivo: Arquivo;
+    private codigoIndicador:string = '';
+    private tituloIndicador:string = '';
     public options = {
     "iDisplayLength": 15,
     "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
@@ -47,7 +51,7 @@ export class IndicadorImportaListaComponent implements OnInit {
       private router:Router) {
         winRef.nativeWindow.angularComponentRef = {
           zone: this.zone,
-          componentFn: (value) => this.importFile(value),
+          componentFn: (value, titulo) => this.importFile(value, titulo),
           component: this
         };
         winRef.nativeWindow.angularComponentRef = {
@@ -58,6 +62,7 @@ export class IndicadorImportaListaComponent implements OnInit {
       }
 
     ngOnInit(){
+      this.newArquivo = new Arquivo();
       this.sub = this.route.params.subscribe(params => {
           this.tipo = params['tipo'];
           this.titulo = this.tipo && this.tipo==3? "Importação":"Formulário";
@@ -72,7 +77,7 @@ export class IndicadorImportaListaComponent implements OnInit {
 
     detailsFormat(d):string {
       let tituloBotao = d.tipo_consulta==3? "Importa":"Novo registro dados";
-      let func = d.tipo_consulta==3? `window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.importFile('${d.codigo}');})`
+      let func = d.tipo_consulta==3? `window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.importFile('${d.codigo}', '${d.titulo}');})`
               : `window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.openForm('${d.codigo}');})`;
       let tituloSubPainel = d.tipo_consulta==3? "Arquivos":"Dados digitados";
       return `
@@ -128,12 +133,27 @@ export class IndicadorImportaListaComponent implements OnInit {
       }
     }
 
-    importFile(codigo:string){
+    importFile(codigo: string, titulo:string){
+      this.newArquivo = new Arquivo();
+      this.codigoIndicador = codigo;
+      this.tituloIndicador = titulo;
+
       this.importaModal.show();
     }
 
     openForm(codigo:string){
       this.formModal.show();
+    }
+
+    fileChangeEvent(fileInput: any){
+      //this.newArquivo = new Arquivo();
+      let file = fileInput.target.files[0];
+      this.newArquivo.file =  file;
+      console.log('fileinput', file, this.newArquivo);
+      this.newArquivo.nameFile = file.name;
+      this.newArquivo.tamanhoFile = file.size;
+      this.newArquivo.formato = file.type;
+      this.newArquivo.dataFile = file.lastModifiedDate;
     }
 
 }

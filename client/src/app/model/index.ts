@@ -6,3 +6,4 @@ export * from './indicador';
 export * from './unidade-responsavel';
 export * from './granularidade';
 export * from './polaridade';
+export * from './arquivo';
