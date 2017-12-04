@@ -42,13 +42,13 @@ config:
   # -------------------------------------------
   # | Banco de dados do MGI                   |
   # -------------------------------------------
-  #database: dbspo
-  database: dbses
+  database: dbspo
+  #database: dbses
   user: vasconcelos
   password: serenaya00
   hostdb: localhost
-  #schema: dbesusgestor
-  schema: dbmgi
+  schema: dbesusgestor
+  #schema: dbmgi
   ##hostdb: banco
   # -------------------------------------------
   # | Tabela interna de resultados            |
@@ -58,19 +58,19 @@ config:
   # -------------------------------------------
   # | SCPA                                    |
   # -------------------------------------------
-  #schema_login: scpa
-  #wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
-  #system: SAGE
+  schema_login: scpa
+  wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+  system: SAGE
   # -------------------------------------------
   # | LDAP                                    |
   # -------------------------------------------
-  schema_login: ldap
-  url: 'ldap://localhost'
-  bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br'
-  bindCredentials: 'gFGcZxyrnc8pT8se'
-  searchBase: 'DC=synapsys, DC=com, DC=br'
-  searchFilter: '(uid={{username}})'
-  mailfield: 'mail'
+  #schema_login: ldap
+  #url: 'ldap://localhost'
+  #bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br'
+  #bindCredentials: 'gFGcZxyrnc8pT8se'
+  #searchBase: 'DC=synapsys, DC=com, DC=br'
+  #searchFilter: '(uid={{username}})'
+  #mailfield: 'mail'
   # -------------------------------------------
   # | Documentacao                            |
   # -------------------------------------------

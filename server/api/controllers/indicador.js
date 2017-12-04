@@ -65,7 +65,9 @@ module.exports = {
       'fonte_dados', 'ultima_atualizacao', 'granularidade', 'tipo_consulta' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Unidade, as: 'UnidadeResponsavel' },
-        { model: models.UnidadeMedida, as: 'UnidadeMedida' }
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+        { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+        { model: models.Granularidade, as: 'Granularidade' }
       ],
       where: { 'ativo': true },
       order: ['titulo']

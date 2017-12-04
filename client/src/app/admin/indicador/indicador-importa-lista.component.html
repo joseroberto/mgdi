@@ -87,8 +87,24 @@
         <div id="documento-form">
                 <form role="form">
                   <fieldset>
-                      <legend>&nbsp;&nbsp;[{{ codigoIndicador }} - {{ tituloIndicador }}] </legend>
-                        <div class="form-group">
+                      <legend>&nbsp;&nbsp;[{{ indicadorSelecionado.codigo }} - {{ indicadorSelecionado.titulo }}] </legend>
+                        <div class="row" *ngIf="indicadorSelecionado.PeriodicidadeAtualizacao">
+                          <label class="col-md-2 control-label">Periodicidade</label>
+                          <div class="col-md-10">{{ indicadorSelecionado.PeriodicidadeAtualizacao.descricao }}</div>
+                        </div>
+                        <div class="row" *ngIf="indicadorSelecionado.UnidadeMedida">
+                          <label class="col-md-2 control-label">Unidade de Medida</label>
+                          <div class="col-md-10">{{ indicadorSelecionado.UnidadeMedida.descricao }}</div>
+                        </div>
+                        <div class="row" *ngIf="indicadorSelecionado.Granularidade">
+                          <label class="col-md-2 control-label">Estratificação</label>
+                          <div class="col-md-10">{{ indicadorSelecionado.Granularidade.descricao }}</div>
+                        </div>
+                        <div class="row" *ngIf="indicadorSelecionado.fonte_dados">
+                          <label class="col-md-2 control-label">Fonte</label>
+                          <div class="col-md-10">{{ indicadorSelecionado.fonte_dados }}</div>
+                        </div>
+                        <div class="form-group row">
                           <label class="col-md-2 control-label" for="arquivo">Arquivo</label>
                           <div class="col-md-10">
                             <input type="file" class="btn btn-default" id="arquivo"

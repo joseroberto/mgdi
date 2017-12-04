@@ -3,8 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 import {ModalDirective} from 'ngx-bootstrap';
 import { IndicadorService, UtilService } from '../../services/index';
-import { Arquivo } from '../../model/arquivo';
+import { Arquivo, Indicador } from '../../model/index';
 import {WindowRef} from '../WindowRef';
+
 
 @FadeInTop()
 @Component({
@@ -20,10 +21,10 @@ export class IndicadorImportaListaComponent implements OnInit {
     private titulo:string='';
     private sub: any;
     private tipo: number=3;
-    private colecaoIndicadores: any[]=[];
+    private colecaoIndicadores: Indicador[]=[];
     private newArquivo: Arquivo;
-    private codigoIndicador:string = '';
-    private tituloIndicador:string = '';
+    private indicadorSelecionado:Indicador;
+
     public options = {
     "iDisplayLength": 15,
     "oLanguage": {"sUrl": 'assets/api/langs/datatable-br.json'},
@@ -63,6 +64,7 @@ export class IndicadorImportaListaComponent implements OnInit {
 
     ngOnInit(){
       this.newArquivo = new Arquivo();
+      this.indicadorSelecionado = new Indicador();
       this.sub = this.route.params.subscribe(params => {
           this.tipo = params['tipo'];
           this.titulo = this.tipo && this.tipo==3? "Importação":"Formulário";
@@ -126,6 +128,7 @@ export class IndicadorImportaListaComponent implements OnInit {
         this.indicadorService.getPorTipoConsulta(this.tipo).subscribe((resp)=>{
           console.log('Resultado',resp);
           if(resp.count > 0){
+            this.colecaoIndicadores = resp.rows;
             this.tabelaIndicadores.addRows(resp.rows);
             this.tabelaIndicadores.draw();
           }
@@ -135,8 +138,9 @@ export class IndicadorImportaListaComponent implements OnInit {
 
     importFile(codigo: string, titulo:string){
       this.newArquivo = new Arquivo();
-      this.codigoIndicador = codigo;
-      this.tituloIndicador = titulo;
+      console.log('Conjunto', this.colecaoIndicadores);
+      console.log('Selecionado', this.colecaoIndicadores.filter(item=> item.codigo == codigo));
+      this.indicadorSelecionado = this.colecaoIndicadores.filter(item=>item.codigo === codigo)[0];
 
       this.importaModal.show();
     }
