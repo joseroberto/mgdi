@@ -269,6 +269,37 @@ module.exports = {
       'tipo_consulta', 'referencia_consulta', 'criterio_agregacao', 'periodicidade_atualizacao', 'ultima_atualizacao' ],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
-      })
+    }),
+
+    import_arquivo: (req,res)=>{
+        var arquivo = req.swagger.params.arquivo.value;
+
+
+        // Le arquivo
+        if(arquivo.mimetype=='text/csv'){
+          csv({noheader:false, delimiter:';', trim:true, headers:['codigo','sigla','nome','informal', 'competencia', 'atividade', 'unidade_pai']})
+          .fromString(arquivo.buffer.toString())
+          .on('json', (json)=>{
+              //console.log('original',json);
+              if('sigla' in json){
+
+                models.Unidade.findOrCreate({where:{
+                    codigo: json['codigo']
+                  },
+                  defaults: uni}).then((u, created)=>{
+                    //console.log(u, created);
+                  });
+                }
+          })
+          .on('error', (err)=>{
+            console.log(err);
+            res.status(500).send(err);
+          })
+          .on('done', ()=>{
+              res.json({codret: 0, mensagem: "Arquivo rescebido com sucesso."});
+          });
+        }
+    }
+
 
 }

@@ -314,6 +314,40 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/situacao-carga:
+    x-swagger-router-controller: situacao-carga
+    get:
+      description: Retorna os possiveis para controle da situacao da carga de dados via importacao
+      summary: Lista de situações de carga possíveis
+      operationId: getSituacaoCarga
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetSituacaoCargaResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tipo-arquivo:
+    x-swagger-router-controller: tipo-arquivo
+    get:
+      description: Retorna os tipos de arquivo possiveis para carga de dados via importacao
+      summary: Lista de tipos de arquivo de carga possíveis
+      operationId: getTipoArquivo
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetTipoArquivoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/polaridade:
     x-swagger-router-controller: polaridade
     get:
@@ -1799,6 +1833,32 @@ definitions:
               type: number
             descricao:
               type: string
+  GetSituacaoCargaResponse:
+    required:
+      - situacao_carga
+    properties:
+      situacao_carga:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetTipoArquivoResponse:
+    required:
+      - tipo_arquivo
+    properties:
+      tipo_arquivo:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
   GetBancoDadosResponse:
     required:
       - banco_dados
@@ -1811,6 +1871,8 @@ definitions:
             codigo:
               type: number
             descricao:
+              type: string
+            mime:
               type: string
   GetTipoConsultaResponse:
     required:

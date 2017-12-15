@@ -73,7 +73,7 @@ module.exports = function(passport) {
           var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest().toString('hex');
 
           client.buscaPerfilUsuario(
-              {autenticacao: {email: username, senha: password_hash, siglaSistema: config_param.system}},
+              {autenticacao: {email: username, senha: password_hash, siglaSistema: process.env.SISTEMA || config_param.system}},
               (err, result)=>{
                 if(err){
                   var erroSCPA = err.body.substring(err.body.indexOf('<detalhamento>')+14,err.body.indexOf('</detalhamento>'));

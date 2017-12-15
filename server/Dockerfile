@@ -17,5 +17,5 @@ ADD . /var/opt/mgi
 EXPOSE 8000
 WORKDIR /var/opt/mgi
 
-CMD [ "start", "config/pm2-esusgestor.config.yaml" ]
+CMD [ "start", "config/pm2-api.config.yaml" ]
 ENTRYPOINT ["pm2-docker"]

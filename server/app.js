@@ -49,7 +49,9 @@ app.use(passport.session()); // persistent login sessions
 app.get('/swagger.yaml', (req,res,next)=>{
     console.log('swagger', swagger_config);
     res.setHeader('content-type', 'application/json');
-    swagger_config.host = process.env.HOST || config_param.host;
+    var host = process.env.HOST || config_param.host;
+    var port = process.env.PORT || config_param.port;
+    swagger_config.host = `${host}:${port}`;
     swagger_config.info.title = config_param.title;
     swagger_config.info.description = config_param.description;
     res.send(swagger_config);
@@ -74,7 +76,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
 
-  var port = process.env.PORT || 8000;
+  var port = process.env.PORT || config_param.port || 8000;
   var options = {
   dotfiles: 'ignore',
   etag: true,
