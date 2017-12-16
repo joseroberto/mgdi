@@ -89,33 +89,42 @@
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="well no-padding">
 
-              <form id="smart-form-register" class="smart-form client-form">
+              <form id="smart-form-register" class="smart-form client-form" novalidate="novalidate"
+                  [saBootstrapValidator]="validatorOptions" (ngSubmit)="onSubmit()">
                 <header>Usuário</header>
 
                 <fieldset>
                   <section>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
-                      <input type="text" name="username" placeholder="Nome Completo">
+                      <input type="text" name="nome" placeholder="Nome Completo">
                       <b class="tooltip tooltip-bottom-right">Nome para cadastramento do perfil</b> </label>
                   </section>
-                  <section>
-                    <label class="input"> <i class="icon-append fa fa-circle-o"></i>
-                      <input type="text" name="cpf" placeholder="CPF" saMaskedInput="999.999.999-99">
-                      <b class="tooltip tooltip-bottom-right">Para registro</b> </label>
-                  </section>
-                  <section>
-                    <label class="input"> <i class="icon-append fa fa-envelope"></i>
-                      <input type="email" name="email" placeholder="Endereço de email">
-                      <b class="tooltip tooltip-bottom-right">Para envio de email pelo sistema de alerta</b> </label>
-                  </section>
+                  <div class="row">
+                    <section class="col col-4">
+                      <label class="input"> <i class="icon-append fa fa-circle-o"></i>
+                        <input type="text" name="cpf" placeholder="CPF" saMaskedInput="999.999.999-99">
+                        <b class="tooltip tooltip-bottom-right">Para registro</b> </label>
+                    </section>
+                    <section class="col col-8">
+                      <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Endereço de email">
+                        <b class="tooltip tooltip-bottom-right">Para envio de email pelo sistema de alerta</b> </label>
+                    </section>
+                  </div>
                   <section>
                     <label class="select">
                       <select name="unidade">
                         <option value="" selected disabled>Unidade de Lotação</option>
-                        <option value="1">Unidade 1</option>
-                        <option value="2">Unidade 2</option>
+                        <ng-container *ngFor="let item of colecaoUnidades">
+                          <option value="{{item.codigo}}">{{ item.sigla }} - {{ item.nome}}</option>
+                        </ng-container>
                       </select> <i ></i>
                     </label>
+                  </section>
+                  <section>
+                    <label class="input"> <i class="icon-append fa fa-briefcase"></i>
+                    <input type="email" name="email" placeholder="Cargo">
+                    <b class="tooltip tooltip-bottom-right">Cargo ocupado pelo usuário</b> </label>
                   </section>
                 </fieldset>
 
@@ -148,6 +157,34 @@
                           <option value="M">Masculino</option>
                           <option value="F">Feminino</option>
                         </select> <i></i> </label>
+                    </section>
+                  </div>
+
+                  <div class="row">
+                    <section>
+                      <div class="form-group">
+                          <div class="col-md-10">
+                            <legend style="margin: 15px">Perfil solicitado</legend>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" class="radiobox style-1" checked="checked" name="inputs">
+                                <span>Perfil 1</span>
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" class="radiobox style-1" name="inputs">
+                                <span>Perfil 2</span>
+                              </label>
+                            </div>
+                            <div class="radio">
+                              <label>
+                                <input type="radio" class="radiobox style-1" name="inputs">
+                                <span>Perfil 3</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
                     </section>
                   </div>
                 </fieldset>
