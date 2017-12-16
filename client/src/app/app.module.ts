@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
+import {SmartadminInputModule} from "./shared/forms/input/smartadmin-input.module";
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -18,7 +19,9 @@ import { AppState, InternalStateType } from './app.service';
 import {CoreModule} from "./core/core.module";
 import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
-import {LoginComponent} from './auth/login.component'
+import {LoginComponent} from './auth/login.component';
+
+import { ModalModule, TooltipModule, BsDropdownModule} from "ngx-bootstrap";
 
 
 // Servicos
@@ -49,13 +52,15 @@ type StoreType = {
     AppComponent,LoginComponent
   ],
   imports: [ // import Angular's modules
+    ModalModule, TooltipModule, BsDropdownModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     CoreModule,
     SmartadminLayoutModule,
-    routing
+    routing,
+    SmartadminInputModule
   ],
   exports: [
   ],

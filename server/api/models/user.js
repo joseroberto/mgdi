@@ -11,6 +11,11 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey: true,
         field: 'co_user'
     },
+    login: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        field: 'ds_login'
+    },
     cpf: {
         type: DataTypes.STRING(11),
         allowNull: false,

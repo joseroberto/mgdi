@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
+import {ModalDirective} from "ngx-bootstrap";
 
 import { AuthenticationService, UtilService } from '../services/index';
 import { NotificationService } from "../shared/utils/notification.service";
@@ -11,6 +12,8 @@ import { environment } from '../../environments/environment';
 export class LoginComponent implements OnInit {
   model: any = {};
   env: any = environment;
+
+@ViewChild('complementoModal') private categoriaAnaliseModal:ModalDirective;
 
   constructor(private router: Router, private auth: AuthenticationService, private util:UtilService) { }
 
