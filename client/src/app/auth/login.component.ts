@@ -2,10 +2,11 @@ import { Component, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {ModalDirective} from "ngx-bootstrap";
 
-import { AuthenticationService, UtilService } from '../services/index';
+import { AuthenticationService, UtilService, UnidadeService } from '../services/index';
+import { User, UnidadeResponsavel } from '../model/index';
 import { NotificationService } from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
-import { UnidadeService } from '../services/index';
+declare var $: any;
 
 @Component({
   templateUrl: './login.component.html'
@@ -13,9 +14,10 @@ import { UnidadeService } from '../services/index';
 export class LoginComponent implements OnInit {
   model: any = {};
   env: any = environment;
+  private newuser: User;
 
   @ViewChild('complementoModal') private categoriaAnaliseModal:ModalDirective;
-  private colecaoUnidades:any[] = [];
+  private colecaoUnidades:UnidadeResponsavel[] = [];
   private   validatorOptions = {
     feedbackIcons: {
       valid: 'glyphicon glyphicon-ok',
@@ -62,9 +64,12 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(private router: Router, private auth: AuthenticationService,
-    private unidadeService:UnidadeService, private util:UtilService) { }
+    private unidadeService:UnidadeService, private util:UtilService) {
+    }
 
   ngOnInit() {
+    this.newuser = new User();
+
     this.unidadeService.getAll().subscribe(resp=>{
         this.colecaoUnidades = resp.unidades;
     }, err => this.util.msgErroInfra(err));
@@ -86,8 +91,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(){
-    console.log('Submetido');
+
+  private onSubmit(){
+    // Campos com controle de mascara não atualiza a model do angular2.
+    this.newuser.celular= $('#celular').val();
+    this.newuser.cpf= $('#cpf').val();
+    this.newuser.telefone= $('#telefone').val();
+    this.newuser.ramal= $('#ramal').val();
+    this.newuser.unidade = JSON.parse($('#unidade').val());
+    this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
+    //
+
+    console.log('Submetido', this.newuser);
   }
 
 }
