@@ -6,5 +6,10 @@ module.exports = {
     }).then(function(lista) {
       res.json({users: lista});
     });
+  },
+  getPorLogin:(login)=>{
+    return models.User.findAll({
+      where: {login:login}
+    });
   }
 }

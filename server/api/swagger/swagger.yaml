@@ -103,6 +103,23 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/perfis:
+    x-swagger-router-controller: perfil
+    get:
+      description: Retorna a lista de perfis
+      summary: Lista de perfis
+      operationId: getPerfis
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetPerfilListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/periodicidade:
     x-swagger-router-controller: periodicidade
     get:
@@ -1902,6 +1919,27 @@ definitions:
               type: number
             descricao:
               type: string
+  GetPerfilListResponse:
+    required:
+      - perfis
+    properties:
+      perfis:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            sigla:
+              type: string
+            descricao:
+              type: string
+            titulo:
+              type: string
+            ativo:
+              type: boolean
+            exige_unidade:
+              type: boolean
   GetPeriodicidadeListResponse:
     required:
       - periodicidades

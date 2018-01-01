@@ -5,7 +5,7 @@ const util = require('util');
 const log4js = require('log4js');
 const config_param = require('../helpers/config')();
 const swagger = require('../helpers/swagger')();
-const  models  = require('../models');
+const user = require('./user');
 const passport = require("passport");
 require('../helpers/passport.js')(passport); // pass passport for configuration
 
@@ -24,6 +24,12 @@ module.exports = {
               return res.status(500).send(info);
             }
             var token = jwt.sign(user, config_param.secret, { expiresIn: '7d' });
+            // Checa se o usuário já existe no cadastro do MGI
+            /*user.getPorLogin(user.login).then(indicador=>{
+              console.log('userMGI', indicador);
+            });*/
+
+
             res.json({token: util.format('Bearer %s', token), user: user});
         })(req,res);
       }else{

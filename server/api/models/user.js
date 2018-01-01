@@ -46,12 +46,23 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: true,
         field: 'ds_cargo'
     },
-    perfis: {
-      type : DataTypes.ARRAY(DataTypes.STRING(20)),
-      defaultValue:null,
-      field: 'ar_perfis'
+    data_aprovacao:{
+        type: DataTypes.DATE,
+        field: 'dt_aprovacao_perfil'
+    },
+    usuario_aprovacao:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'co_user_aprovacao'
     }
   },{
+    classMethods: {
+      associate: function(models) {
+        User.belongsTo(models.Perfil,{
+            as: 'Perfil',
+            foreignKey: 'co_perfil'});
+      }
+    },
     schema: schema,
     freezeTableName: true,
     timestamps: true,

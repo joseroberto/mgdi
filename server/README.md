@@ -50,8 +50,7 @@ As seguintes variáveis poderão ser definidas:
 * PASSWORD_DB - Senha do usuário do banco de dados
 * WSDL - Endereço de acesso da API de validação.
 * SCHEMA - Schema da base de dados utilizado para o sistema MGI na base de dados
-* HOST - host a ser chamado para api
-* PORT - porta do host a ser chamado para api
+* HOST - host a ser chamado para api (formato pode ser host:port)
 
 Dependendo da escolha do tipo de esquema de validação:
 
