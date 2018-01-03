@@ -30,7 +30,7 @@ import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeServ
   UnidadeMedidaService, IndicadorService, UtilService,
   TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService,
   BancoDadosService, UnidadeService, GranularidadeService, CriterioAgregacaoService,
-  VersionService, UsuarioService, ConsultaService, PolaridadeService } from './services/index';
+  VersionService, UsuarioService, ConsultaService, PolaridadeService, PerfilService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -87,7 +87,8 @@ type StoreType = {
     VersionService,
     UsuarioService,
     ConsultaService,
-    PolaridadeService
+    PolaridadeService,
+    PerfilService
   ]
 })
 export class AppModule {

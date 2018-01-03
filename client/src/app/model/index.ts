@@ -8,3 +8,4 @@ export * from './granularidade';
 export * from './polaridade';
 export * from './arquivo';
 export * from './user';
+export * from './perfil';

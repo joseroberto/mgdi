@@ -1,4 +1,4 @@
-import { UnidadeResponsavel } from '../model/index';
+import { UnidadeResponsavel, Perfil } from '../model/index';
 
 export class User{
   codigo: number = 0;
@@ -12,7 +12,7 @@ export class User{
   cargo: string = '';
   unidade: UnidadeResponsavel;
   sexo: string = '';
-  perfis: string[] = [];
+  perfil: Perfil;
 
   constructor(){
   }

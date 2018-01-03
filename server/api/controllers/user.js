@@ -7,9 +7,12 @@ module.exports = {
       res.json({users: lista});
     });
   },
-  getPorLogin:(login)=>{
+  getPorLogin: (login)=>{
     return models.User.findAll({
       where: {login:login}
     });
-  }
+  },
+  countPerfil: ()=>{
+      return models.User.count();
+    }
 }

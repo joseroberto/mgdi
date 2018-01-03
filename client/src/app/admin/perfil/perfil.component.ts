@@ -1,5 +1,6 @@
 import { Component,OnInit, ViewChild } from '@angular/core';
 import {ModalDirective} from "ngx-bootstrap";
+import {UtilService} from '../../services/index';
 
 @Component({
   templateUrl: 'perfil.component.html',
@@ -8,12 +9,14 @@ import {ModalDirective} from "ngx-bootstrap";
 export class PerfilComponent implements OnInit{
   @ViewChild('perfilModal') perfilModal:ModalDirective;
   private user:Object = {};
-  constructor() {
+
+  constructor(private util:UtilService) {
   }
 
   public ngOnInit(){
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     console.log('user', this.user);
+
     //this.perfilModal.show();
   }
 

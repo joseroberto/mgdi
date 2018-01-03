@@ -71,6 +71,7 @@ config:
   searchBase: 'DC=synapsys, DC=com, DC=br'
   searchFilter: '(uid={{username}})'
   mailfield: 'mail'
+  namefield: 'givenName'
   # -------------------------------------------
   # | Documentacao                            |
   # -------------------------------------------

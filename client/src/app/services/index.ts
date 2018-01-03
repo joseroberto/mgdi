@@ -18,3 +18,4 @@ export * from './usuario.service';
 export * from './consulta.service';
 export * from './polaridade.service';
 export * from './user.service';
+export * from './perfil.service';

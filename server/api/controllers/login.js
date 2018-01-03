@@ -10,12 +10,12 @@ const passport = require("passport");
 require('../helpers/passport.js')(passport); // pass passport for configuration
 
 module.exports = {
-
   authenticate: (req, res)=>{
     var log = log4js.getLogger();
     try {
       if(!config_param.bypass){
-        passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, function (err, user,info){
+        passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
+            console.log('retornos', info, userlogin);
             if(err){
               console.log('Erro:',err);
               return res.status(403).send({message: err});
@@ -23,13 +23,18 @@ module.exports = {
             if(info){
               return res.status(500).send(info);
             }
-            var token = jwt.sign(user, config_param.secret, { expiresIn: '7d' });
-            // Checa se o usuário já existe no cadastro do MGI
-            /*user.getPorLogin(user.login).then(indicador=>{
-              console.log('userMGI', indicador);
-            });*/
 
+            console.log('Login de usuario==>', req.body.username);
+            // Checa se o usuário logado possui cadastro do MGI
+            var userPerfil =  await user.getPorLogin(req.body.username);
+            if(!userPerfil || userPerfil.length==0){
+              return res.status(406).send(userlogin);
+            }
+            var numPerfil = await user.countPerfil();
+            console.log('Result user', userPerfil, numPerfil);
 
+            // Loga o Usuario
+            var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
             res.json({token: util.format('Bearer %s', token), user: user});
         })(req,res);
       }else{
@@ -37,7 +42,7 @@ module.exports = {
             cpf: '11111111',
             nome: 'Usuário Fake',
             email: 'teste@teste.com',
-            perfis: []
+            perfil: ''
         };
         console.log('Usuario fake:', temp); //TODO: Retirar isso
         var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });

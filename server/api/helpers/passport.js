@@ -37,7 +37,7 @@ module.exports = function(passport) {
         console.log('local', username, password);
 
         return done(null, false, null);
-        
+
     }));
 
     // =========================================================================
@@ -89,10 +89,8 @@ module.exports = function(passport) {
     passport.use('ldap', new LdapStrategy(opts,(user,done)=>{
       console.log('Autenticacao LDAP', user);
       done(null,{
-                    login: user,
-                    cpf: user['cpf'],
-                    nome: user['givenName'],
-                    email: user[process.env.MAILFIELD || config_param.mailfield]
-                });
+          nome: user[process.env.NAMEFIELD || config_param.namefield],
+          email: user[process.env.MAILFIELD || config_param.mailfield]
+      });
     }));
 };

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {ModalDirective} from "ngx-bootstrap";
 
-import { AuthenticationService, UtilService, UnidadeService } from '../services/index';
+import { AuthenticationService, UtilService, PerfilService, UnidadeService } from '../services/index';
 import { User, UnidadeResponsavel } from '../model/index';
 import { NotificationService } from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
@@ -12,10 +12,11 @@ declare var $: any;
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
+  f:any;
   model: any = {};
   env: any = environment;
   private newuser: User;
-
+  private colecaoPerfis:any[] = [];
   @ViewChild('complementoModal') private categoriaAnaliseModal:ModalDirective;
   private colecaoUnidades:UnidadeResponsavel[] = [];
   private   validatorOptions = {
@@ -29,6 +30,18 @@ export class LoginComponent implements OnInit {
         validators: {
           notEmpty: {
             message: 'Nome é obrigatório'
+          },
+          stringLength: {
+                        max: 50,
+                        min: 3,
+                        message: 'Digite um nome válido'
+                    }
+        }
+      },
+      celular: {
+        validators: {
+          notEmpty: {
+            message: 'Número de telefone celular é obrigatório'
           }
         }
       },
@@ -43,13 +56,9 @@ export class LoginComponent implements OnInit {
         validators: {
           notEmpty: {
             message: 'Email é obrigatório'
-          }
-        }
-      },
-      celular: {
-        validators: {
-          notEmpty: {
-            message: 'Número de telefone celular é obrigatório'
+          },
+          emailAddress: {
+            message: 'Email inválido'
           }
         }
       },
@@ -59,17 +68,35 @@ export class LoginComponent implements OnInit {
             message: 'Informação de sexo é obrigatória'
           }
         }
+      },
+      unidade: {
+        validators: {
+          notEmpty: {
+            message: 'Unidade de lotação é obrigatória'
+          }
+        }
+      },
+      perfilusr: {
+        validators: {
+          notEmpty: {
+            message: 'Perfil é obrigatório'
+          }
+        }
       }
     }
   };
 
   constructor(private router: Router, private auth: AuthenticationService,
-    private unidadeService:UnidadeService, private util:UtilService) {
+    private unidadeService:UnidadeService, private util:UtilService, private perfilService:PerfilService) {
     }
 
   ngOnInit() {
+    // TODO: Colocar essa parte no open form
     this.newuser = new User();
-
+    this.perfilService.getAll().subscribe(resp=>{
+      console.log('resp', resp);
+      this.colecaoPerfis = resp.perfis;
+    }, err => this.util.msgErroInfra(err));
     this.unidadeService.getAll().subscribe(resp=>{
         this.colecaoUnidades = resp.unidades;
     }, err => this.util.msgErroInfra(err));
@@ -92,17 +119,33 @@ export class LoginComponent implements OnInit {
   }
 
 
-  private onSubmit(){
+  private onSubmit(form){
     // Campos com controle de mascara não atualiza a model do angular2.
     this.newuser.celular= $('#celular').val();
     this.newuser.cpf= $('#cpf').val();
     this.newuser.telefone= $('#telefone').val();
     this.newuser.ramal= $('#ramal').val();
-    this.newuser.unidade = JSON.parse($('#unidade').val());
-    this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
-    //
 
-    console.log('Submetido', this.newuser);
+    this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
+    if(this.newuser.perfil && this.newuser.perfil.exige_unidade){
+      this.newuser.unidade = JSON.parse($('#unidade').val());
+    }
+    //
+    this.f = form;
+    if(form.valid){
+      console.log('Formulário válido');
+    }else {
+      //var validator = form.validate();
+      //validator.resetForm();
+      console.log('Formulário inválido');
+    }
+    console.log('Submetido', form, this.newuser);
   }
 
+  private onValueChanged(item){
+    //formData.controls.value.markAsDirty();
+    if(this.f)
+        this.f.resetForm();
+    console.log('Valor mudou', item);
+  }
 }
