@@ -103,6 +103,27 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma solicitação de complementação de cadastro
+      summary: Cria uma solicitação de complementação
+      operationId: createSolicitacao
+      tags:
+        - MGI
+      parameters:
+        - name: solicitacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Solicitacao'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/perfis:
     x-swagger-router-controller: perfil
     get:
@@ -1667,7 +1688,34 @@ definitions:
         type: array
         items:
           type: object
-
+  Solicitacao:
+    description: Objeto solicitação
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código do registro do usuário
+      login:
+        type: string
+      cpf:
+        type: string
+      nome:
+        type: string
+      email:
+        type: string
+      ramal:
+        type: string
+      celular:
+        type: string
+      cargo:
+        type: string
+      data_aprovacao:
+        type: string
+      usuario_aprovacao:
+        type: number
+      situacao:
+        type: number
+      
   IndicadorAtualizacao:
     description: Objeto indicador
     type: object

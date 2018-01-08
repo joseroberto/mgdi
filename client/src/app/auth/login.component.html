@@ -145,8 +145,8 @@
                         <label></label>
                         <div class="inputGroupContainer">
                           <div class="input-group">
-                            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone de Contato"
-                              saMaskedInput="(00) 000-0000" [ngModel]="newuser.telefone" />
+                            <input type="text" class="form-control" id="telefone" name="telefone" placeholder="Telefone Fixo para Contato"
+                              saMaskedInput="(00) 0000-0000" [ngModel]="newuser.telefone" />
                             <span class="input-group-addon"><i class="icon-append fa fa-phone"></i></span>
                           </div>
                         </div>
@@ -156,7 +156,7 @@
                         <div class="inputGroupContainer">
                           <div class="input-group">
                             <input class="form-control" id="celular" name="celular" type="text"
-                            placeholder="Telefone Celular" [ngModel]="newuser.celular" saMaskedInput="(00) 0000-0000"/>
+                            placeholder="Telefone Celular" [ngModel]="newuser.celular" saMaskedInput="(00) 0 0000-0000"/>
                             <span class="input-group-addon"><i class="icon-append fa fa-mobile"></i></span>
                           </div>
                         </div>
@@ -192,7 +192,7 @@
                       <div class="form-group col-md-12">
                           <ng-container *ngFor="let item of colecaoPerfis">
                               <label class="radio">
-                                <input type="radio" class="radiobox style-1" name="perfilusr" [(ngModel)]="newuser.perfil" [value]="item">
+                                <input type="radio" class="radiobox style-1" name="perfilusr" [(ngModel)]="newuser.Perfil" [value]="item">
                                 <span>{{ item.sigla }} - {{ item.titulo }}</span>
                               </label>
                           </ng-container>

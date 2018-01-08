@@ -59,3 +59,24 @@ insert into dbmgi.tb_perfil (ds_sigla, ds_titulo, ds_perfil, st_exige_unidade) v
 
 alter table dbmgi.tb_user_mgi add constraint fk_tb_user_mgi_co_perfil foreign key (co_perfil)
   references dbmgi.tb_perfil(co_perfil);
+
+alter table dbmgi.tb_user_mgi add column co_situacao_perfil int not null default 0;
+COMMENT ON COLUMN dbmgi.tb_user_mgi.co_situacao_perfil IS 'Situação da aprovação da conta de usuário';
+
+alter table dbmgi.tb_user_mgi alter column dt_login set default now();
+
+create table dbmgi.tb_status_aprovacao(
+    co_status int not null,
+    ds_status varchar(255) not null,
+    CONSTRAINT tb_status_aprovacao_pkey PRIMARY KEY (co_status)
+);
+COMMENT ON TABLE dbmgi.tb_status_aprovacao IS 'Armazena os possíveis status de aprovação de fluxo';
+COMMENT ON COLUMN dbmgi.tb_status_aprovacao.co_status IS 'Surrogate key do status';
+COMMENT ON COLUMN dbmgi.tb_status_aprovacao.ds_status IS 'Descrição do status';
+
+insert into dbmgi.tb_status_aprovacao (co_status, ds_status) values (0, 'Em análise');
+insert into dbmgi.tb_status_aprovacao (co_status, ds_status) values (1, 'Aprovado');
+insert into dbmgi.tb_status_aprovacao (co_status, ds_status) values (2, 'Negado');
+
+alter table dbmgi.tb_user_mgi add constraint fk_tb_user_mgi_co_situacao foreign key (co_situacao_perfil)
+  references dbmgi.tb_status_aprovacao(co_status);

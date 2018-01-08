@@ -60,7 +60,25 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         User.belongsTo(models.Perfil,{
             as: 'Perfil',
-            foreignKey: 'co_perfil'});
+            foreignKey: {
+              field: 'co_perfil',
+              allowNull: false,
+            }
+        });
+        User.belongsTo(models.Unidade,{
+            as: 'Unidade',
+            foreignKey: {
+              field: 'co_unidade',
+              allowNull: true,
+            }
+        });
+        User.belongsTo(models.StatusAprovacao,{
+            as: 'Situacao',
+            foreignKey: {
+              field: 'co_situacao_perfil',
+              allowNull: false,
+            }
+        });
       }
     },
     schema: schema,

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {ModalDirective} from "ngx-bootstrap";
 
-import { AuthenticationService, UtilService, PerfilService, UnidadeService } from '../services/index';
+import { AuthenticationService, UtilService, PerfilService, UnidadeService, UsuarioService } from '../services/index';
 import { User, UnidadeResponsavel } from '../model/index';
 import { NotificationService } from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
@@ -87,7 +87,8 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(private router: Router, private auth: AuthenticationService,
-    private unidadeService:UnidadeService, private util:UtilService, private perfilService:PerfilService) {
+    private unidadeService:UnidadeService, private util:UtilService,
+    private perfilService:PerfilService, private usuarioService:UsuarioService) {
     }
 
   ngOnInit() {
@@ -127,25 +128,26 @@ export class LoginComponent implements OnInit {
     this.newuser.ramal= $('#ramal').val();
 
     this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
-    if(this.newuser.perfil && this.newuser.perfil.exige_unidade){
-      this.newuser.unidade = JSON.parse($('#unidade').val());
+    if(this.newuser.Perfil && this.newuser.Perfil.exige_unidade){
+      this.newuser.Unidade = JSON.parse($('#unidade').val());
     }
     //
+    let user = Object.assign(this.newuser);
+    user.celular = user.celular.replace(/[\.\(\)-\s]/g,'');
+    user.cpf = user.cpf.replace(/[\.-]/g,'');
+    user.telefone = user.telefone.replace(/[\.\(\)-\s]/g,'');
+
     this.f = form;
     if(form.valid){
-      console.log('Formulário válido');
+      console.log('Formulário válido', user);
+      this.usuarioService.createSolicitacao(user).subscribe(resp=>{
+        console.log('OnSubmit', resp);
+      }, err => this.util.msgErro(JSON.parse(err._body).message))
     }else {
       //var validator = form.validate();
       //validator.resetForm();
       console.log('Formulário inválido');
     }
     console.log('Submetido', form, this.newuser);
-  }
-
-  private onValueChanged(item){
-    //formData.controls.value.markAsDirty();
-    if(this.f)
-        this.f.resetForm();
-    console.log('Valor mudou', item);
   }
 }

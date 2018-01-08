@@ -15,7 +15,7 @@ module.exports = {
     try {
       if(!config_param.bypass){
         passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
-            console.log('retornos', info, userlogin);
+            //console.log('retornos', info, userlogin);
             if(err){
               console.log('Erro:',err);
               return res.status(403).send({message: err});
@@ -27,15 +27,15 @@ module.exports = {
             console.log('Login de usuario==>', req.body.username);
             // Checa se o usuário logado possui cadastro do MGI
             var userPerfil =  await user.getPorLogin(req.body.username);
-            if(!userPerfil || userPerfil.length==0){
-              return res.status(406).send(userlogin);
-            }
+            //if(!userPerfil || userPerfil.length==0){
+            //  return res.status(406).send(userlogin);
+            //}
             var numPerfil = await user.countPerfil();
             console.log('Result user', userPerfil, numPerfil);
 
             // Loga o Usuario
             var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
-            res.json({token: util.format('Bearer %s', token), user: user});
+            res.json({token: util.format('Bearer %s', token), user: userlogin});
         })(req,res);
       }else{
         var temp = {

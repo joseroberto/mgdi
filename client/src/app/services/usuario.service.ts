@@ -10,6 +10,9 @@ export class UsuarioService extends REST {
   getAll(){
     return this.get('/user-mgi');
   }
+  createSolicitacao(perfil){
+    return this.post('/user-mgi', perfil);
+  }
 
 
 }
