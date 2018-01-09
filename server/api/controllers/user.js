@@ -1,4 +1,6 @@
 var models  = require('../models');
+var perfil = require('./perfil');
+var status = require('./status-aprovacao');
 
 module.exports = {
   getUsers: (req, res)=>{
@@ -7,31 +9,33 @@ module.exports = {
       res.json({users: lista});
     });
   },
-  getPorLogin: (login)=>{
+  getPorLogin: async (login)=>{
     return models.User.findAll({
       where: {login:login}
     });
   },
-  countPerfil: ()=>{
-      return models.User.count();
-  },
   createSolicitacao: (req,res)=>{
-    var entidade = req.body;
-    entidade['PerfilCodigo'] = entidade.Perfil.codigo;
-    if(entidade.Unidade){
-      entidade['UnidadeCodigo'] = entidade.Unidade.codigo;
-    }
-    if(entidade.Situacao){
-      entidade['SituacaoCodigo'] = entidade.Situacao.codigo;
-    }else{
-      entidade['SituacaoCodigo'] = 0;
-    }
-    console.log('create', entidade);
-    models.User.create(entidade).then((perfil)=> {
+    console.log('Solicitacao de perfil');
+    createPerfil(req.body).then((perfil)=> {
       res.json({codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
       res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
     });
   }
+}
+
+async function createPerfil(entidade){
+  var numPerfil = await models.User.count();
+  entidade['SituacaoCodigo'] = 0;
+
+  // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
+  if(numPerfil==0){
+    var vlPerfil = await perfil.getPerfilPorSigla('ADM');
+    entidade['PerfilCodigo'] = vlPerfil[0].dataValues.codigo;
+    entidade['SituacaoCodigo'] = 1; // Aprovado
+  }
+
+  //console.log('create', entidade);
+  return models.User.upsert(entidade);
 }

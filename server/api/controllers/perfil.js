@@ -9,5 +9,13 @@ module.exports = {
     }).then(function(lista) {
       res.json({perfis: lista});
     });
+  },
+  getPerfilPorSigla: async (sigla)=>{
+    return models.Perfil.findAll({
+      where:{
+        ativo:true,
+        sigla:sigla
+      }
+    });
   }
 }

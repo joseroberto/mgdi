@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   env: any = environment;
   private newuser: User;
   private colecaoPerfis:any[] = [];
-  @ViewChild('complementoModal') private categoriaAnaliseModal:ModalDirective;
+  @ViewChild('complementoModal') private complementoModal:ModalDirective;
   private colecaoUnidades:UnidadeResponsavel[] = [];
   private   validatorOptions = {
     feedbackIcons: {
@@ -108,17 +108,25 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.model.usuario, this.model.senha).subscribe(resp =>{
       console.log("Sucesso no login",resp);
       this.router.navigate(['/admin'], {queryParams: {q:'login'}});
-    },err =>{
+    }, err =>{
       console.log("Erro no login", err);
       let mensagem = JSON.parse(err._body);
       if ([403,500].indexOf(err.status)> -1){
         this.util.msgErro(mensagem.message);
+      }else if(err.status==406){
+        let entidade = JSON.parse(err._body);
+        console.log('entidade', entidade);
+        localStorage.setItem('token', entidade.token);
+        this.newuser = Object.assign(new User(), entidade.user);
+        $('#nome').prop('disabled', 'nome' in entidade.user);
+        $('#email').prop('disabled', 'email' in entidade.user);
+
+        this.complementoModal.show();
       }else{
         this.util.msgErroInfra("Erro no acesso ao login. Tente mais tarde!");
       }
     });
   }
-
 
   private onSubmit(form){
     // Campos com controle de mascara não atualiza a model do angular2.
@@ -132,16 +140,20 @@ export class LoginComponent implements OnInit {
       this.newuser.Unidade = JSON.parse($('#unidade').val());
     }
     //
-    let user = Object.assign(this.newuser);
+    let user = Object.assign(new User(), this.newuser);
     user.celular = user.celular.replace(/[\.\(\)-\s]/g,'');
     user.cpf = user.cpf.replace(/[\.-]/g,'');
     user.telefone = user.telefone.replace(/[\.\(\)-\s]/g,'');
 
     this.f = form;
     if(form.valid){
-      console.log('Formulário válido', user);
       this.usuarioService.createSolicitacao(user).subscribe(resp=>{
-        console.log('OnSubmit', resp);
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+          this.complementoModal.hide();
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
       }, err => this.util.msgErro(JSON.parse(err._body).message))
     }else {
       //var validator = form.validate();

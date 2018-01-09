@@ -80,3 +80,5 @@ insert into dbmgi.tb_status_aprovacao (co_status, ds_status) values (2, 'Negado'
 
 alter table dbmgi.tb_user_mgi add constraint fk_tb_user_mgi_co_situacao foreign key (co_situacao_perfil)
   references dbmgi.tb_status_aprovacao(co_status);
+
+alter table dbmgi.tb_user_mgi add column co_sexo char(1) not null;

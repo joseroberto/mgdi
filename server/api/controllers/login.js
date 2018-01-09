@@ -17,25 +17,29 @@ module.exports = {
         passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
             //console.log('retornos', info, userlogin);
             if(err){
-              console.log('Erro:',err);
               return res.status(403).send({message: err});
             }
             if(info){
               return res.status(500).send(info);
             }
-
+            userlogin['login'] = req.body.username;
             console.log('Login de usuario==>', req.body.username);
             // Checa se o usuário logado possui cadastro do MGI
             var userPerfil =  await user.getPorLogin(req.body.username);
-            //if(!userPerfil || userPerfil.length==0){
-            //  return res.status(406).send(userlogin);
-            //}
-            var numPerfil = await user.countPerfil();
-            console.log('Result user', userPerfil, numPerfil);
+            console.log('userPerfil==>', userPerfil);
+            if(!userPerfil || userPerfil.length==0){
+              var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
+              return res.status(406).json({token: util.format('Bearer %s', token), user: userlogin});
+            } else if (userPerfil[0].dataValues.SituacaoCodigo==0){
+              var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
+              return res.status(406).json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
+            } else if (userPerfil[0].dataValues.SituacaoCodigo==2){
+              return res.status(403).send({message: 'Usuário rejeitado pelo ADMINISTRADOR'});
+            }
 
             // Loga o Usuario
-            var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
-            res.json({token: util.format('Bearer %s', token), user: userlogin});
+            var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
+            res.json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
         })(req,res);
       }else{
         var temp = {

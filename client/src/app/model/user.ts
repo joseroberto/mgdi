@@ -14,6 +14,9 @@ export class User{
   sexo: string = '';
   Perfil: Perfil;
   Situacao: StatusAprovacao;
+  PerfilCodigo: number;
+  SituacaoCodigo: number;
+  UnidadeCodigo: number;
 
   constructor(){
   }

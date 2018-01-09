@@ -54,6 +54,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       field: 'co_user_aprovacao'
+    },
+    sexo:{
+      type: DataTypes.CHAR(1),
+      allowNull: false,
+      field: 'co_sexo'
     }
   },{
     classMethods: {

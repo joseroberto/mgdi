@@ -19,7 +19,7 @@ export class AuthenticationService extends REST implements CanActivate{
         return this.gethttp().post(super.getURL('/login', false), {username: usuario, password: senha}, super.jwt()).map(
           (response: Response) => {
             let resp = response.json();
-            localStorage.setItem('token', resp.token);  //TODO: Verificar se e necessario
+            localStorage.setItem('token', resp.token);
             //this.userService.announceUserChange(resp.user);
             let user = resp.user;
             user['apelido'] = this.label(resp.user.nome);
