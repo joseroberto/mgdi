@@ -807,7 +807,9 @@ paths:
         - name: tag
           in: query
           required: false
-          type: number
+          type: array
+          items:
+            type: number
       responses:
         "200":
           description: Sucesso
