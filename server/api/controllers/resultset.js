@@ -536,7 +536,6 @@ function montaQueryValorIndicador(codigo, indicador, config){
 */
 function tabulaResultado(result, indicadores, config){
   //TODO: Tornar dinamica a temporalidade
-  var ano;
   var retorno=[];
   var itemTratado = {};
   var field = '';
@@ -572,11 +571,12 @@ function tabulaResultado(result, indicadores, config){
       });
     }
     var obj = {};
+    itemTratado['periodo']={};
     indicadores.forEach((key)=>{
       obj[key.toLowerCase()] = +item[key.toLowerCase()];
     });
 
-    itemTratado[item.ano] = obj;
+    itemTratado.periodo[item.ano] = obj;
   });
 
   return retorno;
