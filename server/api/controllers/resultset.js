@@ -305,18 +305,22 @@ function montaQueryComplemento(indicadores, config){
     var orderby = '';
 
     var varPeriodicidade = '';
+    var nomeCampo = '';
     var indicadorAnterior = '';
     var referencia = indicadores[Object.keys(indicadores)[0]];
 
     switch (referencia.periodicidade) {
       case 360:
         varPeriodicidade = 'ano';
+        nomeCampo='co_ano';
         break;
       case 30:
         varPeriodicidade = 'anomes';
+        nomeCampo='co_anomes';
         break;
       case 1:
         varPeriodicidade = 'anomesdia';
+        nomeCampo='co_anomesdia';
         break;
       default:
     }
@@ -374,6 +378,7 @@ function montaQueryComplemento(indicadores, config){
             break;
         }
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
+          //from += ` FULL OUTER JOIN ${key} `;
           from += ` INNER JOIN ${key} `;
           // granularidade
           switch (referencia.granularidade) {
@@ -435,14 +440,6 @@ function montaQueryComplemento(indicadores, config){
 
     }
 
-    // Filtro de ano, anomes ou anomesdia
-    if(config.data){
-      if(config.data<0){
-        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} in (${pesquisaPeriodosCarregadosIndicador(indicadores, config.data, referencia.periodicidade)})`;
-      }else
-        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} in (${config.data})`;
-    }
-
     if(referencia.criterioAgregacao==0){
       groupby='';
     }
@@ -460,7 +457,19 @@ function montaQueryComplemento(indicadores, config){
     }
 
     //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
-    return `${select} ${from} ${where} ${groupby} ${orderby};`;
+
+    var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
+    // Filtro de ano, anomes ou anomesdia
+    if(config.data){
+      var filtroData = '';
+      if(config.data<0)
+        filtroData= `select distinct ${nomeCampo} from ${schema}.${config_param.tabela_indicadores} where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*config.data}`
+      else
+        filtroData=`${config.data}`;
+      query = `select * from (${query}) as tab where ${varPeriodicidade} in (${filtroData})`;
+    }
+
+    return query;
 }
 
 function montaQueryValorIndicador(codigo, indicador, config){
@@ -584,28 +593,4 @@ function tabulaResultado(result, indicadores, config){
   });
 
   return retorno;
-}
-
-/*
-  Pesquisa o número de periodos carregados do indicador
-  e retorna uma subquery para o selecao de ultimas periodicidades
-  do resultado do indicador.
-*/
-function pesquisaPeriodosCarregadosIndicador(indicadores, refData, periodicidade){
-  var nomeCampo='';
-
-  switch (periodicidade) {
-    case 360:
-      nomeCampo='co_ano';
-      break;
-    case 30:
-      nomeCampo='co_anomes';
-      break;
-    case 1:
-      nomeCampo='co_anomesdia';
-      break;
-    default:
-  }
-  return `select distinct ${nomeCampo} from dbesusgestor.tb_resultado where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*refData}`
-
 }
