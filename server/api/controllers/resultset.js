@@ -180,41 +180,45 @@ function convertCodigoIndicador(config){
     if(!arrValue){
       reject('Parametro de consulta vazio');
     }
-    arrValue.forEach((itemArr)=>{
+    //if(arrValue.length==0){
+    //  reject('Indicador não encontrado');
+    //}
+    //arrValue.forEach((itemArr)=>{
         // Recupera do cache aqueles que são possíveis
-        var value = cache.get(itemArr.trim());
-        if(value != undefined) {
-          console.log('Recuperando do cache:', itemArr, value, value.granularidade);
-          ans[itemArr.trim()] = value;
+        //var value = cache.get(itemArr.trim());
+        //if(value != undefined) {
+          //console.log('Recuperando do cache:', itemArr, value, value.granularidade);
+          //ans[itemArr.trim()] = value;
           // Testa granularidade.  Se difere deve dar um erro
-          if(granularidade==0){
-            granularidade = value.granularidade;
-          }
-          if(value.granularidade!=granularidade){
-            reject('Conjunto de indicadores com granularidade diferentes');
-          }
-          if(value.granularidade<tipoGranularidade){
-            reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
-          }
+          //var value = itemArr;
+          //if(granularidade==0){
+          //  granularidade = value.granularidade;
+          //}
+          //if(value.granularidade!=granularidade){
+          //  reject('Conjunto de indicadores com granularidade diferentes');
+          //}
+          //if(value.granularidade<tipoGranularidade){
+          //  reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
+          //}
 
-          if(value.granularidade>tipoGranularidade && value.criterioAgregacao==0){
-            reject(`Indicador ${itemArr} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
-          }
+          //if(value.granularidade>tipoGranularidade && value.criterioAgregacao==0){
+          //  reject(`Indicador ${itemArr} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
+          //}
           // Testa periodicidade.  Se difere deve dar um erro
-          if(periodicidade==0){
-            periodicidade = value.periodicidade;
-          }
-          if(value.periodicidade!=periodicidade){
-            reject('Conjunto de indicadores com periodicidades diferentes');
-          }
-        }else{
-          console.log('Repassando para busca', itemArr);
-          arrBusca.push(itemArr.trim());
-        }
-    });
-    if(arrBusca && arrBusca.length>0) {
+          //if(periodicidade==0){
+          //  periodicidade = value.periodicidade;
+          //}
+          //if(value.periodicidade!=periodicidade){
+          //  reject('Conjunto de indicadores com periodicidades diferentes');
+          //}
+        //}else{
+        //  console.log('Repassando para busca', itemArr);
+          //arrBusca.push(itemArr.trim());
+        //}
+    //});
+    //if(arrBusca && arrBusca.length>0) {
       // Pesquisa no banco o que nao tiver no cache
-      indicador.getIndicadorPesquisaPorCodigo(arrBusca).then(result=>{
+      indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
         result.forEach(item=>{
           ans[item.codigo] = {
             id: item.id,
@@ -263,9 +267,9 @@ function convertCodigoIndicador(config){
         console.log('ans', ans);
         resolve(ans);
       });
-    }else {
-        resolve(ans);
-    }
+    //}else {
+    //    resolve(ans);
+    //}
   });
 }
 
@@ -433,10 +437,10 @@ function montaQueryComplemento(indicadores, config){
 
     // Filtro de ano, anomes ou anomesdia
     if(config.data){
-      if(config.data==-1)
-        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${referencia.ultima_atualizacao}`;
-      else
-        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} = ${config.data}`;
+      if(config.data<0){
+        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} in (${pesquisaPeriodosCarregadosIndicador(indicadores, config.data, referencia.periodicidade)})`;
+      }else
+        where += ` AND ${Object.keys(indicadores)[0]}.${varPeriodicidade} in (${config.data})`;
     }
 
     if(referencia.criterioAgregacao==0){
@@ -502,15 +506,15 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   switch (indicador.periodicidade) {
     case 360:
-      sql_select += ', co_ano::int  as ano';
+      sql_select += ', co_ano  as ano';
       sql_group += (indicador.criterioAgregacao!=0? 'co_ano,':'');
       break;
     case 30:
-      sql_select += ', co_anomes::int  as anomes';
+      sql_select += ', co_anomes  as anomes';
       sql_group += (indicador.criterioAgregacao!=0? 'co_anomes,':'');
       break;
     case 1:
-      sql_select += ', co_anomesdia::int  as anomesdia';
+      sql_select += ', co_anomesdia  as anomesdia';
       sql_group += (indicador.criterioAgregacao!=0? 'co_anomesdia,':'');
       break;
     default:
@@ -580,4 +584,28 @@ function tabulaResultado(result, indicadores, config){
   });
 
   return retorno;
+}
+
+/*
+  Pesquisa o número de periodos carregados do indicador
+  e retorna uma subquery para o selecao de ultimas periodicidades
+  do resultado do indicador.
+*/
+function pesquisaPeriodosCarregadosIndicador(indicadores, refData, periodicidade){
+  var nomeCampo='';
+
+  switch (periodicidade) {
+    case 360:
+      nomeCampo='co_ano';
+      break;
+    case 30:
+      nomeCampo='co_anomes';
+      break;
+    case 1:
+      nomeCampo='co_anomesdia';
+      break;
+    default:
+  }
+  return `select distinct ${nomeCampo} from dbesusgestor.tb_resultado where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*refData}`
+
 }
