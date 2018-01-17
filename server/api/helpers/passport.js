@@ -47,8 +47,8 @@ module.exports = function(passport) {
         console.log('Acessando scpa:', process.env.WSDL || config_param.wsdl);
         soap.createClient(process.env.WSDL || config_param.wsdl, function(err, client) {
           if(err){
-            console.log(err);
-            return res.status(500).send(err);
+            console.log('Erro==>',err);
+            return done('Erro no acesso ao SCPA.');
           }
 
           var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest().toString('hex');

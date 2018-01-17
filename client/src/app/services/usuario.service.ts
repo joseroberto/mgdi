@@ -8,10 +8,13 @@ export class UsuarioService extends REST {
     super(http);
   }
   getAll(){
-    return this.get('/user-mgi');
+    return this.get('/user');
   }
   createSolicitacao(perfil){
-    return this.post('/user-mgi', perfil);
+    return this.post('/user', perfil);
+  }
+  getPorSituacao(codigo:number){
+    return this.get(`/user?situacao=${codigo}`);
   }
 
 

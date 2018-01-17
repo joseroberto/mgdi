@@ -86,12 +86,17 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
-  /api/user-mgi:
+  /api/user:
     x-swagger-router-controller: user
     get:
       description: Retorna a lista de usuários que utilizam o MGI - Módulo de Gestão de Indicadores
       summary: Lista de Usuários do MGI
       operationId: getUsers
+      parameters:
+        - name: situacao
+          type: number
+          in: query
+          required: false
       tags:
         - MGI
       security:

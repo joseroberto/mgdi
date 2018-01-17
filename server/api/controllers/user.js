@@ -4,8 +4,13 @@ var status = require('./status-aprovacao');
 
 module.exports = {
   getUsers: (req, res)=>{
-    models.User.findAll({
-    }).then(function(lista) {
+    var attr = {
+      where:{}
+    };
+    if(req.swagger.params.situacao){
+      attr.where = {SituacaoCodigo:req.swagger.params.situacao.value};
+    }
+    models.User.findAll(attr).then(function(lista) {
       res.json({users: lista});
     });
   },
