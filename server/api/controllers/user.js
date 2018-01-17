@@ -5,6 +5,9 @@ var status = require('./status-aprovacao');
 module.exports = {
   getUsers: (req, res)=>{
     var attr = {
+      include: [ { model: models.Unidade, as: 'Unidade' },
+        { model: models.Perfil, as: 'Perfil' }
+      ],
       where:{}
     };
     if(req.swagger.params.situacao){

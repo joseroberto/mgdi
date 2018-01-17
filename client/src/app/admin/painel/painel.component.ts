@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NotificationService} from "../../shared/utils/notification.service";
-import {IndicadorService} from '../../services/index';
+import {IndicadorService, UsuarioService} from '../../services/index';
+import {User} from '../../model/index';
 
 @Component({
   selector: 'app-home',
@@ -11,9 +12,10 @@ export class PainelComponent implements OnInit {
 
   private totalIndicadores:number=0;
   private listaIndicadores:any[]=[];
+  private listaUsers:User[] = [];
 
   constructor(private route: ActivatedRoute, private notificationService: NotificationService,
-      private indicadorService:IndicadorService) { }
+      private indicadorService:IndicadorService, private usuarioService:UsuarioService) { }
 
   ngOnInit() {
     //console.log('Teste', this.route.snapshot.queryParams);
@@ -27,6 +29,11 @@ export class PainelComponent implements OnInit {
       });
       this.loadIndicadorPorUnidade();
     }
+    this.usuarioService.getPorSituacao(0).subscribe(resp=>{
+      console.log('Usuarios:', resp);
+      this.listaUsers = resp.users;
+    })
+
   }
 
   loadIndicadorPorUnidade(){

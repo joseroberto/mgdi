@@ -2,7 +2,7 @@ import { Component, OnInit, ViewContainerRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {ModalDirective} from "ngx-bootstrap";
 
-import { AuthenticationService, UtilService, PerfilService, UnidadeService, UsuarioService } from '../services/index';
+import { AuthenticationService, UtilService, PerfilService, UnidadeService,UsuarioService } from '../services/index';
 import { User, UnidadeResponsavel } from '../model/index';
 import { NotificationService } from "../shared/utils/notification.service";
 import { environment } from '../../environments/environment';
@@ -87,8 +87,8 @@ export class LoginComponent implements OnInit {
   };
 
   constructor(private router: Router, private auth: AuthenticationService,
-    private unidadeService:UnidadeService, private util:UtilService,
-    private perfilService:PerfilService, private usuarioService:UsuarioService) {
+    private unidadeService:UnidadeService,  private usuarioService:UsuarioService, private util:UtilService,
+    private perfilService:PerfilService) {
     }
 
   ngOnInit() {
