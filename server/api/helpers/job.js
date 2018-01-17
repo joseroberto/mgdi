@@ -1,7 +1,9 @@
-var schedule = require('node-schedule');
-var models  = require('../models');
+const schedule = require('node-schedule');
+const models  = require('../models');
 const config_param = require('./config')();
 const pg = require('pg');
+const resultset = require('../controllers/resultset');
+const elasticsearch = require('elasticsearch');
 
 
 //*    *    *    *    *    *
@@ -72,5 +74,86 @@ exports.cron = ()=>{
               break;
       }
     });
+  });
+}
+exports.resultsetToElastic = ()=>{
+  var client = new elasticsearch.Client({
+    host: 'localhost:9200',
+    log: 'info'
+  });
+  var config = { codigos: [ 'MOR4010' ],
+      tipo: 'MN'};
+  resultset.consultaResultado(config).then( (resp)=>{
+    var codigo = Object.keys(resp[1])[0];
+    console.log('indicador', resp[1][codigo]);
+    console.log('First reg', resp[0].rows[0]);
+
+
+    client.index(
+      {
+      index: 'indicador_lin',
+      type: 'indicador_LIN',
+      opType: 'index',
+      id: codigo,
+      body: Object.assign(resp[1][codigo], {resultado: resp[0].rows})
+    }, function (error, response) {
+        console.log('Resposta LIN', response, error);
+    });
+
+    /*client.index({
+      index: 'indicador_cda',
+      type: 'indicador_CDA',
+      opType: 'index',
+      id: codigo,
+      body: resultset.formataCDAResult(resp[0].rows, resp[0].fields, config, resp[1])
+    }, function (error, response) {
+        console.log('Resposta CDA', response, error);
+    });
+    client.index({
+      index: 'indicador_tab',
+      type: 'indicador_TAB',
+      opType: 'index',
+      id: codigo,
+      body: resultset.formataJSONResult(resp[0].rows, config, Object.keys(resp[1]))
+    }, function (error, response) {
+        console.log('Resposta TAB', response, error);
+    });*/
+  });
+}
+exports.indicadorToElastic = ()=>{
+  var client = new elasticsearch.Client({
+    host: 'localhost:9200',
+    log: 'info'
+  });
+
+  models.Indicador.findAll(
+    { include: [ { model: models.Tag, as: 'Tags' },
+                 { model: models.Indicador, as: 'IndicadoresRelacionados' },
+                 { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+                 { model: models.ClassificacaoIndicador, as: 'ClassificacaoIndicador' },
+                 { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
+                 { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
+                 { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
+                 { model: models.Unidade , as: 'UnidadeResponsavel' },
+                 { model: models.Granularidade , as: 'Granularidade' },
+                 { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
+                 { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+                 { model: models.Polaridade, as: 'Polaridade' }],
+      where: {codigo: 'MOR4010'}
+    }
+  ).then((indicador)=> {
+    if(indicador && indicador.length>0){
+      var dado = indicador[0].toJSON();
+      client.index({
+        index: 'indicador',
+        type: 'ficha',
+        opType: 'index',
+        id: dado.codigo,
+        body: dado
+      }, function (error, response) {
+          console.log('Resposta', response);
+      });
+      console.log('teste', dado.codigo, dado);
+    }
   });
 }

@@ -23,15 +23,35 @@ pool.on('error', function (err, client) {
 
 module.exports = {
   getResultado: (req, res)=>{
-      // Aplica filtros
-      var config = montaParametros(req.swagger.params);
-      console.log('config', config);
-
+    var config = montaParametros(req.swagger.params);
+    console.log('config', config);
+    module.exports.consultaResultado(config).then( (resultado) =>{
+        // req.headers.accept === 'application/json'
+        switch (config.formato) {
+          case 'LIN':
+            res.json(resultado[0].rows);
+            break;
+          case 'CDA':
+              res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, config, resultado[1]));
+              break;
+          case 'TAB':
+              res.json(module.exports.formataJSONResult(resultado[0].rows, config, Object.keys(resultado[1])));
+              break;
+          default:
+              res.status(500).send({mensagem: "Formato inválido"});
+        }
+      }, err =>{
+        res.status(500).send(err);
+      }
+    );
+  },
+  consultaResultado: (config)=>{
+    return new Promise((resolve, reject)=>{
       // Filtro por ano, uf, ibge, regiao,
       convertCodigoIndicador(config).then(indicadores=>{
         if(Object.keys(indicadores).length==0){
           console.log('Sem dados');
-          res.json({codret: -1, mensagem: "Indicador não encontrado"});
+          reject({codret: -1, mensagem: "Indicador não encontrado"});
           return;
         }
 
@@ -41,97 +61,84 @@ module.exports = {
           //console.log(result);
           if(err) {
             console.error('error running query', err);
-            res.json({mensagem:err});
+            reject({mensagem:err});
             return;
           }
-          // req.headers.accept === 'application/json'
-          switch (config.formato) {
-            case 'LIN':
-              res.json(result.rows);
-              break;
-            case 'CDA':
-                res.json(formataCDAResult(result.rows, result.fields, config, indicadores));
-                break;
-            case 'TAB':
-                res.json(formataJSONResult(result.rows, config, Object.keys(indicadores)));
-                break;
-            default:
-                res.status(500).send({mensagem: "Formato inválido"});
-          }
+          resolve([result, indicadores]);
         });
 
-      }, err=>{ console.log('Erro==>', err); res.status(500).send({message: err});});
-  }
-}
+      }, err=>{ console.log('Erro==>', err); reject({message: err});});
+    });
+  },
+  /*
+    Formatador de saída para consultas CDA.
+  */
+   formataCDAResult: (result, fields, config, indicadores)=>{
+    var metadata=[];
+    var filtro={};
+    var tipoRegiao='';
 
-/*
-  Formatador de saída para consultas CDA.
-*/
-function formataCDAResult(result, fields, config, indicadores){
-  var metadata=[];
-  var filtro={};
-  var tipoRegiao='';
-
-  indicadores['REGIAO']={titulo:'Região', descricao:'Região agregada', tipo:'geo'};
-  indicadores['LOCAL']={titulo:'Cidade', descricao:'Região desagregada', tipo:'geo'};
-  indicadores['UF']={titulo:'Estado', descricao:'Unidade Federativa', tipo:'geo'};
-  indicadores['CODIGOGEO']={titulo:'Município', descricao:'Código da unidade', tipo:'id'};
-  indicadores['ANO']={titulo:'Ano', descricao:'Ano da ocorrência', tipo:'id'};
+    indicadores['REGIAO']={titulo:'Região', descricao:'Região agregada', tipo:'geo'};
+    indicadores['LOCAL']={titulo:'Cidade', descricao:'Região desagregada', tipo:'geo'};
+    indicadores['UF']={titulo:'Estado', descricao:'Unidade Federativa', tipo:'geo'};
+    indicadores['CODIGOGEO']={titulo:'Município', descricao:'Código da unidade', tipo:'id'};
+    indicadores['ANO']={titulo:'Ano', descricao:'Ano da ocorrência', tipo:'id'};
 
 
-  // Acrescenta os dados da consulta
-  var referencia = indicadores[Object.keys(indicadores)[0]];
-  switch (config.tipo) {
-    case 'BR':
-      tipoRegiao='br';
-      break;
-    case 'RG':
-      tipoRegiao='regiao';
-      break;
-    case 'UF':
-      tipoRegiao='uf';
-      break;
-    case 'MN':
-      tipoRegiao='municipio';
-      break;
-    case 'CN':
-      tipoRegiao='cnes';
-      break;
-  }
+    // Acrescenta os dados da consulta
+    var referencia = indicadores[Object.keys(indicadores)[0]];
+    switch (config.tipo) {
+      case 'BR':
+        tipoRegiao='br';
+        break;
+      case 'RG':
+        tipoRegiao='regiao';
+        break;
+      case 'UF':
+        tipoRegiao='uf';
+        break;
+      case 'MN':
+        tipoRegiao='municipio';
+        break;
+      case 'CN':
+        tipoRegiao='cnes';
+        break;
+    }
 
-  var numIndex = 0;
+    var numIndex = 0;
 
-  fields.forEach(item=>{
-    var key = item.name.toUpperCase();
-    var meta = {
-        colType: item.dataTypeID == 23? "Numeric": "String",
-        colName: item.name,
-        colIndex: numIndex++,
-        titulo: indicadores[key].titulo,
-        resumo: indicadores[key].descricao,
-        tipo: indicadores[key].tipo
+    fields.forEach(item=>{
+      var key = item.name.toUpperCase();
+      var meta = {
+          colType: item.dataTypeID == 23? "Numeric": "String",
+          colName: item.name,
+          colIndex: numIndex++,
+          titulo: indicadores[key].titulo,
+          resumo: indicadores[key].descricao,
+          tipo: indicadores[key].tipo
+      };
+      metadata.push(meta);
+    });
+
+    return {
+      resultset: result,
+      info: {tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro},
+      metadata: metadata
     };
-    metadata.push(meta);
-  });
+  },
 
-  return {
-    resultset: result,
-    info: {tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro},
-    metadata: metadata
-  };
-}
-
-/*
-  Formatador de saída para consultas TABulares.
-*/
-function formataJSONResult(result, config, indicadores){
-  var resultado = tabulaResultado(result, indicadores, config);
-  return {
-    rows: resultado.length,
-    resultset: resultado,
-    titulos: result.titulos,
-    info: { tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro}
-  };
+  /*
+    Formatador de saída para consultas TABulares.
+  */
+  formataJSONResult: (result, config, indicadores)=>{
+    var resultado = tabulaResultado(result, indicadores, config);
+    return {
+      rows: resultado.length,
+      resultset: resultado,
+      titulos: result.titulos,
+      info: { tipoFiltro: config.filtro, tipoRegiao: config.tipo, codigoRegiao: config.valores_filtro}
+    };
+  }
 }
 
 /*
