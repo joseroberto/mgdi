@@ -114,14 +114,14 @@ export class SiteComponent implements OnInit {
 
   loadIndicadorPorUnidade(){
     this.indicadorService.getCountPorUnidade().subscribe(resp=>{
-      //console.log('Unidades',resp.unidades);
+      console.log('Unidades',resp.unidades);
       this.listaIndicadorPorUnidade = resp.unidades;
     });
   }
 
   loadIndicadorPorTag(){
     this.indicadorService.getCountPorTag().subscribe(resp=>{
-      //console.log('Tags',resp.tags);
+      console.log('Tags',resp.tags);
       this.listaIndicadorPorTag = resp.tags.slice(0,9);
     });
   }

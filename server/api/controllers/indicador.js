@@ -7,15 +7,13 @@ module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
       attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao',
-      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'granularidade', 'criterio_agregacao', 'universal' ],
+      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-        { model: models.Unidade, as: 'UnidadeResponsavel' },
+        { model: models.Unidade, as: 'Unidade' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
-        //{ model: models.Indicador, as: 'IndicadoresRelacionados' },
-        //{ model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
-        //{ model: models.Tag, as: 'Tags'}
+        { model: models.Granularidade, as: 'Granularidade' }
       ],
       where: {},
       order: ['titulo']
@@ -69,7 +67,7 @@ module.exports = {
       attributes: [ 'id', 'codigo', 'titulo', 'descricao',
       'fonte_dados', 'ultima_atualizacao', 'granularidade', 'tipo_consulta' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
-        { model: models.Unidade, as: 'UnidadeResponsavel' },
+        { model: models.Unidade, as: 'Unidade' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
         { model: models.Granularidade, as: 'Granularidade' }
@@ -111,10 +109,11 @@ module.exports = {
                    { model: models.Indicador, as: 'IndicadoresRelacionados' },
                    { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
                    { model: models.ClassificacaoIndicador, as: 'ClassificacaoIndicador' },
+                   { model: models.Classificacao6sIndicador, as: 'Classificacao6sIndicador' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-                   { model: models.Unidade , as: 'UnidadeResponsavel' },
+                   { model: models.Unidade , as: 'Unidade' },
                    { model: models.Granularidade , as: 'Granularidade' },
                    { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
                    { model: models.UnidadeMedida, as: 'UnidadeMedida' },
@@ -131,11 +130,13 @@ module.exports = {
       { include: [ { model: models.Tag, as: 'Tags' },
                    { model: models.Indicador, as: 'IndicadoresRelacionados' },
                    { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+                   { model: models.Unidade , as: 'ResponsavelGerencial' },
+                   { model: models.Unidade , as: 'ResponsavelTecnico' },
                    { model: models.ClassificacaoIndicador, as: 'ClassificacaoIndicador' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
                    { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
-                    { model: models.Unidade , as: 'UnidadeResponsavel' }] }
+                    { model: models.Unidade , as: 'Unidade' }] }
     ).then((indicador)=> {
       res.json(indicador);
     });
@@ -235,7 +236,33 @@ module.exports = {
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
     });
   },
+  addResponsavelGerencial: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
+      item.addResponsavelGerencial(req.swagger.params.responsavel_gerencial.value);
+      res.json({codret: 0, mensagem: "Responsável Gerencial adicionado com sucesso"});
+    });
+  },
+  deleteResponsavelGerencial: (req,res)=>{
+    models.IndicadorCategoriaAnalise.destroy({ where: {
+      co_seq_indicador:req.swagger.params.id.value,
+      co_categoria_analise:req.swagger.params.responsavel_gerencial.value}}).then(()=>{
+        res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Gerencial retirada com sucesso"});
+    });
+  },
+  addResponsavelTecnico: (req,res)=>{
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
+      item.addResponsavelTecnico(req.swagger.params.responsavel_tecnico.value);
+      res.json({codret: 0, mensagem: "Responsável Técnico adicionado com sucesso"});
+    });
+  },
 
+  deleteResponsavelTecnico: (req,res)=>{
+    models.IndicadorCategoriaAnalise.destroy({ where: {
+      co_seq_indicador:req.swagger.params.id.value,
+      co_categoria_analise:req.swagger.params.responsavel_tecnico.value}}).then(()=>{
+        res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Técnico retirada com sucesso"});
+    });
+  },
   addIndicadorRelacionado: (req,res)=>{
     Promise.all([
       models.Indicador.findById(req.swagger.params.id_pai.value),

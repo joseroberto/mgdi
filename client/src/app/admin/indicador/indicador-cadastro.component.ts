@@ -3,7 +3,8 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
   PeriodicidadeService, UtilService, ConsultaService,
   TagCategoriaService, CategoriaAnaliseService, BancoDadosService, TipoConsultaService,
-  UnidadeService, GranularidadeService, CriterioAgregacaoService, PolaridadeService} from '../../services/index';
+  UnidadeService, GranularidadeService, CriterioAgregacaoService, PolaridadeService,
+  Classificacao6sIndicadorService, FonteParametroService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Indicador } from '../../model/index';
 
@@ -41,6 +42,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private indicador:Indicador;
 
   private colecaoClassificacao:any[] = [];
+  private colecaoClassificacao6s:any[] = [];
   private colecaoPeriodicidade:any[] = [];
   private colecaoUnidadeMedida:any[] = [];
   private colecaoSecretaria:any[] = [];
@@ -53,6 +55,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private colecaoGranularidades:any[] = [];
   private colecaoCriteriosAgregacao:any[] = [];
   private colecaoPolaridades:any[] = [];
+  private colecaoFonteParametro:any[] = [];
 
   private isEditConceituacao:false;
   private isEditInterpretacao:false;
@@ -65,6 +68,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private isEditProcedimentoOperacional:false;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
+      private classificacao6sIndicadorService:Classificacao6sIndicadorService,
       private indicadorService:IndicadorService,
       private periodicidadeService:PeriodicidadeService,
       private unidadeMedidaService:UnidadeMedidaService,
@@ -79,7 +83,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       private granularidadeService: GranularidadeService,
       private criterioAgregacaoService: CriterioAgregacaoService,
       private consultaService: ConsultaService,
-      private polaridadeService:PolaridadeService) {
+      private polaridadeService:PolaridadeService,
+      private fonteParametroService: FonteParametroService) {
         this.breadcrumb = ['Indicador', 'Novo'];
 
       }
@@ -90,6 +95,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.indicador = new Indicador();
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
         this.colecaoClassificacao = resp.classificacoes;
+    }, err => this.util.msgErroInfra(err));
+    this.classificacao6sIndicadorService.getAll().subscribe(resp => {
+        this.colecaoClassificacao6s = resp.classificacoes;
     }, err => this.util.msgErroInfra(err));
     this.periodicidadeService.getAll().subscribe(resp => {
         this.colecaoPeriodicidade = resp.periodicidades;
@@ -102,6 +110,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err => this.util.msgErroInfra(err));
     this.categoriaAnaliseService.getAll().subscribe(resp => {
         this.colecaoCategoriaAnalise = resp.categorias_analise;
+    }, err => this.util.msgErroInfra(err));
+    this.fonteParametroService.getAll().subscribe(resp => {
+        this.colecaoFonteParametro = resp.fontes;
     }, err => this.util.msgErroInfra(err));
     this.tipoConsultaService.getAll().subscribe(resp => {
         this.colecaoTipoConsulta = resp.tipos_consulta;
@@ -124,6 +135,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     this.polaridadeService.getAll().subscribe(resp=>{
         this.colecaoPolaridades = resp.polaridades;
     }, err => this.util.msgErroInfra(err));
+    this.loadIndicador();
   }
 
   ngAfterViewInit(){
@@ -136,12 +148,14 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
-      this.loadIndicador();
+      //this.loadIndicador();
       //$('.procedimento_operacional').summernote(this.options);
   }
 
   private loadIndicador(){
+    console.log('loadIndicador');
     this.sub = this.route.params.subscribe(params => {
+        console.log('loadIndicador', params);
         this.indicador.codigo = params['codigo'];
         if(this.indicador.codigo){
           this.indicadorService.get(this.indicador.codigo).subscribe(resp=>{
@@ -345,8 +359,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   private onSubmit(form){
-    let valor: Indicador= this.populaObjetoGravacao([this.indicador,form.value]);
-    console.log('Antes de gravar', valor, form.valid);
+    //let valor: Indicador= this.populaObjetoGravacao([this.indicador,form.value]);
+    //console.log('Antes de gravar', valor, form.valid);
+    let valor: Indicador = Object.assign(this.indicador, form.value);
     if(form.valid){
       //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
@@ -436,6 +451,41 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err=>this.util.msgErroInfra(err));
   }
 
+  private adicionaItemResponsavelGerencial(){
+    let id = $('#unidade_gerencial').val();
+    if(id){
+      console.log('adicionaItemResponsavelGerencial', id);
+      this.indicadorService.adicionaResponsavelGerencial(this.indicador.id, id).subscribe(resp=>{
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+          $('#unidade_gerencial').val('');
+          this.loadIndicador();
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
+      }, err=>this.util.msgErroInfra(err));
+    }else{
+        this.util.msgErro('Preencha a unidade responsável gerencial');
+    }
+  }
+
+  private adicionaItemResponsavelTecnico(){
+    let id = $('#unidade_tecnica').val();
+    if(id){
+      this.indicadorService.adicionaResponsavelTecnico(this.indicador.id, id).subscribe(resp=>{
+      if(resp.codret==0){
+        this.util.msgSucesso(resp.mensagem);
+        $('#unidade_tecnica').val('');
+        this.loadIndicador();
+      }else{
+        this.util.msgErro(resp.mensagem);
+      }
+    }, err=>this.util.msgErroInfra(err));
+    }else{
+        this.util.msgErro('Preencha o indicador relacionado');
+    }
+  }
+
   private adicionaCategoriaRelacionada(){
     let valorSelecionado = $('#categoria_relacionada').val();
     let codigo_categoria_analise:string = $(`#listacat option[value='${valorSelecionado}']`).attr('codigo');
@@ -465,17 +515,18 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }, err=>this.util.msgErroInfra(err));
   }
 
+//TODO: Ajustar
   private selecionaUnidade(){
-    let valorSelecionado = $('#unidade_responsavel').val();
-    let codigo_unidade:number = $(`#listResponsavel option[value='${valorSelecionado}']`).attr('codigo');
-    if(codigo_unidade){
-      this.indicador.unidade_responsavel = +codigo_unidade;
-      this.carregaUnidade(codigo_unidade);
-    }
+  //  let valorSelecionado = $('#unidade_responsavel').val();
+  //  let codigo_unidade:number = $(`#listResponsavel option[value='${valorSelecionado}']`).attr('codigo');
+  //  if(codigo_unidade){
+  //    this.indicador.unidade_responsavel = +codigo_unidade;
+  //    this.carregaUnidade(codigo_unidade);
+  //  }
   }
 
   private carregaUnidade(codigo:number){
-    this.unidadeService.getUnidade(codigo).subscribe(resp=>{
+    /*this.unidadeService.getUnidade(codigo).subscribe(resp=>{
       console.log('Secretaria selecionada:', resp);
       this.secretaria_selecionada = resp.unidade;
       // Atualiza a secretaria nu_nivel=1
@@ -484,7 +535,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }else{
         this.indicador.secretaria = resp.unidade.ancestors.find(item=> item.nu_nivel==1)['codigo'];
       }
-    });
+    });*/
   }
 
   private formataNomeUnidade():string{
@@ -521,7 +572,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   isIndicadorTemGrafico(){
-    return this.indicador.ultima_atualizacao && this.indicador.granularidade>2 && (this.indicador.criterio_agregacao!=0 || this.indicador.granularidade == 3);
+    return this.indicador.ultima_atualizacao && this.indicador.GranularidadeCodigo>2 && (this.indicador.CriterioAgregacaoCodigo!=0 || this.indicador.GranularidadeCodigo == 3);
   }
 
   getLabel(){

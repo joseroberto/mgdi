@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NotificationService} from "../../shared/utils/notification.service";
-import {IndicadorService, UsuarioService} from '../../services/index';
+import {IndicadorService, UsuarioService, UtilService} from '../../services/index';
 import {User} from '../../model/index';
 
 @Component({
@@ -15,7 +15,8 @@ export class PainelComponent implements OnInit {
   private listaUsers:User[] = [];
 
   constructor(private route: ActivatedRoute, private notificationService: NotificationService,
-      private indicadorService:IndicadorService, private usuarioService:UsuarioService) { }
+      private indicadorService:IndicadorService, private usuarioService:UsuarioService,
+    private util: UtilService) { }
 
   ngOnInit() {
     //console.log('Teste', this.route.snapshot.queryParams);
@@ -29,11 +30,28 @@ export class PainelComponent implements OnInit {
       });
       this.loadIndicadorPorUnidade();
     }
+    this.loadSolicitacoesPendentes();
+  }
+
+  aprovaSolicitacao(codigo:number){
+    this.usuarioService.aprovaSolicitacaoPerfil(codigo).subscribe(resp=>{
+      this.util.msgSucessoEdicao(resp.mensagem);
+      this.loadSolicitacoesPendentes();
+    }, err=>this.util.msgErroInfra(err));
+  }
+
+  rejeitaSolicitacao(codigo:number){
+    this.usuarioService.rejeitaSolicitacaoPerfil(codigo).subscribe(resp=>{
+      this.util.msgSucessoEdicao(resp.mensagem);
+      this.loadSolicitacoesPendentes();
+    }, err=>this.util.msgErroInfra(err));
+  }
+
+  loadSolicitacoesPendentes(){
     this.usuarioService.getPorSituacao(0).subscribe(resp=>{
       console.log('Usuarios:', resp);
       this.listaUsers = resp.users;
-    })
-
+    });
   }
 
   loadIndicadorPorUnidade(){

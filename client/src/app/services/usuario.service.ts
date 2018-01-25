@@ -16,6 +16,11 @@ export class UsuarioService extends REST {
   getPorSituacao(codigo:number){
     return this.get(`/user?situacao=${codigo}`);
   }
-
+  aprovaSolicitacaoPerfil(codigo:number){
+    return this.post(`/user/${codigo}/aprova`,'');
+  }
+  rejeitaSolicitacaoPerfil(codigo:number){
+    return this.post(`/user/${codigo}/rejeita`,'');
+  }
 
 }

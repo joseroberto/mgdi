@@ -56,11 +56,11 @@
                   </div>
                 </div>
                   <popover-content #titulo
-                     title="Título Resumido"
+                     title="Título"
                      [closeOnClickOutside]="true">
                           Identificação do indicador dado pelo usuário. É necessário que se tenha um título com o mínimo possível de tamanho já que ele será utilizado em títulos de gráficos, planilhas e afins. Limite de 200 caracteres.
                   </popover-content>
-                  <label class="col-md-2 control-label">Título Resumido <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
+                  <label class="col-md-2 control-label">Título <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
                   <div class="col-md-5">
                     <input id="titulo" class="form-control"
                       placeholder="Título resumido do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
@@ -78,24 +78,28 @@
               </li>
               <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't3'">
-                  <span class="badge bg-color-blue txt-color-white">{{ indicador.IndicadoresRelacionados.length }}</span> Indicadores Relacionados</a>
+                  <span class="badge bg-color-blue txt-color-white">{{ indicador.IndicadoresRelacionados.length }}</span> Responsabilidades</a>
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
-                <a (click)="currenttab = 't4'"><span
-                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria de análise</a>
+                <a (click)="currenttab = 't4'">
+                  <span class="badge bg-color-blue txt-color-white">{{ indicador.IndicadoresRelacionados.length }}</span> Indicadores Relacionados</a>
               </li>
               <li [class.active]="currenttab=='t5'" *ngIf="indicador.codigo">
-                <a (click)="currenttab = 't5'"> Configuração</a>
+                <a (click)="currenttab = 't5'"><span
+                  class="badge bg-color-greenLight txt-color-white">{{ indicador.CategoriasAnalise.length }}</span> Categoria de análise</a>
               </li>
-              <li [class.active]="currenttab=='t6'" *ngIf="false">
-                <a (click)="currenttab = 't6'"><span
+              <li [class.active]="currenttab=='t6'" *ngIf="indicador.codigo">
+                <a (click)="currenttab = 't6'"> Configuração</a>
+              </li>
+              <li [class.active]="currenttab=='t7'" *ngIf="false">
+                <a (click)="currenttab = 't7'"><span
                   class="badge bg-color-purple txt-color-white">5</span> Histórico de Carga</a>
               </li>
-              <li [class.active]="currenttab=='t7'"  *ngIf="indicador.codigo && (indicador.ultima_atualizacao)">
-                <a (click)="currenttab = 't7'">Resultados</a>
-              </li>
               <li [class.active]="currenttab=='t8'"  *ngIf="indicador.codigo && (indicador.ultima_atualizacao)">
-                <a (click)="currenttab = 't8'">Gráfico</a>
+                <a (click)="currenttab = 't8'">Resultados</a>
+              </li>
+              <li [class.active]="currenttab=='t9'"  *ngIf="indicador.codigo && (indicador.ultima_atualizacao)">
+                <a (click)="currenttab = 't9'">Gráfico</a>
               </li>
             </ul>
             <tabset class="padding-10">
@@ -122,6 +126,7 @@
                     <popover-content #classificacao
                                      title="Classificação dos indicadores"
                                      [closeOnClickOutside]="true">
+                      Fonte:  <b>TCU - O uso de indicadores na avaliação do Programa de Inclusão Digital do Governo Federal. </b>
                       Segundo <i>Bonnefoy (2005)</i> e <i>Jannuzzi (2005)</i>, os indicadores podem ser de:<br/><br/>
                       <ul>
                         <li><b>Insumo (antes)</b>: são indicadores que têm relação direta com os recursos
@@ -152,15 +157,37 @@
                         exemplos o Índice Gini de distribuição de renda e o PIB per capita.</li>
                       </ul>
                     </popover-content>
-                     <label class="col-md-2 control-label" for="classificacao" >Classificação
+                     <label class="col-md-2 control-label" for="ClassificacaoIndicadorCodigo" >Classificação
                        <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="classificacao"></i></label>
                      <div class="col-md-2">
-                       <select class="form-control" id="classificacao" name="classificacao"
-                       [ngModel]="indicador.classificacao" required>
+                       <select class="form-control" id="ClassificacaoIndicadorCodigo" name="ClassificacaoIndicadorCodigo"
+                       [ngModel]="indicador.ClassificacaoIndicadorCodigo" required>
                          <option *ngFor="let itemClassificacao of colecaoClassificacao" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
                        </select>
                      </div>
-                     <label class="col-md-2 control-label" for="unidade_medida">Unidade de medida
+
+                      <label class="col-md-2 control-label" for="Classificacao6sIndicadorCodigo" >Classificação 6S
+                        <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="classificacao6s"></i></label>
+                      <div class="col-md-2">
+                        <popover-content #classificacao6s
+                                         title="Classificação 6s"
+                                         [closeOnClickOutside]="true">
+                          Fonte: <b>Guia Referencial para Medição de Desempenho na Administração Pública, Ministério do Planejamento,2010.</b>
+                          <ul>
+                          <li><b>Efetividade</b> são os impactos gerados pelos produtos/serviços, processos ou projetos. A efetividade está vinculada ao grau de satisfação ou ainda ao valor  gregado, a transformação produzida no contexto em geral.</li>
+                          <li><b>Eficácia</b> é a quantidade e qualidade de produtos e serviços entregues ao usuário (beneficiário direto dos produtos e serviços da organização). Por exemplo, se, na mesma campanha citada, a meta de vacinação é imunizar 100.000 crianças e este número foi alcançado ou superado, a campanha foi eficaz.</li>
+                          <li><b>Eficiência</b> é a relação entre os produtos/serviços gerados (outputs) com os insumos utilizados, relacionando o que foi entregue e o que foi consumido de recursos, usualmente sob a forma de custos ou produtividade. Por exemplo: uma campanha de vacinação é mais eficiente quanto menor for o custo, ou seja, quanto menor for o custo da campanha, mantendo‐se os objetivos propostos.</li>
+                          <li><b>Execução</b> refere‐se à realização dos processos, projetos e planos de ação conforme estabelecidos.</li>
+                          <li><b>Excelência</b> é a conformidade a critérios e padrões de qualidade/excelência para a realização dos processos, atividades e projetos na busca da melhor execução e economicidade; sendo um elemento transversal. Indicadores e padrões de excelência podem ser encontrados no Instrumento de Avaliação da Gestão Pública (IAGP)</li>
+                          <li><b>Economicidade</b> está alinhada ao conceito de obtenção e uso de recursos com o menor ônus possível, dentro dos requisitos e da quantidade exigidas pelo input, gerindo adequadamente os recursos financeiros e físicos. Indicadores de economicidade podem ser encontrados nas unidades de suprimentos.</li>
+                          </ul>
+                        </popover-content>
+                        <select class="form-control" id="Classificacao6sIndicadorCodigo" name="Classificacao6sIndicadorCodigo"
+                        [ngModel]="indicador.Classificacao6sIndicadorCodigo" required>
+                          <option *ngFor="let itemClassificacao of colecaoClassificacao6s" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
+                        </select>
+                      </div>
+                     <label class="col-md-2 control-label" for="UnidadeMedidaCodigo">Unidade de medida
                        <popover-content #unidade_medida
                                         title="Unidade de Medida Utilizada"
                                         [closeOnClickOutside]="true">
@@ -168,28 +195,9 @@
                        </popover-content>
                        <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade_medida"></i></label>
                      <div class="col-md-2">
-                       <select class="form-control" id="unidade_medida" name="unidade_medida" [ngModel]="indicador.unidade_medida" required>
+                       <select class="form-control" id="UnidadeMedidaCodigo" name="UnidadeMedidaCodigo" [ngModel]="indicador.UnidadeMedidaCodigo" required>
                          <option *ngFor="let itemUnidade of colecaoUnidadeMedida" [ngValue]="itemUnidade.codigo">{{ itemUnidade.descricao }}</option>
                        </select>
-                     </div>
-                       <label class="col-md-2 control-label">Índice de Referência
-                         <popover-content #indice_referencia
-                           title="Índice de Referência"
-                           [closeOnClickOutside]="true">
-                             Situação que se deseja atingir.
-                         </popover-content>
-                         <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="indice_referencia">
-                         </i>
-                       </label>
-                     <div class="col-md-2">
-                       <input type="text" id="indice_referencia" name="indice_referencia" maxlength="5"
-                       [ngModel]="formatTelaFloat(indicador.indice_referencia)"
-                       class="form-control"
-                       placeholder="Índice"
-                       data-bv-notempty="false"
-                       data-bv-numeric="true"
-                       data-bv-numeric-separator=","
-                       data-bv-numeric-message="Valor deve ser numérico">
                      </div>
                   </div>
                   <div class="form-group">
@@ -199,16 +207,16 @@
                                        [closeOnClickOutside]="true">
                           Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
                       </popover-content>
-                      <label class="col-md-2 control-label" for="granularidade">Estratificação
+                      <label class="col-md-2 control-label" for="GranularidadeCodigo">Estratificação
                       <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="granularidade"></i></label>
                     </div>
                     <div class="col-md-2">
-                      <select class="form-control" id="granularidade" name="granularidade" [ngModel]="indicador.granularidade" required>
+                      <select class="form-control" id="GranularidadeCodigo" name="GranularidadeCodigo" [ngModel]="indicador.GranularidadeCodigo" required>
                         <option *ngFor="let itemGranularidade of colecaoGranularidades" [ngValue]="itemGranularidade.codigo">{{ itemGranularidade.descricao }}</option>
                       </select>
                     </div>
                     <div>
-                      <label class="col-md-2 control-label" for="polaridade">Polaridade
+                      <label class="col-md-2 control-label" for="PolaridadeCodigo">Polaridade
                         <popover-content #polaridade
                                          title="Polaridade"
                                          [closeOnClickOutside]="true">
@@ -218,7 +226,7 @@
                       </i></label>
                     </div>
                     <div class="col-md-2">
-                      <select class="form-control" id="polaridade" name="polaridade" [ngModel]="indicador.polaridade" required>
+                      <select class="form-control" id="PolaridadeCodigo" name="PolaridadeCodigo" [ngModel]="indicador.PolaridadeCodigo" required>
                         <option *ngFor="let itemPolaridade of colecaoPolaridades" [ngValue]="itemPolaridade.codigo">{{ itemPolaridade.descricao }}</option>
                       </select>
                     </div>
@@ -240,87 +248,100 @@
                       </select>
                     </div>
                   </div>
+
+
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="UnidadeCodigo">Unidade
+                      <popover-content #unidade
+                                       title="Marcadores"
+                                       [closeOnClickOutside]="true">
+                          Selecione a unidade principal responsável pelo indicador
+                      </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade"></i>
+                    </label>
+                    <div class="col-md-6">
+                        <select select2 style="width:100%" class="select2" id="UnidadeCodigo" name="UnidadeCodigo" [ngModel]="indicador.UnidadeCodigo"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
+                            <option *ngFor="let itemUnidade of colecaoUnidades"
+                              value="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
+                        </select>
+                        <div class="note">
+                          <strong>Atenção:</strong> Preencha com a unidade principal a que o indicador pertence
+                        </div>
+                      </div>
+                    </div>
                 </fieldset>
                 <fieldset style="padding: 15px">
-                  <popover-content #unidade_responsavel
-                                   title="Unidade Responsável"
+                  <popover-content #parametro_analise
+                                   title="Parâmetro de análise"
                                    [closeOnClickOutside]="true">
-                      Unidade a ser contactada e que responderá pelas informações do indicador.
+                      Parâmetro aceito para análise do indicador.
                   </popover-content>
-                  <legend>&nbsp;&nbsp;Unidade Responsável <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade_responsavel"></i></legend>
+                  <legend>&nbsp;&nbsp;Parâmetro de Análise <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="parametro_analise"></i></legend>
                   <div class="form-group">
-                      <div class="col-md-12">
-                        <input class="form-control" placeholder="Sigla ou partes do nome..."
-                            type="text" list="listResponsavel" id="unidade_responsavel" name="unidade_responsavel_view"
-                            [ngModel]="formataNomeUnidade()"
-                            (change)="selecionaUnidade()"
-                            data-bv-notempty="true"
-                            data-bv-notempty-message="A unidade responsável é obrigatória">
-                        <datalist id="listResponsavel">
-                          <option *ngFor="let itemUnidade of colecaoUnidades"
-                            value="[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}"
-                            [attr.codigo]="itemUnidade.codigo">
-                        </datalist>
-                        <p class="note"><strong>Nota:</strong> selecione a coordenação do Ministério da Saúde responsável pelo indicador.</p>
-                      </div>
-                      <br/><br/><br/>
-                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
-                          <h4> {{secretaria_selecionada.nome}}
-                            <br>
-                            <small> {{secretaria_selecionada.sigla}}</small>
-                          </h4>
-                          <ul class="list-unstyled">
-                            <li>
-                              <p class="text-muted">
-                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
-                              </p>
-                            </li>
-                            <li>
-                              <p class="text-muted">
-                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
-                              </p>
-                            </li>
-                          </ul>
-                      </div>
-
-                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
-                      <p class="font-md">
-                        <i>Subordinada a ...</i>
-                      </p>
-                      <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
-                        <li class="col-md-12" style="padding-left:30px">
-                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
-                        </li>
-                      </ul>
+                    <label class="col-md-2 control-label">Parâmetro
+                      <popover-content #parametro
+                        title="Parâmetro de Referência"
+                        [closeOnClickOutside]="true">
+                          Parâmetro para análise.
+                      </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="parametro">
+                      </i>
+                    </label>
+                    <div class="col-md-2">
+                      <input type="text" id="parametro" name="parametro" maxlength="5"
+                      [ngModel]="formatTelaFloat(indicador.parametro)"
+                      class="form-control"
+                      placeholder="Índice"
+                      data-bv-notempty="false"
+                      data-bv-numeric="true"
+                      data-bv-numeric-separator=","
+                      data-bv-numeric-message="Valor deve ser numérico">
+                    </div>
+                    <div>
+                      <label class="col-md-2 control-label" for="ParametroFonteCodigo">Fonte
+                        <popover-content #fonte
+                                         title="Fonte do parâmetro de análise"
+                                         [closeOnClickOutside]="true">
+                            Selecione a fonte do parâmetro de análise.
+                        </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="fonte">
+                      </i></label>
+                    </div>
+                    <div class="col-md-6">
+                      <select class="form-control" id="ParametroFonteCodigo" name="ParametroFonteCodigo" [ngModel]="indicador.ParametroFonteCodigo">
+                        <option *ngFor="let itemFonte of colecaoFonteParametro" [ngValue]="itemFonte.codigo">{{ itemFonte.sigla}} - {{ itemFonte.descricao }}</option>
+                      </select>
                     </div>
                   </div>
                 </fieldset>
                 <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Periodicidades</legend>
                   <div class="form-group">
-                    <label class="col-md-2 control-label" for="periodicidade">Atualização</label>
+                    <label class="col-md-2 control-label" for="PeriodicidadeAtualizacaoCodigo">Atualização</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade"
-                      name="periodicidade_atualizacao"
-                      [ngModel]="indicador.periodicidade_atualizacao" required
+                      <select class="form-control" id="PeriodicidadeAtualizacaoCodigo"
+                      name="PeriodicidadeAtualizacaoCodigo"
+                      [ngModel]="indicador.PeriodicidadeAtualizacaoCodigo" required
                       data-bv-notempty-message="O valor é obrigatório">
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
                     </div>
-                    <label class="col-md-2 control-label" for="periodicidade">Avaliação</label>
+                    <label class="col-md-2 control-label" for="PeriodicidadeAvaliacaoCodigo">Apuração/Avaliação</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_avaliacao" name="periodicidade_avaliacao"
+                      <select class="form-control" id="PeriodicidadeAvaliacaoCodigo" name="PeriodicidadeAvaliacaoCodigo"
                       data-bv-notempty-message="O valor é obrigatório"
-                      [ngModel]="indicador.periodicidade_avaliacao" required>
+                      [ngModel]="indicador.PeriodicidadeAvaliacaoCodigo" required>
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
                       </select>
                     </div>
-                    <label class="col-md-2 control-label" for="periodicidade">Monitoramento</label>
+                    <label class="col-md-2 control-label" for="PeriodicidadeMonitoramentoCodigo">Monitoramento</label>
                     <div class="col-md-2">
-                      <select class="form-control" id="periodicidade_monitoramento" name="periodicidade_monitoramento"
-                      [ngModel]="indicador.periodicidade_monitoramento" required
+                      <select class="form-control" id="PeriodicidadeMonitoramentoCodigo" name="PeriodicidadeMonitoramentoCodigo"
+                      [ngModel]="indicador.PeriodicidadeMonitoramentoCodigo" required
                       data-bv-notempty-message="O valor é obrigatório">
                         <option *ngFor="let itemPeriodicidade of colecaoPeriodicidade"
                         [ngValue]="itemPeriodicidade.codigo">{{ itemPeriodicidade.descricao }}</option>
@@ -378,7 +399,7 @@
                     </div>
                     <div class="col-md-2">
                       <span class="onoffswitch">
-                        <input type="checkbox" name="universao" class="onoffswitch-checkbox"
+                        <input type="checkbox" name="universal" class="onoffswitch-checkbox"
                                id="universal" [(ngModel)]="indicador.universal">
                         <label class="onoffswitch-label" for="universal">
                             <span class="onoffswitch-inner"
@@ -486,6 +507,132 @@
               </tab>
               <tab [active]="currenttab == 't3'">
                 <fieldset style="padding: 15px">
+                  <popover-content #responsabilidade_gerencial
+                    title="Responsabilidade Gerencial"
+                    [closeOnClickOutside]="true">
+                      Áreas responsáveis pela qualificação do indicador e sua ficha.
+                  </popover-content>
+                  <legend>&nbsp;&nbsp;Responsabilidade Gerencial <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="responsabilidade_gerencial"></i></legend>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="unidade_gerencial">Sigla/Nome
+                      <popover-content #unidade_gerencial
+                                       title="Unidade Gerencial"
+                                       [closeOnClickOutside]="true">
+                          Selecione a unidade gerencial responsável pelo indicador
+                      </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade_gerencial"></i>
+                    </label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <select select2 style="width:100%" class="select2" id="unidade_gerencial">
+                            <option *ngFor="let itemUnidade of colecaoUnidades"
+                              [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
+                        </select>
+                        <div class="input-group-btn">
+                        <button class="btn btn-primary" type="button" (click)="adicionaItemResponsavelGerencial()">
+                          <i class="fa fa-plus"></i>Adiciona Item
+                        </button>
+                        </div>
+                      </div>
+                    </div>
+                    <br/>
+                    <br/><hr/>
+                    <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
+                        <h4> {{secretaria_selecionada.nome}}
+                          <br>
+                          <small> {{secretaria_selecionada.sigla}}</small>
+                        </h4>
+                        <ul class="list-unstyled">
+                          <li>
+                            <p class="text-muted">
+                              <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
+                            </p>
+                          </li>
+                          <li>
+                            <p class="text-muted">
+                              <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
+                            </p>
+                          </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
+                    <p class="font-md">
+                      <i>Subordinada a ...</i>
+                    </p>
+                    <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
+                      <li class="col-md-12" style="padding-left:30px">
+                        {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                      </li>
+                    </ul>
+                  </div>
+                  </div>
+                </fieldset>
+                <fieldset style="padding: 15px">
+                  <popover-content #responsabilidade_tecnica
+                    title="Responsabilidade Técnica"
+                    [closeOnClickOutside]="true">
+                      Áreas responsáveis técnicamente pelos dados divulgados.
+                  </popover-content>
+                  <legend>&nbsp;&nbsp;Responsabilidade Técnica <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="responsabilidade_tecnica"></i></legend>
+
+                  <div class="form-group">
+                    <label class="col-md-2 control-label" for="unidade_tecnica">Sigla/Nome
+                      <popover-content #unidade_tecnica
+                                       title="Responsabilidade Técnica"
+                                       [closeOnClickOutside]="true">
+                          Selecione a unidade gerencial responsável pelo indicador
+                      </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade_tecnica"></i>
+                    </label>
+                    <div class="col-md-8">
+                      <div class="input-group">
+                        <select select2 style="width:100%" class="select2" id="unidade_tecnica">
+                            <option *ngFor="let itemUnidade of colecaoUnidades"
+                              [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
+                        </select>
+                        <div class="input-group-btn">
+                        <button class="btn btn-primary" type="button" (click)="adicionaItemResponsavelTecnico()">
+                          <i class="fa fa-plus"></i>Adiciona Item
+                        </button>
+                        </div>
+                      </div>
+                    </div>
+                      <br/><br/><hr/>
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
+                          <h4> {{secretaria_selecionada.nome}}
+                            <br>
+                            <small> {{secretaria_selecionada.sigla}}</small>
+                          </h4>
+                          <ul class="list-unstyled">
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
+                              </p>
+                            </li>
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
+                              </p>
+                            </li>
+                          </ul>
+                      </div>
+
+                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
+                      <p class="font-md">
+                        <i>Subordinada a ...</i>
+                      </p>
+                      <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
+                        <li class="col-md-12" style="padding-left:30px">
+                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </fieldset>
+              </tab>
+              <tab [active]="currenttab == 't4'">
+                <fieldset style="padding: 15px">
                   <popover-content #indicadores_relacionados
                     title="Indicadores relacionados"
                     [closeOnClickOutside]="true">
@@ -537,7 +684,7 @@
                   </div>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't4'">
+              <tab [active]="currenttab == 't5'">
                 <fieldset style="padding: 15px">
                   <popover-content #categoria_analise
                     title="Categorias de Análise"
@@ -590,7 +737,7 @@
                   </div>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't5'">
+              <tab [active]="currenttab == 't6'">
                 <fieldset style="padding: 15px">
                   <popover-content #tipo_extracao
                     title="Tipos de Extração"
@@ -607,24 +754,24 @@
                             [closeOnClickOutside]="true">
                               Tipo de consulta: ETL, Query, Importação.
                         </popover-content>
-                        <label class="col-md-2 control-label" for="tipo_consulta" >Tipo de Consulta <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tipo_consulta"></i></label>
+                        <label class="col-md-2 control-label" for="TipoConsultaCodigo" >Tipo de Consulta <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tipo_consulta"></i></label>
                         <div class="col-md-2">
-                          <select class="form-control" id="tipo_consulta" name="tipo_consulta" [(ngModel)]="indicador.tipo_consulta" required>
+                          <select class="form-control" id="TipoConsultaCodigo" name="TipoConsultaCodigo" [(ngModel)]="indicador.TipoConsultaCodigo" required>
                             <option *ngFor="let itemTipoConsulta of colecaoTipoConsulta" [ngValue]="itemTipoConsulta.codigo">{{ itemTipoConsulta.descricao }}</option>
                           </select>
                         </div>
                         <!-- Fim Componente 1 -->
                         <!-- Componente 2 -->
-                        <div *ngIf="indicador.tipo_consulta==2">
+                        <div *ngIf="indicador.TipoConsultaCodigo==2">
                           <popover-content #banco
                               title="Banco de Dados"
                               [closeOnClickOutside]="true">
                               Cadastro de cada um dos bancos possíveis de se buscar dados de origem.
                           </popover-content>
-                          <label class="col-md-2 control-label" for="banco_dados" >Banco de Dados <i class="fa fa-question-circle" popoverPlacement="top" popoverOnHover="true" [popover]="banco"></i></label>
+                          <label class="col-md-2 control-label" for="BancoDadosCodigo" >Banco de Dados <i class="fa fa-question-circle" popoverPlacement="top" popoverOnHover="true" [popover]="banco"></i></label>
 
                            <div class="col-md-2">
-                             <select class="form-control" id="banco_dados" name="banco_dados" [ngModel]="indicador.banco_dados" required>
+                             <select class="form-control" id="BancoDadosCodigo" name="BancoDadosCodigo" [ngModel]="indicador.BancoDadosCodigo" required>
                                <option *ngFor="let itemBancoDados of colecaoBancoDados" [ngValue]="itemBancoDados.codigo">{{ itemBancoDados.descricao }}</option>
                              </select>
                            </div>
@@ -637,10 +784,10 @@
                                           [closeOnClickOutside]="true">
                              Qual o critério de agregação para os dados do indicador.
                            </popover-content>
-                           <label class="col-md-2 control-label" for="criterio_agregacao">Critério de Agregação
+                           <label class="col-md-2 control-label" for="CriterioAgregacaoCodigo">Critério de Agregação
                               <i class="fa fa-question-circle" popoverPlacement="top" popoverOnHover="true" [popover]="criterio_agregacao_label"></i></label>
                             <div class="col-md-2">
-                             <select class="form-control" id="criterio_agregacao" name="criterio_agregacao" [ngModel]="indicador.criterio_agregacao">
+                             <select class="form-control" id="CriterioAgregacaoCodigo" name="CriterioAgregacaoCodigo" [ngModel]="indicador.CriterioAgregacaoCodigo">
                                <option *ngFor="let itemCriteriosAgregacao of colecaoCriteriosAgregacao" [ngValue]="itemCriteriosAgregacao.codigo">{{ itemCriteriosAgregacao.descricao }}</option>
                              </select>
                             </div>
@@ -654,17 +801,17 @@
                                 [closeOnClickOutside]="true">
                    De acordo com o tipo query a ser executada, nome da ETL, nome do processo para importação, ou SQL a ser executado.
                   </popover-content>
-                  <legend *ngIf="indicador.tipo_consulta==1 || indicador.tipo_consulta==2">&nbsp;&nbsp;{{ (indicador.tipo_consulta==2?"Sql":"Fórmula") }} <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i>
+                  <legend *ngIf="indicador.TipoConsultaCodigo==1 || indicador.TipoConsultaCodigo==2">&nbsp;&nbsp;{{ (indicador.TipoConsultaCodigo==2?"Sql":"Fórmula") }} <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="referencia"></i>
                   </legend>
                   <!-- Formula -->
-                  <div class="row"  *ngIf="indicador.tipo_consulta==1 || indicador.tipo_consulta==2">
+                  <div class="row"  *ngIf="indicador.TipoConsultaCodigo==1 || indicador.TipoConsultaCodigo==2">
                        <div class="col-md-10" >
                         <textarea id="referencia_consulta" name="referencia_consulta" style="width:90%" rows='5' [ngModel]="indicador.referencia_consulta"></textarea>
                        </div>
                   </div>
                   <br/><br/>
                   <!-- Fim da Formula -->
-                  <div *ngIf="indicador.tipo_consulta==5">
+                  <div *ngIf="indicador.TipoConsultaCodigo==5">
                       <popover-content #procedimento
                                       title="Procedimento Operacional"
                                       [closeOnClickOutside]="true">
@@ -691,7 +838,7 @@
                   </div>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't6'">
+              <tab [active]="currenttab == 't7'">
                 <fieldset style="padding: 15px">
                   <div class="table-responsive col-md-10">
                     <table class="table table-hover">
@@ -723,15 +870,15 @@
                   </div>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't7'">
+              <tab [active]="currenttab == 't8'">
                 <fieldset style="padding: 15px">
                   <resultset *ngIf="indicador.Granularidade" [codigo]="indicador.codigo"
                   [granularidade]="indicador.Granularidade.sigla"
-                  [criterio]="indicador.criterio_agregacao"
-                  [tipo]="indicador.tipo_consulta"></resultset>
+                  [criterio]="indicador.CriterioAgregacaoCodigo"
+                  [tipo]="indicador.TipoConsultaCodigo"></resultset>
                 </fieldset>
               </tab>
-              <tab [active]="currenttab == 't8'">
+              <tab [active]="currenttab == 't9'">
                 <fieldset style="padding: 15px">
                       <grafico #graph (onInit)="loadData(indicador.codigo, indicador.Granularidade.sigla, this.graph)"
                      type="bar"

@@ -86,6 +86,54 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
+  /api/user/{codigo}/aprova:
+    x-swagger-router-controller: user
+    post:
+      description: Aprova a solicitação do usuário
+      summary: Aprova solicitação de perfil para o usuário
+      operationId: aprovaSolicitacao
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      tags:
+        - MGI
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/user/{codigo}/rejeita:
+    x-swagger-router-controller: user
+    post:
+      description: Rejeita a solicitação do usuário
+      summary: Rejeita solicitação de perfil para o usuário
+      operationId: rejeitaSolicitacao
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      tags:
+        - MGI
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/user:
     x-swagger-router-controller: user
     get:
@@ -180,6 +228,40 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetClassificacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/classificacao6s:
+    x-swagger-router-controller: classificacao6s-indicador
+    get:
+      description: Retorna a classificacao possivel para os indicadores
+      summary: Lista de classificações
+      operationId: getClassificacoes6s
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetClassificacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/fonte-parametro:
+    x-swagger-router-controller: parametro-fonte
+    get:
+      description: Retorna a lista de fontes para relacionar ao parametro de referencia do indicador
+      summary: Lista de fontes que fornecem parâmetros de referência
+      operationId: getFontesParametro
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetParametroFonteResponse"
         default:
           description: Erro
           schema:
@@ -1135,6 +1217,114 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{id}/responsavel-gerencial/{responsavel_gerencial}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona responsavel gerencial relacionado a um indicador
+      summary: Adiciona um responsável geárencial
+      operationId: addResponsavelGerencial
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_gerencial
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Rompe a relação entre o responsável gerencial e um indicador
+      summary: Rompe a relação entre indicadores e responsável gerencial
+      operationId: deleteResponsavelGerencial
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_gerencial
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{id}/responsavel-tecnico/{responsavel_tecnico}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona responsável tniéco relacionado a um indicador
+      summary: Adiciona uma responsável técnico a um indicador
+      operationId: addResponsavelTecnico
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_tecnico
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Rompe a relação de responsabilidade técnica com um indicador
+      summary: Rompe a relação entre responsável técnico e um indicador
+      operationId: deleteResponsavelTecnico
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_tecnico
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /api/indicador/{codigo}/interpretacao:
     x-swagger-router-controller: indicador
@@ -2026,6 +2216,21 @@ definitions:
           properties:
             codigo:
               type: number
+            descricao:
+              type: string
+  GetParametroFonteResponse:
+    required:
+      - fontes
+    properties:
+      fontes:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            sigla:
+              type: string
             descricao:
               type: string
   GetClassificacaoResponse:

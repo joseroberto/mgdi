@@ -73,10 +73,10 @@
                             <td title='{{item.Perfil.descricao}}'>{{item.Perfil.sigla}}</td>
                             <td title='{{item.Unidade.nome}}'>{{item.Unidade.sigla}}</td>
                             <td>
-                              <button class='btn btn-xs btn-info pull-left'>
+                              <button class='btn btn-xs btn-info pull-left' (click)="aprovaSolicitacao(item.codigo)">
                                 <i class="fa fa-thumbs-o-up "></i>&nbsp;Aprova
                               </button>
-                              <button class='btn btn-xs btn-danger pull-left' style='margin-left:5px'>
+                              <button class='btn btn-xs btn-danger pull-left' style='margin-left:5px' (click)="rejeitaSolicitacao(item.codigo)">
                                 <i class="fa fa-times "></i>&nbsp;Declina
                               </button>
                             </td>

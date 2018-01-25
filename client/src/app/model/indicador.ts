@@ -5,11 +5,9 @@ export class Indicador{
     codigo:string = '';
     titulo:string = '';
     descricao:string = '';
-    classificacao:number = 0;
-    periodicidade_atualizacao:number = null;
-    periodicidade_monitoramento:number = null;
-    periodicidade_avaliacao:number = null;
-    unidade_medida:number = 2;
+    ClassificacaoIndicadorCodigo:number = 0;
+    Classificacao6sIndicadorCodigo:number = 0;
+    UnidadeMedidaCodigo:number = 2;
     metodo_calculo:string = '';
     conceituacao:string = '';
     interpretacao:string = '';
@@ -22,26 +20,34 @@ export class Indicador{
     acumulativo: boolean = false;
     ativo:boolean = true;
     privado:boolean = false;
-    tipo_consulta:number = 0;
-    banco_dados:number = 0;
+    TipoConsultaCodigo:number = 0;
+    ParametroFonteCodigo:number = null;
+    BancoDadosCodigo:number = 0;
     referencia_consulta:string;
     procedimento_operacional:string;
     secretaria:number = null;
-    unidade_responsavel:number = null;
-    granularidade:number = 0;
-    criterio_agregacao:number = 0;
+    UnidadeCodigo:number = null;
+    GranularidadeCodigo:number = 0;
+    CriterioAgregacaoCodigo:number = 0;
+    PeriodicidadeAtualizacaoCodigo:number = 30;
+    PeriodicidadeAvaliacaoCodigo:number = 30;
+    PeriodicidadeMonitoramentoCodigo:number = 30;
     especifico:boolean = false;
-    indice_referencia: number =null;
+    parametro: number =null;
     ultima_atualizacao:any = null;
-    polaridade:number = 0;
+    PolaridadeCodigo:number = 0;
     Granularidade:Granularidade;
     tags:Tag[];
     IndicadoresRelacionados:Indicador[];
     CategoriasAnalise:CategoriaAnalise[];
+    ResponsavelTecnico:UnidadeResponsavel[];
+    ResponsavelGerencial:UnidadeResponsavel[];
     UnidadeResponsavel:UnidadeResponsavel;
   constructor(){
     this.IndicadoresRelacionados = [];
-    this.CategoriasAnalise = [];
+    this.ResponsavelTecnico = [];
+    this.IndicadoresRelacionados = [];
+    this.ResponsavelGerencial = [];
     this.tags = [];
   }
 }

@@ -1,5 +1,6 @@
 export * from './authentication.service';
 export * from './classificacao-indicador.service';
+export * from './classificacao6s-indicador.service';
 export * from './indicador.service';
 export * from './periodicidade.service';
 export * from './unidade-medida.service';
@@ -18,3 +19,4 @@ export * from './usuario.service';
 export * from './consulta.service';
 export * from './polaridade.service';
 export * from './perfil.service';
+export * from './fonte-parametro.service';

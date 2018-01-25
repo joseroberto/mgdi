@@ -30,6 +30,12 @@ module.exports = {
       console.log('Erro', err);
       res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
     });
+  },
+  aprovaSolicitacao: (req,res)=>{
+    res.json({codret: 0, mensagem: "Solicitação de perfil de acesso aprovada com sucesso"});
+  },
+  rejeitaSolicitacao: (req,res)=>{
+    res.json({codret: 0, mensagem: "Solicitação de perfil de acesso rejeitada com sucesso"});
   }
 }
 

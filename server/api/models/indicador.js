@@ -26,71 +26,6 @@ module.exports = function(sequelize, DataTypes) {
         field: 'ds_descricao',
         allowNull: false
     },
-    secretaria: {
-        type: DataTypes.INTEGER,
-        field: 'co_secretaria',
-        allowNull: false
-    },
-    unidade_responsavel: {
-        type: DataTypes.INTEGER,
-        field: 'co_unidade_responsavel',
-        allowNull: false
-    },
-    periodicidade_atualizacao: {
-        type: DataTypes.INTEGER,
-        field: 'co_periodicidade_atualizacao',
-        allowNull: false
-    },
-    periodicidade_avaliacao: {
-        type: DataTypes.INTEGER,
-        field: 'co_periodicidade_avaliacao',
-        allowNull: false
-    },
-    periodicidade_monitoramento: {
-        type: DataTypes.INTEGER,
-        field: 'co_periodicidade_monitoramento',
-        allowNull: false
-    },
-    classificacao: {
-        type: DataTypes.INTEGER,
-        field: 'co_indicador_classificacao',
-        allowNull: false
-    },
-    unidade_medida: {
-        type: DataTypes.INTEGER,
-        field: 'co_unidade_medida',
-        allowNull: false
-    },
-    tipo_consulta: {
-        type: DataTypes.INTEGER,
-        field: 'co_tipo_consulta',
-        allowNull: false,
-        defaultValue: 0
-    },
-    granularidade: {
-        type: DataTypes.INTEGER,
-        field: 'co_granularidade',
-        allowNull: false,
-        defaultValue: 0
-    },
-    criterio_agregacao: {
-        type: DataTypes.INTEGER,
-        field: 'co_criterio_agregacao',
-        allowNull: false,
-        defaultValue: 0
-    },
-    banco_dados: {
-        type: DataTypes.INTEGER,
-        field: 'co_banco_dados',
-        allowNull: false,
-        defaultValue: 0
-    },
-    polaridade: {
-        type: DataTypes.INTEGER,
-        field: 'co_polaridade',
-        allowNull: false,
-        defaultValue: 0
-    },
     metodo_calculo:{
         type: DataTypes.TEXT,
         field: 'ds_metodo_calculo'
@@ -137,9 +72,9 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false,
         defaultValue: 0
     },
-    indice_referencia:{
+    parametro:{
         type: DataTypes.FLOAT,
-        field: 'nu_indice_referencia',
+        field: 'nu_parametro_referencia',
         allowNull: true
     },
     acumulativo:{
@@ -170,34 +105,55 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
          Indicador.belongsTo(models.Polaridade,{
           as: 'Polaridade',
-          foreignKey: 'co_polaridade'});
-         //Indicador.belongsTo(models.TipoConsulta,{
-        //  as: 'TipoConsulta',
-        //  foreignKey: 'co_tipo_consulta'});
+          foreignKey: {field: 'co_polaridade',allowNull: false}});
+          Indicador.belongsTo(models.Unidade,{
+              as: 'Unidade',
+              foreignKey: {field: 'co_unidade',allowNull: false}
+          });
+          Indicador.belongsTo(models.ParametroFonte,{
+              as: 'ParametroFonte',
+              foreignKey: {field: 'co_fonte',allowNull: true}
+          });
+          Indicador.belongsTo(models.TipoConsulta,{
+              as: 'TipoConsulta',
+              foreignKey: {field: 'co_tipo_consulta',allowNull: false}
+          });
+          Indicador.belongsTo(models.BancoDados,{
+              as: 'BancoDados',
+              foreignKey: {field: 'co_banco_dados',allowNull: true}
+          });
          Indicador.belongsTo(models.Periodicidade,{
            as: 'PeriodicidadeAtualizacao',
-           foreignKey: 'co_periodicidade_atualizacao'});
+           foreignKey: {field: 'co_periodicidade_atualizacao',allowNull: false}
+           });
         Indicador.belongsTo(models.Periodicidade,{
              as: 'PeriodicidadeAvaliacao',
-             foreignKey: 'co_periodicidade_avaliacao'});
+             foreignKey: {field: 'co_periodicidade_avaliacao',allowNull: false}
+             });
         Indicador.belongsTo(models.Periodicidade,{
             as: 'PeriodicidadeMonitoramento',
-            foreignKey: 'co_periodicidade_monitoramento'});
+            foreignKey: {field: 'co_periodicidade_monitoramento',allowNull: false}
+            });
         Indicador.belongsTo(models.ClassificacaoIndicador,{
             as: 'ClassificacaoIndicador',
-            foreignKey: 'co_indicador_classificacao'});
+            foreignKey: {field: 'co_indicador_classificacao',allowNull: false}
+            });
+        Indicador.belongsTo(models.Classificacao6sIndicador,{
+            as: 'Classificacao6sIndicador',
+            foreignKey: {field: 'co_indicador_classificacao6s',allowNull: false}
+            });
         Indicador.belongsTo(models.UnidadeMedida,{
             as: 'UnidadeMedida',
-            foreignKey: 'co_unidade_medida'});
-        Indicador.belongsTo(models.Unidade,{
-           as: 'UnidadeResponsavel',
-           foreignKey: 'co_unidade_responsavel'});
+            foreignKey: {field: 'co_unidade_medida',allowNull: false}
+            });
        Indicador.belongsTo(models.Granularidade,{
           as: 'Granularidade',
-          foreignKey: 'co_granularidade'});
+          foreignKey: {field: 'co_granularidade',allowNull: false}
+          });
        Indicador.belongsTo(models.Criterio_Agregacao,{
           as: 'CriterioAgregacao',
-          foreignKey: 'co_criterio_agregacao'});
+          foreignKey: {field: 'co_criterio_agregacao',allowNull: false}
+          });
         Indicador.belongsToMany(models.Indicador, {
            as: 'IndicadoresRelacionados',
            through: models.IndicadorRelacionado,
@@ -208,9 +164,21 @@ module.exports = function(sequelize, DataTypes) {
            through: models.IndicadorCategoriaAnalise,
            foreignKey: 'co_seq_indicador',
            otherKey: 'co_categoria_analise' });
-        Indicador.belongsToMany(models.Tag, {
-           as: 'Tags',
-           through: 'tb_indicador_tag',
+         Indicador.belongsToMany(models.Tag, {
+            as: 'Tags',
+            through: 'tb_indicador_tag',
+            foreignKey: 'co_seq_indicador',
+            onDelete: 'cascade' });
+        Indicador.belongsToMany(models.Unidade, {
+           as: 'ResponsavelTecnico',
+           through: 'tb_indicador_responsavel_tecnico',
+           foreignKey: 'co_seq_indicador',
+           otherKey: 'co_unidade',
+           onDelete: 'cascade' });
+        Indicador.belongsToMany(models.Unidade, {
+           as: 'ResponsavelGerencial',
+           through: 'tb_indicador_responsavel_gerencial',
+           otherKey: 'co_unidade',
            foreignKey: 'co_seq_indicador',
            onDelete: 'cascade' });
       }

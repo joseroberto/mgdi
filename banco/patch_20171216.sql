@@ -82,3 +82,7 @@ alter table dbesusgestor.tb_user_mgi add constraint fk_tb_user_mgi_co_situacao f
   references dbesusgestor.tb_status_aprovacao(co_status);
 
 alter table dbesusgestor.tb_user_mgi add column co_sexo char(1) not null;
+
+create index ix_tb_resultado_co_ibge on dbesusgestor.tb_resultado(co_ibge);
+create index ix_tb_resultado_co_seq_indicador on dbesusgestor.tb_resultado(co_seq_indicador);
+create index ix_tb_resultado_co_ano on dbesusgestor.tb_resultado(co_ano);
