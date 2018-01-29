@@ -48,6 +48,7 @@ export class Indicador{
     this.ResponsavelTecnico = [];
     this.IndicadoresRelacionados = [];
     this.ResponsavelGerencial = [];
+    this.CategoriasAnalise = [];
     this.tags = [];
   }
 }

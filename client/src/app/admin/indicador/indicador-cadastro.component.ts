@@ -93,6 +93,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     System.import('script-loader!summernote/dist/summernote.min.js');
     this.flag_update = false;
     this.indicador = new Indicador();
+    console.log('new indicador', this.indicador);
     this.classificacaoIndicadorService.getAll().subscribe(resp => {
         this.colecaoClassificacao = resp.classificacoes;
     }, err => this.util.msgErroInfra(err));
@@ -148,8 +149,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
-      //this.loadIndicador();
-      //$('.procedimento_operacional').summernote(this.options);
   }
 
   private loadIndicador(){
@@ -164,8 +163,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
-              //console.log('Valor interno', this.indicador, resp);
-              this.carregaUnidade(this.indicador.secretaria);
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
@@ -359,11 +356,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   private onSubmit(form){
-    //let valor: Indicador= this.populaObjetoGravacao([this.indicador,form.value]);
-    //console.log('Antes de gravar', valor, form.valid);
     let valor: Indicador = Object.assign(this.indicador, form.value);
     if(form.valid){
-      //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
         this.indicadorService.update(valor).subscribe(resp=>{
           if(resp.codret==0){
@@ -390,38 +384,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  private populaObjetoGravacao(obj:any[]):Indicador{
-      console.log('obj', obj);
-      let valor:Indicador = new Indicador();
-      obj.forEach(item=>{
-        if('id' in item) valor['id'] = item ['id'];
-        if('codigo' in item ) valor['codigo']=item['codigo'];
-        if('titulo' in item ) valor['titulo']=item['titulo'];
-        if('descricao' in item ) valor['descricao']=item['descricao'];
-        if('classificacao' in item ) valor['classificacao']=item['classificacao'];
-        if('periodicidade_atualizacao' in item ) valor['periodicidade_atualizacao']=item['periodicidade_atualizacao'];
-        if('periodicidade_avaliacao' in item ) valor['periodicidade_avaliacao']=item['periodicidade_avaliacao'];
-        if('periodicidade_monitoramento' in item ) valor['periodicidade_monitoramento']=item['periodicidade_monitoramento'];
-        if('unidade_medida' in item ) valor['unidade_medida']=item['unidade_medida'];
-        if('ativo' in item ) valor['ativo']=item['ativo'];
-        if('acumulativo' in item) valor['acumulativo']=item['acumulativo'];
-        if('privado' in item) valor['privado']=item['privado'];
-        if('especifico' in item ) valor['especifico']=item['especifico'];
-        if('unidade_responsavel' in item ) valor['unidade_responsavel']=item['unidade_responsavel'];
-        if('secretaria' in item ) valor['secretaria']=item['secretaria'];
-        if('polaridade' in item ) valor['polaridade']=item['polaridade'];
-        if('tags' in item ) valor['tags']=item['tags'];
-        if('indice_referencia' in item && item['indice_referencia']!=null ) valor['indice_referencia']=parseFloat(String(item['indice_referencia']).replace(',','.'));
-        if('granularidade' in item) valor['granularidade'] = item['granularidade'];
-
-        if('referencia_consulta' in item) valor['referencia_consulta'] = item['referencia_consulta'];
-        if('criterio_agregacao' in item) valor['criterio_agregacao'] = item['criterio_agregacao'];
-        if('banco_dados' in item) valor['banco_dados'] = item['banco_dados'];
-        if('tipo_consulta' in item) valor['tipo_consulta'] = item['tipo_consulta'];
-
-      });
-      return valor;
-  }
   private adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
     let id:number = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');
@@ -469,21 +431,43 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  private adicionaItemResponsavelTecnico(){
-    let id = $('#unidade_tecnica').val();
-    if(id){
-      this.indicadorService.adicionaResponsavelTecnico(this.indicador.id, id).subscribe(resp=>{
+  private deleteItemResponsaveGerencial(id: number){
+    this.indicadorService.deleteResponsavelGerencial(this.indicador.id, id).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
-        $('#unidade_tecnica').val('');
         this.loadIndicador();
       }else{
         this.util.msgErro(resp.mensagem);
       }
     }, err=>this.util.msgErroInfra(err));
+  }
+
+  private adicionaItemResponsavelTecnico(){
+    let id = $('#unidade_tecnica').val();
+    if(id){
+      this.indicadorService.adicionaResponsavelTecnico(this.indicador.id, id).subscribe(resp=>{
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+          $('#unidade_tecnica').val('');
+          this.loadIndicador();
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
+      }, err=>this.util.msgErroInfra(err));
     }else{
         this.util.msgErro('Preencha o indicador relacionado');
     }
+  }
+
+  private deleteItemResponsaveTecnico(id: number){
+    this.indicadorService.deleteResponsavelTecnico(this.indicador.id, id).subscribe(resp=>{
+      if(resp.codret==0){
+        this.util.msgSucesso(resp.mensagem);
+        this.loadIndicador();
+      }else{
+        this.util.msgErro(resp.mensagem);
+      }
+    }, err=>this.util.msgErroInfra(err));
   }
 
   private adicionaCategoriaRelacionada(){
@@ -513,29 +497,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.util.msgErro(resp.mensagem);
       }
     }, err=>this.util.msgErroInfra(err));
-  }
-
-//TODO: Ajustar
-  private selecionaUnidade(){
-  //  let valorSelecionado = $('#unidade_responsavel').val();
-  //  let codigo_unidade:number = $(`#listResponsavel option[value='${valorSelecionado}']`).attr('codigo');
-  //  if(codigo_unidade){
-  //    this.indicador.unidade_responsavel = +codigo_unidade;
-  //    this.carregaUnidade(codigo_unidade);
-  //  }
-  }
-
-  private carregaUnidade(codigo:number){
-    /*this.unidadeService.getUnidade(codigo).subscribe(resp=>{
-      console.log('Secretaria selecionada:', resp);
-      this.secretaria_selecionada = resp.unidade;
-      // Atualiza a secretaria nu_nivel=1
-      if(resp.unidade && resp.unidade.nu_nivel==1){
-        this.indicador.secretaria = resp.unidade.codigo;
-      }else{
-        this.indicador.secretaria = resp.unidade.ancestors.find(item=> item.nu_nivel==1)['codigo'];
-      }
-    });*/
   }
 
   private formataNomeUnidade():string{

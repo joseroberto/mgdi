@@ -78,7 +78,7 @@
               </li>
               <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't3'">
-                  <span class="badge bg-color-blue txt-color-white">{{ indicador.IndicadoresRelacionados.length }}</span> Responsabilidades</a>
+                  <span class="badge bg-color-blue txt-color-white">0</span> Responsabilidades</a>
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't4'">
@@ -264,7 +264,7 @@
                         data-bv-notempty="true"
                         data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
                             <option *ngFor="let itemUnidade of colecaoUnidades"
-                              value="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
+                              [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
                         </select>
                         <div class="note">
                           <strong>Atenção:</strong> Preencha com a unidade principal a que o indicador pertence
@@ -536,37 +536,45 @@
                       </div>
                     </div>
                     <br/>
-                    <br/><hr/>
-                    <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
-                        <h4> {{secretaria_selecionada.nome}}
-                          <br>
-                          <small> {{secretaria_selecionada.sigla}}</small>
-                        </h4>
-                        <ul class="list-unstyled">
-                          <li>
-                            <p class="text-muted">
-                              <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
-                            </p>
-                          </li>
-                          <li>
-                            <p class="text-muted">
-                              <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
-                            </p>
-                          </li>
-                        </ul>
                     </div>
-
-                    <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
-                    <p class="font-md">
-                      <i>Subordinada a ...</i>
-                    </p>
-                    <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
-                      <li class="col-md-12" style="padding-left:30px">
-                        {{ itemancestor.sigla}} - {{ itemancestor.nome}}
-                      </li>
-                    </ul>
+                    <ng-container *ngFor="let item of indicador.ResponsavelGerencial">
+                      <br/><hr/>
+                      <div class="row"  style="padding: 15px">
+                      <div class="col-sm-5">
+                          <h4> {{item.nome}}
+                            <br>
+                            <small> {{item.sigla}}</small>
+                          </h4>
+                          <ul class="list-unstyled">
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{item.telefone}}</span>
+                              </p>
+                            </li>
+                            <li>
+                              <p class="text-muted">
+                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{item.email}}">{{item.email}}</a>
+                              </p>
+                            </li>
+                          </ul>
+                      </div>
+                      <div class="col-sm-5" style="border-left-style: dotted">
+                      <p class="font-md">
+                        <i>Subordinada a ...</i>
+                      </p>
+                      <ul *ngFor="let itemancestor of item.ancestors">
+                        <li class="col-md-12" style="padding-left:30px">
+                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-2">
+                      <button class="btn btn-danger pull-right" type="button" (click)="deleteItemResponsavelGerencial(item.codigo)">
+                        <i class="fa fa-times"></i>Apaga Item
+                      </button>
                   </div>
-                  </div>
+                    </div>
+                  </ng-container>
                 </fieldset>
                 <fieldset style="padding: 15px">
                   <popover-content #responsabilidade_tecnica
@@ -598,37 +606,44 @@
                         </div>
                       </div>
                     </div>
-                      <br/><br/><hr/>
-                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome">
-                          <h4> {{secretaria_selecionada.nome}}
+                    <br/>
+                  </div>
+                    <ng-container *ngFor="let item of indicador.ResponsavelTecnico">
+                      <br/><hr/>
+                      <div class="row"  style="padding: 15px">
+                      <div class="col-sm-5">
+                          <h4> {{item.nome}}
                             <br>
-                            <small> {{secretaria_selecionada.sigla}}</small>
+                            <small> {{item.sigla}}</small>
                           </h4>
                           <ul class="list-unstyled">
                             <li>
                               <p class="text-muted">
-                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{secretaria_selecionada.telefone}}</span>
+                                <i class="fa fa-phone"></i>&#xA0;&#xA0;<span class="txt-color-darken">{{item.telefone}}</span>
                               </p>
                             </li>
                             <li>
                               <p class="text-muted">
-                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{secretaria_selecionada.email}}">{{secretaria_selecionada.email}}</a>
+                                <i class="fa fa-envelope"></i>&#xA0;&#xA0;<a href="mailto:{{item.email}}">{{item.email}}</a>
                               </p>
                             </li>
                           </ul>
                       </div>
-
-                      <div class="col-sm-6" *ngIf="secretaria_selecionada.nome" style="border-left-style: dotted">
-                      <p class="font-md">
-                        <i>Subordinada a ...</i>
-                      </p>
-                      <ul *ngFor="let itemancestor of secretaria_selecionada.ancestors">
-                        <li class="col-md-12" style="padding-left:30px">
-                          {{ itemancestor.sigla}} - {{ itemancestor.nome}}
-                        </li>
-                      </ul>
+                      <div class="col-sm-5" style="border-left-style: dotted">
+                        <p class="font-md"><i>Subordinada a ...</i></p>
+                        <ul *ngFor="let itemancestor of item.ancestors">
+                          <li class="col-md-12" style="padding-left:30px">
+                            {{ itemancestor.sigla}} - {{ itemancestor.nome}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-danger pull-right" type="button" (click)="deleteItemResponsavelTecnico(item.codigo)">
+                          <i class="fa fa-times"></i>Apaga Item
+                        </button>
                     </div>
-                  </div>
+                    </div>
+                  </ng-container>
                 </fieldset>
               </tab>
               <tab [active]="currenttab == 't4'">
@@ -647,7 +662,7 @@
                           type="text" list="listInd" id="item_relacionado">
                       <datalist id="listInd">
                         <option *ngFor="let itemIndicador of colecaoIndicadores"
-                          value="[{{ itemIndicador.id }}] - {{ itemIndicador.titulo }}"
+                          value="[{{ itemIndicador.codigo }}] - {{ itemIndicador.titulo }}"
                           [attr.codigo]="itemIndicador.id">
                       </datalist>
                       <div class="input-group-btn">

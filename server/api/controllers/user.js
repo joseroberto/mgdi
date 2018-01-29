@@ -32,11 +32,28 @@ module.exports = {
     });
   },
   aprovaSolicitacao: (req,res)=>{
-    res.json({codret: 0, mensagem: "Solicitação de perfil de acesso aprovada com sucesso"});
+    changeSituacao(req.swagger.params.codigo.value, 1).then( item=>{
+        res.json({codret: 0, mensagem: "Solicitação de perfil de acesso aprovada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
+    });
   },
   rejeitaSolicitacao: (req,res)=>{
-    res.json({codret: 0, mensagem: "Solicitação de perfil de acesso rejeitada com sucesso"});
+    changeSituacao(req.swagger.params.codigo.value, 2).then( item=>{
+        res.json({codret: 0, mensagem: "Solicitação de perfil de acesso rejeitada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
+    });
   }
+}
+
+function changeSituacao(codigo, situacao){
+  return models.User.findAll({where: {codigo: codigo}}).map(resp=>{
+      resp.SituacaoCodigo = situacao;
+      resp.save();
+  });
 }
 
 async function createPerfil(entidade){
