@@ -78,7 +78,7 @@
               </li>
               <li [class.active]="currenttab=='t3'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't3'">
-                  <span class="badge bg-color-blue txt-color-white">0</span> Responsabilidades</a>
+                  <span class="badge bg-color-blue txt-color-white">{{ indicador.ResponsavelGerencial.length + indicador.ResponsavelTecnico.length }}</span> Responsabilidades</a>
               </li>
               <li [class.active]="currenttab=='t4'" *ngIf="indicador.codigo">
                 <a (click)="currenttab = 't4'">
@@ -260,7 +260,7 @@
                       <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade"></i>
                     </label>
                     <div class="col-md-6">
-                        <select select2 style="width:100%" class="select2" id="UnidadeCodigo" name="UnidadeCodigo" [ngModel]="indicador.UnidadeCodigo"
+                        <select select2 style="width:100%" class="select2 unidadeselect" id="UnidadeCodigo" name="UnidadeCodigo" [ngModel]="indicador.UnidadeCodigo"
                         data-bv-notempty="true"
                         data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
                             <option *ngFor="let itemUnidade of colecaoUnidades"
@@ -411,19 +411,19 @@
                       <label class="control-label">Universal</label>
                     </div>
                   </div>
-                  <div class="form-actions">
-                    <div class="row">
-                      <div class="col-md-12">
+                </fieldset>
+
+                  <div class="row">
+                    <div class="col-md-12 form-actions">
                         <button class="btn btn-default" type='button' (click)="newIndicador(f)">
                           <i class="fa fa-plus"></i>Novo
                         </button>
                         <button class="btn btn-primary" type="submit">
                           <i class="fa fa-save"></i>Grava
                         </button>
-                      </div>
                     </div>
                   </div>
-                </fieldset>
+
               </tab>
               <tab [active]="currenttab == 't2'">
                 <fieldset style="padding: 15px">
@@ -662,7 +662,7 @@
                           type="text" list="listInd" id="item_relacionado">
                       <datalist id="listInd">
                         <option *ngFor="let itemIndicador of colecaoIndicadores"
-                          value="[{{ itemIndicador.codigo }}] - {{ itemIndicador.titulo }}"
+                          value="[{{ itemIndicador.id }}] - {{ itemIndicador.titulo }}"
                           [attr.codigo]="itemIndicador.id">
                       </datalist>
                       <div class="input-group-btn">
@@ -841,14 +841,10 @@
                       <!-- Fim do Procedimento de extracao -->
                   </div>
                   <div class="row">
-                    <div class="form-actions">
-                      <div class="row">
-                        <div class="col-md-12">
-                          <button class="btn btn-primary" type="submit">
-                            <i class="fa fa-save"></i>Grava
-                          </button>
-                        </div>
-                      </div>
+                    <div class="col-md-12 form-actions">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i>Grava
+                      </button>
                     </div>
                   </div>
                 </fieldset>

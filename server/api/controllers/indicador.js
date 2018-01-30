@@ -84,23 +84,14 @@ module.exports = {
   },
   createIndicador: (req,res)=>{
     var entidade = req.body;
-    unidade.getCodigoUnidadePai(entidade['unidade_responsavel']).then(function(lista) {
-      //console.log('Lista', lista);
-      // Atualiza a secretaria nu_nivel=1
-      if(lista.nu_nivel==1){
-        entidade['secretaria'] = lista.codigo;
-      }else{
-        entidade['secretaria'] = lista.ancestors.find(item=> item.nu_nivel==1)['codigo'];
-      }
-      console.log('create', entidade);
-      models.Indicador.create(entidade).then((indicador)=> {
-        if(req.body.tags)
-          indicador.setTags(req.body.tags);
-        res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
-      }).catch(err=>{
-        console.log('Erro', err);
-        res.status(500).json({codret: 1001, message: "Erro no cadastramento do indicador"});
-      });
+    console.log('create', entidade);
+    models.Indicador.create(entidade).then((indicador)=> {
+      if(req.body.tags)
+        indicador.setTags(req.body.tags);
+      res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro no cadastramento do indicador"});
     });
   },
   getIndicador: (req,res)=>{

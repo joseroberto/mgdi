@@ -29,8 +29,9 @@ module.exports = {
   },
   getUnidadesHierarchical: (req, res)=>{
     models.Unidade.findAll({
-      hierarchy: true,
-      include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{ 'ativo':true }, attributes:['codigo', 'titulo', 'descricao'], required: false }]
+      hierarchy: true
+      //,
+      //include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{ 'ativo':true }, attributes:['codigo', 'titulo', 'descricao'], required: false }]
     }).then(function(lista) {
       res.json({unidades: lista});
     });

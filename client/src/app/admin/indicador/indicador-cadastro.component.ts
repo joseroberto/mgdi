@@ -149,6 +149,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
+      $('.unidadeselect').on('change', (e) => {
+        this.indicador.UnidadeCodigo=jQuery(e.target).val();
+      });
   }
 
   private loadIndicador(){
@@ -163,6 +166,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               this.titulo = 'Atualiza ' + this.indicador.codigo;
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
+              $('.unidadeselect').val(this.indicador.UnidadeCodigo);
+              $('.unidadeselect').trigger('change');
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
@@ -358,6 +363,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private onSubmit(form){
     let valor: Indicador = Object.assign(this.indicador, form.value);
     if(form.valid){
+      //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
         this.indicadorService.update(valor).subscribe(resp=>{
           if(resp.codret==0){
@@ -367,6 +373,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
           }
         }, err=>this.util.msgErro(JSON.parse(err._body).message));
       }else{
+        console.log('form', form.value);
         valor['codigo'] = form.value.codigo_edit.toUpperCase();
         this.indicadorService.create(valor).subscribe(resp=>{
           console.log(resp);
@@ -431,7 +438,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
   }
 
-  private deleteItemResponsaveGerencial(id: number){
+  private deleteItemResponsavelGerencial(id: number){
     this.indicadorService.deleteResponsavelGerencial(this.indicador.id, id).subscribe(resp=>{
       if(resp.codret==0){
         this.util.msgSucesso(resp.mensagem);
