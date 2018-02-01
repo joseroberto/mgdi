@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {config} from '../../smartadmin.config';
-import { VersionService } from '../../../services/index';
+import { ParametroService } from '../../../services/index';
 
 @Component({
   selector: 'sa-footer',
   templateUrl: './footer.component.html'
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
   private versionClient:string;
   private versionServer:string;
   private enviroment:string;
@@ -14,15 +14,15 @@ export class FooterComponent implements OnInit {
   private titleServer: string;
   private ultimo_login: string;
 
-  constructor(private versionService:VersionService) {}
+  constructor(private parametroService:ParametroService) {}
 
   ngOnInit() {
     this.versionClient = config.version;
     this.title = config.title;
-    this.versionService.getVersion().subscribe(resp=>{
-        this.versionServer = resp.version;
-        this.titleServer = resp.title;
-        this.enviroment = resp.enviroment;
+    this.parametroService.change.subscribe(parametros=>{
+        this.versionServer = parametros.version;
+        this.titleServer = parametros.title;
+        this.enviroment = parametros.enviroment;
     });
 
     let user = localStorage.getItem('currentUser');
@@ -49,4 +49,7 @@ export class FooterComponent implements OnInit {
       }
     }
 
+    ngOnDestroy(){
+      //this.parametroService.change.unsubscribe();
+    }
 }

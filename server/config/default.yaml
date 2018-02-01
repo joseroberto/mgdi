@@ -80,6 +80,7 @@ config:
   #description: |
   #  API para acesso aos serviços de fornecimento de dados de indicador.
   title: eSUSGestor - API de comunicação
+  company: Ministério da Saúde 123
   description: |
     A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
     # Introdução

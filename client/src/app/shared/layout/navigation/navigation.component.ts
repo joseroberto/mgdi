@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginInfoComponent} from "../../user/login-info/login-info.component";
-
+import { ParametroService } from '../../../services/index';
 
 @Component({
 
@@ -9,10 +9,19 @@ import {LoginInfoComponent} from "../../user/login-info/login-info.component";
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() {
+  private enviroment:string = '';
+  constructor(private parametroService:ParametroService) {
   }
 
   ngOnInit() {
+    this.parametroService.change.subscribe(parametros=>{
+        this.enviroment = parametros.enviroment;
+    });
+  }
+
+  isProduction(){
+    return this.enviroment == 'production';
+
   }
 
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import { ParametroService } from '../../../services/index';
 
 declare var $: any;
 
@@ -9,10 +10,14 @@ declare var $: any;
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) {
+  private orgao: string;
+  constructor(private router: Router, private parametroService:ParametroService) {
   }
 
   ngOnInit() {
+    this.parametroService.change.subscribe(parametros=>{
+        this.orgao = parametros.company;
+    });
   }
 
 

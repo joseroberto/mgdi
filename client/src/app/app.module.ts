@@ -30,8 +30,8 @@ import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeServ
   UnidadeMedidaService, IndicadorService, UtilService,
   TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService,
   BancoDadosService, UnidadeService, GranularidadeService, CriterioAgregacaoService,
-  VersionService, UsuarioService, ConsultaService, PolaridadeService, PerfilService,
-  Classificacao6sIndicadorService, FonteParametroService } from './services/index';
+  UsuarioService, ConsultaService, PolaridadeService, PerfilService,
+  Classificacao6sIndicadorService, FonteParametroService, ParametroService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -77,6 +77,7 @@ type StoreType = {
     UnidadeMedidaService,
     UnidadeService,
     IndicadorService,
+    ParametroService,
     UtilService,
     TagCategoriaService,
     TagService,
@@ -86,7 +87,6 @@ type StoreType = {
     CookieService,
     GranularidadeService,
     CriterioAgregacaoService,
-    VersionService,
     UsuarioService,
     ConsultaService,
     PolaridadeService,

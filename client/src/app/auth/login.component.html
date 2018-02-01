@@ -5,7 +5,7 @@
     <span id="logo"> <img src="assets/img/logo.png" alt="SmartAdmin"> </span>
   </div>
 
-  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Não tem uma conta?</span> <a [href]="env.urlNewUser" class="btn btn-danger">Cria uma conta</a> </span>
+  <span id="extr-page-header-space" *ngIf="isSCPA()"> <span class="hidden-mobile hiddex-xs">Não tem uma conta?</span> <a [href]="env.urlNewUser" class="btn btn-danger">Cria uma conta</a> </span>
 
 </header>
 <div id="main" role="main" class="animated fadeInDown">
@@ -13,11 +13,11 @@
   <div id="content" class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-        <h1 class="txt-color-red login-header-big">MGI - Módulo de Gestão de Indicadores</h1>
+        <h1 class="txt-color-red login-header-big">{{ title }}</h1>
 
         <div class="hero">
           <div class="pull-left login-desc-box-l">
-            <h4 class="paragraph-header">Controle dos indicadores do Ministério da Saúde!</h4>
+            <h4 class="paragraph-header">Controle dos indicadores do {{ orgao }}</h4>
           </div>
           <img src="assets/img/demo/iphoneview.png" class="pull-right display-image" alt="" style="width:210px">
         </div>

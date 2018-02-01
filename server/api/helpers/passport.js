@@ -2,6 +2,7 @@ const soap = require('soap'),
       LocalStrategy   = require('passport-local').Strategy,
       LdapStrategy    = require('passport-ldapauth').Strategy;
       JsonStrategy    = require('passport-json').Strategy;
+      WindowsStrategy = require('passport-windowsauth');
 const config_param = require('./config')();
 const crypto = require('crypto');
 //var parseString = require('xml2js').parseString;
@@ -92,5 +93,31 @@ module.exports = function(passport) {
           nome: user[process.env.NAMEFIELD || config_param.namefield],
           email: user[process.env.MAILFIELD || config_param.mailfield]
       });
+    }));
+
+    // =========================================================================
+    // Windows Login ==============================================================
+    // =========================================================================
+    var opts_win = {
+        ldap: {
+                url:  process.env.URL || config_param.url,
+                bindDN: process.env.BIND_DN || config_param.bindDn,
+                bindCredentials: process.env.BIND_CREDENTIALS || config_param.bindCredentials,
+                base: process.env.SEARCH_BASE || config_param.searchBase,
+                reconnect: true,
+                timeout: 30,
+                maxConnections: 50,
+                connectTimeout: 20,
+                idleTimeout: 30,
+              }, integrated: false
+    }
+
+    passport.use('windows',new WindowsStrategy(opts_win, (profile, done)=>{
+        console.log('profile', profile);
+        done(null, {
+          login: profile.sAMAccountName,
+          nome: profile._json.name,
+          email: profile.emails
+        });
     }));
 };

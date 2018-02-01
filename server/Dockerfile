@@ -1,4 +1,4 @@
-FROM keymetrics/pm2-docker-alpine:6
+FROM keymetrics/pm2:latest-alpine
 
 LABEL maintainer="joserobertovasconcelos@gmail.com" \
       description="Esta imagem exige os seguintes parâmetros: \
@@ -17,5 +17,4 @@ ADD . /var/opt/mgi
 EXPOSE 8000
 WORKDIR /var/opt/mgi
 
-CMD [ "start", "config/pm2-api.config.yaml" ]
-ENTRYPOINT ["pm2-docker"]
+CMD [ "pm2-runtime", "config/pm2-api.config.yaml"]

@@ -14,8 +14,9 @@ module.exports = {
     var log = log4js.getLogger();
     try {
       if(!config_param.bypass){
+        console.log('Fazendo autenticação ', req.body.username);
         passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
-            //console.log('retornos', info, userlogin);
+            console.log('retornos', process.env.SCHEMA_LOGIN || config_param.schema_login, info, userlogin, err);
             if(err){
               return res.status(403).send({message: err});
             }
@@ -66,6 +67,11 @@ module.exports = {
         env = 'development';
       }
       swagger.info['enviroment']=env;
+      swagger.info['company']=process.env.COMPANY || config_param.company;
+      swagger.info['login']=process.env.SCHEMA_LOGIN || config_param.schema_login;
+      swagger.info['title']=config_param.title;
+      swagger.info['description']=config_param.description;
+      swagger.info['date'] = new Date();
       res.json(swagger.info);
     } catch (e) {
       console.log(e);

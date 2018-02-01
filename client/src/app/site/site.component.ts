@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FadeInTop} from "../shared/animations/fade-in-top.decorator";
-import { IndicadorService, UtilService, ConsultaService } from '../services/index';
+import { IndicadorService, UtilService, ConsultaService, ParametroService } from '../services/index';
 
 @FadeInTop()
 @Component({
@@ -22,9 +22,11 @@ export class SiteComponent implements OnInit {
     this.pageChanged(1);
   }
 
-  constructor(private indicadorService:IndicadorService, private consultaService:ConsultaService) { }
+  constructor(private indicadorService:IndicadorService,
+    private consultaService:ConsultaService, private parametroService: ParametroService) { }
 
   ngOnInit() {
+    this.parametroService.load();
     if(localStorage.getItem('pesquisa_site')){
       this.pesquisa = JSON.parse(localStorage.getItem('pesquisa_site'));
     }else{

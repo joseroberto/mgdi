@@ -44,17 +44,17 @@ Se for mais conveniente, a configuração do serviço poderá ser feita utilizan
 
 As seguintes variáveis poderão ser definidas:
 
+* COMPANY - Título da empresa
 * HOSTDB - IP/Host da máquina de banco de dados
 * DATABASE - Nome do banco de dados
 * USER_DB - Usuário do banco de dados
 * PASSWORD_DB - Senha do usuário do banco de dados
-* WSDL - Endereço de acesso da API de validação.
 * SCHEMA - Schema da base de dados utilizado para o sistema MGI na base de dados
 * HOST - host a ser chamado para api (formato pode ser host:port)
 
 Dependendo da escolha do tipo de esquema de validação:
 
-* SCHEMA_LOGIN - pode assumir os seguintes valores: ldap, scpa, local.
+* SCHEMA_LOGIN - pode assumir os seguintes valores: ldap, scpa, local, windows.
 
 ##LDAP
 

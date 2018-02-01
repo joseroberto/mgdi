@@ -40,7 +40,7 @@
             </li>
           </ul>
         </li>
-        <li >
+        <li *ngIf="!isProduction()" >
           <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span
             class="menu-item-parent">{{'Programas/Metas' | i18n}}</span></a>
           <ul>
