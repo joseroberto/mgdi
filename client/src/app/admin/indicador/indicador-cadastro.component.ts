@@ -23,6 +23,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private msg_padrao = 'Não há dados cadastrados';
   private tituloForm = 'Novo Indicador';
   private titulo = 'Novo Indicador';
+  private tituloCabecalho = 'Cadastro de um novo indicador';
   private breadcrumb = [];
   private sub: any;
   private flag_update:boolean = false;
@@ -149,6 +150,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
+
       $('.unidadeselect').on('change', (e) => {
         this.indicador.UnidadeCodigo=jQuery(e.target).val();
       });
@@ -164,6 +166,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               console.log('Registro em edicao:', this.indicador);
               this.tituloForm = this.indicador.codigo;
               this.titulo = 'Atualiza ' + this.indicador.codigo;
+              this.tituloCabecalho = 'Atualiza dados do indicador';
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
               $('.unidadeselect').val(this.indicador.UnidadeCodigo);
@@ -362,7 +365,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   private onSubmit(form){
     let valor: Indicador = Object.assign(this.indicador, form.value);
-    if(form.valid){
+    $(':input[type="submit"]').prop('disabled', false);
+    console.log('form',form,  valor);
+    if(form.valid && this.validacaoAdicional(valor)){
       //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
         this.indicadorService.update(valor).subscribe(resp=>{
@@ -370,27 +375,38 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             this.util.msgSucessoEdicao(resp.mensagem);
           }else{
             this.util.msgErro(resp.mensagem);
+
           }
-        }, err=>this.util.msgErro(JSON.parse(err._body).message));
+        }, err=>{
+          this.util.msgErro(JSON.parse(err._body).message);
+        });
       }else{
-        console.log('form', form.value);
         valor['codigo'] = form.value.codigo_edit.toUpperCase();
         this.indicadorService.create(valor).subscribe(resp=>{
-          console.log(resp);
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
             this.router.navigateByUrl('/admin/indicador/'+ valor.codigo);
           }else{
             this.util.msgErro(resp.mensagem);
           }
-        }, (err)=>this.util.msgErro(JSON.parse(err._body).message)
-        );
+        }, (err)=>{
+          this.util.msgErro(JSON.parse(err._body).message);
+        });
       }
     }else{
       this.util.msgErro('Erro de validação de campos');
     }
+    return true;
   }
-
+  private validacaoAdicional(valor){
+    let resposta = true;
+    resposta = resposta && valor.UnidadeCodigo;
+    //TODO: Não consegui fazer validação do bootstrap funcionar para o campo select2 da unidade
+    if(!valor.UnidadeCodigo){
+      this.util.msgErro('Unidade é obrigatória');
+    }
+    return resposta;
+  }
   private adicionaItemRelacionado(){
     let valorSelecionado = $('#item_relacionado').val();
     let id:number = $(`#listInd option[value='${valorSelecionado}']`).attr('codigo');

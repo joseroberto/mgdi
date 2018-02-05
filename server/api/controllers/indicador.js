@@ -90,8 +90,14 @@ module.exports = {
         indicador.setTags(req.body.tags);
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     }).catch(err=>{
-      console.log('Erro', err);
-      res.status(500).json({codret: 1001, message: "Erro no cadastramento do indicador"});
+      if('errors' in err){
+        if(err.errors.length>0){
+          res.status(500).json(Object.assign({codret: 1001},err.errors[0]));
+        }
+      }else{
+        res.status(500).json({codret: 1001, message: "Erro no cadastramento do indicador"});
+      }
+
     });
   },
   getIndicador: (req,res)=>{

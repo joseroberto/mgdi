@@ -134,8 +134,12 @@ export class LoginComponent implements OnInit {
         this.newuser = Object.assign(new User(), entidade.user);
         $('#nome').prop('disabled', 'nome' in entidade.user);
         $('#email').prop('disabled', 'email' in entidade.user);
-
         this.complementoModal.show();
+        setTimeout(()=>{
+          $.each($('input[saMaskedInput]'), (index,value)=>{
+            $(value).mask($(value).attr('saMaskedInput'));
+          })}
+        , 500);
       }else{
         this.util.msgErroInfra("Erro no acesso ao login. Tente mais tarde!");
       }
@@ -148,13 +152,19 @@ export class LoginComponent implements OnInit {
     this.newuser.cpf= $('#cpf').val();
     this.newuser.telefone= $('#telefone').val();
     this.newuser.ramal= $('#ramal').val();
-
+    $(':input[type="submit"]').prop('disabled', false);
     this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
-    if(this.newuser.Perfil && this.newuser.Perfil.exige_unidade){
-      this.newuser.Unidade = JSON.parse($('#unidade').val());
-    }
+    //if(this.newuser.Perfil && this.newuser.Perfil.exige_unidade){
+    //FIX: Todos os perfis vao exigir unidade de lotacao.
+      this.newuser.UnidadeCodigo = JSON.parse($('#UnidadeCodigo').val());
+      if(!this.newuser.UnidadeCodigo){
+        this.util.msgErro("Unidade de lotação é obrigatória");
+        return false;
+      }
+    //}
     //
     let user = Object.assign(new User(), this.newuser);
+    // Limpa formatacoes
     user.celular = user.celular.replace(/[\.\(\)-\s]/g,'');
     user.cpf = user.cpf.replace(/[\.-]/g,'');
     user.telefone = user.telefone.replace(/[\.\(\)-\s]/g,'');

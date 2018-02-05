@@ -1,4 +1,11 @@
-import {Directive, Input, ElementRef, OnInit, HostBinding, HostListener} from '@angular/core';
+//
+// FIX: Manutencao no componente efetuada em 03/02/2018
+// Descricao: Fazer com que o formulario so seja submetido apos a validacao do jquery
+//    parece que com o html5, mesmo com return false da funcao (submit), o formulario ainda estar
+//    sendo submetido.  Agora deve-se programar um evento (onSubmit) = "funcao".  So executa se
+//   validacao ok.
+
+import {Directive, Input, ElementRef, EventEmitter, OnInit, HostBinding, HostListener, Output} from '@angular/core';
 
 declare var $: any;
 
@@ -8,13 +15,13 @@ declare var $: any;
 export class BootstrapValidatorDirective implements OnInit {
 
   @Input() saBootstrapValidator:any;
-
+  @Output() public onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   @HostListener('submit')  s = ()=>{
     const bootstrapValidator = this.$form.data('bootstrapValidator');
     bootstrapValidator.validate();
     if(bootstrapValidator.isValid())
-      this.$form.submit();
+      this.onSubmit.emit(this.$form);
     else return;
   }
 
@@ -38,6 +45,11 @@ export class BootstrapValidatorDirective implements OnInit {
 
     this.$form.submit(function(ev){ev.preventDefault();});
 
+  }
+
+  isValid(){
+    const bootstrapValidator = this.$form.data('bootstrapValidator');
+    return bootstrapValidator.isValid();
   }
 
 }

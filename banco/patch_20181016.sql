@@ -33,61 +33,61 @@ insert into dbesusgestor.tb_indicador_fonte (ds_sigla_fonte, ds_fonte) values ('
 insert into dbesusgestor.tb_indicador_fonte (ds_sigla_fonte, ds_fonte) values ('MS', 'Ministério da Saúde');
 
 
-alter table dbmgi.tb_indicador rename column co_unidade_responsavel to co_unidade;
-alter table dbmgi.tb_indicador add column co_indicador_classificacao6s int not null default 0;
-COMMENT ON COLUMN dbmgi.tb_indicador.co_indicador_classificacao6s IS 'Surrogate key da classificacao6s';
+alter table dbesusgestor.tb_indicador rename column co_unidade_responsavel to co_unidade;
+alter table dbesusgestor.tb_indicador add column co_indicador_classificacao6s int not null default 0;
+COMMENT ON COLUMN dbesusgestor.tb_indicador.co_indicador_classificacao6s IS 'Surrogate key da classificacao6s';
 
-alter table dbmgi.tb_indicador add constraint fk_tb_indicador_co_indicador_classificacao6s foreign key (co_indicador_classificacao6s) references
-dbmgi.tb_indicador_classificacao6s(co_indicador_classificacao);
+alter table dbesusgestor.tb_indicador add constraint fk_tb_indicador_co_indicador_classificacao6s foreign key (co_indicador_classificacao6s) references
+dbesusgestor.tb_indicador_classificacao6s(co_indicador_classificacao);
 
-alter table dbmgi.tb_indicador drop column co_secretaria;
+alter table dbesusgestor.tb_indicador drop column co_secretaria;
 
-alter table dbmgi.tb_indicador add column co_fonte int;
-COMMENT ON COLUMN dbmgi.tb_indicador.co_fonte IS 'Surrogate key da fonte do parametro';
+alter table dbesusgestor.tb_indicador add column co_fonte int;
+COMMENT ON COLUMN dbesusgestor.tb_indicador.co_fonte IS 'Surrogate key da fonte do parametro';
 
-alter table dbmgi.tb_indicador add constraint fk_tb_indicador_co_fonte foreign key (co_fonte) references
-dbmgi.tb_indicador_fonte(co_fonte);
+alter table dbesusgestor.tb_indicador add constraint fk_tb_indicador_co_fonte foreign key (co_fonte) references
+dbesusgestor.tb_indicador_fonte(co_fonte);
 
-alter table dbmgi.tb_indicador rename column nu_indice_referencia to nu_parametro_referencia;
+alter table dbesusgestor.tb_indicador rename column nu_indice_referencia to nu_parametro_referencia;
 
-create table dbmgi.tb_indicador_responsavel_tecnico(
+create table dbesusgestor.tb_indicador_responsavel_tecnico(
   co_seq_indicador int not null,
   co_unidade int not null,
   constraint pk_tb_indicador_responsavel_tecnico primary key (co_seq_indicador, co_unidade)
 );
 
-COMMENT ON TABLE dbmgi.tb_indicador_responsavel_tecnico IS 'Tabela de armazenamento dos responsaveis tecnicos do indicador';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_tecnico.co_seq_indicador IS 'Surrogate key do indicador';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_tecnico.co_unidade IS 'Surrogate key da unidade';
+COMMENT ON TABLE dbesusgestor.tb_indicador_responsavel_tecnico IS 'Tabela de armazenamento dos responsaveis tecnicos do indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_tecnico.co_seq_indicador IS 'Surrogate key do indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_tecnico.co_unidade IS 'Surrogate key da unidade';
 
-alter table dbmgi.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_seq_indicador foreign key (co_seq_indicador) references
-dbmgi.tb_indicador(co_seq_indicador);
-alter table dbmgi.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_unidade foreign key (co_unidade) references
-dbmgi.tb_unidade(co_unidade);
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_seq_indicador foreign key (co_seq_indicador) references
+dbesusgestor.tb_indicador(co_seq_indicador);
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_unidade foreign key (co_unidade) references
+dbesusgestor.tb_unidade(co_unidade);
 
 
 
-create table dbmgi.tb_indicador_responsavel_gerencial(
+create table dbesusgestor.tb_indicador_responsavel_gerencial(
   co_seq_indicador int not null,
   co_unidade int not null,
   constraint pk_tb_indicador_responsavel_gerencial primary key (co_seq_indicador, co_unidade)
 );
 
-COMMENT ON TABLE dbmgi.tb_indicador_responsavel_gerencial IS 'Tabela de armazenamento dos responsaveis gerenciais do indicador';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_gerencial.co_seq_indicador IS 'Surrogate key do indicador';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_gerencial.co_unidade IS 'Surrogate key da unidade';
+COMMENT ON TABLE dbesusgestor.tb_indicador_responsavel_gerencial IS 'Tabela de armazenamento dos responsaveis gerenciais do indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_gerencial.co_seq_indicador IS 'Surrogate key do indicador';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_gerencial.co_unidade IS 'Surrogate key da unidade';
 
-alter table dbmgi.tb_indicador_responsavel_gerencial add constraint fk_tb_indicador_responsavel_gerencial_co_seq_indicador foreign key (co_seq_indicador) references
-dbmgi.tb_indicador(co_seq_indicador);
-alter table dbmgi.tb_indicador_responsavel_gerencial add constraint fk_tb_indicador_responsavel_gerencial_co_unidade foreign key (co_unidade) references
-dbmgi.tb_unidade(co_unidade);
+alter table dbesusgestor.tb_indicador_responsavel_gerencial add constraint fk_tb_indicador_responsavel_gerencial_co_seq_indicador foreign key (co_seq_indicador) references
+dbesusgestor.tb_indicador(co_seq_indicador);
+alter table dbesusgestor.tb_indicador_responsavel_gerencial add constraint fk_tb_indicador_responsavel_gerencial_co_unidade foreign key (co_unidade) references
+dbesusgestor.tb_unidade(co_unidade);
 
-alter table dbmgi.tb_indicador_responsavel_gerencial add column dt_inclusao timestamp without time zone;
-alter table dbmgi.tb_indicador_responsavel_gerencial add column dt_atualizacao timestamp without time zone;
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_gerencial.dt_inclusao IS 'Data de inclusão do registro';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_gerencial.dt_atualizacao IS 'Data de atualização do registro';
+alter table dbesusgestor.tb_indicador_responsavel_gerencial add column dt_inclusao timestamp without time zone;
+alter table dbesusgestor.tb_indicador_responsavel_gerencial add column dt_atualizacao timestamp without time zone;
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_gerencial.dt_inclusao IS 'Data de inclusão do registro';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_gerencial.dt_atualizacao IS 'Data de atualização do registro';
 
-alter table dbmgi.tb_indicador_responsavel_tecnico add column dt_inclusao timestamp without time zone;
-alter table dbmgi.tb_indicador_responsavel_tecnico add column dt_atualizacao timestamp without time zone;
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_tecnico.dt_inclusao IS 'Data de inclusão do registro';
-COMMENT ON COLUMN dbmgi.tb_indicador_responsavel_tecnico.dt_atualizacao IS 'Data de atualização do registro';
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add column dt_inclusao timestamp without time zone;
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add column dt_atualizacao timestamp without time zone;
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_tecnico.dt_inclusao IS 'Data de inclusão do registro';
+COMMENT ON COLUMN dbesusgestor.tb_indicador_responsavel_tecnico.dt_atualizacao IS 'Data de atualização do registro';

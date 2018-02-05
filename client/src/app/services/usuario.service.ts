@@ -22,5 +22,7 @@ export class UsuarioService extends REST {
   rejeitaSolicitacaoPerfil(codigo:number){
     return this.post(`/user/${codigo}/rejeita`,'');
   }
-
+  getPerfil(){
+    return this.get('/user/perfil');
+  }
 }

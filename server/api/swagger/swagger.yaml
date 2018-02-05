@@ -134,6 +134,25 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/user/perfil:
+    x-swagger-router-controller: user
+    get:
+      description: Retorna o perfil do usuario logado
+      summary: Lista de Usuários do MGI
+      operationId: getPerfil
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetUserPerfilResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/user:
     x-swagger-router-controller: user
     get:
@@ -1924,8 +1943,6 @@ definitions:
         type: [string, 'null']
       usuario_aprovacao:
         type: [number, 'null']
-      situacao:
-        type: number
       PerfilCodigo:
         type: number
       SituacaoCodigo:
@@ -2156,6 +2173,12 @@ definitions:
               type: string
             mime:
               type: string
+  GetUserPerfilResponse:
+    required:
+      - perfil
+    properties:
+      perfil:
+        type: object
   GetTipoConsultaResponse:
     required:
       - tipos_consulta

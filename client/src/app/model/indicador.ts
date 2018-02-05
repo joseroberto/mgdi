@@ -26,7 +26,7 @@ export class Indicador{
     referencia_consulta:string;
     procedimento_operacional:string;
     secretaria:number = null;
-    UnidadeCodigo:number = null;
+    UnidadeCodigo:number = 1;
     GranularidadeCodigo:number = 0;
     CriterioAgregacaoCodigo:number = 0;
     PeriodicidadeAtualizacaoCodigo:number = 30;

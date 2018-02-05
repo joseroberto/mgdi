@@ -1,6 +1,8 @@
-var models  = require('../models');
-var perfil = require('./perfil');
-var status = require('./status-aprovacao');
+const models  = require('../models');
+const perfil = require('./perfil');
+const status = require('./status-aprovacao');
+const jwt    = require('jsonwebtoken');
+const config_param = require('../helpers/config')();
 
 module.exports = {
   getUsers: (req, res)=>{
@@ -46,6 +48,12 @@ module.exports = {
       console.log('Erro', err);
       res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
     });
+  },
+
+  getPerfil: (req,res)=>{
+    console.log(req.headers.authorization);
+    //jwt.verify(token, config_param.secret);
+    res.json(req.headers.authorization);
   }
 }
 

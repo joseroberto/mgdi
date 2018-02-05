@@ -30,7 +30,7 @@
       <!-- widget content -->
       <div class="widget-body no-padding">
 
-        <form class="form-horizontal" #f="ngForm" (ngSubmit)="onSubmit(f)"
+        <form class="form-horizontal" #f="ngForm" (onSubmit)="onSubmit(f)"
           novalidate="novalidate" saBootstrapValidator
           class="form-horizontal"
           data-bv-message="O valor é inválido"

@@ -113,11 +113,15 @@ module.exports = function(passport) {
     }
 
     passport.use('windows',new WindowsStrategy(opts_win, (profile, done)=>{
-        console.log('profile', profile);
-        done(null, {
-          login: profile.sAMAccountName,
-          nome: profile._json.name,
-          email: profile.emails
-        });
+        if(!profile){
+          done('Erro de autenticação', null);
+        }else{
+          done(null, {
+            login: profile.sAMAccountName,
+            nome: profile._json.name,
+            email: profile.emails
+          });
+        }
+
     }));
 };

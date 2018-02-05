@@ -24,7 +24,6 @@ pool.on('error', function (err, client) {
 module.exports = {
   getResultado: (req, res)=>{
     var config = montaParametros(req.swagger.params);
-    console.log('config', config);
     module.exports.consultaResultado(config).then( (resultado) =>{
         // req.headers.accept === 'application/json'
         switch (config.formato) {

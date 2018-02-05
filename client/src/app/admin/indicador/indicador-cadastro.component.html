@@ -21,7 +21,7 @@
     -->
     <header>
       <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-      <h2>{{ titulo }} </h2>
+      <h2> {{ tituloCabecalho }} </h2>
     </header>
 
     <!-- widget div-->
@@ -29,7 +29,7 @@
 
       <!-- widget content -->
       <div class="widget-body no-padding">
-        <form #f="ngForm" (ngSubmit)="onSubmit(f)"
+        <form #f="ngForm" (onSubmit)="onSubmit(f)" id="formulario"
           novalidate="novalidate" saBootstrapValidator
           class="form-horizontal"
           data-bv-message="O valor é inválido"
@@ -241,7 +241,7 @@
                       <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tag"></i>
                     </label>
                     <div class="col-md-6">
-                      <select select2 multiple #tags class="form-control tags" name="secretaria2">
+                      <select select2 multiple #tags class="form-control tags" name="tag">
                         <optgroup [label]="itemCategoria.descricao" *ngFor="let itemCategoria of colecaoTagCategoria">
                           <option [value]="itemTag.codigo" *ngFor="let itemTag of itemCategoria.Tags">{{ itemTag.descricao }}</option>
                         </optgroup>
@@ -260,7 +260,7 @@
                       <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade"></i>
                     </label>
                     <div class="col-md-6">
-                        <select select2 style="width:100%" class="select2 unidadeselect" id="UnidadeCodigo" name="UnidadeCodigo" [ngModel]="indicador.UnidadeCodigo"
+                        <select style="width:100%" select2 class="select2 unidadeselect" id="UnidadeCodigo" name="UnidadeCodigo"
                         data-bv-notempty="true"
                         data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
                             <option *ngFor="let itemUnidade of colecaoUnidades"
@@ -662,7 +662,7 @@
                           type="text" list="listInd" id="item_relacionado">
                       <datalist id="listInd">
                         <option *ngFor="let itemIndicador of colecaoIndicadores"
-                          value="[{{ itemIndicador.id }}] - {{ itemIndicador.titulo }}"
+                          value="[{{ itemIndicador.codigo }}] - {{ itemIndicador.titulo }}"
                           [attr.codigo]="itemIndicador.id">
                       </datalist>
                       <div class="input-group-btn">
