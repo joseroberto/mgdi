@@ -148,7 +148,18 @@ module.exports = {
     });
   },
   deleteIndicador: (req,res)=>{
-    models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((indicador)=>{
+    models.Indicador.destroy({where: {codigo: req.swagger.params.codigo.value}}).then((resp)=>{
+      res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      if('original' in err){
+        res.status(503).json({codret: err.original.code, message: err.original.detail});
+      }else{
+
+        res.status(503).json(err);
+      }
+    });
+    /*models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((indicador)=>{
 
       models.IndicadorCategoriaAnalise.destroy({ where: {
         co_seq_indicador:indicador[0].id}}).then(()=>{
@@ -161,12 +172,19 @@ module.exports = {
                 console.log(indicador[0]);
                 indicador[0].setTags(null);
                 indicador[0].destroy();
-                res.json({codret: 0, mensagem: "Indicador apagado com sucesso"});
+                res.json({codret: 0, mensagem: "Indicador apagado com sucesso 123"});
+          }).catch(err=>{
+            console.log('Erro', err);
+            res.status(500).json({codret: 1001, message: "Erro apagando o relacionamento do indicador"});
           });
 
+      }).catch(err=>{
+        console.log('Erro', err);
+        res.status(500).json({codret: 1001, message: "Erro apagando o indicador"});
       });
 
     });
+    */
   },
   editaIndicador: (req,res)=>{
     //console.log('Update indicador',req.body);
@@ -183,48 +201,75 @@ module.exports = {
   updateConceituacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Conceituação do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da conceituação do indicador"});
     });
   },
   updateInterpretacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Interpretação do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da atualização da interpretação"});
     });
   },
   updateUso: (req,res)=>{
     //console.log(req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Usos do indicador ${req.swagger.params.codigo.value} atualizados com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação do uso do indicador"});
     });
   },
   updateLimitacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Limitações do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da limitação do indicador"});
     });
   },
   updateObservacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Observações do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da observação"});
     });
   },
   updateNota: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Notas do indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da nota técnica"});
     });
   },
   updateProcedimentoOperacional: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Procedimento operacional para o indicador ${req.swagger.params.codigo.value} atualizadas com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação do procedimento operacional"});
     });
   },
   updateFonteDados: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Fonte de dados do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação da fonte de dados"});
     });
   },
 
   updateMetodoCalculo: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Método de Cálculo do indicador ${req.swagger.params.codigo.value} atualizado com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação do método de cálculo"});
     });
   },
 
@@ -232,6 +277,9 @@ module.exports = {
     models.Indicador.findById(req.swagger.params.id.value).then( item=>{
       item.addCategoriasAnalise(req.swagger.params.categoria_analise.value);
       res.json({codret: 0, mensagem: "Categoria de análise adicionada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na adição da categoria de análise"});
     });
   },
 
@@ -240,12 +288,18 @@ module.exports = {
       co_seq_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.categoria_analise.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com a categoria de análise retirada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na desvinculação da categoria de análise do indicador"});
     });
   },
   addResponsavelGerencial: (req,res)=>{
     models.Indicador.findById(req.swagger.params.id.value).then( item=>{
       item.addResponsavelGerencial(req.swagger.params.responsavel_gerencial.value);
       res.json({codret: 0, mensagem: "Responsável Gerencial adicionado com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na adição do responsável gerencial"});
     });
   },
   deleteResponsavelGerencial: (req,res)=>{
@@ -253,12 +307,18 @@ module.exports = {
       co_seq_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.responsavel_gerencial.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Gerencial retirada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na desvinculação do responsável gerencial do indicador"});
     });
   },
   addResponsavelTecnico: (req,res)=>{
     models.Indicador.findById(req.swagger.params.id.value).then( item=>{
       item.addResponsavelTecnico(req.swagger.params.responsavel_tecnico.value);
       res.json({codret: 0, mensagem: "Responsável Técnico adicionado com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na adição do responsável técnico do indicador"});
     });
   },
 
@@ -267,6 +327,9 @@ module.exports = {
       co_seq_indicador:req.swagger.params.id.value,
       co_categoria_analise:req.swagger.params.responsavel_tecnico.value}}).then(()=>{
         res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Técnico retirada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na desvinculação do responsável técnico do indicador"});
     });
   },
   addIndicadorRelacionado: (req,res)=>{
@@ -277,6 +340,9 @@ module.exports = {
       item[0].addIndicadoresRelacionados(req.swagger.params.id.value);
       item[1].addIndicadoresRelacionados(req.swagger.params.id_pai.value);
       res.json({codret: 0, mensagem: "Indicador relacionado adicionado com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na adição do relacionamento entre indicadores"});
     });
     /*models.Indicador.findById(req.swagger.params.codigo_pai.value).then( item=>{
       item.addIndicadoresRelacionados(req.swagger.params.codigo.value);
@@ -298,6 +364,9 @@ module.exports = {
           co_seq_indicador_pai:req.swagger.params.id.value}]}
         }).then(()=>{
         res.json({codret: 0, mensagem: "Relação apagada com sucesso"});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro apagando o relacionamento do indicador"});
     });
   },
 

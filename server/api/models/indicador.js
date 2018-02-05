@@ -172,14 +172,26 @@ module.exports = function(sequelize, DataTypes) {
         Indicador.belongsToMany(models.Unidade, {
            as: 'ResponsavelTecnico',
            through: 'tb_indicador_responsavel_tecnico',
-           foreignKey: 'co_seq_indicador',
-           otherKey: 'co_unidade',
+           foreignKey: {
+              name: 'co_seq_indicador',
+              allowNull: false
+           },
+           otherKey: {
+              name: 'co_unidade',
+              allowNull: false
+           },
            onDelete: 'cascade' });
         Indicador.belongsToMany(models.Unidade, {
            as: 'ResponsavelGerencial',
            through: 'tb_indicador_responsavel_gerencial',
-           otherKey: 'co_unidade',
-           foreignKey: 'co_seq_indicador',
+           otherKey: {
+             name: 'co_unidade',
+             allowNull: false
+           },
+           foreignKey: {
+             name: 'co_seq_indicador',
+             allowNull: false
+           },
            onDelete: 'cascade' });
       }
     },

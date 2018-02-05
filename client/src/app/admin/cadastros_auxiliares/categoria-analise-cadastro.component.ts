@@ -81,8 +81,7 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      if(form.valid){
-        if(this.codigo){
+      if(this.codigo){
         console.log('Reg a atualizar', this.novacategoria);
         this.categoriaAnaliseService.update(this.novacategoria).subscribe(resp=>{
           if(resp.codret==0){
@@ -102,9 +101,6 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
             this.util.msgErro(resp.mensagem);
           }
         }, (err)=>this.util.msgErroInfra(err));
-      }
-      }else{
-        this.util.msgErro('Erro de validação de campos');
       }
     }
 

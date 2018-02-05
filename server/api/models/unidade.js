@@ -55,13 +55,13 @@ module.exports = function(sequelize, DataTypes) {
 
     //},
   },{
-    //classMethods: {
-    //  associate: function(models) {
-    //    Unidade.hasMany(models.Indicador,{
-    //      as: 'IndicadoresRelacionados',
-    //      foreignKey: 'co_secretaria'});
-    //  }
-    //},
+    classMethods: {
+      associate: function(models) {
+        Unidade.hasMany(models.Indicador,{
+          as: 'IndicadoresRelacionados',
+          foreignKey: 'co_unidade'});
+      }
+    },
     hierarchy: {
       foreignKey: 'unidade_pai',
       levelFieldName: 'nu_nivel',

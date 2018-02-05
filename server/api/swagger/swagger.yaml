@@ -1069,7 +1069,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponseTratado"
     put:
       description: Atualiza as informações de um registro de indicador
       summary: Atualiza as informações de um indicador
@@ -2344,12 +2344,14 @@ definitions:
       mensagem:
         type: string
   ErrorResponseTratado:
-    description: Programa
+    description: Erro generico
     type: object
 
   ErrorResponse:
     required:
       - message
     properties:
+      codret:
+        type: string
       message:
         type: string
