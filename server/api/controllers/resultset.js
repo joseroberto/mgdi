@@ -40,6 +40,7 @@ module.exports = {
               res.status(500).send({mensagem: "Formato inválido"});
         }
       }, err =>{
+        console.log('Erro no resultset', err);
         res.status(500).send(err);
       }
     );
@@ -66,7 +67,9 @@ module.exports = {
           resolve([result, indicadores]);
         });
 
-      }, err=>{ console.log('Erro==>', err); reject({message: err});});
+      }, err=>{
+        reject(err);
+      });
     });
   },
   /*
@@ -230,22 +233,22 @@ function convertCodigoIndicador(config){
             id: item.id,
             titulo: item.titulo,
             descricao: item.descricao,
-            granularidade: item.granularidade,
-            banco: item.banco_dados,  //TODO: trocar pela entidade completa
-            tipoConsulta: item.tipo_consulta,
+            granularidade: item.GranularidadeCodigo,
+            banco: item.BancoDados,
+            tipoConsulta: item.TipoConsultaCodigo,
             sql: item.referencia_consulta,
-            criterioAgregacao: item.criterio_agregacao,
-            periodicidade: item.periodicidade_atualizacao,
+            criterioAgregacao: item.CriterioAgregacaoCodigo,
+            periodicidade: item.PeriodicidadeAtualizacaoCodigo,
             ultima_atualizacao: item.ultima_atualizacao,
             tipo: 'valor'
           };
           // Testa tipos de consulta
           if(item.tipo_consulta!=2 && item.tipo_consulta!=3){ // Tratar depois a formula
-            reject('Tipo de consulta incompatível ou indicador sem informação');
+            reject({codret: 1010, message: "Tipo de consulta incompatível ou indicador sem informação"});
           }
           // Testa tipos de periodicidade
           if(item.periodicidade_atualizacao!=30 && item.periodicidade_atualizacao!=360){ // Tratar depois a periodicidade
-            reject('Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida');
+            reject({codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida"});
           }
 
           cache.set(item.codigo, ans[item.codigo]);
@@ -254,24 +257,27 @@ function convertCodigoIndicador(config){
             granularidade = item.granularidade;
           }
           if(item.granularidade!=granularidade){
-            reject('Conjunto de indicadores com granularidade diferentes');
+            reject({codret: 1001, message: "Conjunto de indicadores com granularidade diferentes"});
           }
           if(item.granularidade<tipoGranularidade){
-            reject(`Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`);
+            reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`});
           }
           if(item.granularidade>tipoGranularidade && item.criterio_agregacao==0){
-            reject(`Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
+            reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`});
           }
           // Testa periodicidade.  Se difere deve dar um erro
           if(periodicidade==0){
             periodicidade = item.periodicidade;
           }
           if(item.periodicidade!=periodicidade){
-            reject('Conjunto de indicadores com periodicidades diferentes');
+            reject({codret: 1001, message: 'Conjunto de indicadores com periodicidades diferentes'});
           }
         });
         console.log('ans', ans);
         resolve(ans);
+      }).catch(err=>{
+        console.log('Erro real==>', err);
+        reject({codret: 1001, message: "Erro na pesquisa dos resultados do indicador"});
       });
     //}else {
     //    resolve(ans);

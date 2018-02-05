@@ -372,8 +372,14 @@ module.exports = {
 
   getIndicadorPesquisaPorCodigo: (codigos)=>
     models.Indicador.findAll(
-      { attributes: [  'id', 'codigo', 'titulo', 'descricao','granularidade', 'banco_dados',
-      'tipo_consulta', 'referencia_consulta', 'criterio_agregacao', 'periodicidade_atualizacao', 'ultima_atualizacao' ],
+      { attributes: [  'id', 'codigo', 'titulo', 'descricao',
+          'referencia_consulta', 'ultima_atualizacao' ],
+      include: [
+        { model: models.Granularidade , as: 'Granularidade' },
+        { model: models.BancoDados , as: 'BancoDados' },
+        { model: models.TipoConsulta , as: 'TipoConsulta' },
+        { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
+        { model: models.Periodicidade , as: 'PeriodicidadeAtualizacao' }],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
     }),

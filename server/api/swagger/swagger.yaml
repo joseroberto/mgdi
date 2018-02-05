@@ -44,7 +44,7 @@ paths:
       summary: Loga o usuário
       operationId: authenticate
       tags:
-        - Autenticação
+        - Infraestrutura
       description: |
         Permite ao usuário logar e receber um token uma vez valida a requisição
       parameters:
@@ -98,7 +98,7 @@ paths:
           in: path
           required: true
       tags:
-        - MGI
+        - Infraestrutura
       security:
         - Bearer: []
       responses:
@@ -122,7 +122,7 @@ paths:
           in: path
           required: true
       tags:
-        - MGI
+        - Infraestrutura
       security:
         - Bearer: []
       responses:
@@ -165,7 +165,7 @@ paths:
           in: query
           required: false
       tags:
-        - MGI
+        - Infraestrutura
       security:
         - Bearer: []
       responses:
@@ -182,7 +182,7 @@ paths:
       summary: Cria uma solicitação de complementação
       operationId: createSolicitacao
       tags:
-        - MGI
+        - Infraestrutura
       security:
         - Bearer: []
       parameters:
@@ -208,6 +208,7 @@ paths:
       operationId: getPerfis
       tags:
         - Cadastros Auxiliares
+        - Infraestrutura
       responses:
         "200":
           description: Sucesso
@@ -818,7 +819,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponseTratado"
   /api/indicador/{codigos}/query:
     x-swagger-router-controller: query
     get:
