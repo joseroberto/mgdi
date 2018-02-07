@@ -100,8 +100,8 @@ module.exports = function(passport) {
     // =========================================================================
     var opts_win = {
         ldap: {
-                url:  process.env.URL || config_param.url,
-                bindDN: process.env.BIND_DN || config_param.bindDn,
+                url:  process.env.URL || config_param.url || 'ldap://localhost',
+                bindDN: process.env.BIND_DN || config_param.bindDn || '',
                 bindCredentials: process.env.BIND_CREDENTIALS || config_param.bindCredentials,
                 base: process.env.SEARCH_BASE || config_param.searchBase,
                 reconnect: true,
@@ -111,15 +111,19 @@ module.exports = function(passport) {
                 idleTimeout: 30,
               }, integrated: false
     }
-
     passport.use('windows',new WindowsStrategy(opts_win, (profile, done)=>{
+        let email = '';
+        console.log('AD Windows==>', profile);
         if(!profile){
           done('Erro de autenticação', null);
         }else{
+          if(profile.emails && profile.emails.length>0){
+            email=profile.emails[0];
+          }
           done(null, {
             login: profile.sAMAccountName,
             nome: profile._json.name,
-            email: profile.emails
+            email: email
           });
         }
 

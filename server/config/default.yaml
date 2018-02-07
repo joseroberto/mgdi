@@ -46,10 +46,10 @@ config:
   user: vasconcelos
   password: serenaya00
 
-  #database: dbspo
-  #schema: dbesusgestor
-  database: dbses
-  schema: dbmgi
+  database: dbspo
+  schema: dbesusgestor
+  #database: dbses
+  #schema: dbmgi
   ##hostdb: banco
   # -------------------------------------------
   # | Tabela interna de resultados            |

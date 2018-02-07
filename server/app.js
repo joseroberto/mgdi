@@ -17,7 +17,7 @@ module.exports = app; // for testing
 var theAppLog = log4js.getLogger();
 
 // Programa os jobs de execucao
-job.cron();
+//job.cron();  //TODO: Checar a necessidade de programar jobs no servico web
 
 app.use(morgan("combined",{
   "stream": {

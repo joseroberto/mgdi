@@ -229,51 +229,52 @@ function convertCodigoIndicador(config){
       // Pesquisa no banco o que nao tiver no cache
       indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
         result.forEach(item=>{
+          console.log('item==>', item);
           ans[item.codigo] = {
             id: item.id,
             titulo: item.titulo,
             descricao: item.descricao,
-            granularidade: item.GranularidadeCodigo,
+            granularidade: item.Granularidade.codigo,
             banco: item.BancoDados,
-            tipoConsulta: item.TipoConsultaCodigo,
+            tipoConsulta: item.TipoConsulta.codigo,
             sql: item.referencia_consulta,
-            criterioAgregacao: item.CriterioAgregacaoCodigo,
-            periodicidade: item.PeriodicidadeAtualizacaoCodigo,
+            criterioAgregacao: item.CriterioAgregacao.codigo,
+            periodicidade: item.PeriodicidadeAtualizacao.codigo,
             ultima_atualizacao: item.ultima_atualizacao,
             tipo: 'valor'
           };
           // Testa tipos de consulta
-          if(item.tipo_consulta!=2 && item.tipo_consulta!=3){ // Tratar depois a formula
-            reject({codret: 1010, message: "Tipo de consulta incompatível ou indicador sem informação"});
+          if(ans[item.codigo].tipoConsulta!=2 && ans[item.codigo].tipoConsulta!=3){ // Tratar depois a formula
+            reject({codret: 1010, message: `Tipo de consulta (${ans[item.codigo].tipoConsulta}) incompatível ou indicador sem informação`});
           }
           // Testa tipos de periodicidade
-          if(item.periodicidade_atualizacao!=30 && item.periodicidade_atualizacao!=360){ // Tratar depois a periodicidade
+          if(ans[item.codigo].periodicidade!=30 && ans[item.codigo].periodicidade!=360){ // Tratar depois a periodicidade
             reject({codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida"});
           }
 
-          cache.set(item.codigo, ans[item.codigo]);
+          //cache.set(item.codigo, ans[item.codigo]);
           // Testa granularidade.  Se difere deve dar um erro
           if(granularidade==0){
-            granularidade = item.granularidade;
+            granularidade = ans[item.codigo].granularidade;
           }
-          if(item.granularidade!=granularidade){
+          if(ans[item.codigo].granularidade!=granularidade){
             reject({codret: 1001, message: "Conjunto de indicadores com granularidade diferentes"});
           }
-          if(item.granularidade<tipoGranularidade){
+          if(ans[item.codigo].granularidade<tipoGranularidade){
             reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`});
           }
-          if(item.granularidade>tipoGranularidade && item.criterio_agregacao==0){
+          if(ans[item.codigo].granularidade>tipoGranularidade && item.criterio_agregacao==0){
             reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`});
           }
           // Testa periodicidade.  Se difere deve dar um erro
           if(periodicidade==0){
-            periodicidade = item.periodicidade;
+            periodicidade = ans[item.codigo].periodicidade;
           }
-          if(item.periodicidade!=periodicidade){
+          if(ans[item.codigo].periodicidade!=periodicidade){
             reject({codret: 1001, message: 'Conjunto de indicadores com periodicidades diferentes'});
           }
         });
-        console.log('ans', ans);
+        //console.log('ans', ans);
         resolve(ans);
       }).catch(err=>{
         console.log('Erro real==>', err);
