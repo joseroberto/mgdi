@@ -785,6 +785,11 @@ paths:
           enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
           required: false
           description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
+        - name: porcategoria
+          type: string
+          in: query
+          required: false
+          description: Codigo da categoria de analise para abertura de resultados da consulta de indicador
         - name: valores_filtro
           type: array
           items:
