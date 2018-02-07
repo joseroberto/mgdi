@@ -1,3 +1,3 @@
 alter table dbesusgestor.tb_resultado add column co_seq_categoria_analise_item integer;
 create index ix_tb_resultado_co_seq_categoria_analise_item on dbesusgestor.tb_resultado(co_seq_categoria_analise_item);
-alter table dbesusgestor.tb_resultado add constraint fk_tb_resultado_co_seq_categoria_analise_item FOREIGN KEY (co_seq_indicador) REFERENCES dbesusgestor.tb_categoria_analise_item(co_seq_categoria_analise_item);
+alter table dbesusgestor.tb_resultado add constraint fk_tb_resultado_co_seq_categoria_analise_item FOREIGN KEY (co_seq_categoria_analise_item) REFERENCES dbesusgestor.tb_categoria_analise_item(co_seq_categoria_analise_item);
