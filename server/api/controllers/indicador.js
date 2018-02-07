@@ -379,7 +379,10 @@ module.exports = {
         { model: models.BancoDados , as: 'BancoDados' },
         { model: models.TipoConsulta , as: 'TipoConsulta' },
         { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
-        { model: models.Periodicidade , as: 'PeriodicidadeAtualizacao' }],
+        { model: models.Periodicidade , as: 'PeriodicidadeAtualizacao' },
+        { model: models.CategoriaAnalise , as: 'CategoriasAnalise',
+            include: [ { model: models.CategoriaAnaliseItem, as: 'Itens' } ] }
+      ],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
     }),

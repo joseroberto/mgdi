@@ -166,6 +166,7 @@ function convertCodigoIndicador(config){
     var granularidade = 0;
     var periodicidade = 0;
     var tipoGranularidade = 0;
+    var categoria = null;
     var arrValue = config.codigos;
 
     switch (config.tipo){
@@ -243,6 +244,21 @@ function convertCodigoIndicador(config){
             ultima_atualizacao: item.ultima_atualizacao,
             tipo: 'valor'
           };
+
+          // Testa categoria de CategoriaAnalise
+          if('porcategoria' in config && config.porcategoria){
+            var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
+            if(categoriaSelecionada){
+              ans[item.codigo]['categoria'] = categoriaSelecionada.Itens.map(a=>a.codigo).toString();
+              if(!categoria)
+                categoria = ans[item.codigo]['categoria'];
+            }else{
+              ans[item.codigo]['categoria'] = '';
+            }
+            if(categoria && categoria!=ans[item.codigo]['categoria'])
+              reject({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'});
+          }
+
           // Testa tipos de consulta
           if(ans[item.codigo].tipoConsulta!=2 && ans[item.codigo].tipoConsulta!=3){ // Tratar depois a formula
             reject({codret: 1010, message: `Tipo de consulta (${ans[item.codigo].tipoConsulta}) incompatível ou indicador sem informação`});
@@ -258,20 +274,20 @@ function convertCodigoIndicador(config){
             granularidade = ans[item.codigo].granularidade;
           }
           if(ans[item.codigo].granularidade!=granularidade){
-            reject({codret: 1001, message: "Conjunto de indicadores com granularidade diferentes"});
+            reject({codret: 1012, message: "Conjunto de indicadores com granularidade diferentes"});
           }
           if(ans[item.codigo].granularidade<tipoGranularidade){
-            reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`});
+            reject({codret: 1013, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`});
           }
           if(ans[item.codigo].granularidade>tipoGranularidade && item.criterio_agregacao==0){
-            reject({codret: 1001, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`});
+            reject({codret: 1014, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`});
           }
           // Testa periodicidade.  Se difere deve dar um erro
           if(periodicidade==0){
             periodicidade = ans[item.codigo].periodicidade;
           }
           if(ans[item.codigo].periodicidade!=periodicidade){
-            reject({codret: 1001, message: 'Conjunto de indicadores com periodicidades diferentes'});
+            reject({codret: 1015, message: 'Conjunto de indicadores com periodicidades diferentes'});
           }
         });
         //console.log('ans', ans);
@@ -369,6 +385,15 @@ function montaQueryComplemento(indicadores, config){
         groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
+    }
+
+    // Categoria de CategoriaAnalise
+    console.log('categoria===>', referencia);
+    if('categoria' in referencia && referencia.categoria){
+      select += `itemcat.co_seq_categoria_analise_item as itemcategoria, itemcat.ds_titulo as descricaocategoria,`;
+      from += ` inner join dbesusgestor.tb_categoria_analise_item itemcat on MOR4022.codigo_itemcategoria=co_seq_categoria_analise_item `;
+      groupby += `itemcat.ds_titulo, itemcat.co_seq_categoria_analise_item,`;
+      orderby += `itemcat.co_seq_categoria_analise_item,`;
     }
     orderby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
 
@@ -487,6 +512,7 @@ function montaQueryComplemento(indicadores, config){
 
 function montaQueryValorIndicador(codigo, indicador, config){
   var sql_select = 'select ';
+  var sql_where = `co_seq_indicador=${indicador.id}`;
   var sql_group = 'group by ';
 
   //console.log('montaQueryValorIndicador', indicador);
@@ -542,6 +568,14 @@ function montaQueryValorIndicador(codigo, indicador, config){
     default:
   }
 
+  if(indicador.categoria){
+    sql_select += ', co_seq_categoria_analise_item as codigo_itemcategoria';
+    sql_where+=` AND co_seq_categoria_analise_item in (${indicador.categoria})`;
+    sql_group+='co_seq_categoria_analise_item,';
+  }else{
+    sql_where+=' AND co_seq_categoria_analise_item is null';
+  }
+
   if(indicador.criterioAgregacao==0){
     sql_group='';
   }else{
@@ -549,7 +583,7 @@ function montaQueryValorIndicador(codigo, indicador, config){
   }
 
   return `${sql_select} from ${schema}.${config_param.tabela_indicadores}
-  where co_seq_indicador=${indicador.id} ${sql_group}`;
+  where ${sql_where} ${sql_group}`;
 
 }
 /*

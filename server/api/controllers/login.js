@@ -14,7 +14,7 @@ module.exports = {
     var log = log4js.getLogger();
     try {
       if(!config_param.bypass){
-        console.log('Fazendo autenticação ', req.body.username);
+        console.log('Fazendo autenticacao ', req.body.username);
         passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
             console.log('retornos', process.env.SCHEMA_LOGIN || config_param.schema_login, info, userlogin, err);
             if(err){
