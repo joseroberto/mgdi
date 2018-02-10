@@ -230,7 +230,7 @@ function convertCodigoIndicador(config){
       // Pesquisa no banco o que nao tiver no cache
       indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
         result.forEach(item=>{
-          console.log('item==>', item);
+          //console.log('item==>', item);
           ans[item.codigo] = {
             id: item.id,
             titulo: item.titulo,
@@ -247,13 +247,14 @@ function convertCodigoIndicador(config){
 
           // Testa categoria de CategoriaAnalise
           if('porcategoria' in config && config.porcategoria){
+            console.log('Consulta por categoria');
             var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
             if(categoriaSelecionada){
               ans[item.codigo]['categoria'] = categoriaSelecionada.Itens.map(a=>a.codigo).toString();
               if(!categoria)
                 categoria = ans[item.codigo]['categoria'];
             }else{
-              ans[item.codigo]['categoria'] = '';
+              reject({codret: 1016, message: 'Categoria de análise não associada ao indicador ou a um dos indicadores'});
             }
             if(categoria && categoria!=ans[item.codigo]['categoria'])
               reject({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'});
@@ -432,7 +433,7 @@ function montaQueryComplemento(indicadores, config){
     // Categoria de CategoriaAnalise
     if('categoria' in referencia && referencia.categoria){
       select += `itemcat.co_seq_categoria_analise_item as itemcategoria, itemcat.ds_titulo as descricaocategoria,`;
-      from += ` inner join dbesusgestor.tb_categoria_analise_item itemcat on MOR4022.codigo_itemcategoria=co_seq_categoria_analise_item `;
+      from += ` inner join dbesusgestor.tb_categoria_analise_item itemcat on ${indicadorAnterior}.codigo_itemcategoria=co_seq_categoria_analise_item `;
       groupby += `itemcat.ds_titulo, itemcat.co_seq_categoria_analise_item,`;
       orderby += `itemcat.co_seq_categoria_analise_item,`;
     }
@@ -497,15 +498,7 @@ function montaQueryComplemento(indicadores, config){
     //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
 
     var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
-    // Filtro de ano, anomes ou anomesdia
-    if(config.data){
-      var filtroData = '';
-      if(config.data<0)
-        filtroData= `select distinct ${nomeCampo} from ${schema}.${config_param.tabela_indicadores} where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*config.data}`
-      else
-        filtroData=`${config.data}`;
-      query = `select * from (${query}) as tab where ${varPeriodicidade} in (${filtroData})`;
-    }
+
 
     return query;
 }
@@ -514,6 +507,7 @@ function montaQueryValorIndicador(codigo, indicador, config){
   var sql_select = 'select ';
   var sql_where = `co_seq_indicador=${indicador.id}`;
   var sql_group = 'group by ';
+  var nome_campo_periodo = '';
 
   //console.log('montaQueryValorIndicador', indicador);
 
@@ -555,14 +549,17 @@ function montaQueryValorIndicador(codigo, indicador, config){
   switch (indicador.periodicidade) {
     case 360:
       sql_select += ', co_ano  as ano';
+      nome_campo_periodo='co_ano';
       sql_group += (indicador.criterioAgregacao!=0? 'co_ano,':'');
       break;
     case 30:
       sql_select += ', co_anomes  as anomes';
+      nome_campo_periodo='co_anomes';
       sql_group += (indicador.criterioAgregacao!=0? 'co_anomes,':'');
       break;
     case 1:
       sql_select += ', co_anomesdia  as anomesdia';
+      nome_campo_periodo='co_anomesdia';
       sql_group += (indicador.criterioAgregacao!=0? 'co_anomesdia,':'');
       break;
     default:
@@ -574,6 +571,16 @@ function montaQueryValorIndicador(codigo, indicador, config){
     sql_group+='co_seq_categoria_analise_item,';
   }else{
     sql_where+=' AND co_seq_categoria_analise_item is null';
+  }
+
+  // Filtro de ano, anomes ou anomesdia
+  if(config.data){
+    var filtroData = '';
+    if(config.data<0)
+      filtroData= `select distinct ${nomeCampo} from ${schema}.${config_param.tabela_indicadores} where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*config.data}`
+    else
+      filtroData=`${config.data}`;
+    sql_where += `AND ${nome_campo_periodo} in (${filtroData})`;
   }
 
   if(indicador.criterioAgregacao==0){
