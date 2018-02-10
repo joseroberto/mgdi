@@ -200,12 +200,17 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /api/perfis:
+  /api/perfil:
     x-swagger-router-controller: perfil
     get:
       description: Retorna a lista de perfis
       summary: Lista de perfis
       operationId: getPerfis
+      parameters:
+        - name: aplicacao
+          type: number
+          in: query
+          required: true
       tags:
         - Cadastros Auxiliares
         - Infraestrutura
@@ -459,6 +464,23 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetBancoDadosResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/aplicacao:
+    x-swagger-router-controller: aplicacao
+    get:
+      description: Retorna as aplicações passíveis de serem solicitadas
+      summary: Lista de aplicações cadastradas
+      operationId: getAplicacoes
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetAplicacoesResponse"
         default:
           description: Erro
           schema:
@@ -2065,6 +2087,10 @@ definitions:
       password:
         description: Senha do usuário
         type: string
+      aplicacao:
+        description: Aplicação
+        type: integer
+
   Token:
     type: object
     properties:
@@ -2163,6 +2189,21 @@ definitions:
             codigo:
               type: number
             descricao:
+              type: string
+  GetAplicacoesResponse:
+    required:
+      - aplicacoes
+    properties:
+      aplicacoes:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+            mime:
               type: string
   GetBancoDadosResponse:
     required:

@@ -36,50 +36,32 @@ swagger:
 
 # any other values in this file are just loaded into the config for application access...
 config:
-  host: localhost:8000
-  secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89A=
+  host: api.saude.df.gov.br
+  secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ81A=
   # -------------------------------------------
   # | Banco de dados do MGI                   |
   # -------------------------------------------
-  database: dbspo
-  user: vasconcelos
-  password: serenaya
-  hostdb: localhost
-  schema: dbesusgestor
+  database: dbsalasituacao
+  user: mgi_app
+  password: gFGcZxyrnc8pT8df
+  hostdb: desenv.saude.df.gov.br
+  schema: dbmgi
   # -------------------------------------------
   # | Tabela interna de resultados            |
   # -------------------------------------------
   tabela_indicadores: tb_resultado
   # -------------------------------------------
-  # | SCPA                                    |
-  # -------------------------------------------
-  schema_login: scpa
-  wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
-  system: SAGE
-  # -------------------------------------------
   # | LDAP                                    |
   # -------------------------------------------
-  #schema_login: ldap
-  #url: 'ldap://localhost'
-  #bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br'
-  #bindCredentials: 'gFGcZxyrnc8pT8se'
-  #searchBase: 'DC=synapsys, DC=com, DC=br'
-  #searchFilter: '(uid={{username}})'
+  schema_login: windows
+  url: 'ldap://10.86.1.80/DC=saude,DC=df,DC=gov,DC=br'
+  bindDn: 'CN=Sala de Situacao,OU=0 - Contas de Serviços e Aplicacoes, DC=saude, DC=df, DC=gov, DC=br'
+  bindCredentials: 'ses@2017'
+  searchBase: 'DC=saude,DC=df,DC=gov,DC=br'
   # -------------------------------------------
   # | Documentacao                            |
   # -------------------------------------------
-  title: eSUSGestor - API de comunicação
-  company: Ministério da Saúde - MS
+  title: Sala de Situação - API de comunicação
+  company: Secretaria Estadual de Saúde - SES
   description: |
-    A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
-    # Introdução
-    O projeto visa a criação de um barramento para intermediar o acesso a informações visando uma estratégia de negócio coerente e padronizada.  Esse barramento vai incorporar características de segurança como login no SCPA (ou outro sistema de segurança).  As funcionalidades previstas serão plugáveis e terá como início o módulo de gestão de indicadores MGI  e será extendido para as funcionalidades necessárias as consultas demandadas pelo eSUS Gestor.  O desenvolvimento segue os padrões requeridos pelo DATASUS em seu documento de definição [Diretriz arquitetural de software](https://integrams.saude.gov.br/uploadfile/getFile?coUploadFile=24907)
-    # Objetivo
-    *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
-    *  Utilização de metadados para criação de consultas dinâmicas as bases
-    *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
-
-    # Especificação API eSUSGestor
-    Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
-
-    Interface para acesso e lista de [endpoints](http://rest.demas.saude.gov).
+    (pendencia) Escrever a descrição da API de comunicação para Sala de Situação

@@ -118,11 +118,11 @@ module.exports = function(passport) {
           done('Erro de autenticação', null);
         }else{
           if(profile.emails && profile.emails.length>0){
-            email=profile.emails[0];
+            email=profile.emails[0].value;
           }
           done(null, {
             login: profile.sAMAccountName,
-            nome: profile._json.name,
+            nome: profile.displayName,
             email: email
           });
         }

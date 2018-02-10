@@ -59,20 +59,20 @@ config:
   # -------------------------------------------
   # | SCPA                                    |
   # -------------------------------------------
-  schema_login: scpa
-  wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
-  system: SAGE
+  #schema_login: scpa
+  #wsdl: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+  #system: SAGE
   # -------------------------------------------
   # | LDAP                                    |
   # -------------------------------------------
-  #schema_login: ldap
-  #url: 'ldap://localhost'
-  #bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br'
-  #bindCredentials: 'gFGcZxyrnc8pT8se'
-  #searchBase: 'DC=synapsys, DC=com, DC=br'
-  #searchFilter: '(uid={{username}})'
-  #mailfield: 'mail'
-  #namefield: 'givenName'
+  schema_login: ldap
+  url: 'ldap://localhost'
+  bindDn: 'cn=admin, dc=synapsys, dc=com, dc=br'
+  bindCredentials: 'gFGcZxyrnc8pT8se'
+  searchBase: 'DC=synapsys, DC=com, DC=br'
+  searchFilter: '(uid={{username}})'
+  mailfield: 'mail'
+  namefield: 'givenName'
   # -------------------------------------------
   # | Documentacao                            |
   # -------------------------------------------

@@ -132,8 +132,8 @@ export class LoginComponent implements OnInit {
         console.log('entidade', entidade);
         localStorage.setItem('token', entidade.token);
         this.newuser = Object.assign(new User(), entidade.user);
-        $('#nome').prop('disabled', 'nome' in entidade.user);
-        $('#email').prop('disabled', ('email' in entidade.user) && entidade.user.email);
+        //$('#nome').prop('disabled', 'nome' in entidade.user);
+        //$('#email').prop('disabled', ('email' in entidade.user) && entidade.user.email);
         this.complementoModal.show();
         setTimeout(()=>{
           $.each($('input[saMaskedInput]'), (index,value)=>{

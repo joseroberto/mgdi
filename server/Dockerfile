@@ -29,12 +29,6 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
       * WSDL - Qual o endereço utilizado para consulta de usuário no SCPA. Por exemplo: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl \
       * SISTEMA - Qual o nome do sistema a ser utilizado para login."
 
-ENV HOSTDB=localhost \
-      DATABASE=dbspo \
-      USER=user \
-      PASSWORD=passwd \
-      HOST=localhost \
-      WSDL=http://
 
 # Bundle APP files
 RUN mkdir -p /var/opt/mgi && \

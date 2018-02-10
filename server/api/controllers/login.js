@@ -26,7 +26,7 @@ module.exports = {
             userlogin['login'] = req.body.username;
             console.log('Login de usuario==>', req.body.username);
             // Checa se o usuário logado possui cadastro do MGI
-            var userPerfil =  await user.getPorLogin(req.body.username);
+            var userPerfil =  await user.getPorLogin(req.body.username, req.body.aplicacao);
             console.log('userPerfil==>', userPerfil);
             if(!userPerfil || userPerfil.length==0){
               var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });

@@ -36,6 +36,14 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
+    classMethods:{
+        associate:function(models){
+          Perfil.belongsTo(models.Aplicacao,
+            {
+              as: 'Aplicacao',
+              foreignKey: { field: 'co_aplicacao', allowNull:false}
+            });
+    }},
     schema: schema,
     timestamps: false,
     freezeTableName: true,
