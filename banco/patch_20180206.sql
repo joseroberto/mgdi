@@ -40,3 +40,25 @@ update dbesusgestor.tb_perfil set co_aplicacao=1;
 alter table dbesusgestor.tb_perfil alter column co_aplicacao set not null;
 
 alter table dbesusgestor.tb_perfil add constraint fk_tb_perfil_co_aplicacao FOREIGN KEY (co_aplicacao) REFERENCES dbesusgestor.tb_aplicacao(co_aplicacao);
+
+--- Adiciona categoria de analise como uma entidade hierarquica
+
+alter table dbesusgestor.tb_categoria_analise_item add column co_categoria_analise_item_pai int;
+alter table dbesusgestor.tb_categoria_analise_item add column nu_nivel int;
+alter table dbesusgestor.tb_categoria_analise_item add constraint fk_tb_categoria_analise_item_co_categoria_analise_item_pai FOREIGN KEY (co_categoria_analise_item_pai) REFERENCES dbesusgestor.tb_categoria_analise_item(co_seq_categoria_analise_item);
+
+----------------------------------------------------------
+--drop table dbesusgestor.tb_categoria_analise_item_hierarquia;
+create table dbesusgestor.tb_categoria_analise_item_hierarquia(
+  co_categoria_analise_item int not null,
+  co_categoria_analise_item_pai int not null,
+  constraint pk_tb_categoria_analise_item_hierarquia primary key (co_categoria_analise_item,co_categoria_analise_item_pai)
+);
+
+alter table dbesusgestor.tb_categoria_analise_item_hierarquia add CONSTRAINT tb_categoria_analise_item_hierarquia_co_item_fkey FOREIGN KEY (co_categoria_analise_item)
+        REFERENCES dbesusgestor.tb_categoria_analise_item (co_seq_categoria_analise_item) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+alter table dbesusgestor.tb_categoria_analise_item_hierarquia add CONSTRAINT tb_categoria_analise_item_hierarquia_co_item_pai_fkey FOREIGN KEY (co_categoria_analise_item_pai)
+        REFERENCES dbesusgestor.tb_categoria_analise_item (co_seq_categoria_analise_item) MATCH SIMPLE
+        ON UPDATE NO ACTION ON DELETE NO ACTION;

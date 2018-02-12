@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  url: 'http://api.saude.df.gov.br',
+  url: 'http://api-ses.synapsys.com.br',
   API_URL: "/api",
   aplicacao: 1, // codigo da aplicacao MGI
-  urlNewUser: "http://saude.df.gov.br",
-  urlForgetPassword: "http://saude.df.gov.br"
+  urlNewUser: "http://localhost",
+  urlForgetPassword: "http://localhost"
 };

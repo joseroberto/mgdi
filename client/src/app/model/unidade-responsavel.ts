@@ -3,7 +3,13 @@ export class UnidadeResponsavel{
   sigla: string = '';
   nome: string = '';
   email: string = '';
-  
+  telefone:string;
+  competencia:string;
+  atividade:string;
+  isInformal:boolean;
+  unidade_pai:number;
   constructor(){
+    this.isInformal = false;
+    this.codigo=null;
   }
 }

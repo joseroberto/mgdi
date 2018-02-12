@@ -26,6 +26,7 @@ import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-med
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
 import {PerfilComponent} from './perfil/perfil.component';
+import {UnidadeComponent} from './cadastros_auxiliares/unidade.component';
 
 export const homeRoutes: Routes = [
     {
@@ -87,6 +88,11 @@ export const homeRoutes: Routes = [
     path: 'tag',
     component: TagCadastroComponent,
     data: {pageTitle: 'Novo marcador'}
+    },
+    {
+    path: 'unidade',
+    component: UnidadeComponent,
+    data: {pageTitle: 'Unidades'}
     },
     {
     path: 'tag/:codigo',

@@ -24,6 +24,14 @@ module.exports = function(sequelize, DataTypes) {
             });
         }
     },
+    hierarchy: {
+      foreignKey: 'co_categoria_analise_item_pai',
+      levelFieldName: 'nu_nivel',
+      throughSchema: schema,
+      throughTable: 'tb_categoria_analise_item_hierarquia',
+      throughForeignKey:'co_categoria_analise_item_pai',
+      throughKey: 'co_categoria_analise_item'
+    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
