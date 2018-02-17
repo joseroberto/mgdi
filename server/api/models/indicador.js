@@ -193,6 +193,18 @@ module.exports = function(sequelize, DataTypes) {
              allowNull: false
            },
            onDelete: 'cascade' });
+        Indicador.belongsToMany(models.UnidadeMedida, {
+            as: 'UnidadesMedidaSuplementar',
+            through: 'tb_indicador_unidade_medida',
+            otherKey: {
+              name: 'co_unidade_medida',
+              allowNull: false
+            },
+            foreignKey: {
+              name: 'co_seq_indicador',
+              allowNull: false
+            },
+            onDelete: 'cascade' });
       }
     },
     schema: schema,
