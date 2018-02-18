@@ -366,21 +366,21 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private onSubmit(form){
     let valor: Indicador = Object.assign(this.indicador, form.value);
     $(':input[type="submit"]').prop('disabled', false);
-    console.log('form',form,  valor);
+    //console.log('form',form,  valor);
     if(form.valid && this.validacaoAdicional(valor)){
-      //var obj = Object.assign(form.value, this.indicador.tags);
       if(this.flag_update){
+        // Atualiza dados
         this.indicadorService.update(valor).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
           }else{
             this.util.msgErro(resp.mensagem);
-
           }
         }, err=>{
           this.util.msgErro(JSON.parse(err._body).message);
         });
       }else{
+        // Inclui um novo
         valor['codigo'] = form.value.codigo_edit.toUpperCase();
         this.indicadorService.create(valor).subscribe(resp=>{
           if(resp.codret==0){
