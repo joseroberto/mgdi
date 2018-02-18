@@ -355,7 +355,7 @@ module.exports = {
         { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
         { model: models.Periodicidade , as: 'PeriodicidadeAtualizacao' },
         { model: models.CategoriaAnalise , as: 'CategoriasAnalise',
-            include: [ { model: models.CategoriaAnaliseItem, as: 'Itens',
+            include: [ { model: models.CategoriaAnaliseItem, as: 'Itens',            
             include: [ { model: models.CategoriaAnaliseItem, as: 'descendents' } ]  } ] }
       ],
       //  where: {codigo: req.swagger.params.codigo.value}
