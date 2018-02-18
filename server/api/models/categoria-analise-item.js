@@ -20,12 +20,12 @@ module.exports = function(sequelize, DataTypes) {
       classMethods:{
         associate:function(models){
             CategoriaAnaliseItem.belongsTo(models.CategoriaAnalise, {
-              foreignKey: { field: 'co_categoria_analise', allowNull:false}
+              foreignKey: { field: 'co_categoria_analise', allowNull:false, as: 'CategoriaPai'}
             });
         }
     },
     hierarchy: {
-      foreignKey: 'co_categoria_analise_item_pai',
+      foreignKey: { field:'co_categoria_analise_item_pai', as: 'CategoriaPai'},
       levelFieldName: 'nu_nivel',
       throughSchema: schema,
       throughTable: 'tb_categoria_analise_item_hierarquia',

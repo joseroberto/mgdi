@@ -15,8 +15,7 @@ alter table dbesusgestor.tb_resultado alter column co_anomesdia type int USING c
 
 alter table dbesusgestor.tb_tempo alter column co_anomesdia type int using co_anomesdia::integer;
 
-alter table dbesusgestor.tb_resultado  drop constraint  tb_resultado_co_data_fkey
-FOREIGN KEY (co_anomesdia) REFERENCES dbesusgestor.tb_tempo(co_anomesdia);
+alter table dbesusgestor.tb_resultado  drop constraint  tb_resultado_co_data_fkey;
 
 alter table dbesusgestor.tb_resultado alter column co_anomes type int USING co_anomes::integer;
 alter table dbesusgestor.tb_resultado alter column co_ano type int USING co_ano::integer;

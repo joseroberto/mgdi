@@ -247,10 +247,12 @@ function convertCodigoIndicador(config){
 
           // Testa categoria de CategoriaAnalise
           if('porcategoria' in config && config.porcategoria){
-            console.log('Consulta por categoria');
             var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
             if(categoriaSelecionada){
-              ans[item.codigo]['categoria'] = categoriaSelecionada.Itens.map(a=>a.codigo).toString();
+              console.log('Consulta por categoria', categoriaSelecionada.Itens);
+              ans[item.codigo]['categoriaSelecionada']= categoriaSelecionada;
+              ans[item.codigo]['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
+              console.log('categoria=====> ', ans[item.codigo]['categoria']);
               if(!categoria)
                 categoria = ans[item.codigo]['categoria'];
             }else{
@@ -301,6 +303,21 @@ function convertCodigoIndicador(config){
     //    resolve(ans);
     //}
   });
+}
+
+function getSubCategorias(itens){
+  let ans=[];
+  itens.forEach(subcat=>{
+    if('descendents' in subcat){
+      let temp = getSubCategorias(subcat['descendents']);
+      if(temp.length>0){
+        ans = ans.concat(temp);
+      }
+    }else{
+      ans.push(subcat.codigo);
+    }
+  });
+  return ans;
 }
 
 /*
@@ -593,6 +610,8 @@ function montaQueryValorIndicador(codigo, indicador, config){
   where ${sql_where} ${sql_group}`;
 
 }
+
+
 /*
   Funcao para tabular resulado
 
