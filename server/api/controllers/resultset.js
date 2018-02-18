@@ -56,7 +56,6 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        console.log(sql);
         pool.query(sql,null, (err, result)=>{
           //console.log(result);
           if(err) {
@@ -450,7 +449,7 @@ function montaQueryComplemento(indicadores, config){
     // Categoria de CategoriaAnalise
     if('categoria' in referencia && referencia.categoria){
       select += `itemcat.co_seq_categoria_analise_item as itemcategoria, itemcat.ds_titulo as descricaocategoria,`;
-      from += ` inner join dbesusgestor.tb_categoria_analise_item itemcat on ${indicadorAnterior}.codigo_itemcategoria=co_seq_categoria_analise_item `;
+      from += ` inner join ${schema}.tb_categoria_analise_item itemcat on ${indicadorAnterior}.codigo_itemcategoria=co_seq_categoria_analise_item `;
       groupby += `itemcat.ds_titulo, itemcat.co_seq_categoria_analise_item,`;
       orderby += `itemcat.co_seq_categoria_analise_item,`;
     }
@@ -515,7 +514,6 @@ function montaQueryComplemento(indicadores, config){
     //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
 
     var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
-
 
     return query;
 }

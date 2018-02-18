@@ -1,0 +1,18 @@
+apps:
+  - script   : ./app.js
+    name: barramento-api
+    instances: 1
+    exec_mode: cluster
+    watch  : true
+    env    :
+      NODE_ENV: dev
+      COMPANY: MS
+      HOSTDB: 192.168.0.3
+      DATABASE: dbspo
+      USER_DB: mgdi_adm
+      PASSWORD_DB: serenaya
+      SCHEMA: dbesusgestor_homologa
+      HOST: localhost:8000
+      SCHEMA_LOGIN: scpa
+      WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+      SISTEMA: sage

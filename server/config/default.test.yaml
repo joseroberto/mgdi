@@ -42,9 +42,9 @@ config:
   # | Banco de dados do MGI                   |
   # -------------------------------------------
   database: dbspo
-  user: postgres
-  password: pass
-  hostdb: localhost
+  user: mgdi_adm
+  password: serenaya
+  hostdb: 192.168.0.3
   ##hostdb: banco
   # -------------------------------------------
   # | Tabela interna de resultados            |

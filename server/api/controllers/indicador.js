@@ -13,7 +13,8 @@ module.exports = {
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
         { model: models.Unidade, as: 'Unidade' },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
-        { model: models.Granularidade, as: 'Granularidade' }
+        { model: models.Granularidade, as: 'Granularidade' },
+        { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} }
       ],
       where: {},
       order: ['titulo']
