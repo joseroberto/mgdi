@@ -39,6 +39,9 @@ import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.comp
 // PerfilComponent
 import {PerfilComponent} from './perfil/perfil.component';
 
+// UnidadeComponent
+import {UnidadeComponent} from './cadastros_auxiliares/unidade.component';
+
 import {WindowRef} from './WindowRef';
 import { ComponentesModule } from '../componentes/componentes.module';
 
@@ -75,6 +78,7 @@ import { ComponentesModule } from '../componentes/componentes.module';
     TagComponent,
     UnidadeMedidaCadastroComponent,
     UnidadeMedidaComponent,
+    UnidadeComponent,
     PerfilComponent
   ],
   providers:[WindowRef]

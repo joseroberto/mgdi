@@ -95,33 +95,20 @@
                   <p class="note"><strong>Nota:</strong> discrimine os itens da categoria de análise.</p>
                 </div>
               </div>
-              <div class="table-responsive col-md-10">
-                <table class="table table-hover">
-                  <thead>
-                  <tr>
-                    <td>#</td>
-                    <th>Itens da categoria de análise</th>
-                    <th>&nbsp;</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let itemCat of novacategoria.Itens; let i=index">
-                    <ng-template [ngIf]="itemCat && !itemCat.deleted">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ itemCat.descricao }}</td>
-                        <td>
-                          <a class="btn btn-primary btn-sm icon white"
-                            (click)="editItemCategoriaAnalise(i)"
-                            href="javascript:void(0);" title="Alterar"><i class="fa fa-pencil "></i></a>
-                          <a class="btn btn-danger btn-sm icon white"
-                              (click)="apagaItemCategoriaAnalise(i)"
-                              href="javascript:void(0);" title="Apaga item"><i class="fa fa-times "></i></a>
-                        </td>
-                    </ng-template>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+
+              <sa-widget [editbutton]="false" color="blue">
+                <header>
+                  <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
+                  <h2>Itens da categoria de análise </h2>
+                </header>
+                <div>
+                  <div class="widget-body">
+                    <div class="tree smart-form">
+                      <sa-tree-view [items]="listaSubcategorias" (change)="changeLstener($event)" ></sa-tree-view>
+                    </div>
+                  </div>
+                </div>
+              </sa-widget>
           </fieldset>
           <div class="form-actions">
             <div class="row">

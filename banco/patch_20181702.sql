@@ -1,4 +1,4 @@
-CREATE TABLE dbesusgestor_homologa.tb_indicador_unidade_medida
+CREATE TABLE dbesusgestor.tb_indicador_unidade_medida
 (
   co_indicador_unidade_medida serial NOT NULL,
   co_unidade_medida integer NOT NULL,
@@ -10,4 +10,3 @@ CREATE TABLE dbesusgestor_homologa.tb_indicador_unidade_medida
       REFERENCES dbesusgestor_homologa.tb_unidade_medida (co_unidade_medida) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
-

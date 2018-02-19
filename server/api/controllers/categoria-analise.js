@@ -3,11 +3,20 @@ var models  = require('../models');
 module.exports = {
   getCategoriasAnalises: (req, res)=>{
     models.CategoriaAnalise.findAll({
-      include: [ { model: models.CategoriaAnaliseItem, as: 'Itens' }]
+      include: [ 
+        { model: models.CategoriaAnaliseItem, as: 'Itens',            
+            include: [ { model: models.CategoriaAnaliseItem, as: 'descendents' } ] 
+        }
+      ]
     }).then(function(lista) {
       res.json({categorias_analise: lista});
     });
   },
+  /*getCategoriasAnalises: (req, res)=>{
+    models.CategoriaAnaliseItem.findAll({ hierarchy: true }).then(function(lista) {
+      res.json({categorias_analise: lista});
+    });
+  },*/
   getCategoriaAnalise: (req,res)=>{
     models.CategoriaAnalise.findAll(
       { include: [ { model: models.CategoriaAnaliseItem, as: 'Itens' }],
