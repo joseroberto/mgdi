@@ -124,6 +124,7 @@ module.exports = {
                    { model: models.Granularidade , as: 'Granularidade' },
                    { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
                    { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+                   { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} },
                    { model: models.Polaridade, as: 'Polaridade' }],
         where: {codigo: req.swagger.params.codigo.value}
       }

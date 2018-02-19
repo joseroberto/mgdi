@@ -33,7 +33,7 @@ insert into dbesusgestor.tb_indicador_fonte (ds_sigla_fonte, ds_fonte) values ('
 insert into dbesusgestor.tb_indicador_fonte (ds_sigla_fonte, ds_fonte) values ('MS', 'Ministério da Saúde');
 
 
-alter table dbesusgestor.tb_indicador rename column co_unidade_responsavel to co_unidade;
+alter table dbesusgestor.tb_indicador rename column co_unidade_responsavel to co_unidade; --Ja executada na 25
 alter table dbesusgestor.tb_indicador add column co_indicador_classificacao6s int not null default 0;
 COMMENT ON COLUMN dbesusgestor.tb_indicador.co_indicador_classificacao6s IS 'Surrogate key da classificacao6s';
 
