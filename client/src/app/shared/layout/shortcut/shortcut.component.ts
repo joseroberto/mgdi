@@ -15,19 +15,19 @@ import { trigger,
 
 @Component({
   selector: 'sa-shortcut',
-  templateUrl: './shortcut.component.html',
-  animations: [
-    trigger('shortcutState', [
-      state('out', style({
-        height: 0,
-      })),
-      state('in', style({
-        height: '*',
-      })),
-      transition('out => in', animate('250ms ease-out')),
-      transition('in => out', animate('250ms ease-in '))
-    ])
-  ]
+  templateUrl: './shortcut.component.html'//,
+  // animations: [
+  //   trigger('shortcutState', [
+  //     state('out', style({
+  //       height: 0,
+  //     })),
+  //     state('in', style({
+  //       height: '*',
+  //     })),
+  //     transition('out => in', animate('250ms ease-out')),
+  //     transition('in => out', animate('250ms 300ms ease-in '))
+  //   ])
+  // ]
 })
 export class ShortcutComponent implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
