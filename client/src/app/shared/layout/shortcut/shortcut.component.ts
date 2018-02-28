@@ -25,7 +25,7 @@ import { trigger,
         height: '*',
       })),
       transition('out => in', animate('250ms ease-out')),
-      transition('in => out', animate('250ms 300ms ease-in '))
+      transition('in => out', animate('250ms ease-in '))
     ])
   ]
 })

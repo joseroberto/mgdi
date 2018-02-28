@@ -6,16 +6,12 @@ alter table dbesusgestor.tb_resultado add constraint fk_tb_resultado_co_seq_cate
 
 
 -- Mudanca no tipo das colunas de data da tb_resultado
-
-alter table dbesusgestor.tb_resultado alter column co_anosemana type int USING co_anosemana::integer;
-
 alter table dbesusgestor.tb_resultado  drop constraint tb_resultado_co_data_fkey;
+alter table dbesusgestor.tb_resultado alter column co_anosemana type int USING co_anosemana::integer;
 
 alter table dbesusgestor.tb_resultado alter column co_anomesdia type int USING co_anomesdia::integer;
 
 alter table dbesusgestor.tb_tempo alter column co_anomesdia type int using co_anomesdia::integer;
-
-alter table dbesusgestor.tb_resultado  drop constraint  tb_resultado_co_data_fkey;
 
 alter table dbesusgestor.tb_resultado alter column co_anomes type int USING co_anomes::integer;
 alter table dbesusgestor.tb_resultado alter column co_ano type int USING co_ano::integer;
