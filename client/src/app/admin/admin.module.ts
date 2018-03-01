@@ -35,6 +35,8 @@ import {TagCadastroComponent} from './cadastros_auxiliares/tag-cadastro.componen
 import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
+import {FonteCadastroComponent} from './cadastros_auxiliares/fonte-cadastro.component';
+import {FonteComponent} from './cadastros_auxiliares/fonte.component';
 
 // PerfilComponent
 import {PerfilComponent} from './perfil/perfil.component';
@@ -79,7 +81,9 @@ import { ComponentesModule } from '../componentes/componentes.module';
     UnidadeMedidaCadastroComponent,
     UnidadeMedidaComponent,
     UnidadeComponent,
-    PerfilComponent
+    PerfilComponent,
+    FonteCadastroComponent,
+    FonteComponent
   ],
   providers:[WindowRef]
 })

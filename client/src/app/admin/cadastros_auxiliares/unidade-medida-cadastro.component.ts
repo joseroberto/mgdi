@@ -57,7 +57,7 @@ export class UnidadeMedidaCadastroComponent implements OnInit, OnDestroy{
               this.novaunidademedida = Object.assign(new UnidadeMedida(), resp);
               console.log('Registro em edicao:', this.novaunidademedida);
               this.tituloinit = `Atualiza ${this.novaunidademedida.descricao}`;
-              this.breadcrumb = ['Categoria de Análise', this.novaunidademedida.codigo];
+              this.breadcrumb = ['Unidade de Medida', this.novaunidademedida.codigo];
             }, (err)=> this.util.msgErroInfra(err));
         }
     }

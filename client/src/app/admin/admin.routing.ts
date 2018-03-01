@@ -24,6 +24,8 @@ import {TagCadastroComponent} from './cadastros_auxiliares/tag-cadastro.componen
 import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
+import {FonteCadastroComponent} from './cadastros_auxiliares/fonte-cadastro.component';
+import {FonteComponent} from './cadastros_auxiliares/fonte.component';
 
 import {PerfilComponent} from './perfil/perfil.component';
 import {UnidadeComponent} from './cadastros_auxiliares/unidade.component';
@@ -118,6 +120,21 @@ export const homeRoutes: Routes = [
     path: 'lista-unidade-medida',
     component: UnidadeMedidaComponent,
     data: {pageTitle: 'Lista de unidades de medida'}
+    },
+    {
+    path: 'fonte-dados/:codigo',
+    component: FonteCadastroComponent,
+    data: {pageTitle: 'Edita fonte de dados'}
+    },
+    {
+    path: 'fonte-dados',
+    component: FonteCadastroComponent,
+    data: {pageTitle: 'Nova fonte de dados'}
+    },
+    {
+    path: 'lista-fonte-dados',
+    component: FonteComponent,
+    data: {pageTitle: 'Lista fonte de dados'}
     },
     {
     path: 'perfil',

@@ -291,6 +291,99 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma nova fonte de dados para um parâmtro
+      summary: Cria uma nova fonte de dados
+      operationId: createFonteParametro
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: fonte
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Fonte'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/fonte-parametro/{codigo}:
+    x-swagger-router-controller: parametro-fonte
+    get:
+      description: Retorna uma fonte de dados
+      summary: Recupera uma fonte de dados
+      operationId: getFontesParametroItem
+      tags:
+        - Cadastros Auxiliares
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Edita uma fonte de dados
+      summary: Edita um fonte para os dados de parâmetros
+      operationId: editaFonteParametro
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+        - name: fonte
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Fonte'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Apaga uma fonte
+      summary: Apaga um registro de uma fonte de dados
+      operationId: apagaFonteParametro
+      tags:
+        - Cadastros Auxiliares
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /api/unidade-medida:
     x-swagger-router-controller: unidade-medida
     get:
@@ -2360,6 +2453,16 @@ definitions:
         type: array
         items:
           type: object
+  Fonte:
+    description: Objeto fonte de dados
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código da fonte de dados
+      descricao:
+        type: string
+        description: Descrição da fonte de dados
   UnidadeMedida:
     description: Objeto unidade de medida
     type: object
