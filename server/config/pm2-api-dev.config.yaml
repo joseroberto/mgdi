@@ -7,7 +7,7 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: 192.168.0.3
+      HOSTDB: 192.168.0.2
       DATABASE: dbspo
       USER_DB: mgdi_adm
       PASSWORD_DB: serenaya
@@ -15,4 +15,4 @@ apps:
       HOST: localhost:8000
       SCHEMA_LOGIN: scpa
       WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
-      SISTEMA: sage
+      SISTEMA: SAGE

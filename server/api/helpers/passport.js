@@ -45,8 +45,8 @@ module.exports = function(passport) {
     // SCPA Login ==============================================================
     // =========================================================================
     passport.use('scpa', new JsonStrategy((login, password, done) =>{
-        console.log('Acessando scpa:', process.env.WSDL || config_param.wsdl);
-        soap.createClient(process.env.WSDL || config_param.wsdl, function(err, client) {
+        console.log('Acessando scpa:', process.env.WSDL);
+        soap.createClient(process.env.WSDL, function(err, client) {
           if(err){
             console.log('Erro==>',err);
             return done('Erro no acesso ao SCPA.');
@@ -55,7 +55,7 @@ module.exports = function(passport) {
           var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest().toString('hex');
           // Busca informacoes adicionais no SCPA
           client.buscaPerfilUsuario(
-              {autenticacao: {email: login, senha: password_hash, siglaSistema: process.env.SISTEMA || config_param.system}},
+              {autenticacao: {email: login, senha: password_hash, siglaSistema: process.env.SISTEMA}},
               (err, result)=>{
                 if(err){
                   var erroSCPA = err.body.substring(err.body.indexOf('<detalhamento>')+14,err.body.indexOf('</detalhamento>'));
