@@ -585,19 +585,22 @@ function montaQueryValorIndicador(codigo, indicador, config){
     sql_where+=` AND co_seq_categoria_analise_item in (${indicador.categoria})`;
     sql_group+='co_seq_categoria_analise_item,';
   }else{
-    sql_where+=' AND co_seq_categoria_analise_item is null';
+    sql_where+=' AND co_seq_categoria_analise_item is null ';
   }
-
+ 
   // Filtro de ano, anomes ou anomesdia
   if(config.data){
     var filtroData = '';
     if(config.data<0)
-      filtroData= `select distinct ${nomeCampo} from ${schema}.${config_param.tabela_indicadores} where co_seq_indicador in (${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}) order by 1 desc limit ${(-1)*config.data}`
+      filtroData= `select distinct ${nome_campo_periodo} from ${schema}.${config_param.tabela_indicadores} 
+        where co_seq_indicador in (${indicador.id}) 
+        order by 1 desc limit ${(-1)*config.data}`
+        //${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}
     else
       filtroData=`${config.data}`;
     sql_where += `AND ${nome_campo_periodo} in (${filtroData})`;
   }
-
+  
   if(indicador.criterioAgregacao==0){
     sql_group='';
   }else{

@@ -7,7 +7,7 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: 192.168.0.2
+      HOSTDB: 192.168.1.18
       DATABASE: dbspo
       USER_DB: mgdi_adm
       PASSWORD_DB: serenaya
