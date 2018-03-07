@@ -161,35 +161,9 @@ module.exports = {
         res.status(503).json(err);
       }
     });
-    /*models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then((indicador)=>{
-
-      models.IndicadorCategoriaAnalise.destroy({ where: {
-        co_seq_indicador:indicador[0].id}}).then(()=>{
-
-          models.IndicadorRelacionado.destroy(
-            { where: {$or: [
-              { co_seq_indicador:indicador[0].id},
-              { co_seq_indicador_pai:indicador[0].id}]}
-              }).then(()=>{
-                console.log(indicador[0]);
-                indicador[0].setTags(null);
-                indicador[0].destroy();
-                res.json({codret: 0, mensagem: "Indicador apagado com sucesso 123"});
-          }).catch(err=>{
-            console.log('Erro', err);
-            res.status(500).json({codret: 1001, message: "Erro apagando o relacionamento do indicador"});
-          });
-
-      }).catch(err=>{
-        console.log('Erro', err);
-        res.status(500).json({codret: 1001, message: "Erro apagando o indicador"});
-      });
-
-    });
-    */
   },
   editaIndicador: (req,res)=>{
-    //console.log('Update indicador',req.body);
+    console.log('Update indicador',req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
         item[0].setTags(req.body.tags);

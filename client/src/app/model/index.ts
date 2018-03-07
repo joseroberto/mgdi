@@ -10,3 +10,4 @@ export * from './arquivo';
 export * from './user';
 export * from './perfil';
 export * from './status-aprovacao';
+export * from './fonte-parametro';
