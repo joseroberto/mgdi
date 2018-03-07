@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var Unidade = sequelize.define('Unidade', {
@@ -59,13 +59,13 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Unidade.hasMany(models.Indicador,{
           as: 'IndicadoresRelacionados',
-          foreignKey: 'co_secretaria'});
+          foreignKey: 'co_unidade'});
       }
     },
     hierarchy: {
       foreignKey: 'unidade_pai',
       levelFieldName: 'nu_nivel',
-      throughSchema: 'dbesusgestor',
+      throughSchema: schema,
       throughTable: 'tb_unidade_hierarquia',
       throughForeignKey:'co_unidade_superior',
       throughKey: 'co_unidade'

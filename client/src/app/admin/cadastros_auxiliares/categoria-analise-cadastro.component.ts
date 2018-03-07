@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy,NgZone} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { CategoriaAnalise } from '../../model/index';
 import {ModalDirective} from "ngx-bootstrap";
+import {WindowRef} from '../WindowRef';
 import { UtilService, CategoriaAnaliseService } from '../../services/index';
 
 declare var $: any;
@@ -22,15 +23,32 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     private novacategoria:CategoriaAnalise;
     private tituloModal:string = '';
     private editCategoriaAnalise:any = {codigo:0, titulo:''};
+    private listaSubcategorias:Object[] = [];
 
     @ViewChild('categoriaAnaliseModal') private categoriaAnaliseModal:ModalDirective;
 
     constructor(private route: ActivatedRoute,
           private router: Router,
           private util:UtilService,
+          private zone:NgZone, private winRef: WindowRef,
           private categoriaAnaliseService:CategoriaAnaliseService){
             this.breadcrumb = ['Categoria de Análise', 'Nova'];
             this.novacategoria = new CategoriaAnalise();
+            winRef.nativeWindow.angularComponentRef = {
+              zone: this.zone,
+              componentFn: (value) => this.editItemCategoriaAnalise(value),
+              component: this
+            };
+            winRef.nativeWindow.angularComponentRef = {
+              zone: this.zone,
+              componentFn: (value) => this.apagaItemCategoriaAnalise(value),
+              component: this
+            };
+            winRef.nativeWindow.angularComponentRef = {
+              zone: this.zone,
+              componentFn: (value) => this.adicionaSubItemCategoriaAnalise(value),
+              component: this
+            };
     }
 
     ngOnInit() {
@@ -64,16 +82,65 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
               this.tituloForm = this.novacategoria.codigo;
               this.titulo = 'Atualiza ' + this.novacategoria.codigo;
               this.breadcrumb = ['Categoria de Análise', this.novacategoria.codigo];
+
+              // Fabrica listaSubcategorias
+              this.refreshTreeview();
+
             }, (err)=> this.util.msgErroInfra(err));
         }
     }
 
-    private adicionaItemCategoriaAnalise(){
+    changeLstener(payload) {
+      console.log('change payload', payload)
+    }
+
+    private loadItem(item, index){
+      let obj = {"content": `<span>${item.descricao}
+      <a class="btn btn-primary btn-xs icon white"
+        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editItemCategoriaAnalise('${index}');})"
+        href="javascript:void(0);" title="Alterar"><i class="fa fa-pencil "></i></a>
+      <a class="btn btn-danger btn-xs icon white"
+          onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaItemCategoriaAnalise('${index}');})"
+          href="javascript:void(0);" title="Apaga item"><i class="fa fa-times "></i></a>
+      <a class="btn btn-primary btn-xs icon white"
+        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.adicionaSubItemCategoriaAnalise('${index}');})"
+        href="javascript:void(0);" title="Incluir Subcategoria"><i class="fa fa-plus "></i></a>
+      </span>`};
+      obj['codigo'] = item.codigo;
+      //if(item.children){
+      //  obj['expanded'] = false;
+      //  obj['children'] = [];
+      //  item.children.forEach((itemFilho)=>{
+      //    obj['children'].push(this.loadItem(itemFilho));
+      //  });
+      //}
+      return obj;
+    }
+
+    private refreshTreeview(){
+      this.listaSubcategorias = [];
+      this.novacategoria.Itens.forEach((item, index)=>{
+        if(!item['deleted'])
+          this.listaSubcategorias.push(this.loadItem(item, index));
+      });
+      console.log('refreshTreeview', this.listaSubcategorias);
+    }
+
+    private adicionaItemCategoriaAnalise(valor){
       $('.form-horizontal').find("input").change();
       $('.btn-submit').prop('disabled', false);
       let valorSelecionado = $('#item').val();
       if(valorSelecionado){
-        this.novacategoria.Itens.push({codigo:0, descricao: valorSelecionado});
+        let item = {codigo:0, descricao: valorSelecionado};
+        if(valor){
+          //this.novacategoria.Itens[valor].push(item);
+        }else{
+          this.novacategoria.Itens.push(item);
+        }
+
+        this.refreshTreeview();
+
+        console.log('Add sub==>', this.listaSubcategorias);
         $('#item').val('');
       }else{
         this.util.msgErro('Item de um categoria de análise não pode ser vazio');
@@ -81,8 +148,7 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
     }
 
     private onSubmit(form){
-      if(form.valid){
-        if(this.codigo){
+      if(this.codigo){
         console.log('Reg a atualizar', this.novacategoria);
         this.categoriaAnaliseService.update(this.novacategoria).subscribe(resp=>{
           if(resp.codret==0){
@@ -103,26 +169,40 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
           }
         }, (err)=>this.util.msgErroInfra(err));
       }
-      }else{
-        this.util.msgErro('Erro de validação de campos');
-      }
     }
 
     private apagaItemCategoriaAnalise(i){
       $('.btn-submit').prop('disabled', false);
       this.novacategoria.Itens[i]['deleted'] = 1;
+      this.refreshTreeview();
     }
 
     private editItemCategoriaAnalise(i){
-      console.log('Edita', this.novacategoria.Itens[i]);
-      this.editCategoriaAnalise = Object.assign({}, this.novacategoria.Itens[i], {indice: i});
+      let obj = this.novacategoria.Itens[i];
+      console.log('Edita', obj);
+      this.editCategoriaAnalise = Object.assign({indice: i}, obj);
       this.tituloModal = `Atualizando ${this.editCategoriaAnalise.codigo} - ${this.editCategoriaAnalise.descricao}`;
+      this.categoriaAnaliseModal.show();
+    }
+
+    private adicionaSubItemCategoriaAnalise(i){
+      let obj = this.novacategoria.Itens[i];
+      console.log('Adiciona item a ', obj);
+      this.editCategoriaAnalise = {indice: 0, codigo:0, descricao: '', itempai: i};
+      this.tituloModal = `Adicionando novo subitem a ${obj['descricao']}`;
       this.categoriaAnaliseModal.show();
     }
 
     private atualizaItemCategoriaAnalise(){
       $('.btn-submit').prop('disabled', false);
-      this.novacategoria.Itens[this.editCategoriaAnalise.indice] = Object.assign({}, this.editCategoriaAnalise);
+      if('itempai' in this.editCategoriaAnalise){
+        console.log('Insere subcategoria');
+      }else{
+        console.log('Insere categoria item');
+      }
+      console.log('Registro de edicao', this.editCategoriaAnalise);
+      //this.novacategoria.Itens[this.editCategoriaAnalise.indice] = Object.assign(this.editCategoriaAnalise);
+      this.refreshTreeview();
       this.categoriaAnaliseModal.hide();
     }
 }

@@ -22,6 +22,7 @@ import {PainelComponent} from "./painel/painel.component";
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
+import {IndicadorImportaListaComponent} from './indicador/indicador-importa-lista.component';
 
 // Itens de planos
 import {ProgramaComponent} from './programa/programa.component';
@@ -35,6 +36,11 @@ import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
 
+// PerfilComponent
+import {PerfilComponent} from './perfil/perfil.component';
+
+// UnidadeComponent
+import {UnidadeComponent} from './cadastros_auxiliares/unidade.component';
 
 import {WindowRef} from './WindowRef';
 import { ComponentesModule } from '../componentes/componentes.module';
@@ -63,6 +69,7 @@ import { ComponentesModule } from '../componentes/componentes.module';
     IndicadorListaComponent,
     IndicadorCadastroComponent,
     IndicadorListaUnidadeComponent,
+    IndicadorImportaListaComponent,
     CategoriaAnaliseCadastroComponent,
     CategoriaAnaliseComponent,
     UsuarioComponent,
@@ -70,7 +77,9 @@ import { ComponentesModule } from '../componentes/componentes.module';
     TagCadastroComponent,
     TagComponent,
     UnidadeMedidaCadastroComponent,
-    UnidadeMedidaComponent
+    UnidadeMedidaComponent,
+    UnidadeComponent,
+    PerfilComponent
   ],
   providers:[WindowRef]
 })

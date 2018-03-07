@@ -4,6 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CookieService } from 'ngx-cookie-service';
+import {SmartadminInputModule} from "./shared/forms/input/smartadmin-input.module";
+import {SmartadminValidationModule} from "./shared/forms/validation/smartadmin-validation.module";
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -18,7 +20,9 @@ import { AppState, InternalStateType } from './app.service';
 import {CoreModule} from "./core/core.module";
 import {SmartadminLayoutModule} from "./shared/layout/layout.module";
 
-import {LoginComponent} from './auth/login.component'
+import {LoginComponent} from './auth/login.component';
+
+import { ModalModule, TooltipModule} from "ngx-bootstrap";
 
 
 // Servicos
@@ -26,7 +30,8 @@ import { AuthenticationService, ClassificacaoIndicadorService, PeriodicidadeServ
   UnidadeMedidaService, IndicadorService, UtilService,
   TagCategoriaService, TagService, CategoriaAnaliseService, TipoConsultaService,
   BancoDadosService, UnidadeService, GranularidadeService, CriterioAgregacaoService,
-  VersionService, UsuarioService, ConsultaService } from './services/index';
+  UsuarioService, ConsultaService, PolaridadeService, PerfilService,
+  Classificacao6sIndicadorService, FonteParametroService, ParametroService } from './services/index';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -49,13 +54,16 @@ type StoreType = {
     AppComponent,LoginComponent
   ],
   imports: [ // import Angular's modules
+    ModalModule, TooltipModule,
+    SmartadminValidationModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     CoreModule,
     SmartadminLayoutModule,
-    routing
+    routing,
+    SmartadminInputModule
   ],
   exports: [
   ],
@@ -64,10 +72,12 @@ type StoreType = {
     APP_PROVIDERS,
     AuthenticationService,
     ClassificacaoIndicadorService,
+    Classificacao6sIndicadorService,
     PeriodicidadeService,
     UnidadeMedidaService,
     UnidadeService,
     IndicadorService,
+    ParametroService,
     UtilService,
     TagCategoriaService,
     TagService,
@@ -77,9 +87,11 @@ type StoreType = {
     CookieService,
     GranularidadeService,
     CriterioAgregacaoService,
-    VersionService,
     UsuarioService,
-    ConsultaService
+    ConsultaService,
+    PolaridadeService,
+    PerfilService,
+    FonteParametroService
   ]
 })
 export class AppModule {

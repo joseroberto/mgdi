@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var Criterio_Agregacao = sequelize.define('Criterio_Agregacao', {

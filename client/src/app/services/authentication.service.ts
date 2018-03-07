@@ -15,11 +15,12 @@ export class AuthenticationService extends REST implements CanActivate{
       super(http);
     }
 
-    login(email: string, senha: string) {
-        return this.gethttp().post(super.getURL('/login', false), {email: email,password: senha}, super.jwt()).map(
+    login(usuario: string, senha: string) {
+        return this.gethttp().post(super.getURL('/login', false),
+          {username: usuario, password: senha, aplicacao: environment.aplicacao}, super.jwt()).map(
           (response: Response) => {
             let resp = response.json();
-            localStorage.setItem('token', resp.token);  //TODO: Verificar se e necessario
+            localStorage.setItem('token', resp.token);
             //this.userService.announceUserChange(resp.user);
             let user = resp.user;
             user['apelido'] = this.label(resp.user.nome);
@@ -37,7 +38,7 @@ export class AuthenticationService extends REST implements CanActivate{
     }
 
     canActivate() {
-      
+
         return 'token' in localStorage;
       }
 

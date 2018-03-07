@@ -11,6 +11,7 @@ import { MorrisChartsComponent } from './grafico/morris-charts.component';
 import {IndicadorListaComponent} from './indicador/indicador-lista.component';
 import {IndicadorCadastroComponent} from "./indicador/indicador-cadastro.component";
 import {IndicadorListaUnidadeComponent} from './indicador/indicador-lista-unidade.component';
+import {IndicadorImportaListaComponent} from './indicador/indicador-importa-lista.component';
 
 // Itens de planos
 import {ProgramaComponent} from './programa/programa.component';
@@ -23,6 +24,9 @@ import {TagCadastroComponent} from './cadastros_auxiliares/tag-cadastro.componen
 import {TagComponent} from './cadastros_auxiliares/tag.component';
 import {UnidadeMedidaCadastroComponent} from './cadastros_auxiliares/unidade-medida-cadastro.component';
 import {UnidadeMedidaComponent} from './cadastros_auxiliares/unidade-medida.component';
+
+import {PerfilComponent} from './perfil/perfil.component';
+import {UnidadeComponent} from './cadastros_auxiliares/unidade.component';
 
 export const homeRoutes: Routes = [
     {
@@ -86,6 +90,11 @@ export const homeRoutes: Routes = [
     data: {pageTitle: 'Novo marcador'}
     },
     {
+    path: 'unidade',
+    component: UnidadeComponent,
+    data: {pageTitle: 'Unidades'}
+    },
+    {
     path: 'tag/:codigo',
     component: TagCadastroComponent,
     data: {pageTitle: 'Edita marcador'}
@@ -110,7 +119,16 @@ export const homeRoutes: Routes = [
     component: UnidadeMedidaComponent,
     data: {pageTitle: 'Lista de unidades de medida'}
     },
-
+    {
+    path: 'perfil',
+    component: PerfilComponent,
+    data: {pageTitle: 'Perfil do usuário'}
+    },
+    {
+    path: 'importa/:tipo',
+    component: IndicadorImportaListaComponent,
+    data: {pageTitle: 'Importação de dados'}
+    },
 ];
 
 export const AdminRouting:ModuleWithProviders = RouterModule.forChild(homeRoutes);

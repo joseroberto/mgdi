@@ -1,0 +1,19 @@
+alter table dbesusgestor.tb_indicador_responsavel_gerencial drop constraint fk_tb_indicador_responsavel_gerencial_co_seq_indicador;
+alter table dbesusgestor.tb_indicador_responsavel_gerencial  add constraint fk_tb_indicador_responsavel_gerencial_co_seq_indicador FOREIGN KEY (co_seq_indicador) REFERENCES dbesusgestor.tb_indicador(co_seq_indicador) ON DELETE CASCADE;
+alter table dbesusgestor.tb_indicador_responsavel_gerencial drop constraint fk_tb_indicador_responsavel_gerencial_co_unidade;
+alter table dbesusgestor.tb_indicador_responsavel_gerencial  add constraint fk_tb_indicador_responsavel_gerencial_co_unidade FOREIGN KEY (co_unidade) REFERENCES dbesusgestor.tb_unidade(co_unidade) ON DELETE RESTRICT;
+
+alter table dbesusgestor.tb_indicador_responsavel_tecnico drop constraint fk_tb_indicador_responsavel_tecnico_co_seq_indicador;
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_seq_indicador FOREIGN KEY (co_seq_indicador) REFERENCES dbesusgestor.tb_indicador(co_seq_indicador) ON DELETE CASCADE;
+alter table dbesusgestor.tb_indicador_responsavel_tecnico drop constraint fk_tb_indicador_responsavel_tecnico_co_unidade;
+alter table dbesusgestor.tb_indicador_responsavel_tecnico add constraint fk_tb_indicador_responsavel_tecnico_co_unidade FOREIGN KEY (co_unidade) REFERENCES dbesusgestor.tb_unidade(co_unidade) ON DELETE RESTRICT;
+
+alter table dbesusgestor.tb_indicador_relacionado drop constraint tb_indicador_relacionado_co_indicador_fkey;
+alter table dbesusgestor.tb_indicador_relacionado add constraint tb_indicador_relacionado_co_indicador_fkey FOREIGN KEY (co_seq_indicador) REFERENCES dbesusgestor.tb_indicador(co_seq_indicador) ON DELETE CASCADE;
+alter table dbesusgestor.tb_indicador_relacionado drop constraint tb_indicador_relacionado_co_indicador_pai_fkey;
+alter table dbesusgestor.tb_indicador_relacionado add constraint tb_indicador_relacionado_co_indicador_pai_fkey FOREIGN KEY (co_seq_indicador_pai) REFERENCES dbesusgestor.tb_indicador(co_seq_indicador) ON DELETE CASCADE;
+
+alter table dbesusgestor.tb_indicador_tag drop constraint tb_indicador_tag_co_indicador_fkey;
+alter table dbesusgestor.tb_indicador_tag add constraint tb_indicador_tag_co_indicador_fkey FOREIGN KEY (co_seq_indicador) REFERENCES dbesusgestor.tb_indicador(co_seq_indicador) ON DELETE CASCADE;
+alter table dbesusgestor.tb_indicador_tag drop constraint tb_indicador_tag_co_tag_fkey;
+alter table dbesusgestor.tb_indicador_tag add constraint tb_indicador_tag_co_tag_fkey FOREIGN KEY (co_tag) REFERENCES dbesusgestor.tb_tag(co_tag) ON DELETE RESTRICT;

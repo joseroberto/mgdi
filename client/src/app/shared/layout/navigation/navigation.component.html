@@ -29,15 +29,18 @@
             <li routerLinkActive="active">
               <a routerLink="/admin/indicadorlista">{{'Lista indicadores' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="false">
               <a routerLink="/admin/indicadorlistaunidade">{{'Lista por unidade' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
-              <a routerLink="/admin/importa">{{'Importa dados' | i18n}}</a>
+              <a routerLink="/admin/importa/3">{{'Importa dados' | i18n}}</a>
+            </li>
+            <li routerLinkActive="active">
+              <a routerLink="/admin/importa/4">{{'Formulário de dados' | i18n}}</a>
             </li>
           </ul>
         </li>
-        <li >
+        <li *ngIf="!isProduction()" >
           <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span
             class="menu-item-parent">{{'Programas/Metas' | i18n}}</span></a>
           <ul>
@@ -50,6 +53,9 @@
           <a href="#"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span
             class="menu-item-parent">{{'Cadastros Auxiliares' | i18n}}</span></a>
           <ul>
+            <li routerLinkActive="active">
+              <a routerLink="/admin/unidade">{{'Lista de Unidades' | i18n}}</a>
+            </li>
             <li routerLinkActive="active">
               <a routerLink="/admin/usuario">{{'Lista de Usuários' | i18n}}</a>
             </li>

@@ -42,7 +42,13 @@ export class DatatableComponent implements OnInit {
   }
 
   clear(){
-    this._dataTable.clear();
+    if(this._dataTable)
+      this._dataTable.clear();
+
+  }
+
+  isInicializado(){
+    return this._dataTable? true:false;
   }
 
   refresh(){
@@ -50,11 +56,16 @@ export class DatatableComponent implements OnInit {
   }
 
   draw(){
-    this._dataTable.draw();
+    if(this._dataTable)
+      this._dataTable.draw();
   }
 
   addRow(item){
     this._dataTable.row.add(item);
+  }
+
+  addRows(itens){
+    this._dataTable.rows.add(itens);
   }
 
   deleteRow(item){

@@ -44,7 +44,7 @@
                 </h3>
                 <span [innerHTML]="item.conceituacao"></span>
                 <hr/>
-                <span [innerHTML]="formataBadgesTela('Unidade Responsável:', 'sigla', 'default', [item.UnidadeResponsavel])"></span>
+                <span [innerHTML]="formataBadgesTela('Unidade Responsável:', 'sigla', 'default', [item.Unidade])"></span>
                 <span [innerHTML]="formataBadgesTela('Marcador(es):', 'descricao', 'orange', item.Tags)"></span>
                 <br/>
                 <a class="btn btn-primary" routerLink="/item/{{ item.codigo }}"> Leia mais </a>

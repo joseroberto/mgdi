@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var Programa = sequelize.define('Programa', {
@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
     hierarchy: {
       foreignKey: 'co_programa_pai',
       levelFieldName: 'nu_nivel',
-      throughSchema: 'dbesusgestor',
+      throughSchema: schema,
       throughTable: 'tb_programa_meta_hierarquia',
       throughForeignKey:'co_programa_superior',
       throughKey: 'co_programa'

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FadeInTop} from "../shared/animations/fade-in-top.decorator";
-import { IndicadorService, UtilService, ConsultaService } from '../services/index';
+import { IndicadorService, UtilService, ConsultaService, ParametroService } from '../services/index';
 
 @FadeInTop()
 @Component({
@@ -22,9 +22,11 @@ export class SiteComponent implements OnInit {
     this.pageChanged(1);
   }
 
-  constructor(private indicadorService:IndicadorService, private consultaService:ConsultaService) { }
+  constructor(private indicadorService:IndicadorService,
+    private consultaService:ConsultaService, private parametroService: ParametroService) { }
 
   ngOnInit() {
+    this.parametroService.load();
     if(localStorage.getItem('pesquisa_site')){
       this.pesquisa = JSON.parse(localStorage.getItem('pesquisa_site'));
     }else{
@@ -114,14 +116,14 @@ export class SiteComponent implements OnInit {
 
   loadIndicadorPorUnidade(){
     this.indicadorService.getCountPorUnidade().subscribe(resp=>{
-      //console.log('Unidades',resp.unidades);
+      console.log('Unidades',resp.unidades);
       this.listaIndicadorPorUnidade = resp.unidades;
     });
   }
 
   loadIndicadorPorTag(){
     this.indicadorService.getCountPorTag().subscribe(resp=>{
-      //console.log('Tags',resp.tags);
+      console.log('Tags',resp.tags);
       this.listaIndicadorPorTag = resp.tags.slice(0,9);
     });
   }

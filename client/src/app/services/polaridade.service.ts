@@ -3,11 +3,11 @@ import { Http } from '@angular/http';
 import { REST } from './REST';
 
 @Injectable()
-export class VersionService extends REST {
+export class PolaridadeService extends REST {
   constructor(http:Http) {
     super(http);
   }
-  getVersion(){
-    return this.get('/version');
+  getAll(){
+    return this.get('/polaridade');
   }
 }

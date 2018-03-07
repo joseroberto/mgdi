@@ -1,21 +1,8 @@
 swagger: "2.0"
 info:
-  version: "0.1.1"
-  title: eSUSGestor - API de comunicação
-  description: |
-    A estratégia e-Saúde, sob a óptica de TI, é uma plataforma concebida como um conjunto de soluções que trabalham de maneira independente e descentralizada, porém articulada, coordenada e integrada – como o próprio SUS.
-    # Introdução
-    O projeto visa a criação de um barramento para intermediar o acesso a informações visando uma estratégia de negócio coerente e padronizada.  Esse barramento vai incorporar características de segurança como login no SCPA (ou outro sistema de segurança).  As funcionalidades previstas serão plugáveis e terá como início o módulo de gestão de indicadores MGI  e será extendido para as funcionalidades necessárias as consultas demandadas pelo eSUS Gestor.  O desenvolvimento segue os padrões requeridos pelo DATASUS em seu documento de definição [Diretriz arquitetural de software](https://integrams.saude.gov.br/uploadfile/getFile?coUploadFile=24907)
-    # Objetivo
-    *  Capacidade de identificar o usuário intermediando a autenticação e provendo a autorização necessária segundo integração com o SCPA ou qualquer outro sistema de autenticação.
-    *  Utilização de metadados para criação de consultas dinâmicas as bases
-    *  Implementação de protocolo textuais abertos para comunicação (REST/JSON).
-
-    # Especificação API eSUSGestor
-    Esta API está documentada no formato **OpenAPI** e é disponibilizada no endereço [API eSUSGestor](http://rest.demas.saude.gov).
-
-    Interface para acesso e lista de [endpoints](http://rest.demas.saude.gov).
-
+  version: "0.1.2"
+  title: titulo
+  description: descrição
 
 # during dev, should point to your local machine
 host: localhost:8000
@@ -35,10 +22,10 @@ produces:
 securityDefinitions:
  Bearer:
   description: |
-   Autenticação do eSUS Gestor se baseia nos seguintes recursos:
+   Autenticação da API se baseia nos seguintes recursos:
 
-   - API Key validada com SCPA
-   - OAuth2 que utiliza o barramento do DATASUS.
+   - API Key
+   - OAuth2
 
    O acesso a API ncecessita de um token JWT válido que deve ser passado no cabeçalho no campo 'Authorization'.
 
@@ -57,7 +44,7 @@ paths:
       summary: Loga o usuário
       operationId: authenticate
       tags:
-        - Autenticação
+        - Infraestrutura
       description: |
         Permite ao usuário logar e receber um token uma vez valida a requisição
       parameters:
@@ -82,6 +69,10 @@ paths:
           Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
          schema:
           $ref: '#/definitions/Error'
+        '503':
+         description: Erro de infraestrutura.
+         schema:
+          $ref: '#/definitions/Error'
   /api/version:
     x-swagger-router-controller: login
     get:
@@ -95,19 +86,139 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetVersion"
-  /api/user-mgi:
+  /api/user/{codigo}/aprova:
+    x-swagger-router-controller: user
+    post:
+      description: Aprova a solicitação do usuário
+      summary: Aprova solicitação de perfil para o usuário
+      operationId: aprovaSolicitacao
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/user/{codigo}/rejeita:
+    x-swagger-router-controller: user
+    post:
+      description: Rejeita a solicitação do usuário
+      summary: Rejeita solicitação de perfil para o usuário
+      operationId: rejeitaSolicitacao
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/user/perfil:
+    x-swagger-router-controller: user
+    get:
+      description: Retorna o perfil do usuario logado
+      summary: Lista de Usuários do MGI
+      operationId: getPerfil
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetUserPerfilResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/user:
     x-swagger-router-controller: user
     get:
       description: Retorna a lista de usuários que utilizam o MGI - Módulo de Gestão de Indicadores
       summary: Lista de Usuários do MGI
       operationId: getUsers
+      parameters:
+        - name: situacao
+          type: number
+          in: query
+          required: false
       tags:
-        - MGI
+        - Infraestrutura
+      security:
+        - Bearer: []
       responses:
         "200":
           description: Sucesso
           schema:
             $ref: "#/definitions/GetUserMgiListResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description: Cria uma solicitação de complementação de cadastro
+      summary: Cria uma solicitação de complementação
+      operationId: createSolicitacao
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      parameters:
+        - name: solicitacao
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Solicitacao'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/perfil:
+    x-swagger-router-controller: perfil
+    get:
+      description: Retorna a lista de perfis
+      summary: Lista de perfis
+      operationId: getPerfis
+      parameters:
+        - name: aplicacao
+          type: number
+          in: query
+          required: true
+      tags:
+        - Cadastros Auxiliares
+        - Infraestrutura
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetPerfilListResponse"
         default:
           description: Erro
           schema:
@@ -142,6 +253,40 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetClassificacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/classificacao6s:
+    x-swagger-router-controller: classificacao6s-indicador
+    get:
+      description: Retorna a classificacao possivel para os indicadores
+      summary: Lista de classificações
+      operationId: getClassificacoes6s
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetClassificacaoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/fonte-parametro:
+    x-swagger-router-controller: parametro-fonte
+    get:
+      description: Retorna a lista de fontes para relacionar ao parametro de referencia do indicador
+      summary: Lista de fontes que fornecem parâmetros de referência
+      operationId: getFontesParametro
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetParametroFonteResponse"
         default:
           description: Erro
           schema:
@@ -319,6 +464,74 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/GetBancoDadosResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/aplicacao:
+    x-swagger-router-controller: aplicacao
+    get:
+      description: Retorna as aplicações passíveis de serem solicitadas
+      summary: Lista de aplicações cadastradas
+      operationId: getAplicacoes
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetAplicacoesResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/situacao-carga:
+    x-swagger-router-controller: situacao-carga
+    get:
+      description: Retorna os possiveis para controle da situacao da carga de dados via importacao
+      summary: Lista de situações de carga possíveis
+      operationId: getSituacaoCarga
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetSituacaoCargaResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/tipo-arquivo:
+    x-swagger-router-controller: tipo-arquivo
+    get:
+      description: Retorna os tipos de arquivo possiveis para carga de dados via importacao
+      summary: Lista de tipos de arquivo de carga possíveis
+      operationId: getTipoArquivo
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetTipoArquivoResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/polaridade:
+    x-swagger-router-controller: polaridade
+    get:
+      description: Retorna os tipos de polaridade previstos para os indicadores
+      summary: Lista de polaridades possíveis para consulta
+      operationId: getPolaridades
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetPolaridadesResponse"
         default:
           description: Erro
           schema:
@@ -594,6 +807,11 @@ paths:
           enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
           required: false
           description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
+        - name: porcategoria
+          type: string
+          in: query
+          required: false
+          description: Codigo da categoria de analise para abertura de resultados da consulta de indicador
         - name: valores_filtro
           type: array
           items:
@@ -613,7 +831,9 @@ paths:
               * CDA: Padrão CDA - Community Data Access
               * TAB: Formato tabular (Indicador => { tempo })
         - name: data
-          type: number
+          type: array
+          items:
+            type: number
           in: query
           required: false
           description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
@@ -626,7 +846,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponseTratado"
   /api/indicador/{codigos}/query:
     x-swagger-router-controller: query
     get:
@@ -671,6 +891,30 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/importacao:
+    x-swagger-router-controller: indicador
+    get:
+      description: Retorna os dados de importação dos indicadores cadastrados no sistema (3 - Importação e 4 - Formulário)
+      summary: Lista de indicadores que podem ser importados
+      operationId: getIndicadoresImportacao
+      tags:
+        - Indicadores
+        - Importação
+      parameters:
+        - name: tipo
+          in: query
+          required: true
+          enum: [3, 4]
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetIndicadorConsulta"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/indicador:
     x-swagger-router-controller: indicador
     get:
@@ -696,10 +940,20 @@ paths:
           in: query
           required: false
           type: number
+
         - name: tag
           in: query
           required: false
-          type: number
+          type: array
+          items:
+            type: number
+        - name: codigos
+          in: query
+          required: false
+          type: array
+          items:
+            type: string
+
       responses:
         "200":
           description: Sucesso
@@ -843,7 +1097,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ErrorResponseTratado"
     put:
       description: Atualiza as informações de um registro de indicador
       summary: Atualiza as informações de um indicador
@@ -994,6 +1248,114 @@ paths:
         - Bearer: []
       parameters:
         - name: categoria_analise
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{id}/responsavel-gerencial/{responsavel_gerencial}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona responsavel gerencial relacionado a um indicador
+      summary: Adiciona um responsável geárencial
+      operationId: addResponsavelGerencial
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_gerencial
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Rompe a relação entre o responsável gerencial e um indicador
+      summary: Rompe a relação entre indicadores e responsável gerencial
+      operationId: deleteResponsavelGerencial
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_gerencial
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{id}/responsavel-tecnico/{responsavel_tecnico}:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Adiciona responsável tniéco relacionado a um indicador
+      summary: Adiciona uma responsável técnico a um indicador
+      operationId: addResponsavelTecnico
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_tecnico
+          type: string
+          in: path
+          required: true
+        - name: id
+          in: path
+          required: true
+          type: number
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Rompe a relação de responsabilidade técnica com um indicador
+      summary: Rompe a relação entre responsável técnico e um indicador
+      operationId: deleteResponsavelTecnico
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: responsavel_tecnico
           type: string
           in: path
           required: true
@@ -1584,7 +1946,38 @@ definitions:
         type: array
         items:
           type: object
-
+  Solicitacao:
+    description: Objeto solicitação
+    type: object
+    properties:
+      codigo:
+        type: number
+        description: Código do registro do usuário
+      login:
+        type: string
+      cpf:
+        type: string
+      nome:
+        type: string
+      email:
+        type: string
+      ramal:
+        type: string
+      celular:
+        type: string
+      cargo:
+        type: string
+      data_aprovacao:
+        type: [string, 'null']
+      usuario_aprovacao:
+        type: [number, 'null']
+      PerfilCodigo:
+        type: number
+      SituacaoCodigo:
+        type: number
+      UnidadeCodigo:
+        type: number
+      
   IndicadorAtualizacao:
     description: Objeto indicador
     type: object
@@ -1607,6 +2000,9 @@ definitions:
       periodicidade_monitoramento:
         type: number
         description: Periodicidade de monitoramento dos dados
+      polaridade:
+        type: number
+        description: Polaridade da medida do indicador
       unidade_medida:
         type: number
         description: Código da unidade de medida
@@ -1685,12 +2081,16 @@ definitions:
   Login:
     type: object
     properties:
-      email:
+      username:
         description: Email do usuário
         type: string
       password:
         description: Senha do usuário
         type: string
+      aplicacao:
+        description: Aplicação
+        type: integer
+
   Token:
     type: object
     properties:
@@ -1751,6 +2151,60 @@ definitions:
               type: number
             descricao:
               type: string
+  GetPolaridadesResponse:
+    required:
+      - polaridades
+    properties:
+      polaridades:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetSituacaoCargaResponse:
+    required:
+      - situacao_carga
+    properties:
+      situacao_carga:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetTipoArquivoResponse:
+    required:
+      - tipo_arquivo
+    properties:
+      tipo_arquivo:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+  GetAplicacoesResponse:
+    required:
+      - aplicacoes
+    properties:
+      aplicacoes:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            descricao:
+              type: string
+            mime:
+              type: string
   GetBancoDadosResponse:
     required:
       - banco_dados
@@ -1764,6 +2218,14 @@ definitions:
               type: number
             descricao:
               type: string
+            mime:
+              type: string
+  GetUserPerfilResponse:
+    required:
+      - perfil
+    properties:
+      perfil:
+        type: object
   GetTipoConsultaResponse:
     required:
       - tipos_consulta
@@ -1792,6 +2254,27 @@ definitions:
               type: number
             descricao:
               type: string
+  GetPerfilListResponse:
+    required:
+      - perfis
+    properties:
+      perfis:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            sigla:
+              type: string
+            descricao:
+              type: string
+            titulo:
+              type: string
+            ativo:
+              type: boolean
+            exige_unidade:
+              type: boolean
   GetPeriodicidadeListResponse:
     required:
       - periodicidades
@@ -1803,6 +2286,21 @@ definitions:
           properties:
             codigo:
               type: number
+            descricao:
+              type: string
+  GetParametroFonteResponse:
+    required:
+      - fontes
+    properties:
+      fontes:
+        type: array
+        items:
+          type: object
+          properties:
+            codigo:
+              type: number
+            sigla:
+              type: string
             descricao:
               type: string
   GetClassificacaoResponse:
@@ -1893,12 +2391,14 @@ definitions:
       mensagem:
         type: string
   ErrorResponseTratado:
-    description: Programa
+    description: Erro generico
     type: object
 
   ErrorResponse:
     required:
       - message
     properties:
+      codret:
+        type: string
       message:
         type: string

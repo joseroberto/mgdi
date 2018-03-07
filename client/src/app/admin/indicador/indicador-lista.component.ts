@@ -4,7 +4,7 @@ import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
 import { IndicadorService, UtilService } from '../../services/index';
 import {WindowRef} from '../WindowRef';
-import { environment } from '../../../environments/environment';
+//import { environment } from '../../../environments/environment';
 
 @FadeInTop()
 @Component({
@@ -65,7 +65,7 @@ export class IndicadorListaComponent implements OnInit {
     }}
   ],
   "order": [[1, 'asc']]
-}
+  }
 
 ngOnInit(){
     this.loadIndicadorPorTag();
@@ -89,13 +89,14 @@ apagaIndicador(codigo:string){
   this.util.msgQuestion(`Tem certeza que vai apagar o indicador ${codigo}?`).then(
     ()=>{
       this.indicadorService.delete(codigo).subscribe(resp=>{
-          console.log(resp);
           if(!resp.codret){
             this.util.msgSucessoDelete(resp.mensagem);
             this.tabelaIndicadores.deleteRow(codigo);
           }else
             this.util.msgErro(resp.mensagem);
-        }, err=>{ this.util.msgErroInfra(err._body.message)});
+        }, err=>{
+          this.util.msgErroInfra(JSON.parse(err._body).message);
+        });
     }
   );
 }

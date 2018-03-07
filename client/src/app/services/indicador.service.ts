@@ -97,6 +97,22 @@ export class IndicadorService extends REST {
     return super.delete(`/indicador/${id_pai}/indicador-relacionado/${id}`);
   }
 
+  adicionaResponsavelGerencial(id_pai:number, id:number){
+    return super.patch(`/indicador/${id_pai}/responsavel-gerencial/${id}`,'');
+  }
+
+  deleteResponsavelGerencial(id_pai:number, id:number){
+    return super.delete(`/indicador/${id_pai}/responsavel-gerencial/${id}`);
+  }
+
+  adicionaResponsavelTecnico(id_pai:number, id:number){
+    return super.patch(`/indicador/${id_pai}/responsavel-tecnico/${id}`,'');
+  }
+
+  deleteResponsavelTecnico(id_pai:number, id:number){
+    return super.delete(`/indicador/${id_pai}/responsavel-tecnico/${id}`);
+  }
+
   adicionaCategoriaRelacionada(id:number,categoria_analise:string, ){
     return super.patch(`/indicador/${id}/categoria-analise/${categoria_analise}`,'');
   }
@@ -111,5 +127,9 @@ export class IndicadorService extends REST {
 
   getCountPorTag(){
     return super.get('/indicador-portag');
+  }
+
+  getPorTipoConsulta(tipo:number){
+    return super.get(`/indicador/importacao?tipo=${tipo}`)
   }
 }

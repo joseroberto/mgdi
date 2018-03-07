@@ -54,9 +54,9 @@ module.exports = {
         attr.include[0].where['privado'] = false;
     }
     models.Unidade.findAll(attr).then(function(lista) {
-    res.json({unidades: lista});
-  });
-},
+      res.json({unidades: lista});
+    });
+  },
   deleteUnidade: (req,res)=>{
     models.Unidade.findById(req.swagger.params.codigo.value).then((unidade)=>{
       unidade.destroy();

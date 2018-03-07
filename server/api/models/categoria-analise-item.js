@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var CategoriaAnaliseItem = sequelize.define('CategoriaAnaliseItem', {
@@ -20,9 +20,17 @@ module.exports = function(sequelize, DataTypes) {
       classMethods:{
         associate:function(models){
             CategoriaAnaliseItem.belongsTo(models.CategoriaAnalise, {
-              foreignKey: { field: 'co_categoria_analise', allowNull:false}
+              foreignKey: { field: 'co_categoria_analise', allowNull:false, as: 'CategoriaPai'}
             });
         }
+    },
+    hierarchy: {
+      foreignKey: { field:'co_categoria_analise_item_pai', as: 'CategoriaPai'},
+      levelFieldName: 'nu_nivel',
+      throughSchema: schema,
+      throughTable: 'tb_categoria_analise_item_hierarquia',
+      throughForeignKey:'co_categoria_analise_item_pai',
+      throughKey: 'co_categoria_analise_item'
     },
     schema: schema,
     timestamps: false,

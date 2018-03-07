@@ -6,14 +6,18 @@ var app = express();
 var morgan = require('morgan');
 var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
+var swagger_config = require('./api/helpers/swagger-yaml')();
 var job = require('./api/helpers/job');
+var passport = require("passport");
+var bodyParser = require('body-parser');
+
 
 module.exports = app; // for testing
 
 var theAppLog = log4js.getLogger();
 
 // Programa os jobs de execucao
-job.cron();
+//job.cron();  //TODO: Checar a necessidade de programar jobs no servico web
 
 app.use(morgan("combined",{
   "stream": {
@@ -37,14 +41,41 @@ var config = {
 process.on('SIGINT', function() {
      process.exit(0);
 });
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+app.get('/swagger.yaml', (req,res,next)=>{
+    console.log('swagger', swagger_config);
+    res.setHeader('content-type', 'application/json');
+
+    swagger_config.host = process.env.HOST || config_param.host;
+    swagger_config.info.title = config_param.title;
+    swagger_config.info.description = config_param.description;
+    res.send(swagger_config);
+});
+
+/*app.post('/login2', (req, res, next) =>{
+  console.log('dentro do login2');
+  passport.authenticate('local-login', passport.authenticate('local', { failureRedirect: '/login' }), (req,res)=>{
+    console.log('dentro', req, res);
+    //res.send(JSON.stringify(info)).status(200);
+    //next();
+  });
+});*/
+
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
   swaggerExpress.runner.swagger.host = process.env.HOST || config_param.host;
+  swaggerExpress.runner.swagger.info.title = config_param.title;
+  swaggerExpress.runner.swagger.info.description = config_param.description;
+
   app.use(swaggerExpress.runner.swaggerTools.swaggerUi());
 
 
-  var port = process.env.PORT || 8000;
+  var port = process.env.PORT || config_param.port || 8000;
   var options = {
   dotfiles: 'ignore',
   etag: true,
@@ -70,7 +101,8 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
     });
   app.use(express.static('public'));
   app.use(express.static('node_modules/redoc/dist'));
-  app.use(express.static('api/swagger'));
+  //app.use(express.static('api/swagger'));
+
   //app.use('/', express.static(__dirname + '/doc', options));
 
   swaggerExpress.register(app);

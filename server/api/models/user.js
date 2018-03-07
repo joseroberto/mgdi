@@ -1,6 +1,6 @@
 'use strict';
 const config_param = require('../helpers/config')();
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
@@ -10,6 +10,11 @@ module.exports = function(sequelize, DataTypes) {
         autoIncrement:true,
         primaryKey: true,
         field: 'co_user'
+    },
+    login: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        field: 'ds_login'
     },
     cpf: {
         type: DataTypes.STRING(11),
@@ -36,17 +41,51 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: true,
         field: 'ds_celular'
     },
-    perfis: {
-      type : DataTypes.ARRAY(DataTypes.STRING(20)),
-      defaultValue:null,
-      field: 'ar_perfis'
+    cargo: {
+        type: DataTypes.STRING(100),
+        allowNull: true,
+        field: 'ds_cargo'
     },
-    //ultimo_login: {
-    //  type: DataTypes.DATE,
-    //  noUpdate:true,
-    //  field: 'dt_atualizacao'
-    //}
+    data_aprovacao:{
+        type: DataTypes.DATE,
+        field: 'dt_aprovacao_perfil'
+    },
+    usuario_aprovacao:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'co_user_aprovacao'
+    },
+    sexo:{
+      type: DataTypes.CHAR(1),
+      allowNull: false,
+      field: 'co_sexo'
+    }
   },{
+    classMethods: {
+      associate: function(models) {
+        User.belongsTo(models.Perfil,{
+            as: 'Perfil',
+            foreignKey: {
+              field: 'co_perfil',
+              allowNull: false,
+            }
+        });
+        User.belongsTo(models.Unidade,{
+            as: 'Unidade',
+            foreignKey: {
+              field: 'co_unidade',
+              allowNull: true,
+            }
+        });
+        User.belongsTo(models.StatusAprovacao,{
+            as: 'Situacao',
+            foreignKey: {
+              field: 'co_situacao_perfil',
+              allowNull: false,
+            }
+        });
+      }
+    },
     schema: schema,
     freezeTableName: true,
     timestamps: true,

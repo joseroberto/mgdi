@@ -1,5 +1,6 @@
 export * from './authentication.service';
 export * from './classificacao-indicador.service';
+export * from './classificacao6s-indicador.service';
 export * from './indicador.service';
 export * from './periodicidade.service';
 export * from './unidade-medida.service';
@@ -13,6 +14,9 @@ export * from './announce-user.service';
 export * from './unidade.service';
 export * from './granularidade.service';
 export * from './criterio-agregacao.service';
-export * from './version.service';
 export * from './usuario.service';
 export * from './consulta.service';
+export * from './polaridade.service';
+export * from './perfil.service';
+export * from './fonte-parametro.service';
+export * from './parametro.service';

@@ -1,96 +1,53 @@
 'use strict';
 
 const jwt    = require('jsonwebtoken');
-const soap = require('soap');
-const crypto = require('crypto');
 const util = require('util');
-var log4js = require("log4js");
+const log4js = require('log4js');
 const config_param = require('../helpers/config')();
 const swagger = require('../helpers/swagger')();
-const  models  = require('../models');
+const user = require('./user');
+const passport = require("passport");
+require('../helpers/passport.js')(passport); // pass passport for configuration
 
 module.exports = {
   authenticate: (req, res)=>{
     var log = log4js.getLogger();
-    var user = req.body.email;
-    log.info('Usuario %s tentando autenticar', user);
-    var password = crypto.createHash('sha256').update(req.body.password, 'utf8').digest().toString('hex');
-
     try {
       if(!config_param.bypass){
-        console.log('Acessando:', process.env.WSDL || config_param.wsdl);
-        soap.createClient(process.env.WSDL || config_param.wsdl, function(err, client) {
-          if(!err){
-            client.buscaPerfilUsuario(
-              {autenticacao: {email: user, senha: password, siglaSistema: config_param.system}},
-              function(err, result) {
-                if(err)
-                  console.log("---------------------------------\n", err);
-                if(err || !result.respostaBuscaPerfilUsuario || !result.respostaBuscaPerfilUsuario.perfis || !result.respostaBuscaPerfilUsuario.perfis.perfil){
-                  if(String(err).indexOf('Error')!== -1){
-                    res.status(403).send({codret:1000, message:'Login/Senha inválida'});
-                  }else{
-                    res.status(403).send({codret:1000, message:'Usuário não possui perfil para login no sistema SAGE'});
-                  }
-                }else if(!err && result.respostaBuscaPerfilUsuario.perfis.perfil){
-                  var perfis = {}
-                  var array_perfis = [];
-                  result.respostaBuscaPerfilUsuario.perfis.perfil.forEach((item)=>{
-                    var esferas = [];
-                    item.esferas.esferasPerfil.forEach((esfera)=>{
-                        esferas.push(esfera.configuracao);
-                    });
-                    perfis[item.perfil.sigla]=esferas;
-                    array_perfis.push(item.perfil.sigla);
-                  });
-                  var temp = {
-                      cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
-                      nome: result.respostaBuscaPerfilUsuario.usuario.nome,
-                      email: result.respostaBuscaPerfilUsuario.usuario.email,
-                      perfis: perfis
-                  };
+        console.log('Fazendo autenticacao ', req.body.username);
+        passport.authenticate(process.env.SCHEMA_LOGIN || config_param.schema_login, async (err, userlogin,info)=>{
+            console.log('retornos', process.env.SCHEMA_LOGIN || config_param.schema_login, info, userlogin, err);
+            if(err){
+              return res.status(403).send({message: err});
+            }
+            if(info){
+              return res.status(500).send(info);
+            }
+            userlogin['login'] = req.body.username;
+            console.log('Login de usuario==>', req.body.username);
+            // Checa se o usuário logado possui cadastro do MGI
+            var userPerfil =  await user.getPorLogin(req.body.username, req.body.aplicacao);
+            console.log('userPerfil==>', userPerfil);
+            if(!userPerfil || userPerfil.length==0){
+              var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
+              return res.status(406).json({token: util.format('Bearer %s', token), user: userlogin});
+            } else if (userPerfil[0].dataValues.SituacaoCodigo==0){
+              var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
+              return res.status(406).json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
+            } else if (userPerfil[0].dataValues.SituacaoCodigo==2){
+              return res.status(403).send({message: 'Usuário rejeitado pelo ADMINISTRADOR'});
+            }
 
-                  // Salva dados usuario
-                  models.User.findOne({email:result.respostaBuscaPerfilUsuario.usuario.email}).then((resp)=>{
-                      temp['perfis'] = array_perfis;
-                      if(resp){
-                        resp.update(temp).then((result)=>{
-                          //console.log("Dados de usuário atualizado:", result);
-                        });
-                        //models.User.update(temp, { where: { cpf: result.respostaBuscaPerfilUsuario.usuario.cpf }}).then((user)=> {
-
-                        //});
-                      }else{
-                        models.User.create(temp).then((user)=> {
-                          console.log("Dados de usuário criado:", user);
-                        });
-                      }
-
-                      temp['ultimo_login']=resp['dt_atualizacao'];
-                      var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
-                      res.json({token: util.format('Bearer %s', token), user: temp});
-
-                  }).catch(err=>{
-                      console.log('Erro na atualização de dados de usuário', err);
-                  });
-
-
-                }else{
-                  console.log('Erro', err);
-                  res.status(403).send(err);
-                }
-              });
-          }else{
-            console.log(err);
-            res.status(500).send(err);
-          }
-        });
+            // Loga o Usuario
+            var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
+            res.json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
+        })(req,res);
       }else{
         var temp = {
             cpf: '11111111',
             nome: 'Usuário Fake',
             email: 'teste@teste.com',
-            perfis: []
+            perfil: ''
         };
         console.log('Usuario fake:', temp); //TODO: Retirar isso
         var token = jwt.sign(temp, config_param.secret, { expiresIn: '7d' });
@@ -110,6 +67,11 @@ module.exports = {
         env = 'development';
       }
       swagger.info['enviroment']=env;
+      swagger.info['company']=process.env.COMPANY || config_param.company;
+      swagger.info['login']=process.env.SCHEMA_LOGIN || config_param.schema_login;
+      swagger.info['title']=config_param.title;
+      swagger.info['description']=config_param.description;
+      swagger.info['date'] = new Date();
       res.json(swagger.info);
     } catch (e) {
       console.log(e);
