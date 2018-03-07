@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  url: 'http://api.synapsys.com.br',
+  url: 'http://api.digisus.cloud.saude.gov',
   API_URL: "/api",
   aplicacao: 1, // codigo da aplicacao MGI
-  urlNewUser: "http://localhost",
-  urlForgetPassword: "http://localhost"
+  urlNewUser: "http://aplicacao-homologacao.saude.gov.br/datasus-scpaweb-usuario/visao/login/login-sistema.jsf",
+  urlForgetPassword: "http://aplicacao-homologacao.saude.gov.br/datasus-scpaweb-usuario/visao/login/gerar-senha.jsf"
 };

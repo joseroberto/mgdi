@@ -25,4 +25,3 @@ CREATE TABLE dbesusgestor.tb_indicador_unidade_medida
       REFERENCES dbesusgestor_homologa.tb_unidade_medida (co_unidade_medida) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
-

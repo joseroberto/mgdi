@@ -61,7 +61,7 @@ config:
   # -------------------------------------------
   # | Documentacao                            |
   # -------------------------------------------
-  title: Sala de Situação - API de comunicação
-  company: Secretaria Estadual de Saúde - SES
+  title: Módulo de Gestão de Dados e Indicadores - MGDI
+  company: Ministério da Saúde
   description: |
-    (pendencia) Escrever a descrição da API de comunicação para Sala de Situação
+    (pendencia) Escrever a descrição da API de comunicação 
