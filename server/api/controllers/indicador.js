@@ -2,9 +2,11 @@ require('../extensions/array');
 var models  = require('../models');
 var sequelize = require('sequelize');
 var unidade = require('./unidade');
+var security = require('../helpers/security');
 
 module.exports = {
   getIndicadores: (req, res)=>{
+    var perfil = security.getPerfil(req);
     var attr = {
       attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao',
       'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
@@ -21,8 +23,11 @@ module.exports = {
     };
     //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
+    console.log("PERFIL++>", perfil);
     if (!req.headers.authorization){
         attr.where['privado'] = false;
+    }else if(perfil && perfil.Perfil.sigla!='ADM'){
+      console.log('Unidade restritiva', perfil.UnidadeCodigo);
     }
 
     //if(req.swagger.params.limit.value){
