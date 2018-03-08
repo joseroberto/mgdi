@@ -774,6 +774,81 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  
+  /api/indicador/{codigos}/resultsetpost:
+    x-swagger-router-controller: resultset
+    post:
+      description: Retorna os valores do indicador
+      summary: Query para valores de indicadores
+      operationId: getResultado
+      produces:
+        - application/json
+      tags:
+        - Indicadores
+        - Consulta Dados
+      parameters:
+        - name: codigos
+          type: array
+          items:
+            type: string
+          in: path
+          required: true
+          description: Codigos dos indicadores a serem pesquisados
+        - name: tipo
+          type: string
+          in: query
+          enum: [BR, RG, UF, MN, CN]
+          required: false
+          default: MN
+          description: Tipo de consulta (BR - Brasil, MN - Municipal, RG - Região, UF - Estadual, CN = CNES)
+        - name: filtro
+          type: string
+          in: query
+          enum: [MUN, UF, REG, CID, CCL, MET, FRT, QUA, SA, AL, RIB, QSU]
+          required: false
+          description: Tipos de filtro (MUN-Municipal, UF-Estado, FRT-Fronteiras, SA-Semi árido, RIB-Ribeirinhos, MET-Região Metropolitana, CID-Território da cidadania )
+        - name: porcategoria
+          type: string
+          in: query
+          required: false
+          description: Codigo da categoria de analise para abertura de resultados da consulta de indicador
+        - name: valores_filtro
+          type: array
+          items:
+            type: string
+          in: query
+          required: false
+          description: Valores a serem filtrados
+        - name: formato
+          type: string
+          in: query
+          enum: [LIN, CDA, TAB]
+          required: false
+          default: LIN
+          description: |
+              Indica o tipo de formatação a ser utilizado na saída dos dados:
+              * LIN: Formato linear (Default)
+              * CDA: Padrão CDA - Community Data Access
+              * TAB: Formato tabular (Indicador => { tempo })
+        - name: data
+          type: array
+          items:
+            type: number
+          in: query
+          required: false
+          description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
+
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/ResultIndicador"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponseTratado"          
+
+
 
   /api/indicador/{codigos}/resultset:
     x-swagger-router-controller: resultset

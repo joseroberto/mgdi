@@ -7,10 +7,10 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: 192.168.1.18
+      HOSTDB: 192.168.1.112
       DATABASE: dbspo
-      USER_DB: mgdi_adm
-      PASSWORD_DB: serenaya
+      USER_DB: postgres
+      PASSWORD_DB: postgres
       SCHEMA: dbesusgestor_homologa
       HOST: localhost:8000
       SCHEMA_LOGIN: scpa
