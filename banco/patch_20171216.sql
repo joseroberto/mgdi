@@ -50,7 +50,7 @@ COMMENT ON COLUMN dbesusgestor.tb_perfil.ds_perfil IS 'Descricao do perfil';
 COMMENT ON COLUMN dbesusgestor.tb_perfil.st_perfil IS 'Status ativo/inativo para o perfil';
 COMMENT ON COLUMN dbesusgestor.tb_perfil.st_exige_unidade IS 'Flag para indicar se o perfil exige unidade vinculada';
 
-create unique index dbesusgestor.ux_tb_perfil_ds_sigla on dbesusgestor.tb_perfil(ds_sigla);
+create unique index ux_tb_perfil_ds_sigla on dbesusgestor.tb_perfil(ds_sigla);
 
 insert into dbesusgestor.tb_perfil (ds_sigla, ds_titulo, ds_perfil, st_exige_unidade) values ('ADM', 'Administrador do Sistema', 'O administrador do sistema é responsável por gerenciar permissões e checar dados do sistema.', 'F');
 insert into dbesusgestor.tb_perfil (ds_sigla, ds_titulo, ds_perfil, st_exige_unidade) values ('GES', 'Gestor da área', 'O gestor da área é responsável por manter informações de indicadores específicos da área.', 'T');
