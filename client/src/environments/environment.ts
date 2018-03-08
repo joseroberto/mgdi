@@ -5,7 +5,6 @@
 
 export const environment = {
   production: false,
-  //url: 'http://rest.demas.saude.gov', //
   url: 'http://localhost:8000',
   API_URL: "/api",
   aplicacao: 1, // codigo da aplicacao MGI
