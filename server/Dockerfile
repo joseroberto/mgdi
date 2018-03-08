@@ -3,6 +3,8 @@ FROM keymetrics/pm2:latest-alpine
 LABEL maintainer="joserobertovasconcelos@gmail.com" \
   description="Esta imagem exige os seguintes parâmetros: \
   * COMPANY - Título da empresa \
+  * DESCRIPTION - Descricao da API \
+  * TITLE - Titulo da API \
   * HOSTDB - IP/Host da máquina de banco de dados \
   * DATABASE - Nome do banco de dados \
   * USER_DB - Usuário do banco de dados \
