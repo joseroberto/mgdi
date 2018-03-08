@@ -10,6 +10,7 @@ var swagger_config = require('./api/helpers/swagger-yaml')();
 var job = require('./api/helpers/job');
 var passport = require("passport");
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 
 module.exports = app; // for testing
@@ -18,6 +19,8 @@ var theAppLog = log4js.getLogger();
 
 // Programa os jobs de execucao
 //job.cron();  //TODO: Checar a necessidade de programar jobs no servico web
+
+app.use(cors());
 
 app.use(morgan("combined",{
   "stream": {
