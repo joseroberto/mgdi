@@ -1230,6 +1230,35 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/indicador/{codigo}/objetivoRelevancia:
+    x-swagger-router-controller: indicador
+    patch:
+      description: Atualiza objetivo e relevância de um indicador
+      summary: Atualiza objetivo e relevância de um indicador
+      operationId: updateObjetivoRelevancia
+      tags:
+        - Indicadores
+      security:
+        - Bearer: []
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+        - name: objetivoRelevancia
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ObjetivoRelevancia'
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /api/indicador/{id_pai}/indicador-relacionado/{id}:
     x-swagger-router-controller: indicador
@@ -2121,6 +2150,11 @@ definitions:
     type: object
     properties:
       conceituacao:
+        type: string
+  ObjetivoRelevancia:
+    type: object
+    properties:
+      objetivoRelevacia:
         type: string
   Interpretacao:
     type: object

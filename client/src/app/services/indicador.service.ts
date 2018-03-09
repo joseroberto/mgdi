@@ -57,6 +57,10 @@ export class IndicadorService extends REST {
     return super.patch(`/indicador/${codigo}/conceituacao`,{conceituacao: conceituacao});
   }
 
+  updateObjetivoRelevancia(codigo:string, objetivoRelevancia:string){
+    return super.patch(`/indicador/${codigo}/objetivoRelevancia`,{objetivoRelevancia: objetivoRelevancia});
+  }
+
   updateInterpretacao(codigo:string, interpretacao:string){
     return super.patch(`/indicador/${codigo}/interpretacao`,{interpretacao: interpretacao});
   }

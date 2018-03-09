@@ -267,26 +267,21 @@
                     </div>
                   </div>
 
-
                   <div class="form-group">
-                    <label class="col-md-2 control-label" for="UnidadeCodigo">Unidade
-                      <popover-content #unidade
-                                       title="Marcadores"
+                      <popover-content #diretrizNacional
+                                       title="Diretriz Nacional"
                                        [closeOnClickOutside]="true">
-                          Selecione a unidade principal responsável pelo indicador
+                          Informe diretriz nacional para o indicador
                       </popover-content>
-                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade"></i>
-                    </label>
-                    <div class="col-md-6">
-                        <select style="width:100%" select2 class="select2 unidadeselect" id="UnidadeCodigo" name="UnidadeCodigo"
-                        data-bv-notempty="true"
-                        data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
-                            <option *ngFor="let itemUnidade of colecaoUnidades"
-                              [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
-                        </select>
-                        <div class="note">
-                          <strong>Atenção:</strong> Preencha com a unidade principal a que o indicador pertence
-                        </div>
+                      <label class="col-md-2 control-label">Diretriz Nacional
+                        <i class="fa fa-question-circle" popoverPlacement="auto" 
+                        popoverOnHover="true" [popover]="diretrizNacional"></i></label>
+                      <div class="col-md-10">
+                        <input type="text" id="diretrizNacional" name="diretrizNacional"
+                        [ngModel]="indicador.diretrizNacional"
+                        class="form-control"
+                        placeholder="Diretriz nacional do indicador"
+                        data-bv-notempty="true">
                       </div>
                     </div>
                 </fieldset>
@@ -455,6 +450,22 @@
                         <a (click)="(null)" class="btn btn-success btn-xs" (click)="editConceituacao(false)" *ngIf="isEditConceituacao"><i class="fa fa-save"></i> Grava</a>
                   </legend>
                   <span class="conceituacao" [innerHTML]="indicador.conceituacao||msg_padrao"></span>
+                  <br/><br/>
+                  <popover-content #objetivoRelevancia
+                    title="Objetivo Relevância"
+                    [closeOnClickOutside]="true">
+                      Dados sobre Objetivos e relevância do indicador
+                  </popover-content>
+                  <legend>Objetivo e Relevância <i class="fa fa-question-circle" 
+                      popoverPlacement="right" popoverOnHover="true" [popover]="objetivoRelevancia"></i>
+                        <a (click)="(null)" class="btn btn-primary btn-xs" 
+                          (click)="editObjetivoRelevancia(true)" *ngIf="!isEditObjetivoRelevancia">
+                          <i class="fa fa-edit"></i> Edita</a>
+                        <a (click)="(null)" class="btn btn-success btn-xs" 
+                          (click)="editObjetivoRelevancia(false)" *ngIf="isEditObjetivoRelevancia">
+                          <i class="fa fa-save"></i> Grava</a>
+                  </legend>
+                  <span class="objetivoRelevancia" [innerHTML]="indicador.objetivoRelevancia||msg_padrao"></span>
                   <br/><br/>
                   <popover-content #interpretacao
                     title="Interpretação"

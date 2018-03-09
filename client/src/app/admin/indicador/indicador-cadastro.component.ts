@@ -67,7 +67,6 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private isEditMetodoCalculo:false;
   private isEditFonteDados:false;
   private isEditProcedimentoOperacional:false;
-  private isEditDiretrizNacional:false;
   private isEditObjetivoRelevancia:false;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
@@ -201,6 +200,25 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       );
     }else{
       this.router.navigateByUrl('/admin/indicador');
+    }
+  }
+
+  private editObjetivoRelevancia(flag){
+    this.isEditObjetivoRelevancia = flag;
+    if(flag){
+      $('.objetivoRelevancia').summernote(this.options);
+      $('.objetivoRelevancia').summernote('code', this.indicador.objetivoRelevancia);
+    }else{
+      this.indicador.objetivoRelevancia = $('.objetivoRelevancia').summernote('code');
+      $('.objetivoRelevancia').summernote('destroy');
+      this.indicadorService.updateObjetivoRelevancia(
+        this.indicador.codigo, this.indicador.objetivoRelevancia).subscribe(resp=>{
+        if(resp.codret==0){
+          this.util.msgSucesso(resp.mensagem);
+        }else{
+          this.util.msgErro(resp.mensagem);
+        }
+      }, err=>this.util.msgErroInfra(err));
     }
   }
 

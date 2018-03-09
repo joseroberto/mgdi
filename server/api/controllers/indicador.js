@@ -209,6 +209,14 @@ module.exports = {
       res.status(500).json({codret: 1001, message: "Erro na gravação da conceituação do indicador"});
     });
   },
+  updateObjetivoRelevancia: (req,res)=>{
+    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
+      res.json({codret: 0, mensagem: `Objetivo e relevância do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
+    }).catch(err=>{
+      console.log('Erro', err);
+      res.status(500).json({codret: 1001, message: "Erro na gravação do objetivo e relevância do indicador"});
+    });
+  },
   updateInterpretacao: (req,res)=>{
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       res.json({codret: 0, mensagem: `Interpretação do indicador ${req.swagger.params.codigo.value} atualizada com sucesso`});
