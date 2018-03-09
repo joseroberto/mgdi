@@ -67,7 +67,9 @@ alter table dbesusgestor.tb_resultado alter column co_anosemana type int USING c
 
 alter table dbesusgestor.tb_resultado alter column co_anomesdia type int USING co_anomesdia::integer;
 
-alter table dbesusgestor.tb_tempo alter column co_anomesdia type int using co_anomesdia::integer;
+--alter table dbesusgestor.tb_tempo alter column co_anomesdia type int using co_anomesdia::integer;
+
+update dbesusgestor.tb_resultado set co_anomes = null;
 
 alter table dbesusgestor.tb_resultado alter column co_anomes type int USING co_anomes::integer;
 
