@@ -107,6 +107,24 @@
                 <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Informações</legend>
                   <div class="form-group">
+                    <popover-content #tituloCompleto
+                                     title="Título completo"
+                                     [closeOnClickOutside]="true">
+                        Informe o título completo do indicador
+                    </popover-content>
+                    <label class="col-md-2 control-label">Título completo 
+                      <i class="fa fa-question-circle" popoverPlacement="auto" 
+                      popoverOnHover="true" [popover]="tituloCompleto"></i></label>
+                    <div class="col-md-10">
+                      <input type="text" id="tituloCompleto" name="tituloCompleto" maxlength="255"
+                      [ngModel]="indicador.tituloCompleto"
+                      class="form-control"
+                      placeholder="Título completo do indicador"
+                      data-bv-notempty="true">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
                     <popover-content #descricao
                                      title="Descrição"
                                      [closeOnClickOutside]="true">

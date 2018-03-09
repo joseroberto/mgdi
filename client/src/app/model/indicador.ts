@@ -4,6 +4,7 @@ export class Indicador{
     id:number = 0;
     codigo:string = '';
     titulo:string = '';
+    tituloCompleto:string = '';
     descricao:string = '';
     ClassificacaoIndicadorCodigo:number = 0;
     Classificacao6sIndicadorCodigo:number = 0;
