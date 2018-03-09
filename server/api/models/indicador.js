@@ -26,6 +26,16 @@ module.exports = function(sequelize, DataTypes) {
         field: 'ds_titulo_completo',
         allowNull: true
     },
+    diretrizNacional: {
+        type: DataTypes.TEXT,
+        field: 'ds_diretriz_nacional',
+        allowNull: true
+    },
+    objetivoRelevancia: {
+        type: DataTypes.TEXT,
+        field: 'ds_objetivo_relevancia',
+        allowNull: true
+    },
     descricao: {
         type: DataTypes.STRING(200),
         field: 'ds_descricao',

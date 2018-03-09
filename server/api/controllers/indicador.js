@@ -7,7 +7,7 @@ module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
       attributes: [ 'id', 'codigo', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo', 
-      'privado', 'conceituacao',
+      'privado', 'conceituacao', 'diretrizNacional', 'objetivoRelevancia',
       'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
@@ -375,8 +375,8 @@ module.exports = {
 
   getIndicadorPesquisaPorCodigo: (codigos)=>
     models.Indicador.findAll(
-      { attributes: [  'id', 'codigo', 'titulo', 'tituloCompleto', 'descricao',
-          'referencia_consulta', 'ultima_atualizacao' ],
+      { attributes: [  'id', 'codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'objetivoRelevancia',
+       'descricao', 'referencia_consulta', 'ultima_atualizacao' ],
       include: [
         { model: models.Granularidade , as: 'Granularidade' },
         { model: models.BancoDados , as: 'BancoDados' },
