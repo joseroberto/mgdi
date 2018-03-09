@@ -25,3 +25,10 @@ CREATE TABLE dbesusgestor.tb_indicador_unidade_medida
       REFERENCES dbesusgestor_homologa.tb_unidade_medida (co_unidade_medida) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
+
+
+alter table  dbesusgestor.tb_indicador_responsavel_gerencial add dt_inclusao timestamp without time zone not null;
+alter table  dbesusgestor.tb_indicador_responsavel_gerencial add dt_atualizacao timestamp without time zone;
+
+alter table  dbesusgestor.tb_indicador_responsavel_tecnico add dt_inclusao timestamp without time zone not null;
+alter table  dbesusgestor.tb_indicador_responsavel_tecnico add dt_atualizacao timestamp without time zone;

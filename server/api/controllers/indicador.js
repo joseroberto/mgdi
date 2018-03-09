@@ -23,11 +23,12 @@ module.exports = {
     };
     //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
-    console.log("PERFIL++>", perfil);
+    //console.log("PERFIL++>", perfil);
     if (!req.headers.authorization){
         attr.where['privado'] = false;
     }else if(perfil && perfil.Perfil.sigla!='ADM'){
       console.log('Unidade restritiva', perfil.UnidadeCodigo);
+      attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', where:{codigo: perfil.UnidadeCodigo}});
     }
 
     //if(req.swagger.params.limit.value){

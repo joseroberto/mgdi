@@ -4,6 +4,7 @@ var sequelize = require('sequelize');
 const csv = require('csvtojson'),
         fs = require('fs');
 
+const security = require('../helpers/security');
 
 module.exports = {
   getUnidades: (req, res)=>{
@@ -44,6 +45,7 @@ module.exports = {
     });
   },
   countIndicadorPorUnidade: (req,res)=>{
+    var perfil = security.getPerfil(req);
     var attr = {
       attributes: ['codigo','sigla', 'nome', [sequelize.fn('count', sequelize.col('*')),'numero_indicadores']],
       include: [{ model: models.Indicador, as: 'IndicadoresRelacionados', where:{'ativo': true}, attributes:[] }],
@@ -52,6 +54,10 @@ module.exports = {
     // Testa autorizacao para forcar filtro
     if (!req.headers.authorization){
         attr.include[0].where['privado'] = false;
+    }else if(perfil && perfil.Perfil.sigla!='ADM'){
+      console.log('Unidade restritiva', perfil.UnidadeCodigo);
+      attr.include[0].include = [];
+      //attr.include[0].include.push({ model: models.Unidade , as: 'ResponsavelGerencial', attributes:[], where:{codigo: perfil.UnidadeCodigo}});
     }
     models.Unidade.findAll(attr).then(function(lista) {
       res.json({unidades: lista});
