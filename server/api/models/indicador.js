@@ -21,6 +21,11 @@ module.exports = function(sequelize, DataTypes) {
         field: 'ds_titulo',
         allowNull: false
     },
+    tituloCompleto: {
+        type: DataTypes.TEXT,
+        field: 'ds_titulo_completo',
+        allowNull: true
+    },
     descricao: {
         type: DataTypes.STRING(200),
         field: 'ds_descricao',

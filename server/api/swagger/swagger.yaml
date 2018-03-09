@@ -2063,6 +2063,9 @@ definitions:
       titulo:
         type: string
         description: Titulo do Indicador
+      tituloCompleto:
+        type: string
+        description: Titulo do Indicador com todas as informações para definição
       descricao:
         type: string
         description: Descrição do Indicador

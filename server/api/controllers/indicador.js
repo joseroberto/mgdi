@@ -6,7 +6,8 @@ var unidade = require('./unidade');
 module.exports = {
   getIndicadores: (req, res)=>{
     var attr = {
-      attributes: [ 'id', 'codigo', 'titulo', 'descricao', 'ativo',  'acumulativo', 'privado', 'conceituacao',
+      attributes: [ 'id', 'codigo', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo', 
+      'privado', 'conceituacao',
       'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
@@ -374,7 +375,7 @@ module.exports = {
 
   getIndicadorPesquisaPorCodigo: (codigos)=>
     models.Indicador.findAll(
-      { attributes: [  'id', 'codigo', 'titulo', 'descricao',
+      { attributes: [  'id', 'codigo', 'titulo', 'tituloCompleto', 'descricao',
           'referencia_consulta', 'ultima_atualizacao' ],
       include: [
         { model: models.Granularidade , as: 'Granularidade' },
