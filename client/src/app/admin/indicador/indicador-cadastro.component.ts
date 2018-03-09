@@ -67,6 +67,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private isEditMetodoCalculo:false;
   private isEditFonteDados:false;
   private isEditProcedimentoOperacional:false;
+  private isEditDiretrizNacional:false;
+  private isEditObjetivoRelevancia:false;
 
   constructor(private classificacaoIndicadorService:ClassificacaoIndicadorService,
       private classificacao6sIndicadorService:Classificacao6sIndicadorService,

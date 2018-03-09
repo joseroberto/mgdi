@@ -17,6 +17,8 @@ export class Indicador{
     notas:string = '';
     observacoes:string = '';
     fonte_dados:string = '';
+    objetivoRelevancia = '';
+    diretrizNacional = '';
     carga_manual:boolean = false;
     acumulativo: boolean = false;
     ativo:boolean = true;
