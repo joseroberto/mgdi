@@ -2098,9 +2098,6 @@ definitions:
       diretrizNacional:
         type: string
         description: Campo para preenchimento das diretrizes nacional
-      objetivoRelevancia:
-        type: string
-        description: Campo para preenchimento de objetivo e relevancia
       descricao:
         type: string
         description: Descrição do Indicador
