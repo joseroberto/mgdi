@@ -1,0 +1,1 @@
+ALTER TABLE dbesusgestor_homologa.tb_indicador ALTER COLUMN co_unidade DROP NOT NULL;

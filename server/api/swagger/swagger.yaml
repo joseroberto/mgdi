@@ -2131,9 +2131,6 @@ definitions:
       indice_referencia:
         type: [number, 'null']
         description: Índice que é considerado para o indicador
-      unidade_responsavel:
-        type: number
-        description: Código da Unidade Responsável
       classificacao:
         type: number
         description: Código da classificçaão do Indicador
