@@ -13,9 +13,11 @@ module.exports = {
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
         { model: models.Unidade, as: 'Unidade' },
+        { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         { model: models.Granularidade, as: 'Granularidade' },
-        { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} }
+        { model: models.Unidade, as: 'ResponsavelGerencial' },
+        { model: models.Unidade, as: 'ResponsavelTecnico' }
       ],
       where: {},
       order: ['titulo']
