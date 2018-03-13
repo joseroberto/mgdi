@@ -16,8 +16,13 @@ module.exports = {
         { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
         { model: models.Granularidade, as: 'Granularidade' },
-        { model: models.Unidade, as: 'ResponsavelGerencial' },
-        { model: models.Unidade, as: 'ResponsavelTecnico' }
+        { model: models.Unidade , as: 'ResponsavelGerencial',
+            include: [ { model: models.Unidade, as: 'ancestors' } ],
+            order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
+        },
+        { model: models.Unidade , as: 'ResponsavelTecnico',
+            include: [ { model: models.Unidade, as: 'ancestors' } ],
+            order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ] }
       ],
       where: {},
       order: ['titulo']
