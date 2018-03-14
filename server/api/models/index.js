@@ -19,7 +19,8 @@ var db        = {};
     process.env.PASSWORD_DB || config_param.password, {
     "host": process.env.HOSTDB || config_param.hostdb,
     "dialect": "postgres",
-    "omitNull": true
+    "omitNull": true,
+    "logging": false
   });
 //}
 

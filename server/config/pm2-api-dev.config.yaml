@@ -16,3 +16,4 @@ apps:
       SCHEMA_LOGIN: scpa
       WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
       SISTEMA: SAGE
+      LOGGING_SQ: false

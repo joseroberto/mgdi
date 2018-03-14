@@ -62,7 +62,7 @@ module.exports = {
         //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['secretaria'] = req.swagger.params.secretaria.value;
     }
-    console.log('attr', attr, 'codigos====>', req.swagger.params.codigos.value);
+    // console.log('attr', attr, 'codigos====>', req.swagger.params.codigos.value);
     models.Indicador.findAndCountAll(attr).then(function(resp) {
       //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
       if(req.swagger.params.limit.value){

@@ -9,6 +9,7 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * PASSWORD_DB - Senha do usuário do banco de dados \
   * SCHEMA - Schema da base de dados utilizado para o sistema MGI na base de dados \
   * HOST - host a ser chamado para api (formato pode ser host:port) \
+  * LOGGING_SQ - true ou false para instruir o sequelize a enviar ou não logs \
   \
   Dependendo da escolha do tipo de esquema de validação: \
   \
