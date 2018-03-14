@@ -2093,10 +2093,10 @@ definitions:
         type: string
         description: Titulo do Indicador
       tituloCompleto:
-        type: string
+        type: ["null", string]
         description: Titulo do Indicador com todas as informações para definição
       diretrizNacional:
-        type: string
+        type: ["null", string]
         description: Campo para preenchimento das diretrizes nacional
       descricao:
         type: string
