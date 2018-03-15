@@ -1,0 +1,20 @@
+#!/bin/bash
+export COMPANY='Teste';
+export TITLE='Titulo';
+export DESCRIPTION='Descricao';
+export HOSTDB='localhost';
+export DATABASE='dbses';
+export USER_DB='vasconcelos';
+export PASSWORD_DB='serenaya';
+export SCHEMA='dbmgi';
+export HOST='localhost:8000';
+export SCHEMA_LOGIN='ldap';
+export URL='ldap://localhost';
+export BIND_DN='cn=admin, dc=synapsys, dc=com, dc=br';
+export BIND_CREDENTIALS='gFGcZxyrnc8pT8se';
+export SEARCH_BASE='DC=synapsys, DC=com, DC=br';
+export SEARCH_FILTER='(uid={{username}})';
+export NAMEFIELD='givenName';
+export MAILFIELD='mail';
+export API_URL='http://rest.demas.saude.gov';
+export API_CONTEXT='/api';
