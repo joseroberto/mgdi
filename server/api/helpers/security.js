@@ -41,5 +41,12 @@ module.exports = {
         cb(new Error('No authorization token was found'));
     }
 
+  },
+  getPerfil(req){
+      if(req.headers.authorization){
+        return jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
+      }else{
+          return null;
+      }
   }
 };

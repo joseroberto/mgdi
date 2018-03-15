@@ -59,7 +59,8 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Unidade.hasMany(models.Indicador,{
           as: 'IndicadoresRelacionados',
-          foreignKey: 'co_unidade'});
+          foreignKey: {field: 'co_unidade',allowNull: false}
+        });
       }
     },
     hierarchy: {

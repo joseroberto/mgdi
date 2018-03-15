@@ -198,9 +198,11 @@ export class CategoriaAnaliseCadastroComponent implements OnInit, OnDestroy{
       if('itempai' in this.editCategoriaAnalise){
         console.log('Insere subcategoria');
       }else{
-        console.log('Insere categoria item');
+        console.log('Edita categoria item');
+        this.novacategoria.Itens[this.editCategoriaAnalise.indice]= Object.assign(this.editCategoriaAnalise);
       }
-      console.log('Registro de edicao', this.editCategoriaAnalise);
+      console.log('Registro de edicao 123', this.editCategoriaAnalise);
+      console.log('Registro completo', this.novacategoria);
       //this.novacategoria.Itens[this.editCategoriaAnalise.indice] = Object.assign(this.editCategoriaAnalise);
       this.refreshTreeview();
       this.categoriaAnaliseModal.hide();

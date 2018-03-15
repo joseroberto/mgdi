@@ -60,7 +60,7 @@ export class TagCadastroComponent implements OnInit, OnDestroy{
               this.novatagcategoria = Object.assign(new TagCategoria(), resp);
               console.log('Registro em edicao:', this.novatagcategoria);
               this.titulo = 'Atualiza ' + this.novatagcategoria.codigo;
-              this.breadcrumb = ['Categoria de Análise', this.novatagcategoria.codigo];
+              this.breadcrumb = ['Grupo de Marcador', this.novatagcategoria.codigo];
             }, (err)=> this.util.msgErroInfra(err));
         }
     }

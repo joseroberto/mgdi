@@ -69,8 +69,8 @@ module.exports = {
       swagger.info['enviroment']=env;
       swagger.info['company']=process.env.COMPANY || config_param.company;
       swagger.info['login']=process.env.SCHEMA_LOGIN || config_param.schema_login;
-      swagger.info['title']=config_param.title;
-      swagger.info['description']=config_param.description;
+      swagger.info['title']=process.env.TITLE || config_param.title;
+      swagger.info['description']=process.env.DESCRIPTION || config_param.description;
       swagger.info['date'] = new Date();
       res.json(swagger.info);
     } catch (e) {

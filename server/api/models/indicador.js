@@ -210,7 +210,7 @@ module.exports = function(sequelize, DataTypes) {
            onDelete: 'cascade' });
         Indicador.belongsToMany(models.UnidadeMedida, {
             as: 'UnidadesMedidaSuplementar',
-            through: 'tb_indicador_unidade_medida',
+            through: models.IndicadorUnidadeMedida,
             otherKey: {
               name: 'co_unidade_medida',
               allowNull: false

@@ -2,6 +2,7 @@ const async = require('async');
 const pg = require('pg');
 const util = require('util');
 const _ = require('underscore');
+const config_param = require('../helpers/config')();
 
 const indicador = {
 
@@ -53,26 +54,16 @@ const indicador = {
 
 };
 
-/*
 const config = {
-  user: 'vasconcelos', //env var: PGUSER
-  database: 'dbspo', //env var: PGDATABASE
-  password: 'serenaya',
-  host: '10.1.2.25', // Server hosting the postgres database
+  user: process.env.USER_DB || config_param.user, //env var: PGUSER
+  database: process.env.DATABASE || config_param.database, //env var: PGDATABASE
+  password: process.env.PASSWORD_DB || config_param.password,
+  host: process.env.HOSTDB || config_param.hostdb, // Server hosting the postgres database
   port: 5432, //env var: PGPORT
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
-*/
-const config = {
-  user: 'vasconcelos', //env var: PGUSER
-  database: 'dbspo', //env var: PGDATABASE
-  password: 'serenaya',
-  host: 'localhost', // Server hosting the postgres database
-  port: 5432, //env var: PGPORT
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
-};
+const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 const pool = new pg.Pool(config);
 

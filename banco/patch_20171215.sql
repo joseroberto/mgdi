@@ -32,11 +32,11 @@ create table dbesusgestor.tb_plano_hierarquia(
   co_plano_superior int not null
 );
 
-alter table dbesusgestor.tb_plano_hierarquia add CONSTRAINT tb_plano_meta_hierarquia_co_plano_fkey FOREIGN KEY (co_plano)
-        REFERENCES dbesusgestor.tb_plano (co_plano) MATCH SIMPLE
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
+COMMENT ON TABLE dbesusgestor.tb_plano_hierarquia IS 'Contem a hierarquia de planos';
+COMMENT ON COLUMN dbesusgestor.tb_plano_hierarquia.co_plano_pai IS 'Referência ao plano pai';
+COMMENT ON COLUMN dbesusgestor.tb_plano_hierarquia.co_plano_superior IS 'Referencia ao plano atual';
 
-alter table dbesusgestor.tb_programa_hierarquia add CONSTRAINT tb_plano_hierarquia_co_plano_superior_fkey FOREIGN KEY (co_plano_superior)
+alter table dbesusgestor.tb_plano_hierarquia add CONSTRAINT tb_plano_meta_hierarquia_co_plano_fkey FOREIGN KEY (co_plano)
         REFERENCES dbesusgestor.tb_plano (co_plano) MATCH SIMPLE
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 

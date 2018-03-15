@@ -6,6 +6,10 @@ alter table dbesusgestor.tb_resultado add constraint fk_tb_resultado_co_seq_cate
 
 
 -- Mudanca no tipo das colunas de data da tb_resultado
+alter table dbesusgestor.tb_carga_item drop constraint tb_carga_item_co_data_fkey;
+
+alter table dbesusgestor.tb_resultado alter column co_anosemana type int USING co_anosemana::integer;
+
 alter table dbesusgestor.tb_resultado  drop constraint tb_resultado_co_data_fkey;
 alter table dbesusgestor.tb_resultado alter column co_anosemana type int USING co_anosemana::integer;
 
@@ -15,6 +19,12 @@ alter table dbesusgestor.tb_tempo alter column co_anomesdia type int using co_an
 
 alter table dbesusgestor.tb_resultado alter column co_anomes type int USING co_anomes::integer;
 alter table dbesusgestor.tb_resultado alter column co_ano type int USING co_ano::integer;
+
+-- tb_carga_item_co_data_fkey
+-- limpar dbesusgestor.tb_resultado para co_anomes = '     '
+-- Foi aplicado as mudanças de colunas na tb_resultado;
+--"tb_carga_item_co_data_fkey" FOREIGN KEY (co_anomesdia) REFERENCES dbesusgestor.tb_tempo(co_anomesdia)
+-- update dbesusgestor.tb_resultado set co_anomes=null where co_anomes='      ';
 
 -- criacao da tabela de aplicacao para dar suporte aos perfis
 
