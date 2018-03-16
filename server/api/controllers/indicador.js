@@ -300,10 +300,9 @@ module.exports = {
     });
   },
   deleteResponsavelGerencial: (req,res)=>{
-    models.IndicadorCategoriaAnalise.destroy({ where: {
-      co_seq_indicador:req.swagger.params.id.value,
-      co_categoria_analise:req.swagger.params.responsavel_gerencial.value}}).then(()=>{
-        res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Gerencial retirada com sucesso"});
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
+      item.removeResponsavelGerencial(req.swagger.params.responsavel_gerencial.value);
+      res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Gerencial retirada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
       res.status(500).json({codret: 1001, message: "Erro na desvinculação do responsável gerencial do indicador"});
@@ -320,10 +319,9 @@ module.exports = {
   },
 
   deleteResponsavelTecnico: (req,res)=>{
-    models.IndicadorCategoriaAnalise.destroy({ where: {
-      co_seq_indicador:req.swagger.params.id.value,
-      co_categoria_analise:req.swagger.params.responsavel_tecnico.value}}).then(()=>{
-        res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Técnico retirada com sucesso"});
+    models.Indicador.findById(req.swagger.params.id.value).then( item=>{
+      item.removeResponsavelTecnico(req.swagger.params.responsavel_tecnico.value);
+      res.json({codret: 0, mensagem: "Relação do indicador com o Responsável Técnico retirada com sucesso"});
     }).catch(err=>{
       console.log('Erro', err);
       res.status(500).json({codret: 1001, message: "Erro na desvinculação do responsável técnico do indicador"});

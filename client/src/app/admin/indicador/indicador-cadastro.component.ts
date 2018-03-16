@@ -463,7 +463,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       this.indicadorService.adicionaResponsavelGerencial(this.indicador.id, id).subscribe(resp=>{
         if(resp.codret==0){
           this.util.msgSucesso(resp.mensagem);
-          $('#unidade_gerencial').val('');
+          $('#unidade_gerencial').select2('val','0');
           this.loadIndicador();
         }else{
           this.util.msgErro(resp.mensagem);
@@ -491,7 +491,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       this.indicadorService.adicionaResponsavelTecnico(this.indicador.id, id).subscribe(resp=>{
         if(resp.codret==0){
           this.util.msgSucesso(resp.mensagem);
-          $('#unidade_tecnica').val('');
+          $('#unidade_tecnica').select2('val','0');
           this.loadIndicador();
         }else{
           this.util.msgErro(resp.mensagem);

@@ -56,6 +56,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
+        //console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           //console.log(result);
           if(err) {
@@ -248,10 +249,9 @@ function convertCodigoIndicador(config){
           if('porcategoria' in config && config.porcategoria){
             var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
             if(categoriaSelecionada){
-              console.log('Consulta por categoria', categoriaSelecionada.Itens);
+              //console.log('Consulta por categoria', categoriaSelecionada.Itens);
               ans[item.codigo]['categoriaSelecionada']= categoriaSelecionada;
               ans[item.codigo]['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
-              console.log('categoria=====> ', ans[item.codigo]['categoria']);
               if(!categoria)
                 categoria = ans[item.codigo]['categoria'];
             }else{
@@ -306,8 +306,9 @@ function convertCodigoIndicador(config){
 
 function getSubCategorias(itens){
   let ans=[];
+  
   itens.forEach(subcat=>{
-    if('descendents' in subcat){
+    if('descendents' in subcat && subcat.descendents.length>0){
       let temp = getSubCategorias(subcat['descendents']);
       if(temp.length>0){
         ans = ans.concat(temp);

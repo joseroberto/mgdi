@@ -873,7 +873,7 @@ paths:
     post:
       description: Retorna os valores do indicador
       summary: Query para valores de indicadores
-      operationId: getResultado
+      operationId: getResultado2
       produces:
         - application/json
       tags:
