@@ -1,6 +1,7 @@
 FROM nginx:stable-alpine
 LABEL maintainer="joserobertovasconcelos@gmail.com"
 
+RUN mkdir /usr/share/nginx/html/mgdi
 ADD ./dist /usr/share/nginx/html
 COPY docker-config/default.conf /etc/nginx/conf.d/default.conf
 COPY docker-config/nginx.conf /etc/nginx/nginx.conf
