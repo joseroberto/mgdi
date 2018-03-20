@@ -1,7 +1,8 @@
 FROM nginx:stable-alpine
 LABEL maintainer="joserobertovasconcelos@gmail.com"
 
-ADD ./dist /usr/share/nginx/html
+RUN mkdir -p /usr/share/nginx/html/mgdi
+ADD ./dist /usr/share/nginx/html/mgdi
 COPY docker-config/default.conf /etc/nginx/conf.d/default.conf
 COPY docker-config/nginx.conf /etc/nginx/nginx.conf
 RUN chgrp -R 0 /var/cache/nginx && \
