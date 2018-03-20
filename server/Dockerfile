@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:latest-alpine
+FROM keymetrics/pm2:8-alpine
 
 LABEL maintainer="joserobertovasconcelos@gmail.com" \
   description="Esta imagem exige os seguintes parâmetros: \
