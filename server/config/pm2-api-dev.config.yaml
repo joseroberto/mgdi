@@ -9,8 +9,8 @@ apps:
       COMPANY: MS
       HOSTDB: docker.for.mac.host.internal
       DATABASE: dbspo
-      USER_DB: postgres
-      PASSWORD_DB: postgres
+      USER_DB: mgdi_adm
+      PASSWORD_DB: j7v3q-raf
       SCHEMA: dbesusgestor_homologa
       HOST: localhost:8000
       SCHEMA_LOGIN: scpa
