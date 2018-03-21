@@ -75,9 +75,5 @@ config:
   # -------------------------------------------
   title: Titulo
   #company: Company
-<<<<<<< HEAD
-  description: Description
-=======
   description: Description
   debug: false
->>>>>>> 5cb66ee... Correcao de pequenos erros que estavam acontecendo na passagem de parametros para resultset.component, correcao da consulta de indicador secretaria->UnidadeCodigo e dockerfile com alpine8 fixo e parametro de DEBUG para querys
