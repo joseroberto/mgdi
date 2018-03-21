@@ -20,7 +20,7 @@ var db        = {};
     "host": process.env.HOSTDB || config_param.hostdb,
     "dialect": "postgres",
     "omitNull": true,
-    "logging": true
+    "logging": (process.env.DEBUG || config_param.debug)? console.log:false
   });
 //}
 

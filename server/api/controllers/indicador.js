@@ -66,9 +66,13 @@ module.exports = {
 
     if(req.swagger.params.secretaria.value){
         //console.log('Secretaria: ', req.swagger.params.secretaria.value);
-        attr.where['secretaria'] = req.swagger.params.secretaria.value;
+        attr.where['UnidadeCodigo'] = req.swagger.params.secretaria.value;
     }
+<<<<<<< HEAD
     // console.log('attr', attr, 'codigos====>', req.swagger.params.codigos.value);
+=======
+    //console.log('attr', attr, 'codigos====>', req.swagger.params.codigos.value);
+>>>>>>> 5cb66ee... Correcao de pequenos erros que estavam acontecendo na passagem de parametros para resultset.component, correcao da consulta de indicador secretaria->UnidadeCodigo e dockerfile com alpine8 fixo e parametro de DEBUG para querys
     models.Indicador.findAndCountAll(attr).then(function(resp) {
       //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
       if(req.swagger.params.limit.value){

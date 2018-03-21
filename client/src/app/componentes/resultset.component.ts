@@ -49,14 +49,19 @@ export class ResultsetComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      if(changes.granularidade && changes.granularidade.currentValue){
-          this.tipo_granularidade = changes.granularidade.currentValue;
+      
+      try{
+          if(changes.granularidade && changes.granularidade.currentValue){
+              this.tipo_granularidade = changes.granularidade.currentValue;
+          }
+          if(changes.codigo && changes.codigo.currentValue){
+              this.codigo = changes.codigo.currentValue;
+          }
+          if(('tipo' in changes) && !changes.tipo && changes.tipo.currentValue && !this.tipo)
+            this.loadData();
+      }catch(e){
+        console.log('erro no changes',e, changes);
       }
-      if(changes.codigo && changes.codigo.currentValue){
-          this.codigo = changes.codigo.currentValue;
-      }
-      if(!changes.tipo && changes.tipo.currentValue && !this.tipo)
-        this.loadData();
     }
 
     loadData(){

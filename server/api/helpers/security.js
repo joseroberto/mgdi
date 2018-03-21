@@ -43,9 +43,14 @@ module.exports = {
 
   },
   getPerfil(req){
-      if(req.headers.authorization){
-        return jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
-      }else{
+      try{
+        if(req.headers.authorization){
+            return jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
+        }else{
+            return null;
+        }
+      }catch(e){
+          // Para assinatura invalida o perfil escolhido e o publico
           return null;
       }
   }
