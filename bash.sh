@@ -16,5 +16,6 @@ export SEARCH_BASE='DC=synapsys, DC=com, DC=br';
 export SEARCH_FILTER='(uid={{username}})';
 export NAMEFIELD='givenName';
 export MAILFIELD='mail';
+export DEBUG=1;
 export API_URL='http://rest.demas.saude.gov';
 export API_CONTEXT='/api';

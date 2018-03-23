@@ -151,10 +151,9 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
           }
       });
-
-      // $('.unidadeselect').on('change', (e) => {
-      //   this.indicador.UnidadeCodigo=jQuery(e.target).val();
-      // });
+      $('.unidadeselect').on('change', (e) => {
+          this.indicador.UnidadeCodigo=jQuery(e.target).val();
+            });
   }
 
   private loadIndicador(){
@@ -170,8 +169,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               this.tituloCabecalho = 'Atualiza dados do indicador';
               this.breadcrumb = ['Indicador', this.indicador.codigo];
               this.indicador = Object.assign(this.indicador, resp);
-              // $('.unidadeselect').val(this.indicador.UnidadeCodigo);
-              // $('.unidadeselect').trigger('change');
+              $('.unidadeselect').val(this.indicador.UnidadeCodigo);
+              $('.unidadeselect').trigger('change');
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
@@ -420,11 +419,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
   private validacaoAdicional(valor){
     let resposta = true;
-    // resposta = resposta && valor.UnidadeCodigo;
+    resposta = resposta && valor.UnidadeCodigo;
     //TODO: Não consegui fazer validação do bootstrap funcionar para o campo select2 da unidade
-    // if(!valor.UnidadeCodigo){
-    //   this.util.msgErro('Unidade é obrigatória');
-    // }
+    if(!valor.UnidadeCodigo){
+       this.util.msgErro('Unidade é obrigatória');
+    }
     return resposta;
   }
   private adicionaItemRelacionado(){

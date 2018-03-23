@@ -267,6 +267,28 @@
                   </div>
 
                   <div class="form-group">
+                    <label class="col-md-2 control-label" for="UnidadeCodigo">Unidade
+                      <popover-content #unidade
+                                       title="Marcadores"
+                                        [closeOnClickOutside]="true">
+                          Selecione a unidade principal responsável pelo indicador
+                       </popover-content>
+                      <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="unidade"></i>
+                    </label>
+                    <div class="col-md-6">
+                        <select style="width:100%" select2 class="select2 unidadeselect" id="UnidadeCodigo" name="UnidadeCodigo"
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="A unidade/secretaria a quem pertence o indicador é obrigatória">
+                            <option *ngFor="let itemUnidade of colecaoUnidades"
+                              [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
+                        </select>
+                        <div class="note">
+                          <strong>Atenção:</strong> Preencha com a unidade principal a que o indicador pertence
+                        </div>
+                       </div>
+                     </div>
+
+                  <div class="form-group">
                       <popover-content #diretrizNacional
                                        title="Diretriz Nacional"
                                        [closeOnClickOutside]="true">

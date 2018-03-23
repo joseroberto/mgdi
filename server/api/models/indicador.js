@@ -123,7 +123,7 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: {field: 'co_polaridade',allowNull: false}});
           Indicador.belongsTo(models.Unidade,{
               as: 'Unidade',
-              foreignKey: {field: 'co_unidade',allowNull: true}
+              foreignKey: {field: 'co_unidade',allowNull: false}
           });
           Indicador.belongsTo(models.ParametroFonte,{
               as: 'ParametroFonte',
