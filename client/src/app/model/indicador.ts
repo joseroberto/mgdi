@@ -41,6 +41,7 @@ export class Indicador{
     PolaridadeCodigo:number = 0;
     Granularidade:Granularidade;
     tags:Tag[];
+    unidadesMedidaSuplementar:UnidadeResponsavel[];
     IndicadoresRelacionados:Indicador[];
     CategoriasAnalise:CategoriaAnalise[];
     ResponsavelTecnico:UnidadeResponsavel[];
@@ -53,5 +54,6 @@ export class Indicador{
     this.ResponsavelGerencial = [];
     this.CategoriasAnalise = [];
     this.tags = [];
+    this.unidadesMedidaSuplementar = [];
   }
 }

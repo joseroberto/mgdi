@@ -9,9 +9,9 @@ apps:
       COMPANY: MS
       HOSTDB: docker.for.mac.host.internal
       DATABASE: dbspo
-      USER_DB: mgdi_adm
-      PASSWORD_DB: j7v3q-raf
-      SCHEMA: dbesusgestor_homologa
+      USER_DB: postgres
+      PASSWORD_DB: serenaya
+      SCHEMA: dbesusgestor
       HOST: localhost:8000
       SCHEMA_LOGIN: scpa
       WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
