@@ -365,8 +365,8 @@ module.exports = {
     });
   },
 
-  getIndicadorPesquisaPorCodigo: (codigos)=>
-    models.Indicador.findAll(
+  getIndicadorPesquisaPorCodigo: async (codigos)=>{ 
+      return models.Indicador.findAll(
       { attributes: [  'id', 'codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'objetivoRelevancia',
        'descricao', 'referencia_consulta', 'ultima_atualizacao' ],
       include: [
@@ -381,7 +381,8 @@ module.exports = {
       ],
       //  where: {codigo: req.swagger.params.codigo.value}
       where: {codigo: { $in: codigos}}
-    }),
+    });
+  },
 
     import_arquivo: (req,res)=>{
         var arquivo = req.swagger.params.arquivo.value;

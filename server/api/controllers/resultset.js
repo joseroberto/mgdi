@@ -56,7 +56,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        //console.log('SQL+=>', sql);
+        console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           //console.log(result);
           if(err) {
@@ -159,151 +159,148 @@ function montaParametros(paramEntrada){
   Converte o codigo alfanumerico do indicador em metadados
   necessarios para montagem dinamica da query de consulta.
 */
-function convertCodigoIndicador(config){
-  return new Promise((resolve, reject) => {
-    var ans = {};
-    var arrBusca = [];
-    var granularidade = 0;
-    var periodicidade = 0;
-    var tipoGranularidade = 0;
-    var categoria = null;
-    var arrValue = config.codigos;
+async function  convertCodigoIndicador(config){
 
-    switch (config.tipo){
-        case 'BR':
-          tipoGranularidade = 1;
-          break;
-        case 'RG':
-          tipoGranularidade = 2;
-          break;
-        case 'UF':
-          tipoGranularidade = 3;
-          break;
-        case 'MN':
-          tipoGranularidade = 4;
-          break;
-        case 'CN':
-          tipoGranularidade = 5;
-          break;
-    }
+  var arr={};
+  var granularidade = 0;
+  var periodicidade = 0;
+  var arrBusca = await indicador.getIndicadorPesquisaPorCodigo(config.codigos);
+  var tipoGranularidade = 0;
 
-    if(!arrValue){
-      reject('Parametro de consulta vazio');
-    }
-    //if(arrValue.length==0){
-    //  reject('Indicador não encontrado');
-    //}
-    //arrValue.forEach((itemArr)=>{
-        // Recupera do cache aqueles que são possíveis
-        //var value = cache.get(itemArr.trim());
-        //if(value != undefined) {
-          //console.log('Recuperando do cache:', itemArr, value, value.granularidade);
-          //ans[itemArr.trim()] = value;
-          // Testa granularidade.  Se difere deve dar um erro
-          //var value = itemArr;
-          //if(granularidade==0){
-          //  granularidade = value.granularidade;
-          //}
-          //if(value.granularidade!=granularidade){
-          //  reject('Conjunto de indicadores com granularidade diferentes');
-          //}
-          //if(value.granularidade<tipoGranularidade){
-          //  reject(`Indicador ${itemArr} com granularidade menor que o tipo de consulta requerida`);
-          //}
+  switch (config.tipo){
+    case 'BR':
+      tipoGranularidade = 1;
+      break;
+    case 'RG':
+      tipoGranularidade = 2;
+      break;
+    case 'UF':
+      tipoGranularidade = 3;
+      break;
+    case 'MN':
+      tipoGranularidade = 4;
+      break;
+    case 'CN':
+      tipoGranularidade = 5;
+      break;
+  }
 
-          //if(value.granularidade>tipoGranularidade && value.criterioAgregacao==0){
-          //  reject(`Indicador ${itemArr} com granularidade diferente do tipo de consulta e sem critério de agregação definido`);
-          //}
-          // Testa periodicidade.  Se difere deve dar um erro
-          //if(periodicidade==0){
-          //  periodicidade = value.periodicidade;
-          //}
-          //if(value.periodicidade!=periodicidade){
-          //  reject('Conjunto de indicadores com periodicidades diferentes');
-          //}
-        //}else{
-        //  console.log('Repassando para busca', itemArr);
-          //arrBusca.push(itemArr.trim());
-        //}
-    //});
-    //if(arrBusca && arrBusca.length>0) {
-      // Pesquisa no banco o que nao tiver no cache
-      indicador.getIndicadorPesquisaPorCodigo(arrValue).then(result=>{
-        result.forEach(item=>{
-          //console.log('item==>', item);
-          ans[item.codigo] = {
-            id: item.id,
-            titulo: item.titulo,
-            descricao: item.descricao,
-            granularidade: item.Granularidade.codigo,
-            banco: item.BancoDados,
-            tipoConsulta: item.TipoConsulta.codigo,
-            sql: item.referencia_consulta,
-            criterioAgregacao: item.CriterioAgregacao.codigo,
-            periodicidade: item.PeriodicidadeAtualizacao.codigo,
-            ultima_atualizacao: item.ultima_atualizacao,
-            tipo: 'valor'
-          };
+  return new Promise(async (resolve, reject) => {
 
-          // Testa categoria de CategoriaAnalise
-          if('porcategoria' in config && config.porcategoria){
-            var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
-            if(categoriaSelecionada){
-              //console.log('Consulta por categoria', categoriaSelecionada.Itens);
-              ans[item.codigo]['categoriaSelecionada']= categoriaSelecionada;
-              ans[item.codigo]['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
-              if(!categoria)
-                categoria = ans[item.codigo]['categoria'];
-            }else{
-              reject({codret: 1016, message: 'Categoria de análise não associada ao indicador ou a um dos indicadores'});
-            }
-            if(categoria && categoria!=ans[item.codigo]['categoria'])
-              reject({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'});
-          }
-
-          // Testa tipos de consulta
-          if(ans[item.codigo].tipoConsulta!=2 && ans[item.codigo].tipoConsulta!=3){ // Tratar depois a formula
-            reject({codret: 1010, message: `Tipo de consulta (${ans[item.codigo].tipoConsulta}) incompatível ou indicador sem informação`});
-          }
-          // Testa tipos de periodicidade
-          if(ans[item.codigo].periodicidade!=30 && ans[item.codigo].periodicidade!=360){ // Tratar depois a periodicidade
-            reject({codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida"});
-          }
-
-          //cache.set(item.codigo, ans[item.codigo]);
-          // Testa granularidade.  Se difere deve dar um erro
-          if(granularidade==0){
-            granularidade = ans[item.codigo].granularidade;
-          }
-          if(ans[item.codigo].granularidade!=granularidade){
-            reject({codret: 1012, message: "Conjunto de indicadores com granularidade diferentes"});
-          }
-          if(ans[item.codigo].granularidade<tipoGranularidade){
-            reject({codret: 1013, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`});
-          }
-          if(ans[item.codigo].granularidade>tipoGranularidade && item.criterio_agregacao==0){
-            reject({codret: 1014, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`});
-          }
-          // Testa periodicidade.  Se difere deve dar um erro
-          if(periodicidade==0){
-            periodicidade = ans[item.codigo].periodicidade;
-          }
-          if(ans[item.codigo].periodicidade!=periodicidade){
-            reject({codret: 1015, message: 'Conjunto de indicadores com periodicidades diferentes'});
-          }
-        });
-        //console.log('ans', ans);
-        resolve(ans);
-      }).catch(err=>{
-        console.log('Erro real==>', err);
-        reject({codret: 1001, message: "Erro na pesquisa dos resultados do indicador"});
-      });
-    //}else {
-    //    resolve(ans);
-    //}
+      if(!arrBusca){
+        reject('Parametro de consulta vazio');
+      }
+      try{
+        for (var i=0; i < arrBusca.length; i++){
+          var item = arrBusca[i];
+          arr[item.codigo]=getInfo(item, config, granularidade, periodicidade, tipoGranularidade);
+          granularidade = arr[item.codigo].granularidade;
+          periodicidade = arr[item.codigo].periodicidade;
+          if('indicadores_formula' in arr[item.codigo]){
+            var arritemFormula = await indicador.getIndicadorPesquisaPorCodigo(arr[item.codigo]['indicadores_formula']);
+            arr[item.codigo]['indicadores'] = {};
+            arritemFormula.forEach(itemFormula=>{
+              arr[item.codigo]['indicadores'][itemFormula.codigo] = getInfo(itemFormula, config, granularidade, periodicidade, tipoGranularidade);
+            });
+          } 
+        }
+      }catch(err){
+        try{
+          reject(JSON.parse(err.message));
+        }catch(err2){
+          console.log('Erro', err);
+          reject({codret: 1001, message: "Erro na pesquisa dos resultados do indicador"});
+        }
+      }
+    resolve(arr);
   });
 }
 
+/**
+ * Valida e recupera informações de metadados necessárias para criar dinamicamente
+ * a query para consulta do indicador
+ * 
+ * @param {item de indicador a ser pesquisado} item
+ * @param {configuracao} configuracao (parametros de entrada)
+ * @param {granularidade da consulta geral} granularidade
+ * @param {peridicidade da consulta geral} periodicidade
+ * @param {tipoGranularidade qual o tipo de agregacao selecionada na consulta} tipoGranularidade
+ */
+function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
+    var ans=null;
+    var categoria = null;
+
+    ans = {
+      id: item.id,
+      titulo: item.titulo,
+      descricao: item.descricao,
+      granularidade: item.Granularidade.codigo,
+      banco: item.BancoDados,
+      tipoConsulta: item.TipoConsulta.codigo,
+      sql: item.referencia_consulta,
+      criterioAgregacao: item.CriterioAgregacao.codigo,
+      periodicidade: item.PeriodicidadeAtualizacao.codigo,
+      ultima_atualizacao: item.ultima_atualizacao,
+      tipo: 'valor'
+    };
+
+    // Testa categoria de CategoriaAnalise
+    if('porcategoria' in config && config.porcategoria){
+      var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
+      if(categoriaSelecionada){
+        //console.log('Consulta por categoria', categoriaSelecionada.Itens);
+        ans['categoriaSelecionada']= categoriaSelecionada;
+        ans['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
+        if(!categoria)
+          categoria = ans['categoria'];
+      }else{
+        throw new Error(JSON.stringify({codret: 1016, message: 'Categoria de análise não associada ao indicador ou a um dos indicadores'}));
+      }
+      if(categoria && categoria!=ans[item.codigo]['categoria'])
+        throw new Error(JSON.stringify({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'}));
+    }
+    if(ans.tipoConsulta==1){  // Formula
+      ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
+    }
+    // Testa tipos de consulta
+    if(ans.tipoConsulta!=1 && ans.tipoConsulta!=2 && ans.tipoConsulta!=3){ // Tratar depois a formula
+      throw new Error(JSON.stringify({codret: 1010, message: `Tipo de consulta (${ans.tipoConsulta}) incompatível ou indicador sem informação`}));
+    }
+    // Testa tipos de periodicidade
+    if(ans.periodicidade!=30 && ans.periodicidade!=360){ // Tratar depois a periodicidade
+      throw new Error(JSON.stringify({codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida"}));
+    }
+    // Testa granularidade.  Se difere deve dar um erro
+    if(granularidade==0){
+      granularidade = ans.granularidade;
+    }
+    if(ans.granularidade!=granularidade){
+      throw new Error(JSON.stringify({codret: 1012, message: "Conjunto de indicadores com granularidade diferentes"}));
+    }
+    if(ans.granularidade<tipoGranularidade){
+      throw new Error(JSON.stringify({codret: 1013, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`}));
+    }
+    if(ans.granularidade>tipoGranularidade && item.criterio_agregacao==0){
+      throw new Error(JSON.stringify({codret: 1014, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`}));
+    }
+    // Testa periodicidade.  Se difere deve dar um erro
+    if(periodicidade==0){
+      periodicidade = ans.periodicidade;
+    }
+    if(ans.periodicidade!=periodicidade){
+      throw new Error(JSON.stringify({codret: 1015, message: 'Conjunto de indicadores com periodicidades diferentes'}));
+    }
+    return ans;
+}
+
+/**
+ * Recupera as subcategorias e um conjunto de itens de categorias.
+ * 
+ * No final devemos ter uma lista dos últimos itens na categoria de
+ * itens (folhas da árvore).
+ * 
+ * @param {itens de categorias} itens 
+ */
 function getSubCategorias(itens){
   let ans=[];
   
@@ -329,6 +326,11 @@ function montaQuery(indicadores, config){
   (Object.keys(indicadores)).forEach(key=>{
       // monta query conforme o tipo de consulta
       switch (indicadores[key].tipoConsulta) {
+        case 1:
+          for(item in indicadores[key].indicadores){
+            sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;  
+          };    
+          break;
         case 2: // Query
           sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
           break;
@@ -344,6 +346,9 @@ function montaQuery(indicadores, config){
 
 }
 
+/**
+ * 
+ */
 function montaQueryComplemento(indicadores, config){
     var select = '';
     var from = 'from ';
@@ -355,7 +360,9 @@ function montaQueryComplemento(indicadores, config){
     var nomeCampo = '';
     var indicadorAnterior = '';
     var referencia = indicadores[Object.keys(indicadores)[0]];
+    var alias = referencia.tipoConsulta==1?Object.keys(referencia.indicadores)[0]:Object.keys(indicadores)[0];
 
+    //console.log('REFERENCIA==>',referencia,'ALIAS==>>',alias)
     switch (referencia.periodicidade) {
       case 360:
         varPeriodicidade = 'ano';
@@ -372,8 +379,8 @@ function montaQueryComplemento(indicadores, config){
       default:
     }
 
-    select += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
-    groupby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
+    select += `${alias}.${varPeriodicidade},`;
+    groupby += `${alias}.${varPeriodicidade},`;
 
     switch (config.tipo) {
       case 'RG':
@@ -381,7 +388,7 @@ function montaQueryComplemento(indicadores, config){
         select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
         from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
         groupby += `reg.ds_regiao, reg.co_regiao,`;
         orderby += `reg.ds_regiao,`;
         break;
@@ -390,7 +397,7 @@ function montaQueryComplemento(indicadores, config){
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo,`;
         from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
         groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
         orderby += `uf.no_uf, reg.ds_regiao,`;
         break;
@@ -399,42 +406,28 @@ function montaQueryComplemento(indicadores, config){
         select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
         from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
-                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao`;
+                      inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
         groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
     }
 
-    orderby += `${Object.keys(indicadores)[0]}.${varPeriodicidade},`;
+    orderby += `${alias}.${varPeriodicidade},`;
 
     (Object.keys(indicadores)).forEach(key=>{
-        switch (indicadores[key].criterioAgregacao) {
-          case 0: // Sem agregacao
-            select += ` ${key}::float,`;
-            break;
-          case 1: // Maior valor
-            select += ` MAX(${key})::float  as${key},`;
-            break;
-          case 2: // Menor valor
-            select += ` MIN(${key})::float  ${key},`;
-            break;
-          case 3: // Media
-            select += ` AVG(${key})::float  ,${key},`;
-            break;
-          case 4: // Soma
-            select += ` SUM(${key})::float ${key},`;
-            break;
-        }
+        select += associaAgregacao(indicadores[key]);
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
           //from += ` FULL OUTER JOIN ${key} `;
-          from += ` INNER JOIN ${key} `;
+          //from += ` INNER JOIN ${key} `;
           // granularidade
           switch (referencia.granularidade) {
             case 3: //UF
-              from += `ON ${key}.uf = uf.co_uf `;
+              //from += `ON ${key}.uf = uf.co_uf `;
+              from += associaCampos(indicadores[key], 'uf', 'uf.co_uf', varPeriodicidade);
               break;
             case 4: //Municipio
-              from += `ON ${key}.ibge = mun.co_ibge `;
+              //from += `ON ${key}.ibge = mun.co_ibge `;
+              from += associaCampos(indicadores[key], 'ibge', 'mun.co_ibge', varPeriodicidade);
               break;
           }
         }else
@@ -517,6 +510,63 @@ function montaQueryComplemento(indicadores, config){
     var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
 
     return query;
+}
+
+function associaAgregacao(indicador){
+  var ans = '';
+  var operacao = '';
+  switch (indicador.criterioAgregacao) {
+    case 0: // Sem agregacao
+      operacao = '';
+      break;
+    case 1: // Maior valor
+      operacao = 'MAX';
+      break;
+    case 2: // Menor valor
+      operacao = 'MIN';
+      break;
+    case 3: // Media
+      operacao = 'AVG';
+      break;
+    case 4: // Soma
+      operacao = 'SUM';
+      break;
+  }
+  if(indicador.tipoConsulta==1){ // Formula
+    ans = ' ' + indicador.sql;
+    var ind_item;
+    for(key in indicador.indicadores){
+      ans = ans.replace(`[${key}]`, `${operacao}(${key})::float`);
+      console.log(key,'===>', ans);
+    }
+    ans += ` ${indicador.codigo},`;
+    console.log('PARTICULA==>', ans);
+  }else{
+    // select += ` SUM(${key})::float ${key},`;
+    ans = ` ${operacao}(${indicador.codigo})::float ${indicador.codigo},`;
+  }
+  return ans;
+}
+/**
+ * 
+ */
+function associaCampos(indicador, campo, campo_associacao, varPeriodicidade){
+ //from += `ON ${key}.ibge = mun.co_ibge `;
+ //INNER JOIN PI023N ON PI023N.ibge= mun.co_ibge  INNER JOIN PI023D ON PI023D.ibge= mun.co_ibge and PI023N.ano=PI023D.ano
+    var ans = '';
+    var key_ant = '';
+    if(indicador.tipoConsulta==1){ // Formula
+      for(key in indicador.indicadores){
+        ans += `INNER JOIN ${key} ON ${key}.${campo}=${campo_associacao} `
+        if(key_ant){
+          ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+        }
+        key_ant=key;
+      }
+    }else{
+      ans = `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
+    }
+    return ans;
 }
 
 function montaQueryValorIndicador(codigo, indicador, config){
