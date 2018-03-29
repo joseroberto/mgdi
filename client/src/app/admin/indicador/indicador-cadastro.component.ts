@@ -30,6 +30,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   private secretaria_selecionada: Object = {};
 
   @ViewChild('tags') selectElRef;
+  @ViewChild('uniSuples') selectUnisRef;
 
   private options = {focus: true, height: 100, lang:'pt-BR',
     toolbar: [
@@ -154,6 +155,20 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       $('.unidadeselect').on('change', (e) => {
           this.indicador.UnidadeCodigo=jQuery(e.target).val();
             });
+
+      $('.uniSuples').on('change', (e) => {
+        this.indicador.unidadesMedidaSuplementar=[];
+        if(jQuery(e.target).val()){
+          jQuery(e.target).val().forEach(
+            obj=>{
+              this.indicador.unidadesMedidaSuplementar.push(obj);
+            });
+          }
+      });
+
+      // $('.unidadeselect').on('change', (e) => {
+      //   this.indicador.UnidadeCodigo=jQuery(e.target).val();
+      // });
   }
 
   private loadIndicador(){
@@ -174,9 +189,20 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
+              if(resp && resp.hasOwnProperty('UnidadesMedidaSuplementar') && 
+                resp.UnidadesMedidaSuplementar.length > 0) 
+                this.updateUnidadesSuplList(resp.UnidadesMedidaSuplementar);
             }, (err)=> this.util.msgErroInfra(err));
         }
     });
+  }
+
+  private updateUnidadesSuplList(uniSuples:any[]) {
+    let options = this.selectUnisRef.nativeElement.options;
+    for(let i=0; i < options.length; i++) {
+      options[i].selected = uniSuples.find( item=> item.codigo==options[i].value)!=undefined;
+    }
+    $('.uniSuples').trigger('change');
   }
 
   private updateTagList(tags:any[]) {

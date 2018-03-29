@@ -247,6 +247,24 @@
                         <option *ngFor="let itemPolaridade of colecaoPolaridades" [ngValue]="itemPolaridade.codigo">{{ itemPolaridade.descricao }}</option>
                       </select>
                     </div>
+
+                    <div class="form-group">
+                      <label class="col-md-2 control-label" for="uniSuples">Unidades de medida suplementar
+                        <popover-content #uniSuple
+                                         title="Unidades Suplementares"
+                                         [closeOnClickOutside]="true">
+                            Selecione as unidades de medida suplementar.
+                        </popover-content>
+                        <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="uniSuple"></i>
+                      </label>
+                      <div class="col-md-2">
+                        <select select2 multiple #uniSuples class="form-control uniSuples" name="uniSuple">
+                          <option [value]="uni.codigo" *ngFor="let uni of colecaoUnidadeMedida">{{ uni.descricao }}</option>
+                        </select>
+                      </div>
+                    </div>
+
+
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label" for="tags">Marcadores

@@ -103,6 +103,8 @@ module.exports = {
     models.Indicador.create(entidade).then((indicador)=> {
       if(req.body.tags)
         indicador.setTags(req.body.tags);
+      if(req.body.unidadesMedidaSuplementar)
+        indicador.setUnidadesMedidaSuplementar(req.body.unidadesMedidaSuplementar);
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     }).catch(err=>{
       if('errors' in err){
@@ -180,6 +182,7 @@ module.exports = {
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
         item[0].setTags(req.body.tags);
+        item[0].setUnidadesMedidaSuplementar(req.body.unidadesMedidaSuplementar);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
     }).catch(err=>{
