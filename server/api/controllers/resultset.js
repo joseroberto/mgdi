@@ -364,7 +364,7 @@ function montaQuery(indicadores, config){
 }
 
 /**
- * 
+ *  Monta complemento da query para o construtor
  */
 function montaQueryComplemento(indicadores, config){
     var select = '';
@@ -539,7 +539,10 @@ function montaQueryComplemento(indicadores, config){
 
     return query;
 }
-
+/**
+ * Associacao da operacao de valor para o indicador
+ * @param {objeto indicador} indicador 
+ */
 function associaAgregacao(indicador){
   var ans = '';
   var operacao = '';
