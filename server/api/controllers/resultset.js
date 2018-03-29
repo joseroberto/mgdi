@@ -232,6 +232,7 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
 
     ans = {
       id: item.id,
+      codigo: item.codigo,
       titulo: item.titulo,
       descricao: item.descricao,
       granularidade: item.Granularidade.codigo,
@@ -321,26 +322,34 @@ function getSubCategorias(itens){
   Montador de query de consulta genérica.
 */
 function montaQuery(indicadores, config){
-
+  var arr_control=[];
   var sql_with='WITH ';
   (Object.keys(indicadores)).forEach(key=>{
       // monta query conforme o tipo de consulta
       switch (indicadores[key].tipoConsulta) {
         case 1:
           for(item in indicadores[key].indicadores){
-            sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;  
+            if(arr_control.indexOf(item)==-1){
+              sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;  
+              arr_control.push(item);
+            }
           };    
           break;
         case 2: // Query
-          sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
+          if(arr_control.indexOf(key)==-1){
+            sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
+            arr_control.push(key);
+          }
           break;
         case 3: // Importação
-          sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key], config)} ),`;
+          if(arr_control.indexOf(key)==-1){
+            sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key], config)} ),`;
+            arr_control.push(key);
+          }
           break;
       }
   });
   sql_with = sql_with.substr(0,sql_with.length - 1);
-
   var sql = montaQueryComplemento(indicadores, config);
   return `${sql_with} ${sql}`
 
@@ -413,7 +422,7 @@ function montaQueryComplemento(indicadores, config){
     }
 
     orderby += `${alias}.${varPeriodicidade},`;
-
+    var arr_control=[];
     (Object.keys(indicadores)).forEach(key=>{
         select += associaAgregacao(indicadores[key]);
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
@@ -423,21 +432,30 @@ function montaQueryComplemento(indicadores, config){
           switch (referencia.granularidade) {
             case 3: //UF
               //from += `ON ${key}.uf = uf.co_uf `;
-              from += associaCampos(indicadores[key], 'uf', 'uf.co_uf', varPeriodicidade);
+              from += associaCampos(indicadores[key], 'uf', 'uf.co_uf', varPeriodicidade, arr_control);
               break;
             case 4: //Municipio
               //from += `ON ${key}.ibge = mun.co_ibge `;
-              from += associaCampos(indicadores[key], 'ibge', 'mun.co_ibge', varPeriodicidade);
+              from += associaCampos(indicadores[key], 'ibge', 'mun.co_ibge', varPeriodicidade, arr_control);
               break;
           }
-        }else
-          from += ` ${key} `;
-
-        // ano
-        if(indicadorAnterior){
+        }else if(indicadores[key].tipoConsulta!=1){
+          //from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
+          if(indicadorAnterior){
+            from += `INNER JOIN ${associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control)} `;
+            from += `ON ${indicadorAnterior}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+          }else{
+            from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
+          }  
+        }
+   
+        // periodicidade
+        if(indicadorAnterior && indicadores[key].tipoConsulta!=1){
           from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
         }
-        indicadorAnterior = key;
+
+        indicadorAnterior=key;
+
     });
 
     // Categoria de CategoriaAnalise
@@ -537,34 +555,54 @@ function associaAgregacao(indicador){
     var ind_item;
     for(key in indicador.indicadores){
       ans = ans.replace(`[${key}]`, `${operacao}(${key})::float`);
-      console.log(key,'===>', ans);
     }
     ans += ` ${indicador.codigo},`;
-    console.log('PARTICULA==>', ans);
+    //console.log('PARTICULA==>', ans);
   }else{
     // select += ` SUM(${key})::float ${key},`;
     ans = ` ${operacao}(${indicador.codigo})::float ${indicador.codigo},`;
   }
   return ans;
 }
+
 /**
- * 
+ * Monta a parte associativa das querys
  */
-function associaCampos(indicador, campo, campo_associacao, varPeriodicidade){
- //from += `ON ${key}.ibge = mun.co_ibge `;
- //INNER JOIN PI023N ON PI023N.ibge= mun.co_ibge  INNER JOIN PI023D ON PI023D.ibge= mun.co_ibge and PI023N.ano=PI023D.ano
+function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, control){
     var ans = '';
-    var key_ant = '';
+    
     if(indicador.tipoConsulta==1){ // Formula
-      for(key in indicador.indicadores){
-        ans += `INNER JOIN ${key} ON ${key}.${campo}=${campo_associacao} `
-        if(key_ant){
-          ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+      var key_ant = '';
+      for(key in indicador.indicadores){  
+        if(control.indexOf(key)==-1){    
+            if(campo && campo_associacao){
+              ans += `INNER JOIN ${key} `
+              ans += `ON ${key}.${campo}=${campo_associacao} `;
+              if(key_ant){
+                ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+              }
+            }else{
+              if(key_ant){
+                ans += `INNER JOIN ${key} `;
+                ans += `ON ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+              }else{
+                ans += `${key} `
+              }       
+            }
+            control.push(key);
         }
         key_ant=key;
+
       }
     }else{
-      ans = `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
+      if(control.indexOf(indicador.codigo)>-1) return '';
+      if(campo && campo_associacao){
+        ans += `INNER JOIN ${indicador.codigo} `
+        ans += `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
+      }else{
+        ans += `${indicador.codigo} `
+      }
+      control.push(indicador.codigo);
     }
     return ans;
 }
