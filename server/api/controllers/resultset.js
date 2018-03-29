@@ -263,6 +263,7 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
     if(ans.tipoConsulta==1){  // Formula
       //TODO: Essa linha so funciona no node 8.11 em diante:
       //ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
+      // Trocando temporariamente pelo codigo
       var reg=/\[(.*?)\]/g;
       var match;
       ans['indicadores_formula'] =  [];
@@ -454,6 +455,8 @@ function montaQueryComplemento(indicadores, config){
           }else{
             from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
           }  
+        }else{
+          from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
         }
    
         // periodicidade
