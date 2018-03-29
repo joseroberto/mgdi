@@ -261,7 +261,14 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
         throw new Error(JSON.stringify({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'}));
     }
     if(ans.tipoConsulta==1){  // Formula
-      ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
+      //TODO: Essa linha so funciona no node 8.11 em diante:
+      //ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
+      var reg=/\[(.*?)\]/g;
+      var match;
+      ans['indicadores_formula'] =  [];
+      while(match = reg.exec(ans.sql)) {
+        ans['indicadores_formula'].push(match[1]);
+      }
     }
     // Testa tipos de consulta
     if(ans.tipoConsulta!=1 && ans.tipoConsulta!=2 && ans.tipoConsulta!=3){ // Tratar depois a formula
