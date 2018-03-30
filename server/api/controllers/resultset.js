@@ -567,7 +567,9 @@ function associaAgregacao(indicador){
     ans = ' ' + indicador.sql;
     var ind_item;
     for(key in indicador.indicadores){
-      ans = ans.replace(`[${key}]`, `${operacao}(${key})::float`);
+      //ans = ans.replace(`[${key}]`, `${operacao}(${key})::float`);
+      // Para substituir todas as ocorrencias em javascript:
+      ans = ans.replace(new RegExp(`[${key}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `${operacao}(${key})::float`);
     }
     ans += ` ${indicador.codigo},`;
     //console.log('PARTICULA==>', ans);
