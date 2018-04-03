@@ -1244,6 +1244,15 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+        '403':
+         description: >-
+          Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
+         schema:
+          $ref: '#/definitions/Error'
+        '503':
+         description: Erro de infraestrutura.
+         schema:
+          $ref: '#/definitions/Error'
     delete:
       description: Apaga um registro de indicador
       summary: Apaga um registro de indicador
@@ -2173,7 +2182,7 @@ definitions:
       SituacaoCodigo:
         type: number
       UnidadeCodigo:
-        type: number
+        type: [number, 'null']
       
   IndicadorAtualizacao:
     description: Objeto indicador

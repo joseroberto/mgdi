@@ -486,7 +486,7 @@ function montaQueryComplemento(indicadores, config){
         break;
       case 'REG':
         if(config.valores_filtro){
-          where = where + ' AND floor(mun.co_uf/10)  IN (' + config.valores_filtro+')';
+          where = where + ' AND mun.co_regiao IN (' + config.valores_filtro+')';
         }
         break;
       case 'MUN':

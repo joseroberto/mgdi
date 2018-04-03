@@ -155,9 +155,10 @@ export class LoginComponent implements OnInit {
     $(':input[type="submit"]').prop('disabled', false);
     this.newuser.sexo = $("input[type='radio'][name='sexo']:checked").val();
     //if(this.newuser.Perfil && this.newuser.Perfil.exige_unidade){
-    //FIX: Todos os perfis vao exigir unidade de lotacao.
       this.newuser.UnidadeCodigo = JSON.parse($('#UnidadeCodigo').val());
-      if(!this.newuser.UnidadeCodigo){
+      let PerfilSelecionado = this.colecaoPerfis.find(item=>item.codigo==this.newuser.PerfilCodigo);
+      console.log('PerfilSelecionado==>', PerfilSelecionado);
+      if(!this.newuser.UnidadeCodigo && PerfilSelecionado && PerfilSelecionado.exige_unidade){
         this.util.msgErro("Unidade de lotação é obrigatória");
         return false;
       }
