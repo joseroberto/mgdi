@@ -3,6 +3,7 @@
 /client/src/environments/environment.*
 /banco/ensaio*
 *.sh
+.vscode/
 
 *.tgz
 

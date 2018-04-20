@@ -585,20 +585,21 @@ function associaAgregacao(indicador){
  */
 function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, control){
     var ans = '';
-    
+    //let connector = 'INNER JOIN';
+    let connector = 'FULL OUTER JOIN';
     if(indicador.tipoConsulta==1){ // Formula
       var key_ant = '';
       for(key in indicador.indicadores){  
         if(control.indexOf(key)==-1){    
             if(campo && campo_associacao){
-              ans += `INNER JOIN ${key} `
+              ans += `${connector} ${key} `
               ans += `ON ${key}.${campo}=${campo_associacao} `;
               if(key_ant){
                 ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
               }
             }else{
               if(key_ant){
-                ans += `INNER JOIN ${key} `;
+                ans += `${connector} ${key} `;
                 ans += `ON ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
               }else{
                 ans += `${key} `
@@ -612,7 +613,7 @@ function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, con
     }else{
       if(control.indexOf(indicador.codigo)>-1) return '';
       if(campo && campo_associacao){
-        ans += `INNER JOIN ${indicador.codigo} `
+        ans += `${connector} ${indicador.codigo} `
         ans += `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
       }else{
         ans += `${indicador.codigo} `
