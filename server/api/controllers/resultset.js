@@ -633,30 +633,30 @@ function montaQueryValorIndicador(codigo, indicador, config){
 
   switch (indicador.criterioAgregacao) {
     case 0: // Sem agregacao
-      sql_select += ` nu_valor::float  as ${codigo}`;
+      sql_select += ` nu_valor  as ${codigo}`;
       break;
     case 1: // Maior valor
-      sql_select += ` MAX(nu_valor)::float  as${codigo}`;
+      sql_select += ` MAX(nu_valor)  as${codigo}`;
       break;
     case 2: // Menor valor
-      sql_select += ` MIN(nu_valor)::float  ${codigo}`;
+      sql_select += ` MIN(nu_valor)  ${codigo}`;
       break;
     case 3: // Media
-      sql_select += ` AVG(nu_valor)::float  ${codigo}`;
+      sql_select += ` AVG(nu_valor)  ${codigo}`;
       break;
     case 4: // Soma
-      sql_select += ` SUM(nu_valor)::float  ${codigo}`;
+      sql_select += ` SUM(nu_valor)  ${codigo}`;
       break;
   }
 
   if(!(indicador.granularidade==0 || config.tipo=='BR')){
     switch (indicador.granularidade) {
       case 3:  // UF
-        sql_select += ', co_uf::int  as uf';
+        sql_select += ', co_uf  as uf';
         sql_group += (indicador.criterioAgregacao!=0 ? 'co_uf,':'');
         break;
       case 4:  // Municipio
-        sql_select += ', co_ibge::int  as ibge';
+        sql_select += ', co_ibge  as ibge';
         sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
         break;
       case 5:  // CNES

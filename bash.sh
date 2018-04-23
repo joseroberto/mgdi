@@ -2,7 +2,8 @@
 export COMPANY='Teste';
 export TITLE='Titulo';
 export DESCRIPTION='Descricao';
-export HOSTDB='localhost';
+##export HOSTDB='localhost';
+export HOSTDB='10.1.2.25';
 export DATABASE='dbspo';
 export USER_DB='vasconcelos';
 export PASSWORD_DB='serenaya';
