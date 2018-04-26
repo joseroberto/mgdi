@@ -4,6 +4,7 @@
 /banco/ensaio*
 *.sh
 .vscode/
+bash.sh
 
 *.tgz
 
