@@ -58,7 +58,6 @@ module.exports = {
         var sql = montaQuery(indicadores, config);
         console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
-          //console.log(result);
           if(err) {
             console.error('error running query', err);
             reject({mensagem:err});
@@ -66,6 +65,8 @@ module.exports = {
           }
           resolve([result, indicadores]);
         });
+        //TODO: Por enquanto...
+        //reject({mensagem:'Sem dados'});
 
       }, err=>{
         reject(err);
@@ -326,6 +327,19 @@ function getSubCategorias(itens){
   return ans;
 }
 
+function montaResult(indicadores, config){
+  var referencia = indicadores[Object.keys(indicadores)[0]];
+  var varPeriodicidade = getPeriodicidade(referencia.periodicidade);
+  var varGranularidade = getGranularidade(referencia.granularidade);
+  //var criterio_agregacao = getCriterioAgregacao(referencia.criterioAgregacao);
+
+  return `RESULT as (select ${Object.keys(indicadores).toString()}, 
+      coalesce(${Object.keys(indicadores).map(a=>a + '.' + varPeriodicidade).toString()}) as ${varPeriodicidade},
+      coalesce(${Object.keys(indicadores).map(a=>a + '.' + varGranularidade).toString()}) as ${varGranularidade}     
+      from ${associaCampos2(Object.keys(indicadores), varPeriodicidade, varGranularidade)})`;
+}
+
+
 /*
   Montador de query de consulta genérica.
 */
@@ -358,8 +372,7 @@ function montaQuery(indicadores, config){
       }
   });
   sql_with = sql_with.substr(0,sql_with.length - 1);
-  var sql = montaQueryComplemento(indicadores, config);
-  return `${sql_with} ${sql}`
+  return `${sql_with}, ${montaResult(indicadores, config)} ${montaQueryComplemento(indicadores, config)}`
 
 }
 
@@ -369,35 +382,17 @@ function montaQuery(indicadores, config){
 function montaQueryComplemento(indicadores, config){
     var select = '';
     var from = 'from ';
-    //var where = 'where '; //Essa vai ficar para os filtros
     var groupby = '';
     var orderby = '';
 
-    var varPeriodicidade = '';
-    var nomeCampo = '';
     var indicadorAnterior = '';
     var referencia = indicadores[Object.keys(indicadores)[0]];
+    var varPeriodicidade = getPeriodicidade(referencia.periodicidade);
     var alias = referencia.tipoConsulta==1?Object.keys(referencia.indicadores)[0]:Object.keys(indicadores)[0];
 
     //console.log('REFERENCIA==>',referencia,'ALIAS==>>',alias)
-    switch (referencia.periodicidade) {
-      case 360:
-        varPeriodicidade = 'ano';
-        nomeCampo='co_ano';
-        break;
-      case 30:
-        varPeriodicidade = 'anomes';
-        nomeCampo='co_anomes';
-        break;
-      case 1:
-        varPeriodicidade = 'anomesdia';
-        nomeCampo='co_anomesdia';
-        break;
-      default:
-    }
-
-    select += `${alias}.${varPeriodicidade},`;
-    groupby += `${alias}.${varPeriodicidade},`;
+    select += `${varPeriodicidade},`;
+    groupby += `${varPeriodicidade},`;
 
     switch (config.tipo) {
       case 'RG':
@@ -428,9 +423,14 @@ function montaQueryComplemento(indicadores, config){
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
     }
+    select += Object.values(indicadores).map(a=>getCriterioAgregacao(a.criterioAgregacao)+'('+ a.codigo +') as '+a.codigo + ' ').toString();
+    orderby += `${varPeriodicidade},`;
 
-    orderby += `${alias}.${varPeriodicidade},`;
-    var arr_control=[];
+
+    // Para o RESULT
+    from += 'INNER JOIN RESULT on RESULT.ibge=mun.co_ibge ';
+ 
+    /*var arr_control=[];
     (Object.keys(indicadores)).forEach(key=>{
         select += associaAgregacao(indicadores[key]);
         if(!(referencia.granularidade==0 || config.tipo=='BR')){
@@ -466,7 +466,7 @@ function montaQueryComplemento(indicadores, config){
 
         indicadorAnterior=key;
 
-    });
+    });*/
 
     // Categoria de CategoriaAnalise
     if('categoria' in referencia && referencia.categoria){
@@ -477,7 +477,7 @@ function montaQueryComplemento(indicadores, config){
     }
 
     // Filtro por uf, ibge, regiao,
-    var where = 'where 1=1';
+    var where = `where ${varPeriodicidade}>0`;
     switch (config.filtro) {
       case 'UF':
         if(config.valores_filtro){
@@ -545,24 +545,8 @@ function montaQueryComplemento(indicadores, config){
  */
 function associaAgregacao(indicador){
   var ans = '';
-  var operacao = '';
-  switch (indicador.criterioAgregacao) {
-    case 0: // Sem agregacao
-      operacao = '';
-      break;
-    case 1: // Maior valor
-      operacao = 'MAX';
-      break;
-    case 2: // Menor valor
-      operacao = 'MIN';
-      break;
-    case 3: // Media
-      operacao = 'AVG';
-      break;
-    case 4: // Soma
-      operacao = 'SUM';
-      break;
-  }
+  var operacao = getCriterioAgregacao(indicador.criterioAgregacao);
+  console.log('operacao==>', operacao);
   if(indicador.tipoConsulta==1){ // Formula
     ans = ' ' + indicador.sql;
     var ind_item;
@@ -628,26 +612,9 @@ function montaQueryValorIndicador(codigo, indicador, config){
   var sql_where = `co_seq_indicador=${indicador.id}`;
   var sql_group = 'group by ';
   var nome_campo_periodo = '';
+  var criterio_agregacao = getCriterioAgregacao(indicador.criterioAgregacao);
 
-  //console.log('montaQueryValorIndicador', indicador);
-
-  switch (indicador.criterioAgregacao) {
-    case 0: // Sem agregacao
-      sql_select += ` nu_valor  as ${codigo}`;
-      break;
-    case 1: // Maior valor
-      sql_select += ` MAX(nu_valor)  as${codigo}`;
-      break;
-    case 2: // Menor valor
-      sql_select += ` MIN(nu_valor)  ${codigo}`;
-      break;
-    case 3: // Media
-      sql_select += ` AVG(nu_valor)  ${codigo}`;
-      break;
-    case 4: // Soma
-      sql_select += ` SUM(nu_valor)  ${codigo}`;
-      break;
-  }
+  sql_select += ` ${criterio_agregacao}(nu_valor) as ${codigo}`;
 
   if(!(indicador.granularidade==0 || config.tipo=='BR')){
     switch (indicador.granularidade) {
@@ -772,4 +739,73 @@ function tabulaResultado(result, indicadores, config){
   });
 
   return retorno;
+}
+
+
+/// Funcoes acessorias
+
+function getPeriodicidade(value){
+  var varPeriodicidade = '';
+  switch (value) {
+    case 360:
+      varPeriodicidade = 'ano';
+      break;
+    case 30:
+      varPeriodicidade = 'anomes';
+      break;
+    case 1:
+      varPeriodicidade = 'anomesdia';
+      break;
+    default:
+  }
+  return varPeriodicidade;
+}
+
+function getCriterioAgregacao(value){
+  var operacao = '';
+  switch (value) {
+    case 0: // Sem agregacao
+      operacao = '';
+      break;
+    case 1: // Maior valor
+      operacao = 'MAX';
+      break;
+    case 2: // Menor valor
+      operacao = 'MIN';
+      break;
+    case 3: // Media
+      operacao = 'AVG';
+      break;
+    case 4: // Soma
+      operacao = 'SUM';
+      break;
+  }
+  return operacao;
+}
+
+function getGranularidade(value){
+  var varGranularidade='';
+  switch (value) {
+    case 3: //UF
+      varGranularidade = 'ibge';
+      break;
+    case 4: //Municipio
+      varGranularidade = 'ibge';
+      break;
+  }
+  return varGranularidade;
+}
+
+function associaCampos2(indicadores, varPeriodicidade, varGranularidade){
+  var ans='';
+  var item_anterior = '';
+  indicadores.forEach(item=>{
+    if(ans.length>0){
+      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
+    }else{
+      ans+=item;
+      item_anterior = item;
+    }
+  });
+  return ans;
 }
