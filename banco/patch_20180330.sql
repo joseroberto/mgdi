@@ -7,7 +7,7 @@
 -- select * from dbesusgestor.tb_regiao;
 -- select * from dbesusgestor.tb_uf;
 
-alter table dbesusgestor.tb_uf drop co_regiao;
+alter table dbesusgestor.tb_uf drop column co_regiao;
 alter table dbesusgestor.tb_uf add column co_regiao smallint;
 
 update dbesusgestor.tb_uf set co_regiao=floor(co_uf/10);

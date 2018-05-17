@@ -331,12 +331,45 @@ function montaResult(indicadores, config){
   var referencia = indicadores[Object.keys(indicadores)[0]];
   var varPeriodicidade = getPeriodicidade(referencia.periodicidade);
   var varGranularidade = getGranularidade(referencia.granularidade);
-  //var criterio_agregacao = getCriterioAgregacao(referencia.criterioAgregacao);
+  var arrControle = [];
+  var operation = '';
+  var per = '';
+  var gran = '';
 
-  return `RESULT as (select ${Object.keys(indicadores).toString()}, 
-      coalesce(${Object.keys(indicadores).map(a=>a + '.' + varPeriodicidade).toString()}) as ${varPeriodicidade},
-      coalesce(${Object.keys(indicadores).map(a=>a + '.' + varGranularidade).toString()}) as ${varGranularidade}     
-      from ${associaCampos2(Object.keys(indicadores), varPeriodicidade, varGranularidade)})`;
+
+  Object.keys(indicadores).forEach(key => {
+      switch(indicadores[key].tipoConsulta){
+        case 1: // Formulas
+          var ans = ' ' + indicadores[key].sql;
+          if(arrControle.indexOf(indicadores[key].codigo)==-1){
+              for(key2 in indicadores[key].indicadores){
+                ans = ans.replace(new RegExp(`[${key2}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `(${key2})`);
+                per += key2 + '.' + varPeriodicidade + ',';
+                gran += key2 + '.' + varGranularidade + ',';
+                arrControle.push(key2);
+              }
+              ans += ` ${indicadores[key].codigo},`;
+              operation += ans;
+          }
+          break;
+        case 3: // Tb Resultado
+          operation +=` (${indicadores[key].codigo}) ${indicadores[key].codigo},`;
+          if(arrControle.indexOf(indicadores[key].codigo)==-1){
+            per += indicadores[key].codigo + '.' + varPeriodicidade + ',';
+            gran += indicadores[key].codigo + '.' + varGranularidade + ',';
+            arrControle.push(indicadores[key].codigo);
+          }   
+          break;
+      }
+  });
+
+  per = per.substr(0, per.length-1);
+  gran = gran.substr(0, gran.length-1);
+
+  return `RESULT as (select ${operation} 
+      coalesce(${per}) as ${varPeriodicidade},
+      coalesce(${gran}) as ${varGranularidade}     
+      from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade)})`;
 }
 
 
@@ -346,10 +379,11 @@ function montaResult(indicadores, config){
 function montaQuery(indicadores, config){
   var arr_control=[];
   var sql_with='WITH ';
+
   (Object.keys(indicadores)).forEach(key=>{
       // monta query conforme o tipo de consulta
       switch (indicadores[key].tipoConsulta) {
-        case 1:
+        case 1: // Formula
           for(item in indicadores[key].indicadores){
             if(arr_control.indexOf(item)==-1){
               sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;  
@@ -538,30 +572,6 @@ function montaQueryComplemento(indicadores, config){
     var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
 
     return query;
-}
-/**
- * Associacao da operacao de valor para o indicador
- * @param {objeto indicador} indicador 
- */
-function associaAgregacao(indicador){
-  var ans = '';
-  var operacao = getCriterioAgregacao(indicador.criterioAgregacao);
-  console.log('operacao==>', operacao);
-  if(indicador.tipoConsulta==1){ // Formula
-    ans = ' ' + indicador.sql;
-    var ind_item;
-    for(key in indicador.indicadores){
-      //ans = ans.replace(`[${key}]`, `${operacao}(${key})::float`);
-      // Para substituir todas as ocorrencias em javascript:
-      ans = ans.replace(new RegExp(`[${key}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `${operacao}(${key})`);
-    }
-    ans += ` ${indicador.codigo},`;
-    //console.log('PARTICULA==>', ans);
-  }else{
-    // select += ` SUM(${key})::float ${key},`;
-    ans = ` ${operacao}(${indicador.codigo}) ${indicador.codigo},`;
-  }
-  return ans;
 }
 
 /**
