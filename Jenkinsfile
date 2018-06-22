@@ -1,20 +1,42 @@
 pipeline { 
   agent any
   environment {
-    REGISTRY_NAME = 'registry.gitlab.com/manatus/digisus/mgdiapi'
+    REGISTRY_NAME_API = 'registry.gitlab.com/manatus/digisus/mgdiapi',
+    REGISTRY_NAME_WEB = 'registry.gitlab.com/manatus/digisus/mgdiweb'
   }
   stages {
-    stage('Publish') {
+    stage('Publish-Api') {
       steps {
         dir('server') {
-          sh 'docker build -t $REGISTRY_NAME .'
+          sh 'docker build -t $REGISTRY_NAME_API .'
           withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
-            sh 'docker push $REGISTRY_NAME'
+            sh 'docker push $REGISTRY_NAME_API'
           }
         }
       }
     }
-    stage('Delivery') {
+    stage('Build-Web') {
+      agent {
+        docker { image 'synapsetec/angular2' }
+      }
+      steps {
+        dir('client') {
+          sh 'npm install'
+          sh 'npm run build:prod'
+        }
+      }
+    }
+    stage('Delivery-Web') {
+      steps {
+        dir('client') {
+          sh 'docker build -t $REGISTRY_NAME_WEB .'
+          withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
+            sh 'docker push $REGISTRY_NAME_WEB'
+          }
+        }
+      }
+    }
+    stage('Delivery-Api') {
       steps {
         withCredentials([string(credentialsId: 'RANCHER_ACCESS_KEY', variable: 'ACCESS_KEY'), 
         string(credentialsId: 'RANCHER_SECRET_KEY', variable: 'SECRET_KEY'),

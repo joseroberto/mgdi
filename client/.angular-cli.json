@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "mgi"
   },
   "apps": [
     {
@@ -9,7 +8,8 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        { "glob": "CHANGELOG.md", "input": "../", "output": "./" }
+        {
+}
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -37,7 +37,7 @@
       "config": "./protractor.conf.js"
     }
   },
- "lint": [
+  "lint": [
     {
       "project": "src/tsconfig.app.json"
     },
@@ -56,8 +56,6 @@
   "defaults": {
     "styleExt": "css",
     "component": {
-      "style": false,
-      "template": false
     }
   }
 }

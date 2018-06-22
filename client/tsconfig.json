@@ -1,4 +1,7 @@
 {
+  "paths": {
+    "*": ["./src/*", "node_modules/*"]
+  },
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
