@@ -16,12 +16,8 @@ pipeline {
       }
     }
     stage('Build-Web') {
-      agent {
-        docker { image 'synapsetec/nodejs:node8' }
-      }
       steps {
         withEnv(['HOME=.']){
-          sh 'cd client'
           sh 'npm install'
           sh 'npm run build:prod'
         }
