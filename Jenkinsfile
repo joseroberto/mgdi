@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Build-Web') {
       agent {
-        docker { image 'synapsetec/angular2' }
+        docker { image 'synapsetec/nodejs:node8' }
       }
       steps {
         dir('client') {
