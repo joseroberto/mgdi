@@ -23,7 +23,7 @@ pipeline {
         }
       }
     }
-    stage('Delivery-Web') {
+    stage('Publish-Web') {
       steps {
         dir('client') {
           sh 'docker build -t $REGISTRY_NAME_WEB .'
