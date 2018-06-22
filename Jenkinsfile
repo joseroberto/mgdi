@@ -17,9 +17,11 @@ pipeline {
     }
     stage('Build-Web') {
       steps {
-        withEnv(['HOME=.']){
-          sh 'npm install'
-          sh 'npm run build:prod'
+        dir('client') {
+          withEnv(['HOME=.']){
+            sh 'npm install'
+            sh 'npm run build:prod'
+          }
         }
       }
     }
