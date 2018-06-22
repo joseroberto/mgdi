@@ -1,7 +1,7 @@
 pipeline { 
   agent any
   environment {
-    REGISTRY_NAME_API = 'registry.gitlab.com/manatus/digisus/mgdiapi',
+    REGISTRY_NAME_API = 'registry.gitlab.com/manatus/digisus/mgdiapi'
     REGISTRY_NAME_WEB = 'registry.gitlab.com/manatus/digisus/mgdiweb'
   }
   stages {
