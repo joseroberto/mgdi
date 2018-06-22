@@ -20,10 +20,9 @@ pipeline {
         docker { image 'synapsetec/nodejs:node8' }
       }
       steps {
-        dir('client') {
-          sh 'npm install'
-          sh 'npm run build:prod'
-        }
+        sh 'cd client'
+        sh 'npm install'
+        sh 'npm run build:prod'
       }
     }
     stage('Delivery-Web') {
