@@ -27,6 +27,7 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts",
+        "homolog": "environments/environment.homolog.ts",
         "docker": "environments/environment.docker.ts"
       }
     }
