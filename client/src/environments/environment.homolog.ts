@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://206.189.183.165:9123',
+  url: 'http://mgdiapi.manatustecnologia.com.br',
   API_URL: "/api",
   aplicacao: 1, // codigo da aplicacao MGI
   urlNewUser: "http://aplicacao-homologacao.saude.gov.br/datasus-scpaweb-usuario/visao/login/login-sistema.jsf",
