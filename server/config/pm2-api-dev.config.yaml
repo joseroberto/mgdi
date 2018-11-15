@@ -7,7 +7,7 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: docker.for.mac.host.internal
+      HOSTDB: localhost #docker.for.mac.host.internal
       DATABASE: dbspo
       USER_DB: postgres
       PASSWORD_DB: serenaya
