@@ -11,6 +11,7 @@ var job = require('./api/helpers/job');
 var passport = require("passport");
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var path = require('path');
 
 
 module.exports = app; // for testing
@@ -22,11 +23,35 @@ var theAppLog = log4js.getLogger();
 
 app.use(cors());
 
-app.use(morgan("combined",{
-  "stream": {
-    write: function(str) { theAppLog.debug(str); }
-  }
-}));
+
+var logDirectory =  path.join(__dirname, 'log')
+var fs = require('fs');
+var rfs = require('rotating-file-stream')
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+ 
+var accessLogStream = rfs('access.log', {
+  interval: '1d', 
+  path: logDirectory
+})
+
+app.use(morgan(function (tokens, req, res) {
+   return [
+    tokens.method(req, res),
+    tokens['remote-user'](req),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+}, { stream: accessLogStream }))
+
+
+// app.use(morgan("combined",{
+//   "stream": {
+//     write: function(str) { theAppLog.debug(str); }
+//   }
+// }));
 
 /*app.use((req, response, next) =>{
     console.log('Content-Type',req.get('Content-Type'));
