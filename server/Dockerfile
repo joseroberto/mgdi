@@ -48,6 +48,7 @@ RUN   apk add --no-cache --virtual git && \
   mkdir /var/opt/server_log && \
   chgrp -R 0 /var/opt/server_log && \
   chmod -R g+rwX /var/opt/server_log && \
+  touch /var/opt/server_log/access.log && \
   ln -sf /proc/self/fd/1 /var/opt/server_log/access.log && \
   apk del git
 
