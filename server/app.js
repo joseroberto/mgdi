@@ -12,8 +12,8 @@ var passport = require("passport");
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var path = require('path');
-
-
+var jwtDecode = require('jwt-decode');
+var _ = require('lodash')
 module.exports = app; // for testing
 
 var theAppLog = log4js.getLogger();
@@ -24,64 +24,69 @@ var theAppLog = log4js.getLogger();
 app.use(cors());
 
 
-var logDirectory =  path.join(__dirname, 'log')
+var logDirectory = path.join(__dirname, '../server_log')
 var fs = require('fs');
 var rfs = require('rotating-file-stream')
 // ensure log directory exists
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
- 
+
 var accessLogStream = rfs('access.log', {
-  interval: '1d', 
+  interval: '1d',
   path: logDirectory
 })
 
 app.use(morgan(function (tokens, req, res) {
-   return [
+  let cpf = 'anônimo'
+  let nome = 'anônimo'
+  if (_.has(req.headers, 'authorization')) {
+    var teste = req.headers.authorization
+    try {
+      var decoded = jwtDecode(teste);
+      cpf = decoded['cpf']
+      nome = `'${decoded["nome"]}'`
+    } catch (e) {
+
+    }
+  }
+  return [
     tokens.method(req, res),
-    tokens['remote-user'](req),
+    `'${new Date()}'`,
+    cpf,
+    nome,
+    `'${JSON.stringify(req.body)}'`,
     tokens.url(req, res),
     tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), '-',
+    tokens.res(req, res, 'content-length'),
     tokens['response-time'](req, res), 'ms'
   ].join(' ')
-}, { stream: accessLogStream }))
+}, {
+  stream: accessLogStream
+}))
 
-
-// app.use(morgan("combined",{
-//   "stream": {
-//     write: function(str) { theAppLog.debug(str); }
-//   }
-// }));
-
-/*app.use((req, response, next) =>{
-    console.log('Content-Type',req.get('Content-Type'));
-    if(req.method==='POST'){
-      console.log('Log de desenv-->', req.headers, req.body);
-    }
-  next();
-});*/
 
 var config = {
   appRoot: __dirname, // required config
   swaggerSecurityHandlers: require('./api/helpers/security')
 };
 
-process.on('SIGINT', function() {
-     process.exit(0);
+process.on('SIGINT', function () {
+  process.exit(0);
 });
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-app.get('/swagger.yaml', (req,res,next)=>{
-    console.log('swagger', swagger_config);
-    res.setHeader('content-type', 'application/json');
+app.get('/swagger.yaml', (req, res, next) => {
+  console.log('swagger', swagger_config);
+  res.setHeader('content-type', 'application/json');
 
-    swagger_config.host = process.env.HOST || config_param.host;
-    swagger_config.info.title = config_param.title;
-    swagger_config.info.description = config_param.description;
-    res.send(swagger_config);
+  swagger_config.host = process.env.HOST || config_param.host;
+  swagger_config.info.title = config_param.title;
+  swagger_config.info.description = config_param.description;
+  res.send(swagger_config);
 });
 
 /*app.post('/login2', (req, res, next) =>{
@@ -94,8 +99,10 @@ app.get('/swagger.yaml', (req,res,next)=>{
 });*/
 
 
-SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
+SwaggerExpress.create(config, function (err, swaggerExpress) {
+  if (err) {
+    throw err;
+  }
   swaggerExpress.runner.swagger.host = process.env.HOST || config_param.host;
   swaggerExpress.runner.swagger.info.title = config_param.title;
   swaggerExpress.runner.swagger.info.description = config_param.description;
@@ -105,28 +112,28 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   var port = process.env.PORT || config_param.port || 8000;
   var options = {
-  dotfiles: 'ignore',
-  etag: true,
-  extensions: ['htm', 'html'],
-  index: 'index.html',
-  lastModified: true,
-  maxAge: '1d',
-  setHeaders: function (res, path, stat) {
+    dotfiles: 'ignore',
+    etag: true,
+    extensions: ['htm', 'html'],
+    index: 'index.html',
+    lastModified: true,
+    maxAge: '1d',
+    setHeaders: function (res, path, stat) {
       res.set('x-timestamp', Date.now());
       res.header('Cache-Control', 'public, max-age=1d');
     }
   };
   theAppLog.info('Servidor REST %s', config_param.host);
   theAppLog.info('Porta %s', port);
-  theAppLog.info('Ambiente %s', process.env.NODE_ENV );
+  theAppLog.info('Ambiente %s', process.env.NODE_ENV);
 
   app.use((request, response, next) => {
-        response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-        response.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type');
-        response.header('Access-Control-Allow-Credentials', 'true');
-        next();
-    });
+    response.header('Access-Control-Allow-Origin', '*');
+    response.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    response.header('Access-Control-Allow-Headers', 'Accept, Origin, Content-Type');
+    response.header('Access-Control-Allow-Credentials', 'true');
+    next();
+  });
   app.use(express.static('public'));
   app.use(express.static('node_modules/redoc/dist'));
   //app.use(express.static('api/swagger'));
