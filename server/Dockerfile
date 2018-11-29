@@ -45,6 +45,9 @@ RUN   apk add --no-cache --virtual git && \
   npm install &&  \
   chgrp -R 0 /var/opt/mgi && \
   chmod -R g+rwX /var/opt/mgi && \
+  mkdir /var/opt/server_log && \
+  chgrp -R 0 /var/opt/server_log && \
+  chmod -R g+rwX /var/opt/server_log && \
   apk del git
 
 EXPOSE 8000
