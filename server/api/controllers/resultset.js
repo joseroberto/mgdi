@@ -56,7 +56,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        console.log('SQL+=>', sql);
+        // console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           if(err) {
             console.error('error running query', err);
@@ -807,15 +807,12 @@ function getGranularidade(value){
 }
 
 function associaCampos2(indicadores, varPeriodicidade, varGranularidade){
-  var ans='';
-  var item_anterior = '';
+  var ans=indicadores.shift();
+  var item_anterior = ans;
   indicadores.forEach(item=>{
-    if(ans.length>0){
+    console.log(item)
       ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
-    }else{
-      ans+=item;
-      item_anterior = item;
-    }
+      item_anterior = item;    
   });
   return ans;
 }
