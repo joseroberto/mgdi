@@ -5,6 +5,7 @@ const util = require('util');
 const log4js = require('log4js');
 const config_param = require('../helpers/config')();
 const swagger = require('../helpers/swagger')();
+const acl_rules = require('../helpers/acl-rules')();
 const user = require('./user');
 const passport = require("passport");
 require('../helpers/passport.js')(passport); // pass passport for configuration
@@ -38,9 +39,12 @@ module.exports = {
               return res.status(403).send({message: 'Usuário rejeitado pelo ADMINISTRADOR'});
             }
 
+            //get the ACL rules
+
+
             // Loga o Usuario
             var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-            res.json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
+            res.json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl:acl_rules});
         })(req,res);
       }else{
         var temp = {

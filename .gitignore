@@ -8,6 +8,9 @@ bash.sh
 
 *.tgz
 
+*.local.*
+
+
 # compiled output
 /dist
 /tmp

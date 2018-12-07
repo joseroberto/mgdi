@@ -2,7 +2,7 @@ import {Component, NgZone, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 
-import { IndicadorService, UtilService } from '../../services/index';
+import { IndicadorService, UtilService, AclService } from '../../services/index';
 import {WindowRef} from '../WindowRef';
 //import { environment } from '../../../environments/environment';
 
@@ -21,7 +21,11 @@ export class IndicadorListaComponent implements OnInit {
   constructor(private zone:NgZone, private winRef: WindowRef,
     private indicadorService:IndicadorService,
     private util:UtilService,
+    private acl:AclService,
     private router:Router) {
+
+    this.detailsFormat = this.detailsFormat.bind(this);
+    
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaIndicador(value),
@@ -115,6 +119,24 @@ detailsFormat(d) {
       tags += '</td></tr>';
     }
 
+    let remove = this.acl.getPermission('indicador','DELETE');
+    let removeStr = '';
+    if(remove){
+      removeStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+                    onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">
+                    <i class="fa fa-times "></i>&nbsp;Apaga
+                  </button>`
+    }
+    let edit = this.acl.getPermission('indicador','PUT')
+    let editStr = '';
+    if(edit){
+      editStr = ` <button class='btn btn-xs btn-info pull-right'
+          onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaIndicador('${d.codigo}');})">
+          <i class="fa fa-pencil "></i>&nbsp;Edita
+       </button>`
+    }
+    
+
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
             <tr>
@@ -140,14 +162,10 @@ detailsFormat(d) {
                 <td>Tipo</td>
                 <td colspan="5">
                  ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
-                  <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-                    onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaIndicador('${d.codigo}');})">
-                    <i class="fa fa-times "></i>&nbsp;Apaga
-                  </button>
-                  <button class='btn btn-xs btn-info pull-right'
-                    onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaIndicador('${d.codigo}');})">
-                    <i class="fa fa-pencil "></i>&nbsp;Edita
-                  </button>
+                
+                 ${removeStr}
+                
+                  ${editStr}
                 </td>
             </tbody>
         </table>`

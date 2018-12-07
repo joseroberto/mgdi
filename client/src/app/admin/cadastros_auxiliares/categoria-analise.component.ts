@@ -2,7 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import {WindowRef} from '../WindowRef';
 import { Router } from '@angular/router';
 import {ModalDirective} from "ngx-bootstrap";
-import { CategoriaAnaliseService, UtilService } from '../../services/index';
+import { CategoriaAnaliseService, UtilService, AclService } from '../../services/index';
 
 @Component({
   templateUrl: 'categoria-analise.component.html',
@@ -28,9 +28,12 @@ export class CategoriaAnaliseComponent {
   }
   constructor(private categoriaAnaliseService:CategoriaAnaliseService,
     private util:UtilService,
+    private acl:AclService,
     private router: Router,
     private zone:NgZone,
     private winRef: WindowRef) {
+
+    this.detailsFormat = this.detailsFormat.bind(this);
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaCategoriaAnalise(value),
@@ -64,6 +67,17 @@ export class CategoriaAnaliseComponent {
 
       });
 
+      let apagaStr = `  <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaCategoriaAnalise('${d.codigo}');})">
+      <i class="fa fa-times "></i>&nbsp;Apaga
+    </button>`
+      let editStr = `<button class='btn btn-xs btn-info pull-right'
+      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaCategoriaAnalise('${d.codigo}');})">
+      <i class="fa fa-pencil "></i>&nbsp;Edita
+    </button>`
+
+      if( !this.acl.getPermission('categoria-analise','DELETE') )  apagaStr = '';
+      if( !this.acl.getPermission('categoria-analise','PUT') )  editStr = '';
 
       return `<h4>Subcategorias</h4>
               <div style="padding: 30px">
@@ -82,16 +96,15 @@ export class CategoriaAnaliseComponent {
               </tfoot>
           </table>
           <div style="padding: 5px">
-              <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaCategoriaAnalise('${d.codigo}');})">
-                <i class="fa fa-times "></i>&nbsp;Apaga
-              </button>
-              <button class='btn btn-xs btn-info pull-right'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaCategoriaAnalise('${d.codigo}');})">
-                <i class="fa fa-pencil "></i>&nbsp;Edita
-              </button>
+              ${apagaStr}
+              ${editStr}
+
           </div>
           </div>`
+    }
+
+    userCan(router,method){
+      return this.acl.getPermission(router,method)
     }
 
     editaCategoriaAnalise(codigo:string){

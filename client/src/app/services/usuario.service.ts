@@ -26,3 +26,5 @@ export class UsuarioService extends REST {
     return this.get('/user/perfil');
   }
 }
+
+

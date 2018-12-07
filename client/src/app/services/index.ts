@@ -20,3 +20,4 @@ export * from './polaridade.service';
 export * from './perfil.service';
 export * from './fonte-parametro.service';
 export * from './parametro.service';
+export * from './acl.service';

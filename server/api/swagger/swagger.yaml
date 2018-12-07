@@ -2063,6 +2063,23 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/acl-rules:
+    x-swagger-router-controller: acl
+    get:
+      description: Retorna regras de acesso de controlle
+      summary: Retorna regras de acesso de controlle
+      operationId: getAclRules
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/Acl"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   GetUserMgiListResponse:
@@ -2304,6 +2321,8 @@ definitions:
       aplicacao:
         description: Aplicação
         type: integer
+  Acl:
+    type: object
 
   Token:
     type: object

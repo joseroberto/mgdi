@@ -5,6 +5,7 @@ const jwt    = require('jsonwebtoken');
 const config_param = require('../helpers/config')();
 
 module.exports = {
+  
   getUsers: (req, res)=>{
     var attr = {
       include: [ { model: models.Unidade, as: 'Unidade' },
@@ -12,13 +13,14 @@ module.exports = {
       ],
       where:{}
     };
-    if(req.swagger.params.situacao){
+    if(req.swagger.params.situacao.value !== undefined ){
       attr.where = {SituacaoCodigo:req.swagger.params.situacao.value};
     }
     models.User.findAll(attr).then(function(lista) {
       res.json({users: lista});
     });
   },
+
   getPorLogin: async (login, codigo_aplicacao)=>{
     return models.User.findAll({
       include: [ { model: models.Perfil,

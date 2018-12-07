@@ -23,7 +23,7 @@
           <a href="#"><i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span
             class="menu-item-parent">{{'Indicadores' | i18n}}</span></a>
           <ul>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('indicador','POST')">
               <a routerLink="/admin/indicador">{{'Novo indicador' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
@@ -32,7 +32,7 @@
             <li routerLinkActive="active" *ngIf="false">
               <a routerLink="/admin/indicadorlistaunidade">{{'Lista por unidade' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('importadados','POST')">
               <a routerLink="/admin/importa/3">{{'Importa dados' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
@@ -59,25 +59,25 @@
             <li routerLinkActive="active">
               <a routerLink="/admin/usuario">{{'Lista de Usuários' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('categoria-analise','POST')">
               <a routerLink="/admin/categoria-analise">{{'Nova Categoria de Análise' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
               <a routerLink="/admin/lista-categoria-analise">{{'Lista Categorias de Análise' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('tag','POST')">
               <a routerLink="/admin/tag">{{'Novo Grupo de Marcador' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
               <a routerLink="/admin/lista-tag">{{'Lista Grupos de Marcadores' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('unidade-medida','POST')">
               <a routerLink="/admin/unidade-medida">{{'Nova Unidade de Medida' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
               <a routerLink="/admin/lista-unidade-medida">{{'Lista Unidades de Medida' | i18n}}</a>
             </li>
-            <li routerLinkActive="active">
+            <li routerLinkActive="active" *ngIf="userCan('fonte-dados','POST')">
               <a routerLink="/admin/fonte-dados">{{'Nova Fonte de Dados' | i18n}}</a>
             </li>
             <li routerLinkActive="active">
