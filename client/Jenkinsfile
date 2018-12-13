@@ -5,9 +5,6 @@ pipeline {
   }
   stages {
     stage('Build-Web') {
-      agent {
-        docker { image 'synapsetec/nodejs:node8' }
-      }
       steps {
         sh 'npm --prefix ./client install ./client'
         sh 'npm run --prefix ./client build:homolog'
