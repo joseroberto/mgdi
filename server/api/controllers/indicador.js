@@ -8,7 +8,7 @@ module.exports = {
   getIndicadores: (req, res)=>{
     var perfil = security.getPerfil(req);
     var attr = {
-      attributes: [ 'id', 'codigo', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo', 
+      attributes: [ 'id', 'codigo', 'data_atualizacao_dado', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo', 
       'privado', 'conceituacao', 'diretrizNacional', 'objetivoRelevancia',
       'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
