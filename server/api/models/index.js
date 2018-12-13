@@ -11,6 +11,7 @@ const config_param = require('../helpers/config')();
 
 var db        = {};
 
+
 //if (config.use_env_variable) {
 //  var sequelize = new Sequelize(process.env[config.use_env_variable]);
 //} else {
@@ -24,8 +25,7 @@ var db        = {};
   });
 //}
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(function(file) {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
@@ -42,5 +42,8 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+
+
 
 module.exports = db;

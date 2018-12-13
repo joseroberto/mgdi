@@ -1,7 +1,7 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import {WindowRef} from '../WindowRef';
 import { Router } from '@angular/router';
-import { UnidadeMedidaService, UtilService } from '../../services/index';
+import { UnidadeMedidaService, UtilService, AclService } from '../../services/index';
 
 @Component({
   templateUrl: 'unidade-medida.component.html',
@@ -24,10 +24,15 @@ export class UnidadeMedidaComponent {
   "order": [[1, 'asc']]
   }
   @ViewChild('listUnidadeMedida') tabelaUnidades;
-  constructor(private unidadeMedidaService:UnidadeMedidaService, private util:UtilService,
+  constructor(private unidadeMedidaService:UnidadeMedidaService, 
+    private util:UtilService,
+    private acl:AclService,
     private router: Router,
     private zone:NgZone,
     private winRef: WindowRef) {
+
+    this.detailsFormat = this.detailsFormat.bind(this);
+
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaUnidadeMedida(value),
@@ -60,6 +65,22 @@ export class UnidadeMedidaComponent {
                       </tr>`;
 
 
+
+      let apagaStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaUnidadeMedida('${d.codigo}');})">
+      <i class="fa fa-times "></i>&nbsp;Apaga
+    </button>`;
+
+      let editaStr = `<button class='btn btn-xs btn-info pull-right'
+      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaUnidadeMedida('${d.codigo}');})">
+      <i class="fa fa-pencil "></i>&nbsp;Edita
+    </button>`;
+
+
+      if( ! this.acl.getPermission('unidade-medida','PUT') ) editaStr = '';
+      if( ! this.acl.getPermission('unidade-medida','DELETE') ) apagaStr = '';
+
+
       return `<h4>Unidade de Medida</h4>
               <div style="padding: 30px">
               <table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
@@ -77,14 +98,8 @@ export class UnidadeMedidaComponent {
               </tfoot>
           </table>
           <div style="padding: 5px">
-              <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaUnidadeMedida('${d.codigo}');})">
-                <i class="fa fa-times "></i>&nbsp;Apaga
-              </button>
-              <button class='btn btn-xs btn-info pull-right'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaUnidadeMedida('${d.codigo}');})">
-                <i class="fa fa-pencil "></i>&nbsp;Edita
-              </button>
+            ${editaStr}
+            ${apagaStr}
           </div>
           </div>`
     }

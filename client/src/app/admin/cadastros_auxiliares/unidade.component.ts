@@ -3,7 +3,7 @@ import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 import {ModalDirective} from "ngx-bootstrap";
 import {WindowRef} from '../WindowRef';
 import { UnidadeResponsavel } from '../../model/index';
-import { UnidadeService, UtilService } from '../../services/index';
+import { UnidadeService, UtilService, AclService } from '../../services/index';
 
 @FadeInTop()
 @Component({
@@ -93,7 +93,9 @@ export class UnidadeComponent implements OnInit {
     }
   }
 
-  constructor(private unidadeService:UnidadeService, private util:UtilService,
+  constructor(private unidadeService:UnidadeService,
+     private util:UtilService,
+     private acl:AclService,
     private zone:NgZone, private winRef: WindowRef){
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
@@ -118,6 +120,10 @@ export class UnidadeComponent implements OnInit {
     console.log('change payload', payload)
   }
 
+  userCan(router,method){
+    return this.acl.getPermission(router,method)
+  }
+
   ngOnInit() {
     this.loadItensUnidade();
   }
@@ -136,20 +142,31 @@ export class UnidadeComponent implements OnInit {
   }
 
   loadItem(item){
+
+    let incluiStr = `<button class='btn btn-xs btn-warning pull-right' style='margin-left:5px'
+    onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.newUnidade('${item.codigo}');})">
+    <i class="fa fa-plus"></i>&nbsp;Inclui
+  </button>`
+
+    let editaStr = `<button class='btn btn-xs btn-info pull-right'
+        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editUnidade('${item.codigo}');})">
+        <i class="fa fa-pencil "></i>&nbsp;Edita
+    </button>`
+
+    let apagaStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.deleteUnidade('${item.codigo}');})">
+        <i class="fa fa-times "></i>&nbsp;Apaga</button>`
+    
+    if(!this.userCan('unidade','POST')) incluiStr = '';
+    if(!this.userCan('unidade','PUT')) editaStr = '';
+    if(!this.userCan('unidade','DELETE')) apagaStr = '';
+
     let obj = {"content": `<span class=\" ${this.estilos[item.nu_nivel-1]}\" style=\"line-height: 10px\">
       <span style="vertical-align: middle"> ${this.icones[item.nu_nivel-1]} ${item.sigla} - ${item.nome}</span>
       <span style="vertical-align: middle">` +
-      (item.children? "":`<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.deleteUnidade('${item.codigo}');})">
-        <i class="fa fa-times "></i>&nbsp;Apaga</button>`)
-      + `<button class='btn btn-xs btn-info pull-right'
-        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editUnidade('${item.codigo}');})">
-        <i class="fa fa-pencil "></i>&nbsp;Edita
-      </button>
-      <button class='btn btn-xs btn-warning pull-right' style='margin-left:5px'
-        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.newUnidade('${item.codigo}');})">
-        <i class="fa fa-plus"></i>&nbsp;Inclui
-      </button>
+      (item.children? "":apagaStr)
+      + editaStr
+      + incluiStr + `
       </span>
     </span>`};
     if(item.children){

@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { UsuarioService, UtilService } from '../../services/index';
+import _  from 'lodash';
 
 @Component({
   templateUrl: 'usuario.component.html',
@@ -19,6 +20,7 @@ export class UsuarioComponent {
     },
     {"data": "nome"},
     {"data": "cpf"},
+    {"data": "email"},
     {"data": "ramal"},
     {"data": "celular"},
     {"data": "dt_atualizacao", render: function(data, type, full, meta){
@@ -50,20 +52,41 @@ export class UsuarioComponent {
   private detailsFormat(d) {
       let strPerfil:string='';
       let listaPerfil = {ADM: 'Administrativo', ANA: 'Analista', USR: 'Usuário'};
-      d.perfis.forEach(item => {
-        strPerfil += `<tr>
-                          <td style="width:100px">&nbsp;</td>
-                          <td style="width:100px">${item}</td>
-                          <td>${listaPerfil[item]}</td>
-                      </tr>`;
+      // debugger;
+      // d.Perfil.forEach(item => {
+      //   strPerfil += `<tr>
+      //                     <td style="width:100px">&nbsp;</td>
+      //                     <td style="width:100px">${item}</td>
+      //                     <td>${listaPerfil[item]}</td>
+      //                 </tr>`;
 
-      });
+      // });
+
+      var convertObjectToString = (obj:object):string=>{
+          let str:string = ''
+          _.forOwn(obj, (v,k) =>{
+
+            if( _.isObject(v) ){
+              str += `<p><b>${k}</b>:<blockquote style='font-size:12px;'>`
+              str += convertObjectToString(v)
+              str += `</blockquote></p>`
+
+            }else{
+              str += `<p><b>${k}</b>:${v}</p>`
+            }
+
+          } )
+          return str;
+    }
+
+     strPerfil = convertObjectToString(d) ;
 
 
       return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
               <tbody>
-              <tr><td colspan="3">Perfis:</td></tr>
+              <tr><td style='font-size:12px;'>
               ${strPerfil}
+              </td></tr>
               </tbody>
           </table>`
     }

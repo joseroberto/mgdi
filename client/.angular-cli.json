@@ -8,6 +8,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "tutorial",
         { "glob": "CHANGELOG.md", "input": "../", "output": "./" }
       ],
       "index": "index.html",
