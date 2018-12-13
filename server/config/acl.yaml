@@ -9,7 +9,7 @@
   permissions:
   - resource: "*"
     methods: "*"
-    action: deny
+    action: allow
   - resource: "user"
     methods:
     - GET

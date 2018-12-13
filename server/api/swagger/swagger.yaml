@@ -2071,6 +2071,8 @@ paths:
       operationId: getAclRules
       tags:
         - Cadastros Auxiliares
+      security:
+        - Bearer: []
       responses:
         "200":
           description: Sucesso

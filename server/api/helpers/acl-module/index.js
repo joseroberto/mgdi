@@ -37,7 +37,7 @@ function getConfig() {
 
 //CHECK ACL ACEESS
 function checkACL(role,route,method){
-    debugger;
+  
     const policy = options.policies.get(role);
     if (!policy) {
         return false

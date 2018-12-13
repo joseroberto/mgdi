@@ -115,42 +115,6 @@ const checkACL = async function(req,cb){
     }else{
         return cb(new Error(`Usuário não tem permissão para executar essa operação!`))
     }
-    // var options = acl.getConfig();
    
-    
-    //   if (req.originalUrl === '/') {
-    //     return cb();
-    //   }
-    
-    //   const policy = options.policies.get(role);
-    
-    //   if (!policy) {
-    //       return cb(new Error(`Usuário não tem permissão para executar essa operação!`))
-    //   }
-    
-    //   const permission = acl.findPermissionForRoute(
-    //     req.originalUrl,
-    //     req.method,
-    //     options.baseUrl,
-    //     policy
-    //   );
-
-    //   if (!permission) {
-    //     if (typeof options.denyCallback === 'function') {
-    //       return options.denyCallback(res);
-    //     }
-    //     return res.status(403).json(deny(options.customMessage, options.response));
-    //   }
-    
-    //   let hasAccess =  acl.checkIfHasAccess(
-    //     req.method,
-    //     permission,
-    //   );
-
-    //   if(hasAccess){
-    //     cb()
-    //   }else{
-    //     return cb(new Error(`Usuário não tem permissão para executar essa operação!`))
-    //   }
 }
 
