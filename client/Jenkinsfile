@@ -5,16 +5,14 @@ pipeline {
   }
   stages {
     stage('Build-Web') {
+      agent {
+        docker { image 'synapsetec/nodejs:node8' }
+      }
       steps {
-        agent {
-          docker { image 'synapsetec/nodejs:node8' }
-        }
-        steps {
-          withEnv(['HOME=.']){
-            sh 'npm install'
-            sh 'npm run build:homolog'
-            stash name: 'dist', includes: 'dist/'
-          }
+        withEnv(['HOME=.']){
+          sh 'npm install'
+          sh 'npm run build:homolog'
+          stash name: 'dist', includes: 'dist/'
         }
       }
     }
