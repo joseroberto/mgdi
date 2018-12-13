@@ -1,0 +1,51 @@
+pipeline { 
+  agent any
+  environment {
+    REGISTRY_NAME_WEB = 'registry.gitlab.com/manatus/digisus/mgdiweb'
+  }
+  stages {
+    stage('Build-Web') {
+      steps {
+        agent {
+          docker { image 'synapsetec/nodejs:node8' }
+        }
+        steps {
+          withEnv(['HOME=.']){
+            sh 'npm install'
+            sh 'npm run build:homolog'
+            stash name: 'dist', includes: 'dist/'
+          }
+        }
+      }
+    }
+    stage('Publish-Web') {
+      steps {
+        dir('client') {
+          unstash 'dist'
+          sh 'docker build -t $REGISTRY_NAME_WEB .'
+          withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
+            sh 'docker push $REGISTRY_NAME_WEB'
+          }
+        }
+      }
+    }
+    stage('Delivery-Web') {
+      steps {
+        withCredentials([string(credentialsId: 'RANCHER_ACCESS_KEY', variable: 'ACCESS_KEY'), 
+        string(credentialsId: 'RANCHER_SECRET_KEY', variable: 'SECRET_KEY'),
+        string(credentialsId: 'MGDI-WEB-PAYLOAD', variable: 'PAYLOAD')]) {
+          sh """curl -u '$ACCESS_KEY:$SECRET_KEY' -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{$PAYLOAD}' 'http://138.197.93.63/v2-beta/projects/1a781/services/1s74/?action=upgrade'"""
+        }
+      }
+    }
+    stage('Run Live') {
+      steps {
+        withCredentials([string(credentialsId: 'RANCHER_ACCESS_KEY', variable: 'ACCESS_KEY'), 
+        string(credentialsId: 'RANCHER_SECRET_KEY', variable: 'SECRET_KEY')]) {
+          sleep(13)
+          sh """curl -u '$ACCESS_KEY:$SECRET_KEY' -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{}' 'http://138.197.93.63/v2-beta/projects/1a781/services/1s74/?action=finishupgrade'"""
+        }
+      }
+    }
+  }
+}
