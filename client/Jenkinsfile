@@ -9,12 +9,10 @@ pipeline {
         docker { image 'synapsetec/nodejs:node8' }
       }
       steps {
-        dir('client') {
-          withEnv(['HOME=.']){
-            sh 'npm install'
-            sh 'npm run build:homolog'
-            stash name: 'dist', includes: 'dist/'
-          }
+        withEnv(['HOME=.']){
+          sh 'npm --prefix ./client install ./client'
+          sh 'npm run --prefix ./client build:homolog'
+          stash name: 'dist', includes: 'client/dist/'
         }
       }
     }
