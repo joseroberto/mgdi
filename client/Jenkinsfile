@@ -9,9 +9,11 @@ pipeline {
         docker { image 'synapsetec/nodejs:bn8' }
       }
       steps {
-        sh 'npm --prefix ./client install ./client'
-        sh 'npm run --prefix ./client build:homolog'
-        stash name: 'dist', includes: 'client/dist/'
+        withEnv(['HOME=.']) {
+          sh 'npm --prefix ./client install ./client'
+          sh 'npm run --prefix ./client build:homolog'
+          stash name: 'dist', includes: 'client/dist/'
+        }
       }
     }
     stage('Publish-Web') {
