@@ -41,3 +41,13 @@
   - resource: "*"
     methods: "*"
     action: deny
+
+- group: $area #membro de equipe da area
+  permissions:
+  - resource: "indicador"
+    methods: 
+        - DELETE
+        - PUT
+    action: deny
+
+    

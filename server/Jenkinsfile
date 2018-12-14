@@ -1,0 +1,36 @@
+pipeline { 
+  agent any
+  environment {
+    REGISTRY_NAME_API = 'registry.gitlab.com/manatus/digisus/mgdiapi'
+  }
+  stages {
+    stage('Publish-Api') {
+      steps {
+        dir('server') {
+          sh 'docker build -t $REGISTRY_NAME_API .'
+          withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
+            sh 'docker push $REGISTRY_NAME_API'
+          }
+        }
+      }
+    }
+    stage('Delivery-Api') {
+      steps {
+        withCredentials([string(credentialsId: 'RANCHER_ACCESS_KEY', variable: 'ACCESS_KEY'), 
+        string(credentialsId: 'RANCHER_SECRET_KEY', variable: 'SECRET_KEY'),
+        string(credentialsId: 'MGDI-API-PAYLOAD', variable: 'PAYLOAD')]) {
+          sh """curl -u '$ACCESS_KEY:$SECRET_KEY' -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{$PAYLOAD}' 'http://138.197.93.63/v2-beta/projects/1a781/services/1s67/?action=upgrade'"""
+        }
+      }
+    }
+    stage('Run Live') {
+      steps {
+        withCredentials([string(credentialsId: 'RANCHER_ACCESS_KEY', variable: 'ACCESS_KEY'), 
+        string(credentialsId: 'RANCHER_SECRET_KEY', variable: 'SECRET_KEY')]) {
+          sleep(13)
+          sh """curl -u '$ACCESS_KEY:$SECRET_KEY' -X POST -H 'Accept: application/json' -H 'Content-Type: application/json' -d '{}' 'http://138.197.93.63/v2-beta/projects/1a781/services/1s67/?action=finishupgrade'"""
+        }
+      }
+    }
+  }
+}
