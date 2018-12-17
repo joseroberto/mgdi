@@ -1,7 +1,7 @@
 import { Component, ViewChild,NgZone } from '@angular/core';
 import {WindowRef} from '../WindowRef';
 import { Router } from '@angular/router';
-import { TagCategoriaService, UtilService } from '../../services/index';
+import { TagCategoriaService, UtilService, AclService } from '../../services/index';
 
 @Component({
   templateUrl: 'tag.component.html',
@@ -26,9 +26,13 @@ export class TagComponent {
   @ViewChild('listaTag') tabelaTags;
   constructor(private tagService:TagCategoriaService,
     private util:UtilService,
+    private acl:AclService,
     private router: Router,
     private zone:NgZone,
     private winRef: WindowRef) {
+
+    this.detailsFormat = this.detailsFormat.bind(this);
+
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaMarcadores(value),
@@ -64,6 +68,18 @@ export class TagComponent {
 
       });
 
+      let apagaStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+                      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaMarcadores('${d.codigo}');})">
+                      <i class="fa fa-times "></i>&nbsp;Apaga
+                      </button>`
+      let editaStr = ` <button class='btn btn-xs btn-info pull-right'
+                        onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaMarcadores('${d.codigo}');})">
+                        <i class="fa fa-pencil "></i>&nbsp;Edita
+                      </button>`
+
+      if( !this.acl.getPermission('tag','PUT')) editaStr = ''
+      if( !this.acl.getPermission('tag','DELETE')) apagaStr = ''
+
 
       return `<h4>Marcadores</h4>
               <div style="padding: 30px">
@@ -82,14 +98,8 @@ export class TagComponent {
               </tfoot>
           </table>
           <div style="padding: 5px">
-              <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaMarcadores('${d.codigo}');})">
-                <i class="fa fa-times "></i>&nbsp;Apaga
-              </button>
-              <button class='btn btn-xs btn-info pull-right'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaMarcadores('${d.codigo}');})">
-                <i class="fa fa-pencil "></i>&nbsp;Edita
-              </button>
+             ${apagaStr}
+             ${editaStr}
           </div>
           </div>`
     }

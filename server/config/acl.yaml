@@ -1,0 +1,53 @@
+---
+- group: guest
+  permissions:
+  - resource: "*"
+    methods: "*"
+    action: allow
+
+- group: ADM #administrator
+  permissions:
+  - resource: "*"
+    methods: "*"
+    action: deny
+  - resource: "user"
+    methods:
+    - GET
+    action: allow
+
+- group: GES #gestor da area
+  permissions:
+   - resource: "*"
+     methods: "*"
+     action: deny
+   - resource: "user"
+     methods:
+        - GET
+        - POST
+        - DELETE
+     action: deny
+   - resource: "indicador"
+     methods:
+        - GET
+        - PUT
+     action: allow
+   - resource: "unidade"
+     methods:
+        - POST
+     action: allow
+
+- group: EQA #membro de equipe da area
+  permissions:
+  - resource: "*"
+    methods: "*"
+    action: deny
+
+- group: $area #membro de equipe da area
+  permissions:
+  - resource: "indicador"
+    methods: 
+        - DELETE
+        - PUT
+    action: deny
+
+    

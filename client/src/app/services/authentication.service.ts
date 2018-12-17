@@ -3,6 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../shared/user/user.service';
+import { AclService } from '../services/acl.service';
 import { REST } from './REST';
 import { environment } from '../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
@@ -11,7 +12,12 @@ import 'rxjs/Rx';
 @Injectable()
 export class AuthenticationService extends REST implements CanActivate{
 
-    constructor(http: Http, private userService: UserService, private cookieService: CookieService) {
+    constructor(  http: Http, 
+                  private userService: UserService, 
+                  private cookieService: CookieService,
+                  private aclService: AclService
+
+      ) {
       super(http);
     }
 
@@ -27,6 +33,8 @@ export class AuthenticationService extends REST implements CanActivate{
             user['picture'] = 'assets/img/avatars/male.png';
             console.log(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('acl', JSON.stringify(resp.acl));
+            this.aclService.setRules(resp.acl, resp.user.Perfil.sigla )
             //localStorage.setItem('currentUser', JSON.stringify(resp.user));
             return resp;
           }
@@ -50,6 +58,7 @@ export class AuthenticationService extends REST implements CanActivate{
         this.cookieService.delete('token');
         localStorage.removeItem('token');
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('acl');
     }
 
 

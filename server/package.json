@@ -8,12 +8,16 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "acl": "^0.4.11",
+    "acl-sequelize": "^0.2.1",
     "async": "^2.4.1",
     "chai": "^3.5.0",
     "cors": "^2.8.4",
     "csvtojson": "^1.1.6",
     "elasticsearch": "^14.0.0",
     "express": "^4.12.3",
+    "express-acl": "^2.0.4",
+    "express-unless": "^0.5.0",
     "js-yaml": "^3.8.3",
     "jsonwebtoken": "^7.3.0",
     "jwt-decode": "^2.2.0",
@@ -43,7 +47,8 @@
     "supertest": "^1.0.0"
   },
   "scripts": {
-    "start": "node app.js",
+    "start-dev": "pm2-runtime start config/pm2-api-dev.local.yaml",
+    "start": "pm2-runtime start config/pm2-api.config.yaml",
     "test": "swagger project test"
   }
 }

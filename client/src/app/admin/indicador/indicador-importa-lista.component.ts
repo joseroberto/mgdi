@@ -2,7 +2,7 @@ import {Component, NgZone, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {FadeInTop} from "../../shared/animations/fade-in-top.decorator";
 import {ModalDirective} from 'ngx-bootstrap';
-import { IndicadorService, UtilService } from '../../services/index';
+import { IndicadorService, UtilService, AclService } from '../../services/index';
 import { Arquivo, Indicador } from '../../model/index';
 import {WindowRef} from '../WindowRef';
 
@@ -49,6 +49,7 @@ export class IndicadorImportaListaComponent implements OnInit {
     constructor(private route: ActivatedRoute,private zone:NgZone, private winRef: WindowRef,
       private indicadorService:IndicadorService,
       private util:UtilService,
+      private acl:AclService,
       private router:Router) {
         winRef.nativeWindow.angularComponentRef = {
           zone: this.zone,

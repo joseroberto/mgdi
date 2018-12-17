@@ -1,7 +1,7 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import {WindowRef} from '../WindowRef';
 import { Router } from '@angular/router';
-import { FonteParametroService, UtilService } from '../../services/index';
+import { FonteParametroService, UtilService, AclService } from '../../services/index';
 
 @Component({
   templateUrl: 'fonte.component.html',
@@ -25,10 +25,14 @@ export class FonteComponent {
   "order": [[1, 'asc']]
   }
   @ViewChild('listFonte') tabelaFonte;
-  constructor(private fonteService:FonteParametroService, private util:UtilService,
+  constructor(private fonteService:FonteParametroService, 
+    private util:UtilService,
+    private acl:AclService,
     private router: Router,
     private zone:NgZone,
     private winRef: WindowRef) {
+
+    this.detailsFormat = this.detailsFormat.bind(this);
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaFonteDados(value),
@@ -61,6 +65,20 @@ export class FonteComponent {
                           <td>${d.descricao}</td>
                       </tr>`;
 
+           let apagaStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
+                      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaFonteDados('${d.codigo}');})">
+                      <i class="fa fa-times "></i>&nbsp;Apaga
+                    </button>`
+
+          let editaStr = `
+                    <button class='btn btn-xs btn-info pull-right'
+                      onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaFonteDados('${d.codigo}');})">
+                      <i class="fa fa-pencil "></i>&nbsp;Edita
+                    </button>`
+     
+      if( !this.acl.getPermission('font-dados','DELETE') )  apagaStr = '';
+      if( !this.acl.getPermission('font-dados','PUT') )  editaStr = '';
+              
 
       return `<h4>Fonte de Dados</h4>
               <div style="padding: 30px">
@@ -80,14 +98,8 @@ export class FonteComponent {
               </tfoot>
           </table>
           <div style="padding: 5px">
-              <button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.apagaFonteDados('${d.codigo}');})">
-                <i class="fa fa-times "></i>&nbsp;Apaga
-              </button>
-              <button class='btn btn-xs btn-info pull-right'
-                onclick="window.angularComponentRef.zone.run(() => {window.angularComponentRef.component.editaFonteDados('${d.codigo}');})">
-                <i class="fa fa-pencil "></i>&nbsp;Edita
-              </button>
+              ${apagaStr}
+              ${editaStr}
           </div>
           </div>`
     }

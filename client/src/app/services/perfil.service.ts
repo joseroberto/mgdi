@@ -11,4 +11,5 @@ export class PerfilService extends REST {
   getAll(){
     return this.get(`/perfil?aplicacao=${environment.aplicacao}`);
   }
+  
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginInfoComponent} from "../../user/login-info/login-info.component";
-import { ParametroService } from '../../../services/index';
+import { ParametroService, AclService } from '../../../services/index';
 
 @Component({
 
@@ -10,7 +10,9 @@ import { ParametroService } from '../../../services/index';
 export class NavigationComponent implements OnInit {
 
   private enviroment:string = '';
-  constructor(private parametroService:ParametroService) {
+  constructor(private parametroService:ParametroService,
+             private acl:AclService
+    ) {
   }
 
   ngOnInit() {
@@ -22,6 +24,9 @@ export class NavigationComponent implements OnInit {
   isProduction(){
     return this.enviroment == 'production';
 
+  }
+  userCan(router,method){
+   return this.acl.getPermission(router,method)
   }
 
 }

@@ -1,7 +1,7 @@
 export const config: any = {
 
   version: "0.1.2",
-  title: "MGI - Módulo de Gestão de Indicadores",
+  title: "MGDI - Módulo de Gestão de Dados e Indicadores",
   defaultLocale: "br",
   API_URL: "assets/api", //Usado para carregar itens de API como languages
   menu_speed: 200,
