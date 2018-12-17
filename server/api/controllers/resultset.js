@@ -813,7 +813,7 @@ function getGranularidade(value){
   return varGranularidade;
 }
 
-
+//minor
 function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config){
   var ans=indicadores.shift();
   var item_anterior = ans;
