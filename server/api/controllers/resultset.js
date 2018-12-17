@@ -821,7 +821,7 @@ function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config)
     console.log(item)
       ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
       if(config.tipo!='BR'){
-        ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
+        ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
       }
       item_anterior = item ;    
   });
