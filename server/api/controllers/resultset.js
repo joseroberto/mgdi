@@ -56,7 +56,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        // console.log('SQL+=>', sql);
+        console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           if(err) {
             console.error('error running query', err);
@@ -365,11 +365,13 @@ function montaResult(indicadores, config){
 
   per = per.substr(0, per.length-1);
   gran = gran.substr(0, gran.length-1);
+  var ans = ` RESULT as (select ${operation} coalesce(${per}) as ${varPeriodicidade} `;
+  if(config.tipo !='BR'){
+    ans += ` , coalesce(${gran}) as ${varGranularidade} `;
+  }
+  ans+=` from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade, config)}) `;
 
-  return `RESULT as (select ${operation} 
-      coalesce(${per}) as ${varPeriodicidade},
-      coalesce(${gran}) as ${varGranularidade}     
-      from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade)})`;
+  return ans
 }
 
 
@@ -462,7 +464,12 @@ function montaQueryComplemento(indicadores, config){
 
 
     // Para o RESULT
-    from += 'INNER JOIN RESULT on RESULT.ibge=mun.co_ibge ';
+    if(config.tipo!='BR'){
+      from += 'INNER JOIN RESULT on RESULT.ibge=mun.co_ibge ';
+    }
+    else{
+      from += 'RESULT '
+    }
  
     /*var arr_control=[];
     (Object.keys(indicadores)).forEach(key=>{
@@ -806,13 +813,16 @@ function getGranularidade(value){
   return varGranularidade;
 }
 
-function associaCampos2(indicadores, varPeriodicidade, varGranularidade){
+function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config){
   var ans=indicadores.shift();
   var item_anterior = ans;
   indicadores.forEach(item=>{
     console.log(item)
-      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
-      item_anterior = item;    
+      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
+      if(config.tipo!='BR'){
+        ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
+      }
+      item_anterior = item ;    
   });
   return ans;
 }
