@@ -3,6 +3,6 @@ apps:
     name: barramento-api
     instances: 1
     exec_mode: cluster
-    watch  : true
+    watch  : false
     env    :
       NODE_ENV: production
