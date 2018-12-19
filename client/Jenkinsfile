@@ -14,7 +14,7 @@ pipeline {
         //   sh 'npm run --prefix ./client build:homolog'
         //   stash name: 'dist', includes: 'client/dist/'
         // }
-        sh 'la -la'
+        sh 'ls -la'
       }
     }
     stage('Publish-Web') {
