@@ -8,7 +8,7 @@ module.exports = (app)=>{
 // console.log("swagger_config:" + JSON.stringify(swagger_config.paths) )
 
 
-var logDirectory = path.join(__dirname, '../server_log')
+var logDirectory = path.join(__dirname, '../../../server_log')
 var fs = require('fs');
 var rfs = require('rotating-file-stream')
 // ensure log directory exists
