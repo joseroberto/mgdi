@@ -20,7 +20,7 @@ pipeline {
     stage('Publish-Web') {
       steps {
         dir('client') {
-          unstash 'dist'
+          // unstash 'dist'
           sh 'docker build -t $REGISTRY_NAME_WEB .'
           withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
             sh 'docker push $REGISTRY_NAME_WEB'
