@@ -48,6 +48,10 @@ export class AclService extends REST {
     let options = acl.getConfig();
     const policy = options.policies.get(this.role);
     let access = acl.checkACL(this.role, route, method);
+
+    if(this.role == "ADM")
+        return access;
+
     //check if in $area, if it is, check permission for it
     if(unidadeCod){
         if( this.userUnidadesPath.includes( unidadeCod ) ){
