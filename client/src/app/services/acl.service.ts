@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import _ from 'lodash'
 import { REST } from './REST';
-import { environment } from '../../environments/environment';
-var acl = require("../../../../server/api/helpers/acl-module/index.js");
+// import { environment } from '../../environments/environment';
+// var acl = require("../../../../server/api/helpers/acl-module/index.js");
+var acl = require("../helpers/acl-module/index.js");
 
 
 @Injectable()
