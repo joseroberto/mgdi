@@ -9,17 +9,18 @@ pipeline {
         docker { image 'synapsetec/nodejs:bn8' }
       }
       steps {
-        withEnv(['HOME=.']) {
-          sh 'npm --prefix ./client install ./client'
-          sh 'npm run --prefix ./client build:homolog'
-          stash name: 'dist', includes: 'client/dist/'
-        }
+        // withEnv(['HOME=.']) {
+        //   sh 'npm --prefix ./client install ./client'
+        //   sh 'npm run --prefix ./client build:homolog'
+        //   stash name: 'dist', includes: 'client/dist/'
+        // }
+        sh 'ls -la'
       }
     }
     stage('Publish-Web') {
       steps {
         dir('client') {
-          unstash 'dist'
+          // unstash 'dist'
           sh 'docker build -t $REGISTRY_NAME_WEB .'
           withDockerRegistry([ credentialsId: "GitlabRegistryID", url: "http://registry.gitlab.com" ]) {
             sh 'docker push $REGISTRY_NAME_WEB'
