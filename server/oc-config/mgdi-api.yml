@@ -1,0 +1,125 @@
+kind: Template
+apiVersion: v1
+metadata:
+  name: mgdi-api
+  annotations:
+    openshift.io/display-name: MGDI Api
+    description: Componente nodeJs para Api do MGDI
+    tags: mgdi,digisus,se,ms
+    iconClass: icon-nodejs
+    openshift.io/long-description: Componente nodeJs para Api do MGDI
+    openshift.io/provider-display-name: Ministério da Saúde
+    template.openshift.io/bindable: 'false'
+labels:
+  template: mgdi-api
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+    annotations:
+      description: Expõe a aplicação com loadbalance
+  spec:
+    ports:
+    - name: "${NAME}"
+      port: 8000
+      targetPort: 8000
+    selector:
+      name: "${NAME}"
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+  spec:
+    host: ""
+    to:
+      kind: Service
+      name: "${NAME}"
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+    annotations:
+      description: "ImageStream para o ${NAME}"
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+    annotations:
+      description: "Define como construir a aplicação ${NAME}"
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    source:
+      type: Git
+      git:
+        uri: "${SOURCE_REPOSITORY_URL}"
+        ref: "${SOURCE_REPOSITORY_REF}"
+      sourceSecret:
+        name: "${CREDENTIAL_NAME}"
+    strategy:
+      type: Docker
+      dockerStrategy:
+        from:
+          kind: DockerImage
+          name: keymetrics/pm2:8-alpine
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${NAME}:latest"
+    triggers:
+    - type: ImageChange
+    - type: ConfigChange
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+    annotations:
+      description: Define como realizar o deploy da aplicação
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    strategy:
+      type: Recreate
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${NAME}"
+        from:
+          kind: ImageStreamTag
+          name: "${NAME}:latest"
+    - type: ConfigChange
+    replicas: 1
+    selector:
+      name: "${NAME}"
+    template:
+      metadata:
+        name: "${NAME}"
+        labels:
+          name: "${NAME}"
+      spec:
+        containers:
+        - name: "${NAME}"
+          image: " "
+          ports:
+          - containerPort: 8000
+parameters:
+- name: NAME
+  displayName: Name
+  description: Nome que será usado em todos os objetos criados pelo openshift
+  required: true
+  value: mgdi-api
+- name: SOURCE_REPOSITORY_URL
+  displayName: Repositório no GIT
+  description: A URL do repositório onde a aplicação está
+  required: true
+  value: https://bitbucket.org/manatus/mgdi.git
+- name: SOURCE_REPOSITORY_REF
+  displayName: Branch a ser usado pela aplicação
+  description: Caso seja diferente de master...
+  required: true
+  value: master
+- name: CREDENTIAL_NAME
+  displayName: Nome da credencial criada em Secrets
+  required: true
+  value: rafael-cred
