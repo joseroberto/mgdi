@@ -1,7 +1,7 @@
 {
-  "name": "smartadmin",
-  "version": "0.4.5",
-  "license": "WRAPBOOTSTRAP",
+  "name": "mgdi",
+  "version": "1.2.0",
+  "license": "",
   "scripts": {
     "build:dev": "./node_modules/.bin/ng build",
     "build:prod": "./node_modules/.bin/ng build --env=prod --aot=false --base-href .",
