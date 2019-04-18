@@ -42,6 +42,7 @@ RUN mkdir -p /var/opt/mgi && \
 ADD . /var/opt/mgi
 WORKDIR /var/opt/mgi
 RUN   apk add --no-cache --virtual git && \
+  rm -fr node_modules && \
   npm install &&  \
   chgrp -R 0 /var/opt/mgi && \
   chmod -R g+rwX /var/opt/mgi && \
