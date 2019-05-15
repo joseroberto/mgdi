@@ -38,7 +38,7 @@ swagger:
 config:
   #host: XXX
   secret: bZJc2sWbQLKos6GkHn/VB9oXwQt8S0R0kRvJ5/xJ89E=
-  #bypass: true
+  # bypass: true
   # -------------------------------------------
   # | Banco de dados do MGI                   |
   # -------------------------------------------

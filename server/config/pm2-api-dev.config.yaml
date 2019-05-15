@@ -7,13 +7,14 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: db.manatustecnologia.com.br 
-      DATABASE: dbspo
-      USER_DB: postgres
-      PASSWORD_DB: serenaya
+      HOSTDB: 192.168.0.25
+      DATABASE: dbdigisus
+      USER_DB: luiscrneves
+      PASSWORD_DB: 130670
+      PORT: 8001
       SCHEMA: dbesusgestor
-      HOST: localhost:8000
+      HOST: localhost:8001
       SCHEMA_LOGIN: scpa
-      WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
+      WSDL: http://aplicacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
       SISTEMA: SAGE
       LOGGING_SQ: false

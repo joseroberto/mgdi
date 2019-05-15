@@ -293,3 +293,12 @@ GET 'Wed Dec 05 2018 11:43:15 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}
 GET 'Wed Dec 05 2018 11:43:33 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 65.515 ms
 GET 'Wed Dec 05 2018 11:44:19 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 132.812 ms
 GET 'Wed Dec 05 2018 14:18:26 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 114.667 ms
+POST 'Mon Apr 22 2019 17:58:32 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 403 42 677.441 ms
+POST 'Mon Apr 22 2019 18:00:48 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 403 42 1906.084 ms
+POST 'Mon Apr 22 2019 18:03:14 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 1423.749 ms
+POST 'Mon Apr 22 2019 18:11:41 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 663.658 ms
+POST 'Mon Apr 22 2019 19:45:24 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 338 179.882 ms
+POST 'Mon Apr 22 2019 19:45:45 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 621.468 ms
+POST 'Mon Apr 22 2019 19:46:54 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 434.838 ms
+POST 'Mon Apr 22 2019 19:47:10 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya000","aplicacao":1}' /login 403 42 81.745 ms
+POST 'Mon Apr 22 2019 19:47:20 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 97.230 ms
