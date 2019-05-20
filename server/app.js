@@ -90,10 +90,6 @@ SwaggerExpress.create(config, function (err, se) {
   se.runner.swagger.info.description = config_param.description;
 
 
-
-
-
-
   app.use(se.runner.swaggerTools.swaggerUi());
 
   

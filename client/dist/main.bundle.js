@@ -8520,7 +8520,7 @@ webpackContext.id = 776;
 // The file contents for the current environment will overwrite these during build.
 var environment = {
     production: false,
-    url: 'http://mgdi-api-test-digisus.cloud.saude.gov',
+    url: 'http://mgdiapi.saude.gov.br',
     API_URL: "/api",
     aplicacao: 1,
     urlNewUser: "http://aplicacao-homologacao.saude.gov.br/datasus-scpaweb-usuario/visao/login/login-sistema.jsf",
