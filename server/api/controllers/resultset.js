@@ -814,15 +814,15 @@ function getGranularidade(value){
 }
 
 function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config){
-  var ans='';
-  var item_anterior = '';
+  var ans=indicadores.shift();
+  var item_anterior = ans;
   indicadores.forEach(item=>{
-    if(ans.length>0){
-      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
-    }else{
-      ans+=item;
-      item_anterior = item;
-    }
+    console.log(item)
+      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
+      if(config.tipo!='BR'){
+        ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
+      }
+      item_anterior = item ;    
   });
   return ans;
 }
