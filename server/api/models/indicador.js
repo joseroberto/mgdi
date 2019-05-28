@@ -12,7 +12,8 @@ module.exports = function (sequelize, DataTypes) {
       field: 'co_seq_indicador'
     },
     data_atualizacao_dado: {
-      type: DataTypes.VIRTUAL
+      type: DataTypes.DATE,
+      field: 'dt_atualizacao_dado'
     },
     codigo: {
       type: DataTypes.STRING(8),
@@ -279,32 +280,6 @@ module.exports = function (sequelize, DataTypes) {
     freezeTableName: true,
     tableName: 'tb_indicador'
   });
-
-  Indicador.afterFind('data_atualizacao_dado', async function (result) {
-
-    if (result.constructor === Array) {
-      var query_result = await sequelize.query('select co_seq_indicador, max(dt_atualizacao) as dt_atualizacao FROM dbesusgestor.tb_resultado GROUP BY co_seq_indicador', {
-        type: sequelize.QueryTypes.SELECT
-      })
-      var mapa = {}
-      for (var i = 0; i < query_result.length; i++) {
-        mapa[query_result[i].co_seq_indicador] = query_result[i].dt_atualizacao
-      }
-      var arrayLength = result.length;
-      for (var i = 0; i < arrayLength; i++) {
-        var res = (mapa[result[i].id]) ? (mapa[result[i].id]) : null
-        result[i].data_atualizacao_dado = res
-      }
-    } else {
-      var query_result = await sequelize.query('select max(dt_atualizacao) as dt_atualizacao FROM dbesusgestor.tb_resultado where co_seq_indicador = :co_seq', {
-        replacements: {
-          co_seq: result.id
-        },
-        type: sequelize.QueryTypes.SELECT
-      })
-      result.data_atualizacao_dado = query_result[0].dt_atualizacao;
-    }
-    return result;
-  })
+  
   return Indicador;
 };
