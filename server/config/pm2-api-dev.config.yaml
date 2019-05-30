@@ -8,7 +8,7 @@ apps:
       NODE_ENV: dev
       COMPANY: MS
       HOSTDB: db.manatustecnologia.com.br
-      PGPORT: 5432
+      PGPORT: 5433
       DATABASE: dbspo
       USER_DB: postgres
       PASSWORD_DB: serenaya
