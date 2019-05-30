@@ -7,11 +7,11 @@ apps:
     env    :
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: 192.168.0.25
-      DATABASE: dbdigisus
-      USER_DB: luiscrneves
-      PASSWORD_DB: 130670
-      PORT: 8001
+      HOSTDB: db.manatustecnologia.com.br
+      PGPORT: 5432
+      DATABASE: dbspo
+      USER_DB: postgres
+      PASSWORD_DB: serenaya
       SCHEMA: dbesusgestor
       HOST: localhost:8001
       SCHEMA_LOGIN: scpa

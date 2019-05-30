@@ -1,0 +1,20 @@
+apps:
+  - script   : ./app.js
+    name: barramento-api
+    instances: 1
+    exec_mode: fork
+    node_args: [ "--inspect=0.0.0.0:9229" ]
+    watch: true
+    env:
+      NODE_ENV: dev
+      COMPANY: MS
+      HOSTDB: localhost 
+      DATABASE: dbspo
+      USER_DB: postgres
+      PASSWORD_DB: postgres
+      SCHEMA: dbesusgestor
+      HOST: localhost:8000
+      SCHEMA_LOGIN: scpa
+      WSDL: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl #cadastro scpa: http://aplicacao-homologacao.saude.gov.br/datasus-scpaweb-usuario/
+      SISTEMA: SAGE
+      LOGGING_SQ: false
