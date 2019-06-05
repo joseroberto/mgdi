@@ -56,7 +56,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        console.log('SQL+=>', sql);
+        // console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           if(err) {
             console.error('error running query', err);
@@ -336,16 +336,25 @@ function montaResult(indicadores, config){
   var per = '';
   var gran = '';
 
+  let termos = ''
 
   Object.keys(indicadores).forEach(key => {
       switch(indicadores[key].tipoConsulta){
         case 1: // Formulas
           var ans = ' ' + indicadores[key].sql;
+          let aggConsultaComplementar = ' ' + indicadores[key].sql;
+          for(let indFormula of indicadores[key].indicadores_formula) {
+            aggConsultaComplementar = aggConsultaComplementar.replace(
+              new RegExp(`[${indFormula}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `SUM(${indFormula})`
+            );
+          }
+          indicadores[key].formula_agg = aggConsultaComplementar
           if(arrControle.indexOf(indicadores[key].codigo)==-1){
               for(key2 in indicadores[key].indicadores){
                 ans = ans.replace(new RegExp(`[${key2}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `(${key2})`);
                 per += key2 + '.' + varPeriodicidade + ',';
                 gran += key2 + '.' + varGranularidade + ',';
+                termos += `${key2}, `
                 arrControle.push(key2);
               }
               ans += ` ${indicadores[key].codigo},`;
@@ -354,6 +363,8 @@ function montaResult(indicadores, config){
           break;
         case 3: // Tb Resultado
           operation +=` (${indicadores[key].codigo}) ${indicadores[key].codigo},`;
+          indicadores[key].formula_agg = 
+            `${getCriterioAgregacao(indicadores[key].criterioAgregacao)}(${indicadores[key].codigo})`
           if(arrControle.indexOf(indicadores[key].codigo)==-1){
             per += indicadores[key].codigo + '.' + varPeriodicidade + ',';
             gran += indicadores[key].codigo + '.' + varGranularidade + ',';
@@ -365,12 +376,11 @@ function montaResult(indicadores, config){
 
   per = per.substr(0, per.length-1);
   gran = gran.substr(0, gran.length-1);
-  var ans = ` RESULT as (select ${operation} coalesce(${per}) as ${varPeriodicidade} `;
+  var ans = ` RESULT as (select ${operation} ${termos} coalesce(${per}) as ${varPeriodicidade} `;
   if(config.tipo !='BR'){
     ans += ` , coalesce(${gran}) as ${varGranularidade} `;
   }
   ans+=` from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade, config)}) `;
-
   return ans
 }
 
@@ -408,7 +418,10 @@ function montaQuery(indicadores, config){
       }
   });
   sql_with = sql_with.substr(0,sql_with.length - 1);
-  return `${sql_with}, ${montaResult(indicadores, config)} ${montaQueryComplemento(indicadores, config)}`
+  let ans = montaResult(indicadores, config)
+
+  let query = `${sql_with}, ${ans} ${montaQueryComplemento(indicadores, config)}`
+  return query
 
 }
 
@@ -459,9 +472,12 @@ function montaQueryComplemento(indicadores, config){
         orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
         break;
     }
-    select += Object.values(indicadores).map(a=>getCriterioAgregacao(a.criterioAgregacao)+'('+ a.codigo +') as '+a.codigo + ' ').toString();
-    orderby += `${varPeriodicidade},`;
 
+    select += Object.values(indicadores).map(a => 
+      `${a.formula_agg} ${a.codigo} `
+    ).toString();
+
+    orderby += `${varPeriodicidade},`;
 
     // Para o RESULT
     if(config.tipo!='BR'){
@@ -817,7 +833,6 @@ function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config)
   var ans=indicadores.shift();
   var item_anterior = ans;
   indicadores.forEach(item=>{
-    console.log(item)
       ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
       if(config.tipo!='BR'){
         ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
