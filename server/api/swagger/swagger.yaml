@@ -920,9 +920,10 @@ paths:
           default: LIN
           description: |
               Indica o tipo de formatação a ser utilizado na saída dos dados:
-              * LIN: Formato linear (Default)
-              * CDA: Padrão CDA - Community Data Access
-              * TAB: Formato tabular (Indicador => { tempo })
+              * LIN: Formato linear (Default).
+              * CDA: Padrão CDA - Community Data Access.
+              * TAB: Formato tabular (Indicador => { tempo }).
+              * CSV: Formato de arquivo que armazena dados tabelados.(Download).
         - name: data
           type: array
           items:
@@ -996,9 +997,10 @@ paths:
           default: LIN
           description: |
               Indica o tipo de formatação a ser utilizado na saída dos dados:
-              * LIN: Formato linear (Default)
-              * CDA: Padrão CDA - Community Data Access
-              * TAB: Formato tabular (Indicador => { tempo })
+              * LIN: Formato linear (Default).
+              * CDA: Padrão CDA - Community Data Access.
+              * TAB: Formato tabular (Indicador => { tempo }).
+              * CSV: Formato de arquivo que armazena dados tabelados.(Download).
         - name: data
           type: array
           items:
