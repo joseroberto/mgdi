@@ -13,7 +13,7 @@ apps:
       USER_DB: luiscrneves
       PASSWORD_DB: 130670
       SCHEMA: dbesusgestor
-      HOST: localhost:8001
+      HOST: localhost:8000
       SCHEMA_LOGIN: scpa
       WSDL: http://aplicacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl
       SISTEMA: SAGE

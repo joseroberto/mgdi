@@ -5,6 +5,7 @@ const indicador = require('./indicador');
 const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 const config_param = require('../helpers/config')();
+const json2csv = require('json2csv').parse
 
 const config = {
   user: process.env.USER_DB || config_param.user, //env var: PGUSER
@@ -32,6 +33,14 @@ module.exports = {
             break;
           case 'CDA':
               res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, config, resultado[1]));
+              break;
+          case 'CSV':
+              let indicadorNome = resultado[0].fields[1].name
+              let tipo = config.tipo
+              const csvString = json2csv(resultado[0].rows);
+              res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.csv`);
+              res.set('Content-Type', 'text/csv');
+              res.status(200).send(csvString);
               break;
           case 'TAB':
               res.json(module.exports.formataJSONResult(resultado[0].rows, config, Object.keys(resultado[1])));
@@ -73,9 +82,17 @@ module.exports = {
       });
     });
   },
-  /*
+   /*
     Formatador de saída para consultas CDA.
-  */
+   */
+
+   formataCSV: (rows, res)=>{
+    jsonexport(rows,function(err, csv){
+      res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+      res.set('Content-Type', 'text/csv');
+      res.status(200).send(csv);
+    });
+   },
    formataCDAResult: (result, fields, config, indicadores)=>{
     var metadata=[];
     var filtro={};

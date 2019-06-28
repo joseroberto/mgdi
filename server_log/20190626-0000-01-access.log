@@ -1,0 +1,379 @@
+GET 'Fri Nov 30 2018 20:25:58 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI014%2CPI05/resultset?tipo=RG&formato=LIN 200 5751 4125.296 ms
+GET 'Wed Dec 05 2018 08:55:40 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 15.722 ms
+GET 'Wed Dec 05 2018 08:55:40 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 282.251 ms
+GET 'Wed Dec 05 2018 08:55:40 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 287.489 ms
+GET 'Wed Dec 05 2018 08:55:40 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 495.962 ms
+GET 'Wed Dec 05 2018 08:55:58 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.576 ms
+GET 'Wed Dec 05 2018 08:55:58 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 304  29.157 ms
+GET 'Wed Dec 05 2018 08:55:58 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 304  35.646 ms
+GET 'Wed Dec 05 2018 08:55:58 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 304  189.676 ms
+GET 'Wed Dec 05 2018 08:56:25 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 62.055 ms
+GET 'Wed Dec 05 2018 08:56:25 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 220.449 ms
+GET 'Wed Dec 05 2018 08:56:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.347 ms
+GET 'Wed Dec 05 2018 08:56:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 28.469 ms
+GET 'Wed Dec 05 2018 08:56:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 114.415 ms
+GET 'Wed Dec 05 2018 08:58:38 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.549 ms
+GET 'Wed Dec 05 2018 08:58:38 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  21.615 ms
+GET 'Wed Dec 05 2018 08:58:38 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  25.038 ms
+GET 'Wed Dec 05 2018 08:58:38 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 3.506 ms
+GET 'Wed Dec 05 2018 08:58:38 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 57.210 ms
+GET 'Wed Dec 05 2018 09:01:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.400 ms
+GET 'Wed Dec 05 2018 09:01:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  49.334 ms
+GET 'Wed Dec 05 2018 09:01:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  51.361 ms
+GET 'Wed Dec 05 2018 09:01:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 3.995 ms
+GET 'Wed Dec 05 2018 09:01:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 45.349 ms
+GET 'Wed Dec 05 2018 09:01:52 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  5.328 ms
+GET 'Wed Dec 05 2018 09:01:52 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.841 ms
+GET 'Wed Dec 05 2018 09:01:52 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  12.906 ms
+GET 'Wed Dec 05 2018 09:01:53 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 10.398 ms
+GET 'Wed Dec 05 2018 09:01:53 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 47.906 ms
+GET 'Wed Dec 05 2018 09:01:54 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.432 ms
+GET 'Wed Dec 05 2018 09:01:54 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 7.829 ms
+GET 'Wed Dec 05 2018 09:01:54 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 9.282 ms
+GET 'Wed Dec 05 2018 09:01:56 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 13.926 ms
+GET 'Wed Dec 05 2018 09:01:56 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 42.195 ms
+GET 'Wed Dec 05 2018 09:01:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 14.662 ms
+GET 'Wed Dec 05 2018 09:01:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 36.776 ms
+GET 'Wed Dec 05 2018 09:02:05 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.227 ms
+GET 'Wed Dec 05 2018 09:02:05 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  7.759 ms
+GET 'Wed Dec 05 2018 09:02:05 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  8.437 ms
+GET 'Wed Dec 05 2018 09:02:06 GMT-0200 (-02)' anônimo anônimo '{}' /api/granularidade 200 305 11.279 ms
+GET 'Wed Dec 05 2018 09:02:06 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador/PI023 200 9832 33.952 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.764 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  95.204 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  99.739 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.363 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 12.186 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 8.396 ms
+GET 'Wed Dec 05 2018 09:02:39 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 308.660 ms
+GET 'Wed Dec 05 2018 09:02:41 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.013 ms
+GET 'Wed Dec 05 2018 09:02:41 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  26.321 ms
+GET 'Wed Dec 05 2018 09:02:41 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  27.493 ms
+GET 'Wed Dec 05 2018 09:02:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.272 ms
+GET 'Wed Dec 05 2018 09:02:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 9.970 ms
+GET 'Wed Dec 05 2018 09:02:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 16.432 ms
+GET 'Wed Dec 05 2018 09:02:42 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 98.586 ms
+GET 'Wed Dec 05 2018 09:02:43 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 7.063 ms
+GET 'Wed Dec 05 2018 09:02:43 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.858 ms
+GET 'Wed Dec 05 2018 09:02:43 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 8.804 ms
+GET 'Wed Dec 05 2018 09:02:45 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.288 ms
+GET 'Wed Dec 05 2018 09:02:46 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 11.981 ms
+GET 'Wed Dec 05 2018 09:02:46 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 14.402 ms
+GET 'Wed Dec 05 2018 09:02:46 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 112.516 ms
+GET 'Wed Dec 05 2018 09:02:50 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.873 ms
+GET 'Wed Dec 05 2018 09:02:50 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  5.246 ms
+GET 'Wed Dec 05 2018 09:02:50 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  6.929 ms
+GET 'Wed Dec 05 2018 09:02:51 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.115 ms
+GET 'Wed Dec 05 2018 09:02:51 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 5.956 ms
+GET 'Wed Dec 05 2018 09:02:51 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 6.394 ms
+GET 'Wed Dec 05 2018 09:02:51 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 98.122 ms
+GET 'Wed Dec 05 2018 09:03:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.301 ms
+GET 'Wed Dec 05 2018 09:03:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 72.980 ms
+GET 'Wed Dec 05 2018 09:03:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 77.689 ms
+POST 'Wed Dec 05 2018 09:05:39 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya","aplicacao":1}' /login 403 42 356.736 ms
+POST 'Wed Dec 05 2018 09:05:53 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya","aplicacao":1}' /login 403 42 73.737 ms
+GET 'Wed Dec 05 2018 09:16:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 21.462 ms
+GET 'Wed Dec 05 2018 09:16:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 131.789 ms
+GET 'Wed Dec 05 2018 09:16:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 139.292 ms
+GET 'Wed Dec 05 2018 09:16:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 317.828 ms
+GET 'Wed Dec 05 2018 09:16:21 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.126 ms
+GET 'Wed Dec 05 2018 09:16:21 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 31.486 ms
+GET 'Wed Dec 05 2018 09:16:21 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 30.571 ms
+GET 'Wed Dec 05 2018 09:16:27 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.197 ms
+GET 'Wed Dec 05 2018 09:16:27 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 23.159 ms
+GET 'Wed Dec 05 2018 09:16:27 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 26.590 ms
+GET 'Wed Dec 05 2018 09:16:27 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 168.408 ms
+GET 'Wed Dec 05 2018 09:20:37 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.031 ms
+GET 'Wed Dec 05 2018 09:20:37 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 50.289 ms
+GET 'Wed Dec 05 2018 09:20:37 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 52.544 ms
+POST 'Wed Dec 05 2018 09:28:07 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 435.618 ms
+GET 'Wed Dec 05 2018 09:28:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 6.516 ms
+GET 'Wed Dec 05 2018 09:28:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 2667 20.644 ms
+GET 'Wed Dec 05 2018 09:28:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 12 17.148 ms
+GET 'Wed Dec 05 2018 09:47:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 100.669 ms
+GET 'Wed Dec 05 2018 09:48:33 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 59.889 ms
+GET 'Wed Dec 05 2018 09:48:34 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 304  9.062 ms
+GET 'Wed Dec 05 2018 09:48:50 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  29.866 ms
+GET 'Wed Dec 05 2018 09:48:50 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  32.667 ms
+GET 'Wed Dec 05 2018 09:48:50 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 200 639002 259.526 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/periodicidade 200 397 26.576 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-medida 200 261 50.700 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/tag-categoria 200 2769 50.383 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/classificacao6s 200 300 84.301 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/banco-dados 200 93 36.103 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/classificacao 200 244 98.204 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/tipo-consulta 200 243 38.766 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/fonte-parametro 200 122 64.254 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/categoria-analise 200 10219 92.869 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/granularidade 304  32.875 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  34.941 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/polaridade 200 144 34.727 ms
+GET 'Wed Dec 05 2018 09:48:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/criterio-agregacao 200 211 37.469 ms
+GET 'Wed Dec 05 2018 09:48:59 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  201.718 ms
+GET 'Wed Dec 05 2018 09:48:59 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador/111_12_023 200 4020 256.689 ms
+GET 'Wed Dec 05 2018 09:48:59 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/granularidade 304  2.542 ms
+GET 'Wed Dec 05 2018 09:49:12 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 6.553 ms
+GET 'Wed Dec 05 2018 09:49:12 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 304  29.986 ms
+GET 'Wed Dec 05 2018 09:49:28 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 304  27.712 ms
+GET 'Wed Dec 05 2018 09:49:30 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 304  8.203 ms
+GET 'Wed Dec 05 2018 09:49:31 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/categoria-analise 304  10.694 ms
+GET 'Wed Dec 05 2018 09:49:37 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/categoria-analise/COR 200 968 12.748 ms
+GET 'Wed Dec 05 2018 09:49:44 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 304  29.844 ms
+GET 'Wed Dec 05 2018 09:50:10 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 304  22.678 ms
+GET 'Wed Dec 05 2018 09:51:19 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+GET 'Wed Dec 05 2018 09:53:19 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+POST 'Wed Dec 05 2018 09:56:25 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{"username":"leandroceles@gmail.com","password":"kidciga2261","aplicacao":1}' /login 406 424 499.853 ms
+POST 'Wed Dec 05 2018 09:57:17 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{"codigo":0,"login":"leandroceles@gmail.com","cpf":"70762392134","nome":"Leandro Souza Celes","email":"leandroceles@gmail.com","ramal":"2342","celular":"981221844","telefone":"981221844","cargo":"Teste","sexo":"M","PerfilCodigo":1,"UnidadeCodigo":1,"SituacaoCodigo":0}' /api/user 200 82 570.869 ms
+GET 'Wed Dec 05 2018 09:57:27 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/user 200 12 6.052 ms
+GET 'Wed Dec 05 2018 09:57:44 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/version 200 147 5.215 ms
+GET 'Wed Dec 05 2018 09:57:44 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/indicador?limit=20&offset=0& 500  8.417 ms
+GET 'Wed Dec 05 2018 09:57:44 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/indicador-porunidade 500  11.440 ms
+GET 'Wed Dec 05 2018 09:57:44 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/indicador-portag 304  31.079 ms
+GET 'Wed Dec 05 2018 09:57:46 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.463 ms
+GET 'Wed Dec 05 2018 09:57:46 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/perfil?aplicacao=1 304  6.288 ms
+GET 'Wed Dec 05 2018 09:57:46 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{}' /api/unidade 304  11.199 ms
+POST 'Wed Dec 05 2018 09:58:04 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 158.368 ms
+GET 'Wed Dec 05 2018 09:58:04 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 7.287 ms
+GET 'Wed Dec 05 2018 09:58:04 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 2667 21.135 ms
+GET 'Wed Dec 05 2018 09:58:04 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 823 19.642 ms
+GET 'Wed Dec 05 2018 09:58:22 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 304  18.547 ms
+GET 'Wed Dec 05 2018 09:58:26 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 5.777 ms
+GET 'Wed Dec 05 2018 09:58:26 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  18.131 ms
+GET 'Wed Dec 05 2018 09:58:26 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 304  20.012 ms
+GET 'Wed Dec 05 2018 10:00:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.977 ms
+GET 'Wed Dec 05 2018 10:00:48 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  83.066 ms
+GET 'Wed Dec 05 2018 10:00:48 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/perfil?aplicacao=1 304  85.736 ms
+GET 'Wed Dec 05 2018 10:00:49 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 5.515 ms
+GET 'Wed Dec 05 2018 10:00:49 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 11469 12.717 ms
+GET 'Wed Dec 05 2018 10:00:49 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  15.044 ms
+GET 'Wed Dec 05 2018 10:01:02 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.330 ms
+GET 'Wed Dec 05 2018 10:01:02 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  22.956 ms
+GET 'Wed Dec 05 2018 10:01:02 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  24.833 ms
+GET 'Wed Dec 05 2018 10:01:07 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.295 ms
+GET 'Wed Dec 05 2018 10:01:07 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 15.737 ms
+GET 'Wed Dec 05 2018 10:01:07 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 304  16.134 ms
+GET 'Wed Dec 05 2018 10:01:08 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 166.768 ms
+GET 'Wed Dec 05 2018 10:01:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.620 ms
+GET 'Wed Dec 05 2018 10:01:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  27.933 ms
+GET 'Wed Dec 05 2018 10:01:10 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  29.597 ms
+POST 'Wed Dec 05 2018 10:01:20 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 153.796 ms
+GET 'Wed Dec 05 2018 10:01:23 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 7.461 ms
+GET 'Wed Dec 05 2018 10:01:23 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 2667 18.117 ms
+GET 'Wed Dec 05 2018 10:01:23 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 304  26.305 ms
+GET 'Wed Dec 05 2018 10:01:28 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 304  4.359 ms
+GET 'Wed Dec 05 2018 10:06:03 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 64.922 ms
+GET 'Wed Dec 05 2018 10:06:22 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.039 ms
+GET 'Wed Dec 05 2018 10:06:22 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  20.058 ms
+GET 'Wed Dec 05 2018 10:06:22 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/perfil?aplicacao=1 304  22.951 ms
+GET 'Wed Dec 05 2018 10:06:30 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.815 ms
+GET 'Wed Dec 05 2018 10:06:30 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 14.551 ms
+GET 'Wed Dec 05 2018 10:06:30 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 18.604 ms
+GET 'Wed Dec 05 2018 10:06:30 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 142.129 ms
+GET 'Wed Dec 05 2018 10:06:32 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 3.121 ms
+GET 'Wed Dec 05 2018 10:06:32 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 6.890 ms
+GET 'Wed Dec 05 2018 10:06:32 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 10.903 ms
+POST 'Wed Dec 05 2018 10:06:40 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 152.289 ms
+GET 'Wed Dec 05 2018 10:06:41 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 6.901 ms
+GET 'Wed Dec 05 2018 10:06:41 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 2667 41.843 ms
+GET 'Wed Dec 05 2018 10:06:41 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 823 42.711 ms
+GET 'Wed Dec 05 2018 10:06:47 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 10.210 ms
+GET 'Wed Dec 05 2018 10:07:04 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 41.610 ms
+GET 'Wed Dec 05 2018 10:07:06 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 6.977 ms
+GET 'Wed Dec 05 2018 10:07:11 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 6.123 ms
+GET 'Wed Dec 05 2018 10:07:13 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 28.550 ms
+GET 'Wed Dec 05 2018 10:07:15 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 6.359 ms
+GET 'Wed Dec 05 2018 10:07:46 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 39.753 ms
+GET 'Wed Dec 05 2018 10:09:46 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.017 ms
+GET 'Wed Dec 05 2018 10:09:46 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  22.781 ms
+GET 'Wed Dec 05 2018 10:09:46 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/perfil?aplicacao=1 304  25.321 ms
+GET 'Wed Dec 05 2018 10:09:56 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 2.593 ms
+GET 'Wed Dec 05 2018 10:09:56 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 304  6.992 ms
+GET 'Wed Dec 05 2018 10:09:56 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  8.674 ms
+GET 'Wed Dec 05 2018 10:09:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 1.379 ms
+GET 'Wed Dec 05 2018 10:09:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-porunidade 200 1662 9.092 ms
+GET 'Wed Dec 05 2018 10:09:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador-portag 200 11 11.066 ms
+GET 'Wed Dec 05 2018 10:09:57 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 49793 147.092 ms
+GET 'Wed Dec 05 2018 10:09:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 7.749 ms
+GET 'Wed Dec 05 2018 10:09:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/version 200 147 4.787 ms
+GET 'Wed Dec 05 2018 10:09:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/unidade 200 13501 12.603 ms
+POST 'Wed Dec 05 2018 10:10:07 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 113.423 ms
+GET 'Wed Dec 05 2018 10:10:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 6.829 ms
+GET 'Wed Dec 05 2018 10:10:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 2667 17.349 ms
+GET 'Wed Dec 05 2018 10:10:08 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 823 18.853 ms
+GET 'Wed Dec 05 2018 10:10:25 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 77.152 ms
+GET 'Wed Dec 05 2018 10:13:11 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 41.586 ms
+GET 'Wed Dec 05 2018 10:14:20 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 53.211 ms
+GET 'Wed Dec 05 2018 10:14:24 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 14.091 ms
+GET 'Wed Dec 05 2018 10:15:49 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 200 93225 52.111 ms
+GET 'Wed Dec 05 2018 10:15:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 7.763 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs 301 167 5.437 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/ 200 5332 3.391 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/css/typography.css 200 450 1.578 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 1.517 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 2.595 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 4.844 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 4.658 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 4.559 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 3.667 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 5.635 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 1.760 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 2.218 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 2.234 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 2.764 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 1.842 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 2.826 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 1.156 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.240 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 2.179 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 1.107 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 0.911 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 0.978 ms
+HEAD 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/ 304  1.143 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /api-docs 200  0.166 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.863 ms
+GET 'Wed Dec 05 2018 10:43:05 GMT-0200 (-02)' anônimo anônimo '{}' /docs/images/favicon-16x16.png 200 645 0.776 ms
+GET 'Wed Dec 05 2018 10:43:42 GMT-0200 (-02)' anônimo anônimo '{}' /docs/images/throbber.gif 200 9257 1.211 ms
+GET 'Wed Dec 05 2018 10:43:48 GMT-0200 (-02)' anônimo anônimo '{}' /api/perfil?aplicacao=1 304  72.448 ms
+GET 'Wed Dec 05 2018 10:44:33 GMT-0200 (-02)' anônimo anônimo '{}' /api/aplicacao 200 47 16.701 ms
+GET 'Wed Dec 05 2018 10:44:59 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  2.205 ms
+GET 'Wed Dec 05 2018 10:45:05 GMT-0200 (-02)' anônimo anônimo '{}' /api/user?situacao=1 403  1.118 ms
+GET 'Wed Dec 05 2018 10:45:14 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  0.918 ms
+POST 'Wed Dec 05 2018 10:53:08 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 403 37 14738.760 ms
+POST 'Wed Dec 05 2018 10:53:36 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 403 37 13681.347 ms
+POST 'Wed Dec 05 2018 10:54:23 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 403 37 13717.485 ms
+POST 'Wed Dec 05 2018 10:54:35 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 403 37 13756.395 ms
+POST 'Wed Dec 05 2018 10:54:57 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{"username":"leandroceles@gmail.com","password":"kidciga2261","aplicacao":1}' /login 406 1689 12692.280 ms
+POST 'Wed Dec 05 2018 10:55:26 GMT-0200 (-02)' 70762392134 'Leandro Souza Celes' '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 180.682 ms
+GET 'Wed Dec 05 2018 10:55:27 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 9.724 ms
+GET 'Wed Dec 05 2018 10:55:27 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  21.886 ms
+GET 'Wed Dec 05 2018 10:55:27 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 304  26.679 ms
+POST 'Wed Dec 05 2018 10:55:36 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 156.571 ms
+GET 'Wed Dec 05 2018 10:56:11 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  1.838 ms
+GET 'Wed Dec 05 2018 10:56:13 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  1.074 ms
+GET 'Wed Dec 05 2018 10:56:23 GMT-0200 (-02)' anônimo anônimo '{}' /api-docs?api_key=Bearer%20eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ28iOjIsImxvZ2luIjoicmRlbW9yYWlzLmZyZWl0YXNAZ21haWwuY29tIiwiY3BmIjoiNzU2ODc5MDkyNDkiLCJub21lIjoiUmFmYWVsIGRlIE1vcmFpcyIsImVtYWlsIjoicmRlbW9yYWlzLmZyZWl0YXNAZ21haWwuY29tIiwicmFtYWwiOiIiLCJjZWx1bGFyIjoiNjE5ODIxMDUzMzAiLCJjYXJnbyI6IiIsImRhdGFfYXByb3ZhY2FvIjpudWxsLCJ1c3VhcmlvX2Fwcm92YWNhbyI6bnVsbCwic2V4byI6Ik0iLCJkdF9pbmNsdXNhbyI6IjIwMTgtMDMtMDlUMTU6NDY6MjUuMDgwWiIsImR0X2F0dWFsaXphY2FvIjoiMjAxOC0wMy0wOVQxNTo0NjoyNS4wODBaIiwiUGVyZmlsQ29kaWdvIjoxLCJVbmlkYWRlQ29kaWdvIjo2LCJTaXR1YWNhb0NvZGlnbyI6MSwiUGVyZmlsIjp7ImNvZGlnbyI6MSwic2lnbGEiOiJBRE0iLCJ0aXR1bG8iOiJBZG1pbmlzdHJhZG9yIGRvIFNpc3RlbWEiLCJkZXNjcmljYW8iOiJPIGFkbWluaXN0cmFkb3IgZG8gc2lzdGVtYSDDqSByZXNwb25zw6F2ZWwgcG9yIGdlcmVuY2lhciBwZXJtaXNzw7VlcyBlIGNoZWNhciBkYWRvcyBkbyBzaXN0ZW1hLiIsImF0aXZvIjp0cnVlLCJleGlnZV91bmlkYWRlIjpmYWxzZSwiQXBsaWNhY2FvQ29kaWdvIjoxLCJBcGxpY2FjYW8iOnsiY29kaWdvIjoxLCJkZXNjcmljYW8iOiJNR0kifX0sImlhdCI6MTU0NDAxNDUzNiwiZXhwIjoxNTQ0NjE5MzM2fQ.feuh1D_7HadKU6DzEZl70Oy5Sq53CRJsDqXXFRXNoSg 200  0.209 ms
+GET 'Wed Dec 05 2018 10:56:27 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  1.107 ms
+POST 'Wed Dec 05 2018 10:56:53 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user/17/aprova 200 80 24.496 ms
+GET 'Wed Dec 05 2018 10:56:53 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 304  26.517 ms
+GET 'Wed Dec 05 2018 10:56:58 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 8.177 ms
+GET 'Wed Dec 05 2018 10:59:29 GMT-0200 (-02)' anônimo anônimo '{}' /indicadores 404 150 2.155 ms
+GET 'Wed Dec 05 2018 10:59:37 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicadores 404 154 0.591 ms
+GET 'Wed Dec 05 2018 11:00:01 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador?api_key=Bearer%20eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RpZ28iOjIsImxvZ2luIjoicmRlbW9yYWlzLmZyZWl0YXNAZ21haWwuY29tIiwiY3BmIjoiNzU2ODc5MDkyNDkiLCJub21lIjoiUmFmYWVsIGRlIE1vcmFpcyIsImVtYWlsIjoicmRlbW9yYWlzLmZyZWl0YXNAZ21haWwuY29tIiwicmFtYWwiOiIiLCJjZWx1bGFyIjoiNjE5ODIxMDUzMzAiLCJjYXJnbyI6IiIsImRhdGFfYXByb3ZhY2FvIjpudWxsLCJ1c3VhcmlvX2Fwcm92YWNhbyI6bnVsbCwic2V4byI6Ik0iLCJkdF9pbmNsdXNhbyI6IjIwMTgtMDMtMDlUMTU6NDY6MjUuMDgwWiIsImR0X2F0dWFsaXphY2FvIjoiMjAxOC0wMy0wOVQxNTo0NjoyNS4wODBaIiwiUGVyZmlsQ29kaWdvIjoxLCJVbmlkYWRlQ29kaWdvIjo2LCJTaXR1YWNhb0NvZGlnbyI6MSwiUGVyZmlsIjp7ImNvZGlnbyI6MSwic2lnbGEiOiJBRE0iLCJ0aXR1bG8iOiJBZG1pbmlzdHJhZG9yIGRvIFNpc3RlbWEiLCJkZXNjcmljYW8iOiJPIGFkbWluaXN0cmFkb3IgZG8gc2lzdGVtYSDDqSByZXNwb25zw6F2ZWwgcG9yIGdlcmVuY2lhciBwZXJtaXNzw7VlcyBlIGNoZWNhciBkYWRvcyBkbyBzaXN0ZW1hLiIsImF0aXZvIjp0cnVlLCJleGlnZV91bmlkYWRlIjpmYWxzZSwiQXBsaWNhY2FvQ29kaWdvIjoxLCJBcGxpY2FjYW8iOnsiY29kaWdvIjoxLCJkZXNjcmljYW8iOiJNR0kifX0sImlhdCI6MTU0NDAxNDUzNiwiZXhwIjoxNTQ0NjE5MzM2fQ.feuh1D_7HadKU6DzEZl70Oy5Sq53CRJsDqXXFRXNoSg 200 356988 211.762 ms
+GET 'Wed Dec 05 2018 11:00:16 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador 200 356988 154.180 ms
+GET 'Wed Dec 05 2018 11:01:01 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /api/login 404 148 1.094 ms
+GET 'Wed Dec 05 2018 11:01:10 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 405  1.841 ms
+POST 'Wed Dec 05 2018 11:01:17 GMT-0200 (-02)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"coquila5s","aplicacao":1}' /login 200 1687 244.512 ms
+GET 'Wed Dec 05 2018 11:01:55 GMT-0200 (-02)' anônimo anônimo '{}' /api/user 403  1.222 ms
+GET 'Wed Dec 05 2018 11:02:31 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/unidade-hierarquia 304  47.084 ms
+GET 'Wed Dec 05 2018 11:02:42 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 32.888 ms
+GET 'Wed Dec 05 2018 11:03:07 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 94.437 ms
+GET 'Wed Dec 05 2018 11:03:14 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user 200 12 4.329 ms
+GET 'Wed Dec 05 2018 11:03:24 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 8.461 ms
+GET 'Wed Dec 05 2018 11:03:37 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1&situacao=0 400  2.652 ms
+GET 'Wed Dec 05 2018 11:03:47 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 69.218 ms
+GET 'Wed Dec 05 2018 11:04:00 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 26.561 ms
+GET 'Wed Dec 05 2018 11:04:55 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 115.179 ms
+GET 'Wed Dec 05 2018 11:05:04 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 11.218 ms
+GET 'Wed Dec 05 2018 11:05:05 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 8.870 ms
+GET 'Wed Dec 05 2018 11:05:12 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 12.007 ms
+GET 'Wed Dec 05 2018 11:35:34 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador 200 356988 244.627 ms
+GET 'Wed Dec 05 2018 11:35:38 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 28.380 ms
+GET 'Wed Dec 05 2018 11:35:40 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 7.210 ms
+GET 'Wed Dec 05 2018 11:36:02 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 29.636 ms
+GET 'Wed Dec 05 2018 11:36:03 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 9.716 ms
+GET 'Wed Dec 05 2018 11:36:15 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 69.059 ms
+GET 'Wed Dec 05 2018 11:38:09 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador 200 356988 275.185 ms
+GET 'Wed Dec 05 2018 11:39:22 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador 200 356988 170.237 ms
+GET 'Wed Dec 05 2018 11:39:32 GMT-0200 (-02)' anônimo anônimo '{}' /api/indicador 200 356988 134.374 ms
+GET 'Wed Dec 05 2018 11:42:13 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 104.130 ms
+GET 'Wed Dec 05 2018 11:42:15 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 10.926 ms
+GET 'Wed Dec 05 2018 11:42:16 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 10.154 ms
+GET 'Wed Dec 05 2018 11:42:34 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 71.790 ms
+GET 'Wed Dec 05 2018 11:42:35 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 11.790 ms
+GET 'Wed Dec 05 2018 11:43:15 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 141.832 ms
+GET 'Wed Dec 05 2018 11:43:33 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 65.515 ms
+GET 'Wed Dec 05 2018 11:44:19 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 132.812 ms
+GET 'Wed Dec 05 2018 14:18:26 GMT-0200 (-02)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=1 200 12281 114.667 ms
+POST 'Mon Apr 22 2019 17:58:32 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 403 42 677.441 ms
+POST 'Mon Apr 22 2019 18:00:48 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 403 42 1906.084 ms
+POST 'Mon Apr 22 2019 18:03:14 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 1423.749 ms
+POST 'Mon Apr 22 2019 18:11:41 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 663.658 ms
+POST 'Mon Apr 22 2019 19:45:24 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 338 179.882 ms
+POST 'Mon Apr 22 2019 19:45:45 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 621.468 ms
+POST 'Mon Apr 22 2019 19:46:54 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 434.838 ms
+POST 'Mon Apr 22 2019 19:47:10 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya000","aplicacao":1}' /login 403 42 81.745 ms
+POST 'Mon Apr 22 2019 19:47:20 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 97.230 ms
+GET 'Tue Jun 04 2019 18:06:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1/resultset?tipo=UF&formato=CDA 500 92 2408.720 ms
+GET 'Tue Jun 04 2019 18:07:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI023/resultset?tipo=UF&formato=CDA 500 148 2420.234 ms
+GET 'Tue Jun 04 2019 18:08:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41136 1207.377 ms
+GET 'Tue Jun 04 2019 18:10:34 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1/resultset?tipo=UF&formato=CDA 500 92 852.927 ms
+GET 'Tue Jun 04 2019 19:06:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1/resultset?tipo=UF&formato=CDA 500 92 2664.884 ms
+GET 'Tue Jun 04 2019 19:06:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41136 1266.795 ms
+GET 'Tue Jun 04 2019 19:14:32 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 150 2283.661 ms
+GET 'Tue Jun 04 2019 19:15:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 150 2266.268 ms
+GET 'Tue Jun 04 2019 19:17:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41136 2683.995 ms
+GET 'Tue Jun 04 2019 19:18:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41136 2709.509 ms
+GET 'Tue Jun 04 2019 19:18:29 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 171 2262.228 ms
+GET 'Tue Jun 04 2019 19:19:42 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41136 2737.947 ms
+GET 'Tue Jun 04 2019 19:33:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI08/resultset?tipo=UF&formato=CDA 200 31874 2981.015 ms
+GET 'Tue Jun 04 2019 19:34:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI09/resultset?tipo=UF&formato=CDA 200 28414 1971.871 ms
+GET 'Tue Jun 04 2019 19:36:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 500 148 1643.569 ms
+GET 'Tue Jun 04 2019 19:38:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 621.261 ms
+GET 'Tue Jun 04 2019 19:39:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 500 171 172.138 ms
+GET 'Tue Jun 04 2019 19:43:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 662.767 ms
+GET 'Tue Jun 04 2019 19:49:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 594.613 ms
+GET 'Tue Jun 04 2019 19:49:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 654.992 ms
+GET 'Tue Jun 04 2019 19:54:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 644.035 ms
+GET 'Tue Jun 04 2019 19:58:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 729.878 ms
+GET 'Tue Jun 04 2019 19:58:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 586.626 ms
+GET 'Tue Jun 04 2019 20:00:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 672.753 ms
+GET 'Tue Jun 04 2019 20:01:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 685.994 ms
+GET 'Tue Jun 04 2019 20:03:08 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 688.451 ms
+GET 'Tue Jun 04 2019 20:04:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 12842 669.193 ms
+GET 'Tue Jun 04 2019 20:05:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 681.058 ms
+GET 'Tue Jun 04 2019 20:07:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 596.202 ms
+GET 'Tue Jun 04 2019 20:07:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014,PI03/resultset?tipo=UF&formato=CDA 200 34433 1094.901 ms
+GET 'Tue Jun 04 2019 20:08:11 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014,PI03/resultset?tipo=UF&formato=CDA 200 34433 1195.512 ms
+GET 'Tue Jun 04 2019 20:09:30 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 662.931 ms
+GET 'Tue Jun 04 2019 20:10:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 697.345 ms
+GET 'Tue Jun 04 2019 20:10:34 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 714.938 ms
+GET 'Tue Jun 04 2019 20:16:31 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 709.111 ms
+GET 'Tue Jun 04 2019 20:17:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 658.242 ms
+GET 'Tue Jun 04 2019 20:17:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 607.212 ms
+GET 'Tue Jun 04 2019 20:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 654.858 ms
+GET 'Tue Jun 04 2019 20:18:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 620.350 ms
+GET 'Tue Jun 04 2019 20:20:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 605.512 ms
+GET 'Tue Jun 04 2019 20:21:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 705.492 ms
+GET 'Tue Jun 04 2019 20:21:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 712.283 ms
+GET 'Tue Jun 04 2019 20:22:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 565.594 ms
+GET 'Tue Jun 04 2019 20:22:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 667.597 ms
+GET 'Tue Jun 04 2019 20:23:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 690.481 ms
+GET 'Tue Jun 04 2019 20:24:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 731.111 ms
+GET 'Tue Jun 04 2019 20:24:34 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 661.191 ms
+GET 'Tue Jun 04 2019 20:25:36 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 571.007 ms
+GET 'Tue Jun 04 2019 20:25:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 731.212 ms
+GET 'Tue Jun 04 2019 20:27:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 632.298 ms
+GET 'Tue Jun 04 2019 20:27:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 684.064 ms
+GET 'Tue Jun 04 2019 20:28:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20843 678.779 ms
+GET 'Tue Jun 04 2019 20:30:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 500 164 329.417 ms
+GET 'Tue Jun 04 2019 20:37:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=LIN 200 19465 783.800 ms
+GET 'Tue Jun 04 2019 20:39:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 12842 617.372 ms
+GET 'Tue Jun 04 2019 20:40:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA    ms
+GET 'Tue Jun 04 2019 20:41:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA    ms
+GET 'Tue Jun 04 2019 20:43:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA    ms
+GET 'Tue Jun 04 2019 20:46:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA    ms
+GET 'Tue Jun 04 2019 20:47:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20433 716.142 ms
+GET 'Tue Jun 04 2019 20:48:23 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA    ms
+GET 'Tue Jun 04 2019 20:48:49 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 12842 758.288 ms
+GET 'Tue Jun 04 2019 20:50:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20433 747.991 ms
+GET 'Tue Jun 04 2019 20:56:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI014/resultset?tipo=UF&formato=CDA 200 20433 630.343 ms
+GET 'Tue Jun 04 2019 21:09:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1/resultset?tipo=UF&formato=CDA 200 43330 1156.214 ms
+GET 'Tue Jun 04 2019 21:10:33 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1,PI014/resultset?tipo=UF&formato=CDA 200 54080 1875.086 ms
+GET 'Tue Jun 04 2019 21:16:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP01/resultset?tipo=UF&formato=CDA 500 52 111.388 ms
+GET 'Tue Jun 04 2019 21:16:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 164 44.861 ms
+GET 'Tue Jun 04 2019 21:17:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 164 58.363 ms
+GET 'Tue Jun 04 2019 21:17:35 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 500 164 189.784 ms
+GET 'Tue Jun 04 2019 21:21:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP001/resultset?tipo=UF&formato=CDA 200 41082 772.264 ms
+GET 'Tue Jun 04 2019 21:21:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/ODS3_6_1/resultset?tipo=UF&formato=CDA 200 43330 1354.128 ms
+GET 'Wed Jun 26 2019 17:45:35 GMT-0300 (-03)' anônimo anônimo '{}' / 304  12.976 ms
+GET 'Wed Jun 26 2019 17:45:35 GMT-0300 (-03)' anônimo anônimo '{}' /redoc.min.js 304  5.688 ms
+GET 'Wed Jun 26 2019 17:45:36 GMT-0300 (-03)' anônimo anônimo '{}' /swagger.yaml 304  23.130 ms

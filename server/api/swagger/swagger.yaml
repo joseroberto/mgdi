@@ -951,6 +951,7 @@ paths:
       operationId: getResultado
       produces:
         - application/json
+        - text/csv
       tags:
         - Indicadores
         - Consulta Dados
@@ -990,7 +991,7 @@ paths:
         - name: formato
           type: string
           in: query
-          enum: [LIN, CDA, TAB]
+          enum: [LIN, CDA, TAB, CSV]
           required: false
           default: LIN
           description: |
@@ -2155,7 +2156,7 @@ definitions:
           type: object
   ResultIndicador:
     description: Resultado da consulta especifica de indicador
-    type: [object, array]
+    type: [object, array, string]
 
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
