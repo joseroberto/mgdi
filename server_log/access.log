@@ -389,3 +389,101 @@ GET 'Mon Jul 01 2019 17:18:03 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 2
 GET 'Mon Jul 01 2019 17:18:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 2.013 ms
 GET 'Mon Jul 01 2019 17:18:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.246 ms
 GET 'Mon Jul 01 2019 17:18:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2961 179.007 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  11.125 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  4.009 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  2.722 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.374 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  2.379 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.779 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.683 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  1.603 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  1.935 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  1.504 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  0.987 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  2.659 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  2.601 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.696 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  3.032 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  3.396 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  3.600 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.497 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.688 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.446 ms
+HEAD 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.588 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.635 ms
+GET 'Mon Jul 01 2019 17:30:44 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.513 ms
+GET 'Mon Jul 01 2019 17:30:45 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 4.260 ms
+GET 'Mon Jul 01 2019 17:30:46 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.410 ms
+GET 'Mon Jul 01 2019 17:30:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 304  153.003 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  9.373 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  19.965 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  17.152 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  12.060 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  1.152 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.569 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.344 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  0.577 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  4.349 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  4.976 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  4.172 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  1.958 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.817 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.717 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  0.782 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.433 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.489 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  2.343 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.630 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.665 ms
+HEAD 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.734 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.700 ms
+GET 'Mon Jul 01 2019 17:37:03 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  1.717 ms
+GET 'Mon Jul 01 2019 17:37:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 4.341 ms
+GET 'Mon Jul 01 2019 17:37:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.444 ms
+GET 'Mon Jul 01 2019 17:40:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 118 24.267 ms
+GET 'Mon Jul 01 2019 17:41:37 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2961 159.198 ms
+GET 'Mon Jul 01 2019 17:42:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2846 137.168 ms
+GET 'Mon Jul 01 2019 17:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2676 146.785 ms
+GET 'Mon Jul 01 2019 17:43:37 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2653 154.376 ms
+GET 'Mon Jul 01 2019 17:43:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 304  33.912 ms
+GET 'Mon Jul 01 2019 17:43:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 304  30.401 ms
+GET 'Mon Jul 01 2019 17:44:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2591 135.563 ms
+GET 'Mon Jul 01 2019 17:44:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2517 137.353 ms
+GET 'Mon Jul 01 2019 17:44:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2331 128.706 ms
+GET 'Mon Jul 01 2019 17:44:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2094 106.966 ms
+GET 'Mon Jul 01 2019 17:44:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2084 118.092 ms
+GET 'Mon Jul 01 2019 17:45:35 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2058 95.707 ms
+GET 'Mon Jul 01 2019 17:45:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  18.899 ms
+GET 'Mon Jul 01 2019 17:45:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  4.853 ms
+GET 'Mon Jul 01 2019 17:46:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2058 89.245 ms
+GET 'Mon Jul 01 2019 17:47:42 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  27.450 ms
+GET 'Mon Jul 01 2019 17:47:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  5.056 ms
+GET 'Mon Jul 01 2019 17:47:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  18.731 ms
+GET 'Mon Jul 01 2019 17:47:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  4.372 ms
+GET 'Mon Jul 01 2019 17:48:33 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  21.135 ms
+GET 'Mon Jul 01 2019 17:48:35 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500  4.871 ms
+GET 'Mon Jul 01 2019 17:48:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 2058 90.211 ms
+GET 'Mon Jul 01 2019 17:49:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 304  92.775 ms
+GET 'Mon Jul 01 2019 17:49:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 304  94.010 ms
+GET 'Mon Jul 01 2019 17:50:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 778 89.570 ms
+GET 'Mon Jul 01 2019 17:51:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500 780 86.798 ms
+GET 'Mon Jul 01 2019 17:51:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500 780 9.966 ms
+GET 'Mon Jul 01 2019 17:51:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500 780 7.502 ms
+GET 'Mon Jul 01 2019 17:51:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500 780 7.168 ms
+GET 'Mon Jul 01 2019 17:51:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 500 780 7.037 ms
+GET 'Mon Jul 01 2019 17:51:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 778 83.798 ms
+GET 'Mon Jul 01 2019 17:53:08 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 1345 89.863 ms
+GET 'Mon Jul 01 2019 17:53:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 1345 85.262 ms
+GET 'Mon Jul 01 2019 17:54:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  27.427 ms
+GET 'Mon Jul 01 2019 17:54:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  7.408 ms
+GET 'Mon Jul 01 2019 17:55:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  5.814 ms
+GET 'Mon Jul 01 2019 17:55:01 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  5.698 ms
+GET 'Mon Jul 01 2019 17:55:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 1354 87.954 ms
+GET 'Mon Jul 01 2019 18:01:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 2412 91.800 ms
+GET 'Mon Jul 01 2019 18:01:06 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  8.160 ms
+GET 'Mon Jul 01 2019 18:02:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 2506 84.458 ms
+GET 'Mon Jul 01 2019 18:02:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  28.335 ms
+GET 'Mon Jul 01 2019 18:03:36 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 2523 88.584 ms
+GET 'Mon Jul 01 2019 18:04:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/PI023 200 5502 106.993 ms
+GET 'Mon Jul 01 2019 18:04:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 200 3157 90.072 ms
+GET 'Mon Jul 01 2019 18:04:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/PI023 304  7.594 ms
