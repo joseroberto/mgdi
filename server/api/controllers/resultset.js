@@ -26,6 +26,9 @@ module.exports = {
   getResultado: (req, res)=>{
     var config = montaParametros(req.swagger.params);
     module.exports.consultaResultado(config).then( (resultado) =>{
+      let indicadorNome = resultado[0].fields[1].name
+      let download = resultado[0].rows
+      let tipo = config.tipo
         // req.headers.accept === 'application/json'
         switch (config.formato) {
           case 'LIN':
@@ -34,13 +37,14 @@ module.exports = {
           case 'CDA':
               res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, config, resultado[1]));
               break;
+          case 'JSON':
+              res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.json`);
+              res.set('Content-Type:text/plain; charset=ISO-8859-15');
+              res.status(200).send(download);
           case 'CSV':
-              let indicadorNome = resultado[0].fields[1].name
-              let tipo = config.tipo
-              const csvString = json2csv(resultado[0].rows);
               res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.csv`);
               res.set('Content-Type', 'text/csv');
-              res.status(200).send(csvString);
+              res.status(200).send(json2csv(download));
               break;
           case 'TAB':
               res.json(module.exports.formataJSONResult(resultado[0].rows, config, Object.keys(resultado[1])));

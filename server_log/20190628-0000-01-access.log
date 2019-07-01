@@ -1,0 +1,997 @@
+GET 'Thu Jun 27 2019 17:07:55 GMT-0300 (-03)' anônimo anônimo '{}' / 200 467 18.536 ms
+GET 'Thu Jun 27 2019 17:07:55 GMT-0300 (-03)' anônimo anônimo '{}' /redoc.min.js 200 1062488 4.514 ms
+GET 'Thu Jun 27 2019 17:07:56 GMT-0300 (-03)' anônimo anônimo '{}' /swagger.yaml 200 58638 16.569 ms
+GET 'Thu Jun 27 2019 17:08:02 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 6.622 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs 301 167 2.214 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 16.666 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 6.996 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 8.355 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 13.294 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 9.450 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 12.627 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 25.556 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 29.337 ms
+GET 'Thu Jun 27 2019 17:08:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 22.004 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 25.901 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 218.177 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 216.449 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 214.582 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 14.678 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 25.633 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 25.688 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 214.570 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 200.876 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 9.742 ms
+HEAD 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.586 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.810 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.270 ms
+GET 'Thu Jun 27 2019 17:08:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 28.261 ms
+GET 'Thu Jun 27 2019 17:08:20 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 2.646 ms
+GET 'Thu Jun 27 2019 17:08:59 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 200 9257 1.280 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 21.981 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 9.779 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 9.697 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 8.973 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 6.728 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 8.626 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 10.153 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 12.258 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 7.598 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 10.614 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 9.627 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 12.478 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 16.004 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 16.360 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 14.992 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 15.168 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 16.261 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 9.618 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 8.548 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 7.277 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 6.231 ms
+HEAD 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.543 ms
+GET 'Thu Jun 27 2019 17:09:35 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.331 ms
+GET 'Thu Jun 27 2019 17:09:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 1.347 ms
+GET 'Thu Jun 27 2019 17:09:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  2.013 ms
+GET 'Thu Jun 27 2019 17:13:08 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  1183.604 ms
+GET 'Thu Jun 27 2019 17:13:09 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 5.831 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 10.899 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 7.758 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 7.670 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 5.670 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 7.820 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 6.974 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 13.201 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 10.909 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 6.866 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 3.862 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 14.969 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 11.266 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 191.161 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 187.042 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 187.241 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 186.777 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 2.071 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 191.389 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 0.774 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.287 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.112 ms
+HEAD 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.584 ms
+GET 'Thu Jun 27 2019 17:15:26 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.310 ms
+GET 'Thu Jun 27 2019 17:15:27 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.779 ms
+GET 'Thu Jun 27 2019 17:15:27 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.345 ms
+GET 'Thu Jun 27 2019 17:16:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  2.612 ms
+GET 'Thu Jun 27 2019 17:16:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  1.802 ms
+GET 'Thu Jun 27 2019 17:16:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.628 ms
+GET 'Thu Jun 27 2019 17:16:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  1.698 ms
+GET 'Thu Jun 27 2019 17:21:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  12.377 ms
+GET 'Thu Jun 27 2019 17:21:28 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 3.281 ms
+GET 'Thu Jun 27 2019 17:21:33 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  2.380 ms
+GET 'Thu Jun 27 2019 17:21:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  1.794 ms
+GET 'Thu Jun 27 2019 17:22:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  17.304 ms
+GET 'Thu Jun 27 2019 17:22:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  1.348 ms
+GET 'Thu Jun 27 2019 17:22:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  1.202 ms
+GET 'Thu Jun 27 2019 17:22:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  2.355 ms
+GET 'Thu Jun 27 2019 17:25:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  15.016 ms
+GET 'Thu Jun 27 2019 17:25:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  2.405 ms
+GET 'Thu Jun 27 2019 17:25:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.242 ms
+GET 'Thu Jun 27 2019 17:25:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  1.094 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 13.871 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 19.042 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 16.513 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 14.763 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 12.771 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 14.989 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 13.348 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 5.258 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 6.894 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 6.819 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 7.850 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 7.039 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 3.643 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 5.355 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 5.518 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 6.781 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 4.201 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 9.122 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 1.159 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.772 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 3.834 ms
+HEAD 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.738 ms
+GET 'Thu Jun 27 2019 17:29:08 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.234 ms
+GET 'Thu Jun 27 2019 17:29:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.716 ms
+GET 'Thu Jun 27 2019 17:29:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.291 ms
+GET 'Thu Jun 27 2019 17:29:35 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/SVS307/resultset?tipo=BR&formato=CSV 500 312 53.530 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  17.734 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  4.053 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  2.870 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.959 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  1.429 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  0.636 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.433 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  3.508 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  1.669 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  1.514 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  3.641 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  4.152 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  6.212 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.726 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.719 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.537 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  0.970 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.929 ms
+GET 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.382 ms
+HEAD 'Thu Jun 27 2019 17:32:21 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.781 ms
+GET 'Thu Jun 27 2019 17:32:22 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.439 ms
+GET 'Thu Jun 27 2019 17:32:22 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  1.491 ms
+GET 'Thu Jun 27 2019 17:32:22 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.829 ms
+GET 'Thu Jun 27 2019 17:32:22 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.518 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.494 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  1.344 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  1.854 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  3.798 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  2.660 ms
+GET 'Thu Jun 27 2019 17:32:23 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  2.343 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  3.539 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  3.194 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  4.120 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  6.861 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  7.224 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  8.205 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  0.702 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.407 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.359 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.499 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.666 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  1.480 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.711 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.428 ms
+HEAD 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.393 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.538 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.255 ms
+GET 'Thu Jun 27 2019 17:32:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 2.863 ms
+GET 'Thu Jun 27 2019 17:32:25 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.393 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 14.341 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 4.589 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 4.475 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 2.132 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 7.982 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 9.852 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 10.298 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 5.691 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 17.952 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 7.213 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 5.754 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 6.741 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 7.504 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 9.628 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 5.264 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 2.538 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.544 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 5.567 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 0.929 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 1.243 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 0.635 ms
+HEAD 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.453 ms
+GET 'Thu Jun 27 2019 17:33:15 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.255 ms
+GET 'Thu Jun 27 2019 17:33:16 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.555 ms
+GET 'Thu Jun 27 2019 17:33:16 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.818 ms
+GET 'Thu Jun 27 2019 17:33:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/SVS307/resultset?tipo=BR&formato=CSV 500 7 224.885 ms
+GET 'Thu Jun 27 2019 17:35:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/SVS307/resultset?tipo=BR&formato=CSV 200 18 186.838 ms
+GET 'Thu Jun 27 2019 17:35:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/SVS307/resultset?tipo=BR&formato=CSV 200 1325 197.057 ms
+GET 'Fri Jun 28 2019 10:04:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultsetpost?tipo=UF&formato=CSV 405  37.022 ms
+GET 'Fri Jun 28 2019 10:04:54 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 11.219 ms
+GET 'Fri Jun 28 2019 10:05:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/SVS307/resultset?tipo=BR&formato=CSV 304  220.994 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  12.205 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  8.556 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  6.046 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  3.478 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  2.759 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  3.135 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  6.724 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  0.778 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  13.738 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  12.301 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  12.572 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  6.278 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  6.604 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.655 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  8.939 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  8.729 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  4.637 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.894 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  2.622 ms
+HEAD 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.963 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.773 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  2.637 ms
+GET 'Fri Jun 28 2019 10:40:19 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.535 ms
+GET 'Fri Jun 28 2019 10:40:20 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.455 ms
+GET 'Fri Jun 28 2019 10:40:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=MN&formato=CSV 200 10434795 3149.300 ms
+GET 'Fri Jun 28 2019 10:41:07 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.545 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  3.108 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  2.789 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  0.723 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  0.765 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  0.959 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.038 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  0.938 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  3.367 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  3.482 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  3.460 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  3.363 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  3.256 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.414 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.902 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.852 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.715 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.571 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.918 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.927 ms
+HEAD 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.712 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.526 ms
+GET 'Fri Jun 28 2019 10:41:10 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.503 ms
+GET 'Fri Jun 28 2019 10:41:11 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.506 ms
+GET 'Fri Jun 28 2019 10:41:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 2807 192.314 ms
+GET 'Fri Jun 28 2019 11:26:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  378.119 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 16.937 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  4.893 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  4.934 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.011 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  3.513 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  5.028 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  4.758 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  3.691 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  2.710 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  2.303 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  2.243 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  2.238 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  2.158 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.928 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.052 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.759 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.858 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.605 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.606 ms
+HEAD 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.757 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.804 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  3.241 ms
+GET 'Fri Jun 28 2019 11:27:49 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.338 ms
+GET 'Fri Jun 28 2019 11:27:50 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.415 ms
+GET 'Fri Jun 28 2019 11:27:50 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 3.541 ms
+GET 'Fri Jun 28 2019 11:28:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  281.899 ms
+GET 'Fri Jun 28 2019 11:28:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  291.011 ms
+GET 'Fri Jun 28 2019 11:29:37 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  204.538 ms
+GET 'Fri Jun 28 2019 11:30:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  352.244 ms
+GET 'Fri Jun 28 2019 11:31:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  324.666 ms
+GET 'Fri Jun 28 2019 11:31:42 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  569.914 ms
+GET 'Fri Jun 28 2019 11:32:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  292.476 ms
+GET 'Fri Jun 28 2019 11:32:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  335.008 ms
+GET 'Fri Jun 28 2019 11:33:32 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  312.957 ms
+GET 'Fri Jun 28 2019 11:38:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  288.590 ms
+GET 'Fri Jun 28 2019 11:39:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  290.708 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  9.890 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  6.370 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  4.770 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  13.532 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  4.071 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.449 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  4.294 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  4.383 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  4.903 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  4.812 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  4.720 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  4.543 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  0.796 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  0.681 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  3.696 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  9.284 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  9.311 ms
+GET 'Fri Jun 28 2019 11:43:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  9.244 ms
+GET 'Fri Jun 28 2019 11:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  1.291 ms
+GET 'Fri Jun 28 2019 11:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  1.007 ms
+HEAD 'Fri Jun 28 2019 11:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.616 ms
+GET 'Fri Jun 28 2019 11:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.086 ms
+GET 'Fri Jun 28 2019 11:43:14 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.563 ms
+GET 'Fri Jun 28 2019 11:43:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 3.992 ms
+GET 'Fri Jun 28 2019 11:43:15 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.541 ms
+GET 'Fri Jun 28 2019 11:44:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  302.700 ms
+GET 'Fri Jun 28 2019 11:46:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  385.475 ms
+GET 'Fri Jun 28 2019 11:46:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  305.284 ms
+GET 'Fri Jun 28 2019 11:47:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  325.293 ms
+GET 'Fri Jun 28 2019 11:48:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  335.387 ms
+GET 'Fri Jun 28 2019 11:49:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  326.538 ms
+GET 'Fri Jun 28 2019 11:49:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  162.910 ms
+GET 'Fri Jun 28 2019 11:50:31 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  245.343 ms
+GET 'Fri Jun 28 2019 11:50:32 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 4.891 ms
+GET 'Fri Jun 28 2019 11:59:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  334.428 ms
+GET 'Fri Jun 28 2019 12:00:06 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  289.985 ms
+GET 'Fri Jun 28 2019 12:02:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  280.805 ms
+GET 'Fri Jun 28 2019 12:04:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  272.778 ms
+GET 'Fri Jun 28 2019 12:04:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  157.443 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  12.190 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  7.023 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  6.928 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  2.930 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  4.206 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  6.461 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  7.599 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.957 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  7.127 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  2.735 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  4.096 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  6.872 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  2.412 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.970 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.671 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.102 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.131 ms
+GET 'Fri Jun 28 2019 12:05:47 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.967 ms
+GET 'Fri Jun 28 2019 12:05:48 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.436 ms
+HEAD 'Fri Jun 28 2019 12:05:48 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.039 ms
+GET 'Fri Jun 28 2019 12:05:48 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.677 ms
+GET 'Fri Jun 28 2019 12:05:48 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.519 ms
+GET 'Fri Jun 28 2019 12:05:48 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.790 ms
+GET 'Fri Jun 28 2019 12:05:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.449 ms
+GET 'Fri Jun 28 2019 12:05:49 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 6.118 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  6.812 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  12.080 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  9.914 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.847 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  7.929 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  9.572 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  7.051 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.412 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.313 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  5.247 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  3.361 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  3.814 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  5.752 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.399 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  0.870 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  3.423 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.788 ms
+GET 'Fri Jun 28 2019 12:06:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  5.047 ms
+GET 'Fri Jun 28 2019 12:06:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  1.642 ms
+GET 'Fri Jun 28 2019 12:06:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  2.104 ms
+HEAD 'Fri Jun 28 2019 12:06:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.648 ms
+GET 'Fri Jun 28 2019 12:06:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.839 ms
+GET 'Fri Jun 28 2019 12:06:41 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.506 ms
+GET 'Fri Jun 28 2019 12:06:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 4.896 ms
+GET 'Fri Jun 28 2019 12:06:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.519 ms
+GET 'Fri Jun 28 2019 12:07:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  367.588 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  9.925 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  6.805 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  5.786 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  5.119 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  0.879 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  7.001 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  7.298 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  7.490 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  6.740 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  6.725 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  6.364 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  1.282 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.842 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.185 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.044 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  2.396 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  2.373 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.803 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.537 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.447 ms
+HEAD 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.054 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.498 ms
+GET 'Fri Jun 28 2019 12:08:08 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.781 ms
+GET 'Fri Jun 28 2019 12:08:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 4.601 ms
+GET 'Fri Jun 28 2019 12:08:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.415 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  8.829 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  6.696 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  6.026 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  4.109 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  0.576 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  2.606 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.349 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  2.409 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.083 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  3.873 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  0.680 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.956 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.209 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  2.446 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.784 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.627 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.527 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.648 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  1.077 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.621 ms
+HEAD 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.572 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.413 ms
+GET 'Fri Jun 28 2019 12:09:13 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.559 ms
+GET 'Fri Jun 28 2019 12:09:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 3.910 ms
+GET 'Fri Jun 28 2019 12:09:14 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.415 ms
+GET 'Fri Jun 28 2019 12:09:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  329.246 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  10.824 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  3.250 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  6.533 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.436 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  6.283 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  1.831 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  2.338 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.090 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  4.802 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  1.924 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.928 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  4.660 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  2.095 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.112 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.229 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  4.234 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  4.340 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.593 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.883 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  7.071 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  5.129 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  5.266 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  5.185 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  5.862 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  6.198 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  2.078 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  2.781 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  3.129 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  3.976 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  4.379 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  5.549 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.236 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.027 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  2.327 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  2.034 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.736 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.537 ms
+HEAD 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.723 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  1.733 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.482 ms
+GET 'Fri Jun 28 2019 12:10:29 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.660 ms
+GET 'Fri Jun 28 2019 12:10:30 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 3.758 ms
+GET 'Fri Jun 28 2019 12:10:30 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.476 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  8.137 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  7.086 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  7.457 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  7.028 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  6.891 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  1.296 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  1.144 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  1.789 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  1.855 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.837 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  0.654 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  0.796 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  5.627 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  5.303 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  4.684 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  3.691 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  3.007 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  2.863 ms
+HEAD 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.853 ms
+GET 'Fri Jun 28 2019 12:10:42 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.796 ms
+GET 'Fri Jun 28 2019 12:10:43 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 4.279 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  11.512 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  4.547 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  4.054 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  2.677 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  2.469 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.340 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  5.802 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  3.595 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.429 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  2.574 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  2.484 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  2.125 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.897 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  1.722 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  1.824 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  0.853 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  0.615 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.401 ms
+HEAD 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.775 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.895 ms
+GET 'Fri Jun 28 2019 12:11:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 6.442 ms
+GET 'Fri Jun 28 2019 12:11:30 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  305.701 ms
+GET 'Fri Jun 28 2019 12:13:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  284.309 ms
+GET 'Fri Jun 28 2019 12:13:58 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  310.073 ms
+GET 'Fri Jun 28 2019 12:14:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  284.059 ms
+GET 'Fri Jun 28 2019 12:15:29 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  310.022 ms
+GET 'Fri Jun 28 2019 12:17:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  275.955 ms
+GET 'Fri Jun 28 2019 12:19:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  283.673 ms
+GET 'Fri Jun 28 2019 12:21:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 291.390 ms
+GET 'Fri Jun 28 2019 12:21:31 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 165.180 ms
+GET 'Fri Jun 28 2019 12:21:32 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 145.817 ms
+GET 'Fri Jun 28 2019 12:21:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 287.182 ms
+GET 'Fri Jun 28 2019 12:22:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 299.560 ms
+GET 'Fri Jun 28 2019 12:22:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 159.890 ms
+GET 'Fri Jun 28 2019 12:22:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 160.951 ms
+GET 'Fri Jun 28 2019 12:22:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 144.999 ms
+GET 'Fri Jun 28 2019 12:22:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 121.737 ms
+GET 'Fri Jun 28 2019 12:22:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 108.032 ms
+GET 'Fri Jun 28 2019 12:22:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 93.916 ms
+GET 'Fri Jun 28 2019 12:22:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 92.882 ms
+GET 'Fri Jun 28 2019 12:22:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 85.743 ms
+GET 'Fri Jun 28 2019 12:22:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 87.006 ms
+GET 'Fri Jun 28 2019 12:22:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 104.119 ms
+GET 'Fri Jun 28 2019 12:22:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 91.642 ms
+GET 'Fri Jun 28 2019 12:22:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 93.707 ms
+GET 'Fri Jun 28 2019 12:24:22 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 214.302 ms
+GET 'Fri Jun 28 2019 12:24:23 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 140.402 ms
+GET 'Fri Jun 28 2019 12:24:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 164.851 ms
+GET 'Fri Jun 28 2019 12:24:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 157.711 ms
+GET 'Fri Jun 28 2019 12:24:27 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 157.882 ms
+GET 'Fri Jun 28 2019 12:25:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 273.186 ms
+GET 'Fri Jun 28 2019 12:25:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 167.514 ms
+GET 'Fri Jun 28 2019 12:25:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 155.622 ms
+GET 'Fri Jun 28 2019 12:25:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 180.199 ms
+GET 'Fri Jun 28 2019 12:26:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 287.907 ms
+GET 'Fri Jun 28 2019 12:26:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 165.545 ms
+GET 'Fri Jun 28 2019 12:26:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 154.625 ms
+GET 'Fri Jun 28 2019 12:26:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 160.550 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 5.585 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 5.190 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 3.013 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 2.636 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 3.595 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 7.063 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 11.360 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 11.282 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 6.443 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 6.725 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 6.556 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 11.753 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 9.796 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 7.233 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 5.721 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 6.404 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 4.702 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 8.151 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 2.820 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.837 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.952 ms
+HEAD 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 1.520 ms
+GET 'Fri Jun 28 2019 12:27:08 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.514 ms
+GET 'Fri Jun 28 2019 12:27:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 1.588 ms
+GET 'Fri Jun 28 2019 12:27:09 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.284 ms
+GET 'Fri Jun 28 2019 12:27:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 189.532 ms
+GET 'Fri Jun 28 2019 12:30:42 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 308.893 ms
+GET 'Fri Jun 28 2019 13:37:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 286.500 ms
+GET 'Fri Jun 28 2019 13:37:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 302.187 ms
+GET 'Fri Jun 28 2019 13:37:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 158.591 ms
+GET 'Fri Jun 28 2019 13:37:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 305.319 ms
+GET 'Fri Jun 28 2019 13:37:46 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 173.734 ms
+GET 'Fri Jun 28 2019 13:39:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 17 302.400 ms
+GET 'Fri Jun 28 2019 13:39:47 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 17 157.594 ms
+GET 'Fri Jun 28 2019 13:40:23 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 0 298.794 ms
+GET 'Fri Jun 28 2019 13:40:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 306.634 ms
+GET 'Fri Jun 28 2019 13:41:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 179.866 ms
+GET 'Fri Jun 28 2019 13:48:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 292.495 ms
+GET 'Fri Jun 28 2019 13:48:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 114.881 ms
+GET 'Fri Jun 28 2019 13:48:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 106.063 ms
+GET 'Fri Jun 28 2019 13:49:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 287.193 ms
+GET 'Fri Jun 28 2019 13:49:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 165.903 ms
+GET 'Fri Jun 28 2019 13:49:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 130.346 ms
+GET 'Fri Jun 28 2019 13:49:47 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 182.733 ms
+GET 'Fri Jun 28 2019 13:52:34 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 293.001 ms
+GET 'Fri Jun 28 2019 13:52:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 7.821 ms
+GET 'Fri Jun 28 2019 13:52:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  5.882 ms
+GET 'Fri Jun 28 2019 13:52:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 2.830 ms
+GET 'Fri Jun 28 2019 13:52:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 2.876 ms
+GET 'Fri Jun 28 2019 13:52:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 199.113 ms
+GET 'Fri Jun 28 2019 13:53:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 198.461 ms
+GET 'Fri Jun 28 2019 13:54:34 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 319.700 ms
+GET 'Fri Jun 28 2019 13:55:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 305.060 ms
+GET 'Fri Jun 28 2019 13:55:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 170.837 ms
+GET 'Fri Jun 28 2019 14:01:36 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 303.017 ms
+GET 'Fri Jun 28 2019 14:01:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 313.481 ms
+GET 'Fri Jun 28 2019 14:01:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 175.232 ms
+GET 'Fri Jun 28 2019 14:02:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 292.656 ms
+GET 'Fri Jun 28 2019 14:03:00 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 175.622 ms
+GET 'Fri Jun 28 2019 14:03:06 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 142 165.083 ms
+GET 'Fri Jun 28 2019 14:03:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 142 297.513 ms
+GET 'Fri Jun 28 2019 14:03:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  162.530 ms
+GET 'Fri Jun 28 2019 14:04:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  309.195 ms
+GET 'Fri Jun 28 2019 14:04:46 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  204.701 ms
+GET 'Fri Jun 28 2019 14:05:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 327.761 ms
+GET 'Fri Jun 28 2019 14:06:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 512.851 ms
+GET 'Fri Jun 28 2019 14:07:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 400.275 ms
+GET 'Fri Jun 28 2019 14:12:11 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  317.634 ms
+GET 'Fri Jun 28 2019 14:13:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500  297.060 ms
+GET 'Fri Jun 28 2019 14:15:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 525 311.814 ms
+GET 'Fri Jun 28 2019 14:16:33 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  296.887 ms
+GET 'Fri Jun 28 2019 14:19:31 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  616.666 ms
+GET 'Fri Jun 28 2019 14:20:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  249.954 ms
+GET 'Fri Jun 28 2019 14:20:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  209.431 ms
+GET 'Fri Jun 28 2019 14:20:30 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  169.897 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 13.783 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  5.243 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.154 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 8.878 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 1.705 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 4.192 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 3.539 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 3.364 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 5.235 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 7.045 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 5.443 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 7.811 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 2.319 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 2.192 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 5.142 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 3.734 ms
+GET 'Fri Jun 28 2019 14:22:32 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  1.054 ms
+GET 'Fri Jun 28 2019 14:22:33 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 5.386 ms
+GET 'Fri Jun 28 2019 14:22:33 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 3.111 ms
+HEAD 'Fri Jun 28 2019 14:22:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.059 ms
+GET 'Fri Jun 28 2019 14:22:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 7.224 ms
+GET 'Fri Jun 28 2019 14:22:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 5.171 ms
+GET 'Fri Jun 28 2019 14:22:38 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.502 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 1.800 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.443 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.226 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  2.456 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  1.921 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.993 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  2.114 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  3.103 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  2.134 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  2.057 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  2.241 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.271 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  0.802 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  1.347 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.005 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  0.668 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.126 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  2.027 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  2.032 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.628 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.735 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.627 ms
+HEAD 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.789 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.919 ms
+GET 'Fri Jun 28 2019 14:22:39 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.363 ms
+GET 'Fri Jun 28 2019 14:22:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.886 ms
+GET 'Fri Jun 28 2019 14:22:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.519 ms
+GET 'Fri Jun 28 2019 14:23:01 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 354.758 ms
+GET 'Fri Jun 28 2019 14:23:06 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  1.589 ms
+GET 'Fri Jun 28 2019 14:23:06 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  2.209 ms
+GET 'Fri Jun 28 2019 14:23:06 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.832 ms
+GET 'Fri Jun 28 2019 14:23:06 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.707 ms
+GET 'Fri Jun 28 2019 14:23:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 201.299 ms
+GET 'Fri Jun 28 2019 14:23:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 182.648 ms
+GET 'Fri Jun 28 2019 14:23:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 167.661 ms
+GET 'Fri Jun 28 2019 14:24:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 356.844 ms
+GET 'Fri Jun 28 2019 14:24:03 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 143.730 ms
+GET 'Fri Jun 28 2019 14:25:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 337.560 ms
+GET 'Fri Jun 28 2019 14:25:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 215.440 ms
+GET 'Fri Jun 28 2019 14:25:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 148.672 ms
+GET 'Fri Jun 28 2019 14:25:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 506.151 ms
+GET 'Fri Jun 28 2019 14:25:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 189.105 ms
+GET 'Fri Jun 28 2019 14:25:46 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 131.151 ms
+GET 'Fri Jun 28 2019 14:25:59 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 179.665 ms
+GET 'Fri Jun 28 2019 14:27:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 525 374.808 ms
+GET 'Fri Jun 28 2019 14:27:11 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  187.099 ms
+GET 'Fri Jun 28 2019 14:28:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  304.691 ms
+GET 'Fri Jun 28 2019 14:28:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  205.654 ms
+GET 'Fri Jun 28 2019 14:33:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV    ms
+GET 'Fri Jun 28 2019 14:35:22 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV    ms
+GET 'Fri Jun 28 2019 14:37:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 316.587 ms
+GET 'Fri Jun 28 2019 14:37:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 167.911 ms
+GET 'Fri Jun 28 2019 14:37:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 159.821 ms
+GET 'Fri Jun 28 2019 14:38:49 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 367.815 ms
+GET 'Fri Jun 28 2019 14:38:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 180.154 ms
+GET 'Fri Jun 28 2019 14:38:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 184.728 ms
+GET 'Fri Jun 28 2019 14:50:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV    ms
+GET 'Fri Jun 28 2019 14:50:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 375.609 ms
+GET 'Fri Jun 28 2019 14:50:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 149.779 ms
+GET 'Fri Jun 28 2019 14:50:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 170.973 ms
+GET 'Fri Jun 28 2019 14:51:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 164.909 ms
+GET 'Fri Jun 28 2019 14:51:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 155.931 ms
+GET 'Fri Jun 28 2019 14:51:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 158.366 ms
+GET 'Fri Jun 28 2019 14:51:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 175.080 ms
+GET 'Fri Jun 28 2019 14:51:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 180.189 ms
+GET 'Fri Jun 28 2019 14:51:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 362.662 ms
+GET 'Fri Jun 28 2019 14:51:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 196.028 ms
+GET 'Fri Jun 28 2019 14:51:46 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 531 163.237 ms
+GET 'Fri Jun 28 2019 14:52:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 525 480.951 ms
+GET 'Fri Jun 28 2019 14:52:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 525 216.544 ms
+GET 'Fri Jun 28 2019 14:52:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 525 162.993 ms
+GET 'Fri Jun 28 2019 14:52:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 525 162.010 ms
+GET 'Fri Jun 28 2019 14:52:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 525 149.613 ms
+GET 'Fri Jun 28 2019 14:52:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 525 400.240 ms
+GET 'Fri Jun 28 2019 14:52:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  377.565 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 8.970 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 8.097 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 7.153 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 3.587 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 5.953 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 6.473 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 5.253 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 5.161 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 4.363 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 7.407 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 3.079 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 2.506 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 6.311 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 6.610 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 6.647 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 8.518 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.677 ms
+GET 'Fri Jun 28 2019 14:53:00 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 4.675 ms
+GET 'Fri Jun 28 2019 14:53:01 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 2.342 ms
+GET 'Fri Jun 28 2019 14:53:01 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.627 ms
+GET 'Fri Jun 28 2019 14:53:01 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.609 ms
+HEAD 'Fri Jun 28 2019 14:53:03 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.526 ms
+GET 'Fri Jun 28 2019 14:53:03 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.431 ms
+GET 'Fri Jun 28 2019 14:53:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 1.620 ms
+GET 'Fri Jun 28 2019 14:53:04 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.993 ms
+GET 'Fri Jun 28 2019 14:53:17 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  190.930 ms
+GET 'Fri Jun 28 2019 14:53:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  0.772 ms
+GET 'Fri Jun 28 2019 14:53:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  1.134 ms
+GET 'Fri Jun 28 2019 14:53:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  1.184 ms
+GET 'Fri Jun 28 2019 14:53:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.545 ms
+GET 'Fri Jun 28 2019 14:53:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  216.072 ms
+GET 'Fri Jun 28 2019 14:53:57 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  195.262 ms
+GET 'Fri Jun 28 2019 14:54:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 329.069 ms
+GET 'Fri Jun 28 2019 14:54:29 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 183.187 ms
+GET 'Fri Jun 28 2019 14:54:30 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 168.159 ms
+GET 'Fri Jun 28 2019 14:54:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 179.390 ms
+GET 'Fri Jun 28 2019 14:54:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 164.074 ms
+GET 'Fri Jun 28 2019 14:54:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 182.115 ms
+GET 'Fri Jun 28 2019 14:55:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 184.397 ms
+GET 'Fri Jun 28 2019 14:55:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 310.110 ms
+GET 'Fri Jun 28 2019 15:04:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 294.334 ms
+GET 'Fri Jun 28 2019 15:12:33 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 292.690 ms
+GET 'Fri Jun 28 2019 15:12:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 504 298.542 ms
+GET 'Fri Jun 28 2019 15:18:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 283.756 ms
+GET 'Fri Jun 28 2019 15:19:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 411.394 ms
+GET 'Fri Jun 28 2019 15:19:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 169.028 ms
+GET 'Fri Jun 28 2019 15:19:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 170.956 ms
+GET 'Fri Jun 28 2019 15:19:49 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 601 361.624 ms
+GET 'Fri Jun 28 2019 15:23:14 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV    ms
+GET 'Fri Jun 28 2019 15:32:28 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 314.564 ms
+GET 'Fri Jun 28 2019 15:34:53 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 303.148 ms
+GET 'Fri Jun 28 2019 15:35:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 297.976 ms
+GET 'Fri Jun 28 2019 15:36:15 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 601 268.717 ms
+GET 'Fri Jun 28 2019 15:36:39 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  197.420 ms
+GET 'Fri Jun 28 2019 15:36:42 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  204.741 ms
+GET 'Fri Jun 28 2019 15:37:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  225.724 ms
+GET 'Fri Jun 28 2019 15:38:01 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  198.436 ms
+GET 'Fri Jun 28 2019 15:41:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 355.011 ms
+GET 'Fri Jun 28 2019 15:41:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 341.572 ms
+GET 'Fri Jun 28 2019 15:42:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 613 278.271 ms
+GET 'Fri Jun 28 2019 15:42:23 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  200.167 ms
+GET 'Fri Jun 28 2019 15:44:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  328.481 ms
+GET 'Fri Jun 28 2019 15:44:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  206.660 ms
+GET 'Fri Jun 28 2019 15:44:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  168.572 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  2.751 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  6.369 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  5.400 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.159 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  0.996 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  6.326 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  1.355 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  1.162 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  5.321 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  2.459 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  2.316 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  2.235 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  2.015 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  1.372 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  10.434 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  25.487 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  2.654 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  4.918 ms
+GET 'Fri Jun 28 2019 15:45:38 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.706 ms
+HEAD 'Fri Jun 28 2019 15:45:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.800 ms
+GET 'Fri Jun 28 2019 15:45:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  1.497 ms
+GET 'Fri Jun 28 2019 15:45:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  1.454 ms
+GET 'Fri Jun 28 2019 15:45:41 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.899 ms
+GET 'Fri Jun 28 2019 15:45:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 5.155 ms
+GET 'Fri Jun 28 2019 15:45:43 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.421 ms
+GET 'Fri Jun 28 2019 15:46:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  191.928 ms
+GET 'Fri Jun 28 2019 15:46:17 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  182.228 ms
+GET 'Fri Jun 28 2019 15:49:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 403 342.518 ms
+GET 'Fri Jun 28 2019 15:50:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 349 289.263 ms
+GET 'Fri Jun 28 2019 15:51:12 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 349 287.552 ms
+GET 'Fri Jun 28 2019 15:52:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 306.861 ms
+GET 'Fri Jun 28 2019 15:53:24 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 599 323.529 ms
+GET 'Fri Jun 28 2019 15:54:40 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 601 286.924 ms
+GET 'Fri Jun 28 2019 15:54:52 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  192.651 ms
+GET 'Fri Jun 28 2019 15:55:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 299.953 ms
+GET 'Fri Jun 28 2019 16:01:02 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 292.458 ms
+GET 'Fri Jun 28 2019 16:01:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 302.608 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  10.052 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  5.621 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  3.724 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  2.944 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  0.765 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.187 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  4.594 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  6.531 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  6.406 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  6.537 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  6.659 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  6.381 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  0.749 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  0.602 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  0.540 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.349 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.078 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.659 ms
+GET 'Fri Jun 28 2019 16:02:35 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.355 ms
+HEAD 'Fri Jun 28 2019 16:02:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.714 ms
+GET 'Fri Jun 28 2019 16:02:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.786 ms
+GET 'Fri Jun 28 2019 16:02:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.543 ms
+GET 'Fri Jun 28 2019 16:02:36 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.629 ms
+GET 'Fri Jun 28 2019 16:02:36 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.388 ms
+GET 'Fri Jun 28 2019 16:02:37 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 5.320 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.418 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 304  2.787 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 304  3.066 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 304  3.040 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 304  2.897 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 304  1.835 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 304  2.145 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 304  3.547 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 304  4.435 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 304  5.300 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 304  5.570 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 304  5.627 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 304  5.649 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 304  5.465 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 304  2.132 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 304  1.742 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 304  1.555 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 304  0.677 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 304  0.560 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 304  0.548 ms
+HEAD 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  0.416 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 304  0.467 ms
+GET 'Fri Jun 28 2019 16:02:40 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.226 ms
+GET 'Fri Jun 28 2019 16:02:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 0.879 ms
+GET 'Fri Jun 28 2019 16:02:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.471 ms
+GET 'Fri Jun 28 2019 16:02:55 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 369.077 ms
+GET 'Fri Jun 28 2019 16:04:44 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 500 542 367.061 ms
+GET 'Fri Jun 28 2019 16:07:09 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 200 542 278.066 ms
+GET 'Fri Jun 28 2019 16:07:20 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  192.648 ms
+GET 'Fri Jun 28 2019 16:08:56 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  245.405 ms
+GET 'Fri Jun 28 2019 16:09:08 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  179.676 ms
+GET 'Fri Jun 28 2019 16:09:21 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  188.494 ms
+GET 'Fri Jun 28 2019 16:10:43 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  290.319 ms
+GET 'Fri Jun 28 2019 16:11:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  299.783 ms
+GET 'Fri Jun 28 2019 16:11:25 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  300.874 ms
+GET 'Fri Jun 28 2019 16:11:26 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  165.591 ms
+GET 'Fri Jun 28 2019 16:11:38 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CDA 200 1350 188.206 ms
+GET 'Fri Jun 28 2019 16:11:45 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  144.773 ms
+GET 'Fri Jun 28 2019 16:11:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  177.889 ms
+GET 'Fri Jun 28 2019 16:14:17 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  297.222 ms
+GET 'Fri Jun 28 2019 16:14:29 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  291.310 ms
+GET 'Fri Jun 28 2019 16:14:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  287.563 ms
+GET 'Fri Jun 28 2019 16:15:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  290.414 ms
+GET 'Fri Jun 28 2019 16:15:46 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  331.118 ms
+GET 'Fri Jun 28 2019 16:16:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  326.518 ms
+GET 'Fri Jun 28 2019 16:16:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  329.055 ms
+GET 'Fri Jun 28 2019 16:16:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  195.114 ms
+GET 'Fri Jun 28 2019 16:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  316.317 ms
+GET 'Fri Jun 28 2019 16:18:11 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  326.606 ms
+GET 'Fri Jun 28 2019 16:18:54 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  304.507 ms
+GET 'Fri Jun 28 2019 16:19:05 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/MOR4310/resultset?tipo=BR&formato=CSV 304  200.143 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 12.857 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 7.297 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 9.033 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 7.292 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 6.081 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 8.512 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 10.181 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 8.036 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 9.075 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 11.683 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 11.757 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 10.354 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 10.383 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 6.073 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 5.823 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 5.407 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 3.128 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 10.185 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 3.446 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.487 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.261 ms
+HEAD 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 1.005 ms
+GET 'Fri Jun 28 2019 17:17:28 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.234 ms
+GET 'Fri Jun 28 2019 17:17:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 1.750 ms
+GET 'Fri Jun 28 2019 17:17:29 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.369 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.761 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 1.666 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 0.786 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 0.820 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 4.143 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 4.119 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 4.572 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 4.115 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 4.339 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 1.709 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 2.148 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 4.223 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 4.212 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 3.982 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 2.466 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 2.155 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.087 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 1.556 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 3.941 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 7.053 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 6.922 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 6.909 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 8.517 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 6.912 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 8.121 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 7.482 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 5.983 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 3.807 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 2.698 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 11.348 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 11.332 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 11.470 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 5.906 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 11.600 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.397 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 12.040 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 4.418 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 2.129 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.448 ms
+HEAD 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 1.821 ms
+GET 'Fri Jun 28 2019 17:17:41 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.250 ms
+GET 'Fri Jun 28 2019 17:17:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 2.980 ms
+GET 'Fri Jun 28 2019 17:17:42 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  0.878 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 10.661 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 9.580 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 9.426 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 10.870 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 7.320 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 6.958 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 11.509 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 1.669 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 6.770 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 7.034 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 7.025 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 7.336 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 6.584 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 12.137 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 5.249 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 18.895 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 3.549 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 7.891 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 2.960 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 3.067 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 3.226 ms
+HEAD 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 0.823 ms
+GET 'Fri Jun 28 2019 17:18:24 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.261 ms
+GET 'Fri Jun 28 2019 17:18:25 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 2.035 ms
+GET 'Fri Jun 28 2019 17:18:25 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/throbber.gif 304  1.359 ms

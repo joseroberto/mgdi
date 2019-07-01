@@ -924,6 +924,7 @@ paths:
               * CDA: Padrão CDA - Community Data Access.
               * TAB: Formato tabular (Indicador => { tempo }).
               * CSV: Formato de arquivo que armazena dados tabelados.(Download).
+              * JSON: TESTICULO.
         - name: data
           type: array
           items:
@@ -992,7 +993,7 @@ paths:
         - name: formato
           type: string
           in: query
-          enum: [LIN, CDA, TAB, CSV]
+          enum: [LIN, CDA, TAB, CSV, JSON]
           required: false
           default: LIN
           description: |
@@ -1001,6 +1002,7 @@ paths:
               * CDA: Padrão CDA - Community Data Access.
               * TAB: Formato tabular (Indicador => { tempo }).
               * CSV: Formato de arquivo que armazena dados tabelados.(Download).
+              * JSON: TESTICULO.
         - name: data
           type: array
           items:
