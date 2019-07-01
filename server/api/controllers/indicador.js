@@ -192,6 +192,77 @@ module.exports = {
 
     });
   },
+  getFicha: (req,res)=>{
+    var perfil = security.getPerfil(req);
+    var attr = { include: [ { model: models.Tag, as: 'Tags' },
+        { model: models.Indicador, as: 'IndicadoresRelacionados' },
+        { model: models.CategoriaAnalise , as: 'CategoriasAnalise' },
+        { model: models.ClassificacaoIndicador, as: 'ClassificacaoIndicador' },
+        { model: models.Classificacao6sIndicador, as: 'Classificacao6sIndicador' },
+        { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
+        { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
+        { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
+        //{ model: models.Unidade , as: 'ResponsavelGerencial',
+        //    include: [ { model: models.Unidade, as: 'ancestors' } ],
+        //    order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
+        //},
+        { model: models.Unidade , as: 'ResponsavelTecnico',
+            include: [ { model: models.Unidade, as: 'ancestors' } ],
+            order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ] },
+        { model: models.Unidade , as: 'Unidade',
+            include: [ { model: models.Unidade, as: 'ancestors' } ],
+            order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ] },
+        { model: models.Granularidade , as: 'Granularidade' },
+        { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
+        { model: models.UnidadeMedida, as: 'UnidadeMedida' },
+        { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} },
+        { model: models.Polaridade, as: 'Polaridade' }],
+    where: {codigo: req.swagger.params.codigo.value}
+    };
+
+    //if(perfil && perfil.Perfil.sigla=='ADN'){
+    //  attr.include.push(
+    //    { model: models.Unidade , as: 'ResponsavelGerencial', required: true,
+    //      include: [ { model: models.Unidade, as: 'ancestors' } ],
+    //      order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
+    //    }
+    //  );
+   //}else 
+   if(perfil && perfil.Perfil.sigla!='ADM'){
+      console.log('Unidade restritiva', perfil.UnidadeCodigo);
+      attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', where:{codigo: perfil.UnidadeCodigo},
+            include: [ { model: models.Unidade, as: 'ancestors' } ],
+            order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
+        }    
+      );
+    }else{
+      attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial',
+          include: [ { model: models.Unidade, as: 'ancestors' } ],
+          order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
+      });
+    }
+
+    models.Indicador.findAll(attr).then((indicador)=> {
+      if(indicador && indicador.length>0){
+        if (!req.headers.authorization && indicador[0].privado){
+          res.status(403).json({codret: 1050, message: 'Indicador com atributo privado'});
+        }else
+          res.json(indicador[0]);
+        }
+      else{
+        res.status(503).json({codret: 1011, message: 'Nenhum dado encontrado'});
+      }      
+    }).catch(err=>{
+      if('errors' in err){
+        if(err.errors.length>0){
+          res.status(500).json(Object.assign({codret: 1001},err.errors[0]));
+        }
+      }else{
+        res.status(503).json({codret: 1001, message: "Erro na recuparação de dados do indicador"});
+      }
+
+    });
+  },
   getIndicadorPorId: (req,res)=>{
     models.Indicador.findById(req.swagger.params.id.value,
       { include: [ { model: models.Tag, as: 'Tags' },

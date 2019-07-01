@@ -1308,6 +1308,38 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /api/ficha-qualificacao/{codigo}:
+    x-swagger-router-controller: indicador
+    get:
+      description: Le um registro de indicador
+      summary: Retorna a ficha de qualificação de um indicador
+      operationId: getFicha
+      tags:
+        - Indicadores
+      parameters:
+        - name: codigo
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        '403':
+         description: >-
+          Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
+         schema:
+          $ref: '#/definitions/Error'
+        '503':
+         description: Erro de infraestrutura.
+         schema:
+          $ref: '#/definitions/Error'
+    
   /api/indicador/{codigo}/conceituacao:
     x-swagger-router-controller: indicador
     patch:
