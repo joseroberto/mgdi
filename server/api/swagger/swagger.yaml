@@ -924,7 +924,7 @@ paths:
               * CDA: Padrão CDA - Community Data Access.
               * TAB: Formato tabular (Indicador => { tempo }).
               * CSV: Formato de arquivo que armazena dados tabelados.(Download).
-              * JSON: TESTICULO.
+              * JSON: Formato compacto, de padrão aberto independente.
         - name: data
           type: array
           items:
@@ -1002,7 +1002,7 @@ paths:
               * CDA: Padrão CDA - Community Data Access.
               * TAB: Formato tabular (Indicador => { tempo }).
               * CSV: Formato de arquivo que armazena dados tabelados.(Download).
-              * JSON: TESTICULO.
+              * JSON: Formato compacto, de padrão aberto independente.
         - name: data
           type: array
           items:
