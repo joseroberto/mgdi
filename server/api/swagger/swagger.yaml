@@ -2192,7 +2192,7 @@ definitions:
           type: object
   ResultIndicador:
     description: Resultado da consulta especifica de indicador
-    type: [object, array, string]
+    type: [array, object, string]
 
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
