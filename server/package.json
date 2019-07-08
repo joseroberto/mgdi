@@ -49,7 +49,7 @@
     "supertest": "^1.0.0"
   },
   "scripts": {
-    "start-dev": "pm2-runtime start config/pm2-api-dev.config.yaml",
+    "start-dev": "pm2-runtime start config/pm2-api-dev.local.yaml",
     "start": "pm2-runtime start config/pm2-api.config.yaml",
     "test": "swagger project test"
   }

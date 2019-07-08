@@ -8,10 +8,10 @@ apps:
     env:
       NODE_ENV: dev
       COMPANY: MS
-      HOSTDB: localhost 
+      HOSTDB: db.manatustecnologia.com.br
       DATABASE: dbspo
       USER_DB: postgres
-      PASSWORD_DB: postgres
+      PASSWORD_DB: serenaya
       SCHEMA: dbesusgestor
       HOST: localhost:8000
       SCHEMA_LOGIN: scpa
