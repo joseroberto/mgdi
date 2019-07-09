@@ -11,6 +11,7 @@ apps:
       HOSTDB: db.manatustecnologia.com.br
       DATABASE: dbspo
       USER_DB: postgres
+      PGPORT: 5433
       PASSWORD_DB: serenaya
       SCHEMA: dbesusgestor
       HOST: localhost:8000

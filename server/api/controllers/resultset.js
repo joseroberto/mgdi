@@ -41,6 +41,7 @@ module.exports = {
               res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.json`);
               res.set('Content-Type:text/plain; charset=ISO-8859-15');
               res.status(200).send(download);
+              break;
           case 'CSV':
               res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.csv`);
               res.set('Content-Type', 'text/csv');
@@ -69,7 +70,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-        // console.log('SQL+=>', sql);
+         //console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           if(err) {
             console.error('error running query', err);
@@ -410,8 +411,10 @@ function montaResult(indicadores, config){
   Montador de query de consulta genérica.
 */
 function montaQuery(indicadores, config){
+  console.log(indicadores)
   var arr_control=[];
   var sql_with='WITH ';
+
 
   (Object.keys(indicadores)).forEach(key=>{
       // monta query conforme o tipo de consulta
@@ -423,7 +426,9 @@ function montaQuery(indicadores, config){
               arr_control.push(item);
             }
           };    
+         
           break;
+          
         case 2: // Query
           if(arr_control.indexOf(key)==-1){
             sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
