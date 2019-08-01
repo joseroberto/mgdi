@@ -597,6 +597,7 @@
                     <div class="col-md-8">
                       <div class="input-group">
                         <select select2 style="width:100%" class="select2" id="unidade_gerencial">
+                            <option [value]="">-----selecione a responsabildade gerencial------</option>
                             <option *ngFor="let itemUnidade of colecaoUnidades"
                               [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
                         </select>
@@ -668,6 +669,7 @@
                     <div class="col-md-8">
                       <div class="input-group">
                         <select select2 style="width:100%" class="select2" id="unidade_tecnica">
+                            <option [value]="">-----selecione a responsabildade técnica------</option>
                             <option *ngFor="let itemUnidade of colecaoUnidades"
                               [value]="itemUnidade.codigo">[{{ itemUnidade.sigla }}] - {{ itemUnidade.nome }}</option>
                         </select>
