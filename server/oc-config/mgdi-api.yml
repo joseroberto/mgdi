@@ -53,7 +53,7 @@ objects:
   apiVersion: v1 
   metadata:
     name: "${NAME}-builder"
-    annotations:
+    annotations: 
       description: "Define como construir a aplicação ${NAME}-builder"
       template.alpha.openshift.io/wait-for-ready: 'true'
   spec:
