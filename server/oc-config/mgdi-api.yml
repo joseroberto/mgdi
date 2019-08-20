@@ -45,9 +45,42 @@ objects:
 - kind: ImageStream
   apiVersion: v1
   metadata:
-    name: "${NAME}-binary"
+    name: "${NAME}-builder"
     annotations:
       description: "ImageStream para o ${NAME}-binary"
+
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: "${NAME}-builder"
+    annotations:
+      description: "Define como construir a aplicação ${NAME}-builder"
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    source:
+      contextDir: /server
+      type: Git
+      git:
+        uri: "${SOURCE_REPOSITORY_URL}"
+        ref: "${SOURCE_REPOSITORY_REF}"
+      sourceSecret:
+        name: "${CREDENTIAL_NAME}"
+    strategy:
+      sourceStrategy:
+        env:
+          - name: OUTPUT_DIR
+            value: .
+        from:
+          kind: ImageStreamTag
+          name: 'web-app-builder-runtime:latest'
+          namespace: openshift
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${NAME}-builder:latest"
+    triggers:
+    - type: ImageChange
+    - type: ConfigChange
 
 - kind: BuildConfig
   apiVersion: v1
@@ -68,7 +101,7 @@ objects:
         - as: null
           from:
             kind: ImageStreamTag
-            name: '${NAME}-binary:latest'
+            name: '${NAME}-builder:latest'
             namespace: homologacao-digisus
           paths:
             - sourcePath: /opt/app-root
@@ -78,39 +111,9 @@ objects:
       sourceStrategy:
         from:
           kind: ImageStreamTag
-          name: 'mgdi-server-builder:latest'
-          namespace: builders-digisus
+          name: 'web-app-builder-runtime:latest'
+          namespace: openshift
       type: Source
-
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: "${NAME}-binary"
-    annotations:
-      description: "Define como construir a aplicação ${NAME}-binary"
-      template.alpha.openshift.io/wait-for-ready: 'true'
-  spec:
-    source:
-      contextDir: /server
-      type: Git
-      git:
-        uri: "${SOURCE_REPOSITORY_URL}"
-        ref: "${SOURCE_REPOSITORY_REF}"
-      sourceSecret:
-        name: "${CREDENTIAL_NAME}"
-    strategy:
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          name: 'mgdi-server-builder:latest'
-          namespace: builders-digisus
-    output:
-      to:
-        kind: ImageStreamTag
-        name: "${NAME}-binary:latest"
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
