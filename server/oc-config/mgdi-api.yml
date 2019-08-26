@@ -41,15 +41,24 @@ objects:
     name: "${NAME}"
     annotations:
       description: "ImageStream para o ${NAME}"
-- kind: BuildConfig
+
+- kind: ImageStream
   apiVersion: v1
   metadata:
-    name: "${NAME}"
+    name: "${NAME}-builder"
     annotations:
-      description: "Define como construir a aplicação ${NAME}"
+      description: "ImageStream para o ${NAME}-binary"
+
+- kind: BuildConfig
+  apiVersion: v1 
+  metadata:
+    name: "${NAME}-builder"
+    annotations: 
+      description: "Define como construir a aplicação ${NAME}-builder"
       template.alpha.openshift.io/wait-for-ready: 'true'
   spec:
     source:
+      contextDir: /server
       type: Git
       git:
         uri: "${SOURCE_REPOSITORY_URL}"
@@ -57,18 +66,54 @@ objects:
       sourceSecret:
         name: "${CREDENTIAL_NAME}"
     strategy:
-      type: Docker
-      dockerStrategy:
+      sourceStrategy:
+        env:
+          - name: OUTPUT_DIR
+            value: .
         from:
-          kind: DockerImage
-          name: keymetrics/pm2:8-alpine
+          kind: ImageStreamTag
+          name: 'web-app-builder-runtime:latest'
+          namespace: openshift
     output:
       to:
         kind: ImageStreamTag
-        name: "${NAME}:latest"
+        name: "${NAME}-builder:latest"
     triggers:
     - type: ImageChange
     - type: ConfigChange
+
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    labels:
+      build: ${NAME}
+    name: ${NAME}
+    namespace: homologacao-digisus
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: '${NAME}:latest'
+    runPolicy: Serial
+    source:
+      images:
+        - as: null
+          from:
+            kind: ImageStreamTag
+            name: '${NAME}-builder:latest'
+            namespace: homologacao-digisus
+          paths:
+            - sourcePath: /opt/app-root
+              destinationDir: .
+      type: Image
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: 'web-app-builder-runtime:latest'
+          namespace: openshift
+      type: Source
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -113,7 +158,7 @@ parameters:
   displayName: Repositório no GIT
   description: A URL do repositório onde a aplicação está
   required: true
-  value: https://bitbucket.org/manatus/mgdi.git
+  value: http://gitapps.saude.gov/demas/mgdi.git
 - name: SOURCE_REPOSITORY_REF
   displayName: Branch a ser usado pela aplicação
   description: Caso seja diferente de master...
@@ -122,4 +167,4 @@ parameters:
 - name: CREDENTIAL_NAME
   displayName: Nome da credencial criada em Secrets
   required: true
-  value: rafael-cred
+  value: rafael-secret

@@ -4,10 +4,10 @@ metadata:
   name: mgdi-web
   annotations:
     openshift.io/display-name: MGDI Web
-    description: Componente web do MGDI
-    tags: mgdi,digisus,se,ms
+    description: Este template agreda todos os serviços necessários para que MGDI Web possa funcionar no âmbito do Ministério da Saúde.
+    tags: digisus,se,ms,mgdi
     iconClass: icon-nodejs
-    openshift.io/long-description: Componente web do MGDI
+    openshift.io/long-description: Este template agreda todos os serviços necessários para que MGDI Web possa funcionar no âmbito do Ministério da Saúde.
     openshift.io/provider-display-name: Ministério da Saúde
     template.openshift.io/bindable: 'false'
 labels:
@@ -38,38 +38,91 @@ objects:
 - kind: ImageStream
   apiVersion: v1
   metadata:
+    name: "${NAME}-frontend-builder"
+    annotations:
+      description: "ImageStream para o ${NAME}"
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
     name: "${NAME}"
     annotations:
       description: "ImageStream para o ${NAME}"
 - kind: BuildConfig
   apiVersion: v1
   metadata:
-    name: "${NAME}"
-    annotations:
-      description: "Define como construir a aplicação ${NAME}"
-      template.alpha.openshift.io/wait-for-ready: 'true'
+    labels:
+      build: ${NAME}-frontend
+    name: ${NAME}-frontend
+    namespace: homologacao-digisus
   spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: '${NAME}-frontend:latest'
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
     source:
-      type: Git
-      contextDir: "${CONTEXT_DIR}"
+      configMaps:
+        - configMap:
+            name: nginx.conf
+          destinationDir: .
+      images:
+        - as: null
+          from:
+            kind: ImageStreamTag
+            name: '${NAME}-frontend-builder:latest'
+            namespace: homologacao-digisus
+          paths:
+            - destinationDir: ./client
+              sourcePath: /opt/app-root/output/dist/.
+      type: Image
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: 'nginx-114-rhel7:latest'
+          namespace: openshift
+      type: Source
+
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    labels:
+      build: ${NAME}-frontend-builder
+    name: ${NAME}-frontend-builder
+    namespace: homologacao-digisus
+  spec:
+    nodeSelector: null
+    output:
+      to:
+        kind: ImageStreamTag
+        name: '${NAME}-frontend-builder:latest'
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      contextDir: /mgdi
       git:
         uri: "${SOURCE_REPOSITORY_URL}"
         ref: "${SOURCE_REPOSITORY_REF}"
       sourceSecret:
-        name: "${CREDENTIAL_NAME}"
+        name: rafael-cred
+      type: Git
     strategy:
-      type: Docker
-      dockerStrategy:
+      sourceStrategy:
+        env:
+          - name: NPM_BUILD
+            value: >-
+              npm run build:prod
+          - name: OUTPUT_DIR
+            value: dist/
         from:
-          kind: DockerImage
-          name: nginx:stable-alpine
-    output:
-      to:
-        kind: ImageStreamTag
-        name: "${NAME}:latest"
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
+          kind: ImageStreamTag
+          name: 'web-app-builder-runtime:latest'
+          namespace: openshift
+      type: Source
 - kind: DeploymentConfig
   apiVersion: v1
   metadata:
@@ -110,16 +163,11 @@ parameters:
   description: Nome que será usado em todos os objetos criados pelo openshift
   required: true
   value: mgdi-web
-- name: CONTEXT_DIR
-  displayName: CONTEXT_DIR
-  description: Nome que será usado como diretório de contexto
-  required: true
-  value: client
 - name: SOURCE_REPOSITORY_URL
   displayName: Repositório no GIT
   description: A URL do repositório onde a aplicação está
   required: true
-  value: https://bitbucket.org/manatus/mgdi.git
+  value: http://gitapps.saude.gov/demas/mgdi.git
 - name: SOURCE_REPOSITORY_REF
   displayName: Branch a ser usado pela aplicação
   description: Caso seja diferente de master...
