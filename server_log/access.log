@@ -792,3 +792,128 @@ GET 'Tue Jul 09 2019 14:47:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indica
 GET 'Tue Jul 09 2019 14:48:04 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador/POP003/resultset?tipo=BR&formato=CSV 500 32 996.148 ms
 GET 'Tue Jul 09 2019 14:48:51 GMT-0300 (-03)' anônimo anônimo '{}' /api/ficha-qualificacao/MOR4310 200 1196 701.767 ms
 GET 'Tue Jul 09 2019 14:49:13 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador 200 459752 1911.514 ms
+GET 'Tue Aug 13 2019 16:43:20 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 20.658 ms
+GET 'Tue Aug 13 2019 16:43:21 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  1435.745 ms
+GET 'Tue Aug 13 2019 16:43:21 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 200 2492 1418.000 ms
+GET 'Tue Aug 13 2019 16:43:22 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=20&offset=0& 200 33755 2508.675 ms
+GET 'Tue Aug 13 2019 16:43:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 2.579 ms
+GET 'Tue Aug 13 2019 16:43:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-porunidade 200 1182 686.333 ms
+GET 'Tue Aug 13 2019 16:43:48 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-portag 200 2492 690.452 ms
+GET 'Tue Aug 13 2019 16:43:49 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 35672 1583.701 ms
+GET 'Tue Aug 13 2019 16:43:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/acl-rules 403  3.080 ms
+GET 'Tue Aug 13 2019 16:43:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 3.200 ms
+GET 'Tue Aug 13 2019 16:43:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 137.966 ms
+GET 'Tue Aug 13 2019 16:43:50 GMT-0300 (-03)' anônimo anônimo '{}' /api/unidade 200 13501 145.639 ms
+POST 'Tue Aug 13 2019 16:43:58 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 511.574 ms
+GET 'Tue Aug 13 2019 16:43:59 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 10.019 ms
+GET 'Tue Aug 13 2019 16:43:59 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 1642 134.348 ms
+GET 'Tue Aug 13 2019 16:44:00 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 12 402.558 ms
+GET 'Tue Aug 13 2019 16:46:26 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  395.135 ms
+GET 'Tue Aug 13 2019 16:46:26 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  534.406 ms
+GET 'Tue Aug 13 2019 16:46:27 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 200 924176 1902.930 ms
+GET 'Tue Aug 13 2019 16:46:44 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  666.681 ms
+GET 'Tue Aug 13 2019 16:46:44 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  669.645 ms
+GET 'Tue Aug 13 2019 16:46:45 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1766.610 ms
+GET 'Tue Aug 13 2019 16:48:02 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  690.718 ms
+GET 'Tue Aug 13 2019 16:48:02 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  707.013 ms
+GET 'Tue Aug 13 2019 16:48:03 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1801.300 ms
+GET 'Tue Aug 13 2019 16:48:25 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+GET 'Tue Aug 13 2019 16:49:03 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/classificacao 200 244 649.724 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/classificacao6s 200 300 684.122 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/periodicidade 200 397 697.737 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/unidade-medida 200 261 717.106 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/tag-categoria 200 9921 142.235 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/categoria-analise 200 10219 170.822 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/fonte-parametro 200 122 162.991 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/tipo-consulta 200 243 145.616 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/banco-dados 200 93 130.468 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  165.520 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/granularidade 200 305 161.243 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/criterio-agregacao 200 211 130.255 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/polaridade 200 144 145.541 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  152.748 ms
+GET 'Tue Aug 13 2019 16:49:17 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  132.590 ms
+GET 'Tue Aug 13 2019 16:49:18 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1165.762 ms
+GET 'Tue Aug 13 2019 16:49:19 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1327.290 ms
+GET 'Tue Aug 13 2019 16:49:23 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0&tag=15& 200 55120 581.707 ms
+GET 'Tue Aug 13 2019 16:49:27 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1319.917 ms
+GET 'Tue Aug 13 2019 16:50:20 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+GET 'Tue Aug 13 2019 16:50:25 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador/importacao?tipo=3    ms
+GET 'Tue Aug 13 2019 16:52:06 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 21.340 ms
+GET 'Tue Aug 13 2019 16:52:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-porunidade 200 1182 1481.110 ms
+GET 'Tue Aug 13 2019 16:52:07 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-portag 200 2492 1498.578 ms
+GET 'Tue Aug 13 2019 16:52:08 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 35672 2384.489 ms
+GET 'Tue Aug 13 2019 16:52:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/acl-rules 403  3.302 ms
+GET 'Tue Aug 13 2019 16:52:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 4.909 ms
+GET 'Tue Aug 13 2019 16:52:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 147.767 ms
+GET 'Tue Aug 13 2019 16:52:10 GMT-0300 (-03)' anônimo anônimo '{}' /api/unidade 200 13501 157.929 ms
+POST 'Tue Aug 13 2019 16:52:18 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 506.752 ms
+GET 'Tue Aug 13 2019 16:52:20 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 5.040 ms
+GET 'Tue Aug 13 2019 16:52:20 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 1642 150.060 ms
+GET 'Tue Aug 13 2019 16:52:20 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 12 438.658 ms
+GET 'Tue Aug 13 2019 16:52:28 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  139.537 ms
+GET 'Tue Aug 13 2019 16:52:28 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  155.831 ms
+GET 'Tue Aug 13 2019 16:52:29 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 200 924175 1397.852 ms
+GET 'Tue Aug 13 2019 16:52:52 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 304  690.836 ms
+GET 'Tue Aug 13 2019 16:52:52 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-portag 304  704.399 ms
+GET 'Tue Aug 13 2019 16:52:52 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/acl-rules 200 688 1024.004 ms
+GET 'Tue Aug 13 2019 16:52:53 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 200 924176 1850.511 ms
+GET 'Tue Aug 13 2019 16:53:03 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/classificacao 200 244 155.210 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/classificacao6s 200 300 294.497 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/unidade-medida 200 261 441.824 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/periodicidade 200 397 591.689 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/tag-categoria 200 9921 685.265 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/categoria-analise 200 10219 686.221 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/fonte-parametro 200 122 553.974 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/tipo-consulta 200 243 406.908 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/banco-dados 200 93 292.676 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/unidade 304  140.572 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/granularidade 200 305 147.879 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/criterio-agregacao 200 211 146.778 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/polaridade 200 144 171.403 ms
+GET 'Tue Aug 13 2019 16:53:04 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador/SVS275 200 5589 492.380 ms
+GET 'Tue Aug 13 2019 16:53:05 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/granularidade 304  139.652 ms
+GET 'Tue Aug 13 2019 16:53:05 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador?limit=9999&offset=0& 304  1201.291 ms
+PUT 'Tue Aug 13 2019 16:53:11 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{"id":773,"codigo":"SVS275","titulo":"Taxa de Mortalidade Pós-Neonatal","tituloCompleto":"Taxa de Mortalidade Pós-Neonatal","descricao":"Mortalidade no período pós-neonatal","ClassificacaoIndicadorCodigo":3,"Classificacao6sIndicadorCodigo":0,"UnidadeMedidaCodigo":2,"metodo_calculo":"<span style=\"color: rgb(255, 255, 255); font-family: verdana, arial, helvetica, sans-serif; font-size: 13.3333px; background-color: rgb(51, 102, 153);\">Direto:</span><p style=\"color: rgb(255, 255, 255); font-family: verdana, arial, helvetica, sans-serif; font-size: 13.3333px; background-color: rgb(51, 102, 153);\"></p><table class=\"tabdados\" style=\"padding: 0.5em; font-size: 13.3333px; color: rgb(255, 255, 255); background-color: rgb(51, 102, 153); font-family: verdana, arial, helvetica, sans-serif;\"><tbody><tr align=\"center\"><td style=\"padding-left: 0.5em; padding-right: 0.5em;\">número de óbitos de residentes de 28 a 364 dias completos de vida</td><td style=\"padding-left: 0.5em; padding-right: 0.5em;\">&nbsp;</td></tr><tr valign=\"middle\"><td style=\"padding-left: 0.5em; padding-right: 0.5em;\"><hr></td><td nowrap=\"\" style=\"padding-left: 0.5em; padding-right: 0.5em;\">&nbsp;x 1.000</td></tr><tr align=\"center\"><td style=\"padding-left: 0.5em; padding-right: 0.5em;\">número total de nascidos vivos de mães residentes</td></tr></tbody></table>","conceituacao":"<p>Número de óbitos entre 28 a 364 dias de vida completos, por mil nascidos vivos, em determinado espaço geográfico, no ano considerado.<br></p>","interpretacao":"<div>Estima o risco de um nascido vivo morrer no período pós-neonatal.</div><div>Taxas elevadas de mortalidade pós-neonatal refletem, de maneira geral, baixos níveis de saúde, de desenvolvimento socioeconômico e de condições de vida.</div><div>Quando a taxa de mortalidade infantil é alta, a mortalidade pós-neonatal é usualmente o componente mais elevado.</div>","usos":"<div>Analisar variações geográficas e temporais da mortalidade pós-neonatal.</div><div>Subsidiar processos de planejamento, gestão e avaliação de políticas e ações de atenção integral à saúde infantil.</div><div>Contribuir para a análise comparada das condições de saúde e socioeconômicas.</div>","limitacoes":"<div>O cálculo direto da taxa, a partir de dados derivados de sistemas de registro contínuo, pode exigir correções da subenumeração de óbitos pós-neonatais e de nascidos vivos, especialmente nas regiões Norte e Nordeste.</div><div>O uso alternativo de valores baseados em taxas de mortalidade infantil estimadas, por métodos demográficos, está sujeito a imprecisões inerentes aos pressupostos e às técnicas utilizadas, sobretudo em populações com reduzido número de eventos.</div>","notas":"<p>O número se refere aos eventos notificados ao SIM.</p><p>Alternativa:</p><p>Aplica-se, à taxa de mortalidade infantil estimada pelo IBGE, a proporção de óbitos de 28 a 364 dias de vida completos, informados no SIM (percentual em relação ao total de óbitos de menores de um ano, excluídos os de idade ignorada).</p>","observacoes":"","fonte_dados":"Sistema de Informação sobre Mortalidade (SIM)","objetivoRelevancia":"","diretrizNacional":"","carga_manual":false,"acumulativo":false,"ativo":true,"privado":false,"TipoConsultaCodigo":1,"ParametroFonteCodigo":2,"BancoDadosCodigo":0,"secretaria":null,"UnidadeCodigo":"9","GranularidadeCodigo":4,"CriterioAgregacaoCodigo":4,"PeriodicidadeAtualizacaoCodigo":360,"PeriodicidadeAvaliacaoCodigo":360,"PeriodicidadeMonitoramentoCodigo":360,"especifico":false,"parametro":null,"ultima_atualizacao":null,"PolaridadeCodigo":0,"IndicadoresRelacionados":[],"ResponsavelTecnico":[],"ResponsavelGerencial":[],"CategoriasAnalise":[],"tags":["27"],"unidadesMedidaSuplementar":[],"data_atualizacao_dado":"2019-04-15T12:43:12.750Z","referencia_consulta":"[NUM026]/NULLIF([POP064],0)*1000","procedimento_operacional":null,"universal":true,"dt_inclusao":"2018-07-18T17:20:12.205Z","dt_atualizacao":"2019-06-05T04:29:56.926Z","Tags":[{"codigo":27,"descricao":"Painel digiSUS","co_tag_categoria":7,"CategoriaCodigo":7,"tb_indicador_tag":{"dt_inclusao":"2019-06-05T04:27:59.581Z","dt_atualizacao":"2019-06-05T04:27:59.581Z","co_seq_indicador":773,"co_tag":27}}],"ClassificacaoIndicador":{"codigo":3,"descricao":"Resultado"},"Classificacao6sIndicador":{"codigo":0,"descricao":"Sem classificação"},"PeriodicidadeAtualizacao":{"codigo":360,"descricao":"Anual"},"PeriodicidadeAvaliacao":{"codigo":360,"descricao":"Anual"},"PeriodicidadeMonitoramento":{"codigo":360,"descricao":"Anual"},"Unidade":{"codigo":9,"sigla":"CGIAE","nome":"Coordenação-Geral de Informação e Análise Epidemiológica.","email":"cgiae@saude.gov.br","telefone":"61-33157708","competencia":null,"atividade":null,"isInformal":false,"unidade_pai":8,"nu_nivel":3,"ancestors":[{"codigo":3,"sigla":"SVS","nome":"Secretaria de Vigilância em Saúde","email":null,"telefone":null,"competencia":null,"atividade":null,"isInformal":false,"unidade_pai":null,"nu_nivel":1,"Unidadeancestor":{"co_unidade":9,"co_unidade_superior":3}},{"codigo":8,"sigla":"DANTPS","nome":"Departamento de Vigilância de Doenças e Agravos não Transmissíveis e  Promoção da Saúde","email":"dcnt@saude.gov.br","telefone":"3315 - 6115","competencia":null,"atividade":null,"isInformal":false,"unidade_pai":3,"nu_nivel":2,"Unidadeancestor":{"co_unidade":9,"co_unidade_superior":8}}]},"Granularidade":{"codigo":4,"sigla":"MN","descricao":"Município"},"CriterioAgregacao":{"codigo":4,"descricao":"Soma"},"UnidadeMedida":{"codigo":2,"descricao":"Número"},"UnidadesMedidaSuplementar":[],"Polaridade":{"codigo":0,"descricao":"Sem polaridade"}}' /api/indicador/SVS275 200 58 616.932 ms
+GET 'Mon Aug 26 2019 14:04:05 GMT-0300 (-03)' anônimo anônimo '{}' / 200 467 13.468 ms
+GET 'Mon Aug 26 2019 14:04:05 GMT-0300 (-03)' anônimo anônimo '{}' /redoc.min.js 200 1062488 3.525 ms
+GET 'Mon Aug 26 2019 14:04:05 GMT-0300 (-03)' anônimo anônimo '{}' /swagger.yaml 200 58122 6.841 ms
+GET 'Mon Aug 26 2019 14:04:06 GMT-0300 (-03)' anônimo anônimo '{}' /favicon.ico 404 150 5.322 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs 301 167 2.435 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 200 5332 17.595 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/typography.css 200 450 7.702 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/reset.css 200 1066 7.986 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/screen.css 200 44773 7.230 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery-1.8.0.min.js 200 92555 4.242 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.slideto.min.js 200 369 2.758 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.wiggle.min.js 200 762 2.368 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jquery.ba-bbq.min.js 200 4119 8.275 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/js-yaml.min.js 200 43621 7.515 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/lodash.min.js 200 52646 7.574 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/handlebars-2.0.0.js 200 48517 8.903 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/backbone-min.js 200 20390 6.970 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/highlight.7.3.pack.js 200 7499 1.695 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/marked.js 200 28156 3.709 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/swagger-oauth.js 200 11185 5.443 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/swagger-ui.js 200 2268334 5.953 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/lib/jsoneditor.min.js 200 130042 5.439 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/css/print.css 200 42587 1.037 ms
+GET 'Mon Aug 26 2019 14:04:18 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/logo_small.png 200 770 2.151 ms
+HEAD 'Mon Aug 26 2019 14:04:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/ 304  1.355 ms
+GET 'Mon Aug 26 2019 14:04:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans-Bold.ttf 200 42477 3.645 ms
+GET 'Mon Aug 26 2019 14:04:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/fonts/DroidSans.ttf 200 190776 2.646 ms
+GET 'Mon Aug 26 2019 14:04:19 GMT-0300 (-03)' anônimo anônimo '{}' /api-docs 200  0.282 ms
+GET 'Mon Aug 26 2019 14:04:19 GMT-0300 (-03)' anônimo anônimo '{}' /docs/images/favicon-32x32.png 200 1654 17.193 ms
+GET 'Mon Aug 26 2019 14:06:16 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 10.507 ms
+GET 'Mon Aug 26 2019 14:06:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-porunidade 200 1182 1446.411 ms
+GET 'Mon Aug 26 2019 14:06:18 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador-portag 200 2492 1447.111 ms
+GET 'Mon Aug 26 2019 14:06:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/indicador?limit=20&offset=0& 200 35672 2454.368 ms
+GET 'Mon Aug 26 2019 14:06:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/acl-rules 403  4.383 ms
+GET 'Mon Aug 26 2019 14:06:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/version 200 147 3.227 ms
+GET 'Mon Aug 26 2019 14:06:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/perfil?aplicacao=1 200 840 161.804 ms
+GET 'Mon Aug 26 2019 14:06:19 GMT-0300 (-03)' anônimo anônimo '{}' /api/unidade 200 13501 169.399 ms
+POST 'Mon Aug 26 2019 14:06:28 GMT-0300 (-03)' anônimo anônimo '{"username":"rdemorais.freitas@gmail.com","password":"serenaya00","aplicacao":1}' /login 200 2368 521.405 ms
+GET 'Mon Aug 26 2019 14:06:30 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/version 200 147 2.978 ms
+GET 'Mon Aug 26 2019 14:06:30 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/indicador-porunidade 200 1642 156.684 ms
+GET 'Mon Aug 26 2019 14:06:31 GMT-0300 (-03)' 75687909249 'Rafael de Morais' '{}' /api/user?situacao=0 200 12 601.214 ms
