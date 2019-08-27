@@ -6,7 +6,6 @@ const NodeCache = require( "node-cache" );
 const cache = new NodeCache();
 const config_param = require('../helpers/config')();
 const json2csv = require('json2csv').parse
-
 const config = {
   user: process.env.USER_DB || config_param.user, //env var: PGUSER
   database: process.env.DATABASE || config_param.database, //env var: PGDATABASE
@@ -26,8 +25,12 @@ module.exports = {
   getResultado: (req, res)=>{
     var config = montaParametros(req.swagger.params);
     module.exports.consultaResultado(config).then( (resultado) =>{
-      let indicadorNome = resultado[0].fields[1].name
-      let download = resultado[0].rows
+      let rows = resultado[0].rows
+      let download = [];
+      let namePadrao = req.swagger.params.codigos.originalValue
+      // console.log(namePadrao)
+      let nameIndicador = namePadrao.toLowerCase()
+      let titulo = resultado[1][namePadrao].titulo
       let tipo = config.tipo
         // req.headers.accept === 'application/json'
         switch (config.formato) {
@@ -38,14 +41,102 @@ module.exports = {
               res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, config, resultado[1]));
               break;
           case 'JSON':
-              res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.json`);
+              switch (tipo) {
+                case'BR':
+                //Field 1 é onde traz o nome do indicador no tipo BR
+                for (let i = 0; i < rows.length; i++) {
+                  download.push({
+                    Ano: rows[i].ano,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
+                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
+                break;
+                case 'MN':
+                  for (let i = 0; i < rows.length; i++) {
+                    download.push({
+                      Ano: rows[i].ano,
+                      Estado: rows[i].uf,
+                      Regiao: rows[i].regiao,
+                      Local: rows[i].local,
+                      Codigo: rows[i].codigogeo,
+                      valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                    })
+                  }
+                //Field 5 é onde traz o nome do indicador no tipo MN
+                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
+                break;
+                case 'UF':
+                ////Field 4 é onde traz o nome do indicador no tipo UF
+                for (let i = 0; i < rows.length; i++) {
+                  download.push({
+                    Ano: rows[i].ano,
+                    Estado: rows[i].uf,
+                    Regiao: rows[i].regiao,
+                    Codigo: rows[i].codigogeo,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
+                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
+
+                break;
+                case 'RG':
+                ////Field 4 é onde traz o nome do indicador no tipo RG
+                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
+                break;
+              }
               res.set('Content-Type:text/plain; charset=ISO-8859-15');
               res.status(200).send(download);
               break;
           case 'CSV':
-              res.setHeader('Content-disposition', `attachment; filename=${indicadorNome}-${tipo}.csv`);
+
+            switch (tipo) {
+              case'BR':
+              //Field 1 é onde traz o nome do indicador no tipo BR
+              for (let i = 0; i < rows.length; i++) {
+                download.push({
+                  Ano: rows[i].ano,
+                  valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                })
+              }
+              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+
+              break;
+              case 'MN':
+              //Field 5 é onde traz o nome do indicador no tipo MN
+              for (let i = 0; i < rows.length; i++) {
+                download.push({
+                  Ano: rows[i].ano,
+                  Estado: rows[i].uf,
+                  Regiao: rows[i].regiao,
+                  Local: rows[i].local,
+                  Codigo: rows[i].codigogeo,
+                  valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                })
+              }
+              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+              break;
+              case 'UF':
+                for (let i = 0; i < rows.length; i++) {
+                  download.push({
+                    Ano: rows[i].ano,
+                    Estado: rows[i].uf,
+                    Regiao: rows[i].regiao,
+                    Codigo: rows[i].codigogeo,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
+              ////Field 4 é onde traz o nome do indicador no tipo UF
+              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+              break;
+              case 'RG':
+                  ////Field 4 é onde traz o nome do indicador no tipo RG
+                  res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                  break;
+            }
               res.set('Content-Type', 'text/csv');
               res.status(200).send(json2csv(download));
+
               break;
           case 'TAB':
               res.json(module.exports.formataJSONResult(resultado[0].rows, config, Object.keys(resultado[1])));
@@ -189,6 +280,8 @@ async function  convertCodigoIndicador(config){
   var periodicidade = 0;
   var arrBusca = await indicador.getIndicadorPesquisaPorCodigo(config.codigos);
   var tipoGranularidade = 0;
+  //console.log(arrBusca)
+  //console.log(arr)
 
   switch (config.tipo){
     case 'BR':
@@ -225,7 +318,7 @@ async function  convertCodigoIndicador(config){
             arritemFormula.forEach(itemFormula=>{
               arr[item.codigo]['indicadores'][itemFormula.codigo] = getInfo(itemFormula, config, granularidade, periodicidade, tipoGranularidade);
             });
-          } 
+          }
         }
       }catch(err){
         try{
@@ -242,7 +335,7 @@ async function  convertCodigoIndicador(config){
 /**
  * Valida e recupera informações de metadados necessárias para criar dinamicamente
  * a query para consulta do indicador
- * 
+ *
  * @param {item de indicador a ser pesquisado} item
  * @param {configuracao} configuracao (parametros de entrada)
  * @param {granularidade da consulta geral} granularidade
@@ -255,6 +348,7 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
 
     ans = {
       id: item.id,
+
       codigo: item.codigo,
       titulo: item.titulo,
       descricao: item.descricao,
@@ -267,7 +361,6 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
       ultima_atualizacao: item.ultima_atualizacao,
       tipo: 'valor'
     };
-
     // Testa categoria de CategoriaAnalise
     if('porcategoria' in config && config.porcategoria){
       var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==config.porcategoria);
@@ -327,15 +420,15 @@ function getInfo(item, config, granularidade, periodicidade, tipoGranularidade){
 
 /**
  * Recupera as subcategorias e um conjunto de itens de categorias.
- * 
+ *
  * No final devemos ter uma lista dos últimos itens na categoria de
  * itens (folhas da árvore).
- * 
- * @param {itens de categorias} itens 
+ *
+ * @param {itens de categorias} itens
  */
 function getSubCategorias(itens){
   let ans=[];
-  
+
   itens.forEach(subcat=>{
     if('descendents' in subcat && subcat.descendents.length>0){
       let temp = getSubCategorias(subcat['descendents']);
@@ -359,7 +452,6 @@ function montaResult(indicadores, config){
   var gran = '';
 
   let termos = ''
-
   Object.keys(indicadores).forEach(key => {
       switch(indicadores[key].tipoConsulta){
         case 1: // Formulas
@@ -385,13 +477,13 @@ function montaResult(indicadores, config){
           break;
         case 3: // Tb Resultado
           operation +=` (${indicadores[key].codigo}) ${indicadores[key].codigo},`;
-          indicadores[key].formula_agg = 
+          indicadores[key].formula_agg =
             `${getCriterioAgregacao(indicadores[key].criterioAgregacao)}(${indicadores[key].codigo})`
           if(arrControle.indexOf(indicadores[key].codigo)==-1){
             per += indicadores[key].codigo + '.' + varPeriodicidade + ',';
             gran += indicadores[key].codigo + '.' + varGranularidade + ',';
             arrControle.push(indicadores[key].codigo);
-          }   
+          }
           break;
       }
   });
@@ -411,7 +503,7 @@ function montaResult(indicadores, config){
   Montador de query de consulta genérica.
 */
 function montaQuery(indicadores, config){
-  console.log(indicadores)
+  //console.log(indicadores)
   var arr_control=[];
   var sql_with='WITH ';
 
@@ -422,13 +514,13 @@ function montaQuery(indicadores, config){
         case 1: // Formula
           for(item in indicadores[key].indicadores){
             if(arr_control.indexOf(item)==-1){
-              sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;  
+              sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], config)} ),`;
               arr_control.push(item);
             }
-          };    
-         
+          };
+
           break;
-          
+
         case 2: // Query
           if(arr_control.indexOf(key)==-1){
             sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
@@ -499,7 +591,7 @@ function montaQueryComplemento(indicadores, config){
         break;
     }
 
-    select += Object.values(indicadores).map(a => 
+    select += Object.values(indicadores).map(a =>
       `${a.formula_agg} ${a.codigo} `
     ).toString();
 
@@ -512,7 +604,7 @@ function montaQueryComplemento(indicadores, config){
     else{
       from += 'RESULT '
     }
- 
+
     /*var arr_control=[];
     (Object.keys(indicadores)).forEach(key=>{
         select += associaAgregacao(indicadores[key]);
@@ -537,11 +629,11 @@ function montaQueryComplemento(indicadores, config){
             from += `ON ${indicadorAnterior}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
           }else{
             from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
-          }  
+          }
         }else{
           from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
         }
-   
+
         // periodicidade
         if(indicadorAnterior && indicadores[key].tipoConsulta!=1){
           from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
@@ -632,8 +724,8 @@ function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, con
     let connector = 'FULL OUTER JOIN';
     if(indicador.tipoConsulta==1){ // Formula
       var key_ant = '';
-      for(key in indicador.indicadores){  
-        if(control.indexOf(key)==-1){    
+      for(key in indicador.indicadores){
+        if(control.indexOf(key)==-1){
             if(campo && campo_associacao){
               ans += `${connector} ${key} `
               ans += `ON ${key}.${campo}=${campo_associacao} `;
@@ -646,7 +738,7 @@ function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, con
                 ans += `ON ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
               }else{
                 ans += `${key} `
-              }       
+              }
             }
             control.push(key);
         }
@@ -718,20 +810,20 @@ function montaQueryValorIndicador(codigo, indicador, config){
   }else{
     sql_where+=' AND co_seq_categoria_analise_item is null ';
   }
- 
+
   // Filtro de ano, anomes ou anomesdia
   if(config.data){
     var filtroData = '';
     if(config.data<0)
-      filtroData= `select distinct ${nome_campo_periodo} from ${schema}.${config_param.tabela_indicadores} 
-        where co_seq_indicador in (${indicador.id}) 
+      filtroData= `select distinct ${nome_campo_periodo} from ${schema}.${config_param.tabela_indicadores}
+        where co_seq_indicador in (${indicador.id})
         order by 1 desc limit ${(-1)*config.data}`
         //${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}
     else
       filtroData=`${config.data}`;
     sql_where += `AND ${nome_campo_periodo} in (${filtroData})`;
   }
-  
+
   if(indicador.criterioAgregacao==0){
     sql_group='';
   }else{
@@ -863,7 +955,7 @@ function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config)
       if(config.tipo!='BR'){
         ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
       }
-      item_anterior = item ;    
+      item_anterior = item ;
   });
   return ans;
 }
