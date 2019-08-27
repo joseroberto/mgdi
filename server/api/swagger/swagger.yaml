@@ -867,7 +867,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  
+
   /api/indicador/{codigos}/resultsetpost:
     x-swagger-router-controller: resultset
     post:
@@ -941,7 +941,7 @@ paths:
         default:
           description: Erro
           schema:
-            $ref: "#/definitions/ErrorResponseTratado"          
+            $ref: "#/definitions/ErrorResponseTratado"
 
 
 
@@ -1321,6 +1321,12 @@ paths:
           type: string
           in: path
           required: true
+        - name: filtro
+          type: string
+          in: query
+          enum: [PDF]
+          description: PDF()
+
       responses:
         "200":
           description: Sucesso
@@ -1339,7 +1345,7 @@ paths:
          description: Erro de infraestrutura.
          schema:
           $ref: '#/definitions/Error'
-    
+
   /api/indicador/{codigo}/conceituacao:
     x-swagger-router-controller: indicador
     patch:
@@ -2192,7 +2198,7 @@ definitions:
           type: object
   ResultIndicador:
     description: Resultado da consulta especifica de indicador
-    type: [array, object, string]
+    type: string
 
   QueryIndicador:
     description: Resultado da consulta especifica de indicador
@@ -2239,7 +2245,7 @@ definitions:
         type: number
       UnidadeCodigo:
         type: [number, 'null']
-      
+
   IndicadorAtualizacao:
     description: Objeto indicador
     type: object
