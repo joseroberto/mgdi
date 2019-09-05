@@ -8,9 +8,9 @@ module.exports = {
   getIndicadores: (req, res)=>{
     var perfil = security.getPerfil(req);
     var attr = {
-      attributes: [ 'id', 'codigo', 'data_atualizacao_dado', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo', 
+      attributes: [ 'id', 'codigo', 'data_atualizacao_dado', 'titulo', 'tituloCompleto', 'descricao', 'ativo',  'acumulativo',
       'privado', 'conceituacao', 'diretrizNacional', 'objetivoRelevancia',
-      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal' ],
+      'fonte_dados', 'dt_inclusao', 'ultima_atualizacao', 'universal', 'interpretacao',  'usos', 'limitacoes', 'metodo_calculo', 'notas' ],
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
@@ -156,13 +156,13 @@ module.exports = {
     //      order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
     //    }
     //  );
-   //}else 
+   //}else
    if(perfil && perfil.Perfil.sigla!='ADM'){
       console.log('Unidade restritiva', perfil.UnidadeCodigo);
       attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', where:{codigo: perfil.UnidadeCodigo},
             include: [ { model: models.Unidade, as: 'ancestors' } ],
             order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ]
-        }    
+        }
       );
     }else{
       attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial',
@@ -180,7 +180,7 @@ module.exports = {
         }
       else{
         res.status(503).json({codret: 1011, message: 'Nenhum dado encontrado'});
-      }      
+      }
     }).catch(err=>{
       if('errors' in err){
         if(err.errors.length>0){
@@ -193,8 +193,8 @@ module.exports = {
     });
   },
   getFicha: (req,res)=>{
-    var attr = { 
-      attributes: [ 'codigo', 'id', 'titulo', 'descricao', 'diretrizNacional', 'conceituacao', 
+    var attr = {
+      attributes: [ 'codigo', 'id', 'titulo', 'descricao', 'diretrizNacional', 'conceituacao',
       'objetivoRelevancia', 'interpretacao', 'usos', 'limitacoes',
       'fonte_dados', 'metodo_calculo', 'notas' ],
       where: {codigo: req.swagger.params.codigo.value}
@@ -423,7 +423,7 @@ module.exports = {
     });
   },
 
-  getIndicadorPesquisaPorCodigo: async (codigos)=>{ 
+  getIndicadorPesquisaPorCodigo: async (codigos)=>{
       return models.Indicador.findAll(
       { attributes: [  'id', 'codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'objetivoRelevancia',
        'descricao', 'referencia_consulta', 'ultima_atualizacao' ],
@@ -434,7 +434,7 @@ module.exports = {
         { model: models.Criterio_Agregacao , as: 'CriterioAgregacao' },
         { model: models.Periodicidade , as: 'PeriodicidadeAtualizacao' },
         { model: models.CategoriaAnalise , as: 'CategoriasAnalise',
-            include: [ { model: models.CategoriaAnaliseItem, as: 'Itens',            
+            include: [ { model: models.CategoriaAnaliseItem, as: 'Itens',
             include: [ { model: models.CategoriaAnaliseItem, as: 'descendents' } ]  } ] }
       ],
       //  where: {codigo: req.swagger.params.codigo.value}
