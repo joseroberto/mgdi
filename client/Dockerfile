@@ -18,5 +18,6 @@ ENV APP "MGI"
 
 
 #CMD ["nginx", "-g", "daemon off;"]
+CMD printenv|while IFS='=' read -r name value ; do sed -i -e "s#$name#$value#g" /usr/share/nginx/html/main.bundle.js; done && nginx -g 'daemon off;'
 
 USER 1001
