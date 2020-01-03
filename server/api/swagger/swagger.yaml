@@ -210,7 +210,7 @@ paths:
         - name: aplicacao
           type: string
           in: query
-          required: true
+          required: false
       tags:
         - Cadastros Auxiliares
         - Infraestrutura
