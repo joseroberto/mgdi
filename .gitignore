@@ -5,6 +5,7 @@
 *.sh
 .vscode/
 bash.sh
+.env*
 
 *.tgz
 

@@ -75,7 +75,7 @@ acl.config({
   filename: 'acl.yaml',
   path: 'config',
   decodedObjectName: 'user',
-  roleSearchPath: 'user.Perfil.sigla' 
+  roleSearchPath: 'user.Perfil.sigla'
 });
 
 
@@ -92,7 +92,7 @@ SwaggerExpress.create(config, function (err, se) {
 
   app.use(se.runner.swaggerTools.swaggerUi());
 
-  
+
 
 
   var port = process.env.PORT || config_param.port || 8000;
@@ -126,8 +126,8 @@ SwaggerExpress.create(config, function (err, se) {
   app.use(express.static('node_modules/redoc/dist'));
 
 
-      
-  
+
+
 
   //app.use(express.static('api/swagger'));
 
@@ -135,7 +135,7 @@ SwaggerExpress.create(config, function (err, se) {
   se.register(app);
 
 
-  
+
 
 // path specified
 // looks for ac.json in the config folder

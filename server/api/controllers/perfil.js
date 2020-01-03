@@ -2,9 +2,10 @@ var models  = require('../models');
 
 module.exports = {
   getPerfis: (req, res)=>{
+    console.log('Teste:', req.swagger.params.aplicacao.value)
     models.Perfil.findAll({
       include:[{ model: models.Aplicacao,
-          as: 'Aplicacao', where:{ codigo: req.swagger.params.aplicacao.value }}],
+          as: 'Aplicacao', where:{ sigla: req.swagger.params.aplicacao.value }}],
       where:{
         ativo:true
       }
