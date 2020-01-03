@@ -10,5 +10,13 @@ RUN chgrp -R 0 /var/cache/nginx && \
   chgrp -R 0 /var/run && \
   chmod -R g+rwX /var/run
 EXPOSE 5000
-CMD ["nginx", "-g", "daemon off;"]
+
+ENV URL_REST "http://exemplo.com"
+ENV CONTEXT_REST "/api"
+ENV URL_AUTH ""
+ENV APP "MGI"
+
+
+#CMD ["nginx", "-g", "daemon off;"]
+
 USER 1001
