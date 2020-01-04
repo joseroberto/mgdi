@@ -5,7 +5,7 @@ const jwt    = require('jsonwebtoken');
 const config_param = require('../helpers/config')();
 
 module.exports = {
-  
+
   getUsers: (req, res)=>{
     var attr = {
       include: [ { model: models.Unidade, as: 'Unidade' },
@@ -20,12 +20,16 @@ module.exports = {
       res.json({users: lista});
     });
   },
-
-  getPorLogin: async (login, codigo_aplicacao)=>{
+  getPorLogin: async (login)=>{
+    return models.User.findOne({
+      where: {login:login}
+    });
+  },
+  getPorLoginAplicacao: async (login, sigla_aplicacao)=>{
     return models.User.findAll({
       include: [ { model: models.Perfil,
           as: 'Perfil',
-          include: [{model: models.Aplicacao, as: 'Aplicacao', where: { codigo: codigo_aplicacao } }]
+          include: [{model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
          } ],
       where: {login:login}
     });

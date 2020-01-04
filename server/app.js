@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.get('/swagger.yaml', (req, res, next) => {
-  console.log('swagger', swagger_config);
+  //console.log('swagger', swagger_config);
   res.setHeader('content-type', 'application/json');
 
   swagger_config.host = process.env.HOST || config_param.host;

@@ -5,6 +5,7 @@ const soap = require('soap'),
       WindowsStrategy = require('passport-windowsauth');
 const config_param = require('./config')();
 const crypto = require('crypto');
+const user = require('../controllers/user');
 //var parseString = require('xml2js').parseString;
 
 
@@ -34,10 +35,18 @@ module.exports = function(passport) {
     // LOCAL LOGIN =============================================================
     // =========================================================================
     // Valida o usuario na base local (username/password)
-    passport.use('local', new LocalStrategy((username, password, done) =>{
-        console.log('local', username, password);
-
-        return done(null, false, null);
+    passport.use('local', new LocalStrategy(async (username, password, done) =>{
+        console.log('validacao local', username);
+        var usuario = await user.getPorLogin(username);  //FIX: Falta validar a senha. Funcao habilitada somente para desenv.
+        if(usuario)
+          return done(null, {
+            login: username,
+            cpf: usuario.cpf,
+            nome: usuario.nome,
+            email: usuario.email
+          })
+        else
+          return done('Usuário não encontrado.')
 
     }));
 

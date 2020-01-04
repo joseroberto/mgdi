@@ -16,7 +16,7 @@ acl.config({
     baseUrl: 'api',
     rules:acl_rules,
     decodedObjectName: 'decoded',
-    roleSearchPath: 'decoded.Perfil.sigla' 
+    roleSearchPath: 'decoded.Perfil.sigla'
 });
 
 // module.exports = acl
@@ -53,7 +53,7 @@ module.exports = {
                     return cb(new Error('Invalid token'));
                 }
 
-                var userPerfil =  await user.getPorLogin(decoded.login, (decoded.aplicacao || 1) );
+                var userPerfil =  await user.getPorLoginAplicacao(decoded.login, (decoded.aplicacao) );
 
                 if(userPerfil[0].dataValues.SituacaoCodigo != 1){
                     return cb(new Error('User not active'));
@@ -93,7 +93,7 @@ module.exports = {
 
 //CHECK ACL ACEESS
 const checkACL = async function(req,cb){
-    
+
     var options = acl.getConfig();
     const role = acl.findRoleFromRequest(
         req,
@@ -103,7 +103,7 @@ const checkACL = async function(req,cb){
     );
 
     let hasAccess = acl.checkACL(role, req.originalUrl, req.method)
-    
+
     if(hasAccess){
 
         //check if operation in the model is permited
@@ -115,6 +115,6 @@ const checkACL = async function(req,cb){
     }else{
         return cb(new Error(`Usuário não tem permissão para executar essa operação!`))
     }
-   
+
 }
 

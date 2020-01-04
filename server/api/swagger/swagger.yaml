@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.1.2"
+  version: "1.0.0"
   title: titulo
   description: descrição
 
@@ -2365,7 +2365,7 @@ definitions:
         type: string
       aplicacao:
         description: Aplicação
-        type: integer
+        type: string
   Acl:
     type: object
 
