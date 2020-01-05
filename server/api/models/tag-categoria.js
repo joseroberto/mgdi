@@ -19,12 +19,7 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods:{
         associate:function(models){
-            TagCategoria.hasMany(models.Tag,
-              {
-                as: 'Tags',
-                foreignKey: 'co_tag_categoria'
-              }
-            );
+            TagCategoria.hasMany(models.Tag,{as: 'Tags',foreignKey: 'codigo_categoria'});
         }
     },
     schema: schema,
