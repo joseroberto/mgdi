@@ -15,10 +15,14 @@ export class AclService extends REST {
 
   constructor(http:Http) {
 
-    super(http); 
+    super(http);
     let acl = JSON.parse(localStorage.getItem('acl'));
     let role = _.get(JSON.parse(localStorage.getItem('currentUser')),'Perfil.sigla','guest');
-    this.userUnidadesPath =  JSON.parse(localStorage.getItem('acl_unidades'));
+
+    console.log('acl_unidades==>', localStorage.getItem('acl_unidades'))
+
+    this.userUnidadesPath = {}; //FIX: Pega os acls
+    //this.userUnidadesPath =  JSON.parse(localStorage.getItem('acl_unidades'));
     this.userUnidadeCod = _.get(JSON.parse(localStorage.getItem('currentUser')),'UnidadeCodigo',false);
     this.setRules(acl,role)
 
@@ -29,13 +33,13 @@ export class AclService extends REST {
       this.userUnidadesPath = resp.unidades
       this.setRules(acl, role )
     });
-    
+
   }
-  
+
   getAll(){
     return this.get('/acl-rules');
   }
-  
+
   public setRules(acl_rules, role ){
      acl.config({
         baseUrl: '',

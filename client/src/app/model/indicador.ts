@@ -40,8 +40,8 @@ export class Indicador{
     ultima_atualizacao:any = null;
     PolaridadeCodigo:number = 0;
     Granularidade:Granularidade;
-    tags:Tag[];
-    unidadesMedidaSuplementar:UnidadeResponsavel[];
+    Tags:Tag[];
+    UnidadesMedidaSuplementar:UnidadeResponsavel[];
     IndicadoresRelacionados:Indicador[];
     CategoriasAnalise:CategoriaAnalise[];
     ResponsavelTecnico:UnidadeResponsavel[];
@@ -53,7 +53,7 @@ export class Indicador{
     this.IndicadoresRelacionados = [];
     this.ResponsavelGerencial = [];
     this.CategoriasAnalise = [];
-    this.tags = [];
-    this.unidadesMedidaSuplementar = [];
+    this.Tags = [];
+    this.UnidadesMedidaSuplementar = [];
   }
 }

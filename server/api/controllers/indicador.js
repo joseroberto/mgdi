@@ -234,6 +234,7 @@ module.exports = {
     });
   },
   editaIndicador: (req,res)=>{
+    console.log('Edita==>', req.body);
     models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
       models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
         item[0].setTags(req.body.tags);

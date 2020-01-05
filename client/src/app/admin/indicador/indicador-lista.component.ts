@@ -25,7 +25,7 @@ export class IndicadorListaComponent implements OnInit {
     private router:Router) {
 
     this.detailsFormat = this.detailsFormat.bind(this);
-    
+
     winRef.nativeWindow.angularComponentRef = {
       zone: this.zone,
       componentFn: (value) => this.apagaIndicador(value),
@@ -111,8 +111,7 @@ editaIndicador(codigo:string){
 
 detailsFormat(d) {
     let tags:string='';
-    debugger;
-    
+
     if(d.Tags.length){
       tags += '<tr><td>Marcador(es):</td><td colspan="5">';
       d.Tags.forEach(item=>{
@@ -120,7 +119,7 @@ detailsFormat(d) {
       });
       tags += '</td></tr>';
     }
-   
+
 
     let remove = this.acl.getPermission('indicador','DELETE',d.Unidade.codigo);
     let removeStr = '';
@@ -138,7 +137,7 @@ detailsFormat(d) {
           <i class="fa fa-pencil "></i>&nbsp;Edita
        </button>`
     }
-    
+
 
     return `<table cell-padding="5" cell-spacing="0" border="0" class="table table-hover table-condensed">
             <tbody>
@@ -165,9 +164,9 @@ detailsFormat(d) {
                 <td>Tipo</td>
                 <td colspan="5">
                  ${d.acumulativo? "<span class='label label-info'>ACUMULATIVO</span>":"<span class='label label-default'>NÃO ACUMULATIVO</span>"}
-                
+
                  ${removeStr}
-                
+
                   ${editStr}
                 </td>
             </tbody>

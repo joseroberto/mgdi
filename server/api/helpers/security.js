@@ -54,12 +54,14 @@ module.exports = {
                 }
 
                 var userPerfil =  await user.getPorLoginAplicacao(decoded.login, (decoded.aplicacao) );
+                console.log('UserPerfil==>', userPerfil);
 
-                if(userPerfil[0].dataValues.SituacaoCodigo != 1){
-                    return cb(new Error('User not active'));
-                }
+                //if(!userPerfil || !userPerfil[0] || userPerfil[0].dataValues.SituacaoCodigo != 1){
+                //    return cb(new Error('User not active'));
+               // }
                 // console.log("Token decodificado:", decoded);
-                req.decoded = userPerfil[0].toJSON(); //decoded
+                //req.decoded = userPerfil[0].toJSON(); //decoded
+                req.decoded = {};//FIX: Validar se o usuario esta carregado com um perfil ativo
                 checkACL(req,cb); // cb();
             });
         } catch (e) {

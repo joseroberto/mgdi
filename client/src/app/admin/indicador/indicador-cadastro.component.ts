@@ -6,7 +6,7 @@ import { ClassificacaoIndicadorService, IndicadorService, UnidadeMedidaService,
   UnidadeService, GranularidadeService, CriterioAgregacaoService, PolaridadeService,
   Classificacao6sIndicadorService, FonteParametroService} from '../../services/index';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Indicador } from '../../model/index';
+import { Indicador, TagCategoria } from '../../model/index';
 
 import '../../extensions/array.extension';
 
@@ -144,11 +144,13 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   ngAfterViewInit(){
       $('.tags').on('change', (e) => {
-        this.indicador.tags=[];
+        this.indicador.Tags=[];
         if(jQuery(e.target).val()){
           jQuery(e.target).val().forEach(
             obj=>{
-              this.indicador.tags.push(obj);
+              //console.log(obj);
+              //console.log('Tags==>', this.colecaoTagCategoria);
+              this.indicador.Tags.push(this.getTag(+obj));
             });
           }
       });
@@ -157,11 +159,11 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             });
 
       $('.uniSuples').on('change', (e) => {
-        this.indicador.unidadesMedidaSuplementar=[];
+        this.indicador.UnidadesMedidaSuplementar=[];
         if(jQuery(e.target).val()){
           jQuery(e.target).val().forEach(
             obj=>{
-              this.indicador.unidadesMedidaSuplementar.push(obj);
+              this.indicador.UnidadesMedidaSuplementar.push(obj);
             });
           }
       });
@@ -171,6 +173,15 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       // });
   }
 
+  private getTag(codigo){
+    for(let categoria of this.colecaoTagCategoria){
+       for(let tag of categoria.Tags){
+         if(tag.codigo==codigo){
+           return tag;
+         }
+       }
+    }
+  }
   private loadIndicador(){
     console.log('loadIndicador');
     this.sub = this.route.params.subscribe(params => {
@@ -189,8 +200,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
               this.flag_update = true;
               if(resp && resp.hasOwnProperty('Tags'))
                 this.updateTagList(resp.Tags);
-              if(resp && resp.hasOwnProperty('UnidadesMedidaSuplementar') && 
-                resp.UnidadesMedidaSuplementar.length > 0) 
+              if(resp && resp.hasOwnProperty('UnidadesMedidaSuplementar') &&
+                resp.UnidadesMedidaSuplementar.length > 0)
                 this.updateUnidadesSuplList(resp.UnidadesMedidaSuplementar);
             }, (err)=> this.util.msgErroInfra(err));
         }
@@ -409,12 +420,14 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   private onSubmit(form){
+    console.log('Antes==>', this.indicador);
     let valor: Indicador = Object.assign(this.indicador, form.value);
     $(':input[type="submit"]').prop('disabled', false);
     //console.log('form',form,  valor);
     if(form.valid && this.validacaoAdicional(valor)){
       if(this.flag_update){
         // Atualiza dados
+        console.log('valor==>', valor);
         this.indicadorService.update(valor).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
