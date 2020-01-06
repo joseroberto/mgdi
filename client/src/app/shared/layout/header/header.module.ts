@@ -15,10 +15,9 @@ import {ActivitiesTaskComponent} from "./activities/activities-task/activities-t
 import {HeaderComponent} from "./header.component";
 import {HeaderSiteComponent} from "./header-site.component";
 import {UtilsModule} from "../../utils/utils.module";
-import { SpeechButtonComponent } from './speech-button/speech-button.component';
 import {I18nModule} from "../../i18n/i18n.module";
 import {UserModule} from "../../user/user.module";
-import {VoiceControlModule} from "../../voice-control/voice-control.module";
+//import {VoiceControlModule} from "../../voice-control/voice-control.module";
 import {BsDropdownModule} from "ngx-bootstrap";
 
 
@@ -28,7 +27,7 @@ import {BsDropdownModule} from "ngx-bootstrap";
 
     FormsModule,
 
-    VoiceControlModule,
+    //VoiceControlModule,
 
     BsDropdownModule,
 
@@ -44,7 +43,6 @@ import {BsDropdownModule} from "ngx-bootstrap";
     ActivitiesComponent,
     HeaderComponent,
     HeaderSiteComponent,
-    SpeechButtonComponent,
   ],
   exports: [
     HeaderComponent,

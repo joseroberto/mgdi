@@ -105,12 +105,13 @@ module.exports = {
     var entidade = req.body;
     console.log('create', entidade);
     models.Indicador.create(entidade).then((indicador)=> {
-      if(req.body.tags)
-        indicador.setTags(req.body.tags);
-      if(req.body.unidadesMedidaSuplementar)
-        indicador.setUnidadesMedidaSuplementar(req.body.unidadesMedidaSuplementar);
+      if(entidade.Tags)
+        indicador.setTags(entidade.Tags.map((item)=>{return item.codigo}));
+      if(req.body.UnidadesMedidaSuplementar)
+        indicador.setUnidadesMedidaSuplementar(req.body.UnidadesMedidaSuplementar);
       res.json({codret: 0, mensagem: "Indicador cadastrado com sucesso"});
     }).catch(err=>{
+      console.log('Err=>', err);
       if('errors' in err){
         if(err.errors.length>0){
           res.status(500).json(Object.assign({codret: 1001},err.errors[0]));
@@ -235,10 +236,12 @@ module.exports = {
   },
   editaIndicador: (req,res)=>{
     console.log('Edita==>', req.body);
-    models.Indicador.update( req.body, { where: { codigo: req.swagger.params.codigo.value }}).then(() => {
-      models.Indicador.findAll({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
-        item[0].setTags(req.body.tags);
-        item[0].setUnidadesMedidaSuplementar(req.body.unidadesMedidaSuplementar);
+    var entidade = req.body;
+    models.Indicador.update( entidade, { where: { codigo: req.swagger.params.codigo.value }}).then((update) => {
+
+      models.Indicador.findOne({where: {codigo: req.swagger.params.codigo.value}}).then( item=>{
+        item.setTags(entidade.Tags.map((item)=>{return item.codigo}));
+        //item[0].setUnidadesMedidaSuplementar(req.body.UnidadesMedidaSuplementar);
         res.json({codret: 0, mensagem: "Indicador atualizado com sucesso"});
       });
     }).catch(err=>{

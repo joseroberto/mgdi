@@ -2265,21 +2265,30 @@ definitions:
       descricao:
         type: string
         description: Descrição do Indicador
-      periodicidade_atualizacao:
+      PeriodicidadeAtualizacaoCodigo:
         type: number
         description: Periodicidade de atualização dos dados
-      periodicidade_avaliacao:
+      PeriodicidadeAvaliacaoCodigo:
         type: number
         description: Periodicidade de avaliação dos dados
-      periodicidade_monitoramento:
+      PeriodicidadeMonitoramentoCodigo:
         type: number
         description: Periodicidade de monitoramento dos dados
-      polaridade:
+      TipoConsultaCodigo:
+        type: number
+      ClassificacaoIndicadorCodigo:
+        type: number
+      Classificacao6sIndicadorCodigo:
+        type: number
+      UnidadeMedidaCodigo:
+        type: number
+      ParametroFonteCodigo:
+        type: [number, 'null']
+      UnidadeCodigo:
+        type: string
+      PolaridadeCodigo:
         type: number
         description: Polaridade da medida do indicador
-      unidade_medida:
-        type: number
-        description: Código da unidade de medida
       ativo:
         type: boolean
         description: Indicador ativo
@@ -2297,13 +2306,18 @@ definitions:
         description: Índice que é considerado para o indicador
       classificacao:
         type: number
-        description: Código da classificçaão do Indicador
-      granularidade:
+        description: Código da classificação do Indicador
+      GranularidadeCodigo:
         type: number
         description: Código da granularidade do Indicador
-      criterio_agregacao:
+      CriterioAgregacaoCodigo:
         type: [number, 'null']
         description: Código do critério de agregacão do Indicador
+      Tags:
+        type: array
+        items:
+          type: object
+      
   Conceituacao:
     type: object
     properties:

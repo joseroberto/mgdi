@@ -7,7 +7,7 @@
   <div class='ajuda-faq'>
       <a target="_blank" class='btn btn-primary' href="assets/tutorial/cadastro-indicadores/index.html"> ajuda? </a>
   </div>
-  
+
   <sa-widget [colorbutton]="false" [editbutton]="false" [fullscreenbutton]="false" [custombutton]="false"
              [sortable]="false">
     <!-- widget options:
@@ -25,8 +25,8 @@
     -->
     <header>
       <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-      <h2> {{ tituloCabecalho }} </h2>  
-     
+      <h2> {{ tituloCabecalho }} </h2>
+
     </header>
 
     <!-- widget div-->
@@ -40,7 +40,7 @@
           data-bv-message="O valor é inválido"
           data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
           data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+          data-bv-feedbackicons-validating="glyphicon glyphicon-refresh" autocomplete="off">
           <fieldset style="margin: 15px">
               <legend>&nbsp;&nbsp;[{{ tituloForm }}] </legend>
               <div class="form-group" >
@@ -117,8 +117,8 @@
                                      [closeOnClickOutside]="true">
                         Informe o título completo do indicador
                     </popover-content>
-                    <label class="col-md-2 control-label">Título completo 
-                      <i class="fa fa-question-circle" popoverPlacement="auto" 
+                    <label class="col-md-2 control-label">Título completo
+                      <i class="fa fa-question-circle" popoverPlacement="auto"
                       popoverOnHover="true" [popover]="tituloCompleto"></i></label>
                     <div class="col-md-10">
                       <input type="text" id="tituloCompleto" name="tituloCompleto"
@@ -318,7 +318,7 @@
                           Informe diretriz nacional para o indicador
                       </popover-content>
                       <label class="col-md-2 control-label">Diretriz Nacional
-                        <i class="fa fa-question-circle" popoverPlacement="auto" 
+                        <i class="fa fa-question-circle" popoverPlacement="auto"
                         popoverOnHover="true" [popover]="diretrizNacional"></i></label>
                       <div class="col-md-10">
                         <input type="text" id="diretrizNacional" name="diretrizNacional"
@@ -499,12 +499,12 @@
                     [closeOnClickOutside]="true">
                       Dados sobre Objetivos e relevância do indicador
                   </popover-content>
-                  <legend>Objetivo e Relevância <i class="fa fa-question-circle" 
+                  <legend>Objetivo e Relevância <i class="fa fa-question-circle"
                       popoverPlacement="right" popoverOnHover="true" [popover]="objetivoRelevancia"></i>
-                        <a (click)="(null)" class="btn btn-primary btn-xs" 
+                        <a (click)="(null)" class="btn btn-primary btn-xs"
                           (click)="editObjetivoRelevancia(true)" *ngIf="!isEditObjetivoRelevancia">
                           <i class="fa fa-edit"></i> Edita</a>
-                        <a (click)="(null)" class="btn btn-success btn-xs" 
+                        <a (click)="(null)" class="btn btn-success btn-xs"
                           (click)="editObjetivoRelevancia(false)" *ngIf="isEditObjetivoRelevancia">
                           <i class="fa fa-save"></i> Grava</a>
                   </legend>

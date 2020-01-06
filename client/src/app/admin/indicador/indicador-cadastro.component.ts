@@ -419,16 +419,28 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
       }
   }
 
+  private filterFields(objeto, filter){
+    return Object.keys(objeto).reduce(function(obj, k) {
+      if (filter.includes(k)) obj[k] = objeto[k];
+        return obj;
+      }, {});
+  }
+
   private onSubmit(form){
-    console.log('Antes==>', this.indicador);
     let valor: Indicador = Object.assign(this.indicador, form.value);
     $(':input[type="submit"]').prop('disabled', false);
-    //console.log('form',form,  valor);
+    console.log('valor==>', valor);
     if(form.valid && this.validacaoAdicional(valor)){
       if(this.flag_update){
         // Atualiza dados
-        console.log('valor==>', valor);
-        this.indicadorService.update(valor).subscribe(resp=>{
+        this.indicadorService.update(this.filterFields(
+          valor,
+          ['codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'descricao', 'PolaridadeCodigo', 'ativo',
+            'acumulativo', 'privado', 'universal', 'indice_referencia', 'classificacao', 'GranularidadeCodigo', 'CriterioAgregacaoCodigo',
+            'Tags', 'PeriodicidadeAtualizacaoCodigo', 'PeriodicidadeAvaliacaoCodigo', 'PeriodicidadeMonitoramentoCodigo',
+            'ParametroFonteCodigo', 'UnidadeCodigo', 'TipoConsultaCodigo', 'ClassificacaoIndicadorCodigo', 'Classificacao6sIndicadorCodigo',
+            'UnidadeMedidaCodigo']
+            )).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucessoEdicao(resp.mensagem);
           }else{
@@ -439,8 +451,17 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         });
       }else{
         // Inclui um novo
-        valor['codigo'] = form.value.codigo_edit.toUpperCase();
-        this.indicadorService.create(valor).subscribe(resp=>{
+        if(form.value.codigo_edit)
+            valor['codigo'] = form.value.codigo_edit.toUpperCase();
+        console.log('valor==>', valor);
+        this.indicadorService.create(this.filterFields(
+          valor,
+          ['codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'descricao', 'PolaridadeCodigo', 'ativo',
+            'acumulativo', 'privado', 'universal', 'indice_referencia', 'classificacao', 'GranularidadeCodigo', 'CriterioAgregacaoCodigo',
+            'Tags', 'PeriodicidadeAtualizacaoCodigo', 'PeriodicidadeAvaliacaoCodigo', 'PeriodicidadeMonitoramentoCodigo',
+            'ParametroFonteCodigo', 'UnidadeCodigo', 'TipoConsultaCodigo', 'ClassificacaoIndicadorCodigo', 'Classificacao6sIndicadorCodigo',
+            'UnidadeMedidaCodigo']
+            )).subscribe(resp=>{
           if(resp.codret==0){
             this.util.msgSucesso(resp.mensagem);
             this.router.navigateByUrl('/admin/indicador/'+ valor.codigo);
@@ -456,6 +477,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
     }
     return true;
   }
+
   private validacaoAdicional(valor){
     let resposta = true;
     resposta = resposta && valor.UnidadeCodigo;
