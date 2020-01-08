@@ -972,6 +972,12 @@ paths:
           required: false
           default: MN
           description: Tipo de consulta (BR - Brasil, MN - Municipal, RG - Região, UF - Estadual, CN = CNES)
+        - name: tempo
+          type: string
+          in: query
+          enum: [ANO, MES]
+          required: false
+          description: Agregação por Tempo na consulta (ANO - Ano, MES - Ano/Mês)
         - name: filtro
           type: string
           in: query

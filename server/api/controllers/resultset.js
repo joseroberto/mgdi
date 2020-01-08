@@ -25,14 +25,6 @@ module.exports = {
   getResultado: (req, res)=>{
     var config = montaParametros(req.swagger.params);
     module.exports.consultaResultado(config).then( (resultado) =>{
-      let rows = resultado[0].rows
-      let download = [];
-      let namePadrao = req.swagger.params.codigos.originalValue
-      // console.log(namePadrao)
-      let nameIndicador = namePadrao.toLowerCase()
-      let titulo = resultado[1][namePadrao].titulo
-      let tipo = config.tipo
-        // req.headers.accept === 'application/json'
         switch (config.formato) {
           case 'LIN':
             res.json(resultado[0].rows);
@@ -41,20 +33,28 @@ module.exports = {
               res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, config, resultado[1]));
               break;
           case 'JSON':
+            let rows = resultado[0].rows
+            let download = {};
+            let tipo = config.tipo;
+
+            req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao)=>{
+              let arr = [];
+              let nameIndicador = namePadrao.toLowerCase();
+              //console.log('==>', resultado[1][namePadrao])
+              //let titulo = resultado[1][namePadrao].titulo;
               switch (tipo) {
                 case'BR':
                 //Field 1 é onde traz o nome do indicador no tipo BR
                 for (let i = 0; i < rows.length; i++) {
-                  download.push({
+                  arr.push({
                     Ano: rows[i].ano,
                     valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
                   })
                 }
-                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
                 break;
                 case 'MN':
                   for (let i = 0; i < rows.length; i++) {
-                    download.push({
+                    arr.push({
                       Ano: rows[i].ano,
                       Estado: rows[i].uf,
                       Regiao: rows[i].regiao,
@@ -64,12 +64,11 @@ module.exports = {
                     })
                   }
                 //Field 5 é onde traz o nome do indicador no tipo MN
-                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
                 break;
                 case 'UF':
                 ////Field 4 é onde traz o nome do indicador no tipo UF
                 for (let i = 0; i < rows.length; i++) {
-                  download.push({
+                  arr.push({
                     Ano: rows[i].ano,
                     Estado: rows[i].uf,
                     Regiao: rows[i].regiao,
@@ -77,17 +76,20 @@ module.exports = {
                     valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
                   })
                 }
-                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
-
                 break;
                 case 'RG':
                 ////Field 4 é onde traz o nome do indicador no tipo RG
-                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.json`);
+
                 break;
               }
-              res.set('Content-Type:text/plain; charset=ISO-8859-15');
-              res.status(200).send(download);
-              break;
+              res.setHeader('Content-disposition', `attachment; filename=indicador-${tipo}.json`);
+              download[namePadrao] = arr;
+            });
+
+            res.set('Content-Type:text/plain; charset=ISO-8859-15');
+            res.status(200).send(download);
+
+            break;
           case 'CSV':
 
             switch (tipo) {
@@ -161,7 +163,7 @@ module.exports = {
         }
 
         var sql = montaQuery(indicadores, config);
-         //console.log('SQL+=>', sql);
+        console.log('SQL+=>', sql);
         pool.query(sql,null, (err, result)=>{
           if(err) {
             console.error('error running query', err);
@@ -444,7 +446,7 @@ function getSubCategorias(itens){
 
 function montaResult(indicadores, config){
   var referencia = indicadores[Object.keys(indicadores)[0]];
-  var varPeriodicidade = getPeriodicidade(referencia.periodicidade);
+  var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia,config));
   var varGranularidade = getGranularidade(referencia.granularidade);
   var arrControle = [];
   var operation = '';
@@ -554,7 +556,7 @@ function montaQueryComplemento(indicadores, config){
 
     var indicadorAnterior = '';
     var referencia = indicadores[Object.keys(indicadores)[0]];
-    var varPeriodicidade = getPeriodicidade(referencia.periodicidade);
+    var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia, config));
     var alias = referencia.tipoConsulta==1?Object.keys(referencia.indicadores)[0]:Object.keys(indicadores)[0];
 
     //console.log('REFERENCIA==>',referencia,'ALIAS==>>',alias)
@@ -784,7 +786,7 @@ function montaQueryValorIndicador(codigo, indicador, config){
     }
   }
 
-  switch (indicador.periodicidade) {
+  switch (getSeletorPeriodicidade(indicador, config)) {
     case 360:
       sql_select += ', co_ano  as ano';
       nome_campo_periodo='co_ano';
@@ -896,7 +898,7 @@ function tabulaResultado(result, indicadores, config){
 /// Funcoes acessorias
 
 function getPeriodicidade(value){
-  var varPeriodicidade = '';
+  var varPeriodicidade = value;
   switch (value) {
     case 360:
       varPeriodicidade = 'ano';
@@ -958,4 +960,15 @@ function associaCampos2(indicadores, varPeriodicidade, varGranularidade, config)
       item_anterior = item ;
   });
   return ans;
+}
+
+function getSeletorPeriodicidade(indicador, config){
+  var seletorperiodicidade = indicador.periodicidade;
+  //console.log('TEMPO==>', config.tempo, seletorperiodicidade)
+  if(config.tempo=='ANO'){
+    seletorperiodicidade = 360;
+  }else if (config.tempo='MES' && seletorperiodicidade<=30){
+    seletorperiodicidade = 30;
+  }  //FIX: Implementar para os outros periodos de tempo.
+  return seletorperiodicidade;
 }
