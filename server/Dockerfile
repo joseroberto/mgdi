@@ -12,6 +12,8 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * SCHEMA - Schema da base de dados utilizado para o sistema MGI na base de dados \
   * HOST - host a ser chamado para api (formato pode ser host:port) \
   * DEBUG - modo de depuração de querys \
+  * HOST_CACHE - Servidor memcached \
+  * TTL_CACHE - TTL dos objetos em segundos \
   \
   Dependendo da escolha do tipo de esquema de validação: \
   \
