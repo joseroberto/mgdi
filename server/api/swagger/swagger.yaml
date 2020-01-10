@@ -972,7 +972,7 @@ paths:
           required: false
           default: MN
           description: Tipo de consulta (BR - Brasil, MN - Municipal, RG - Região, UF - Estadual, CN = CNES)
-        - name: tempo
+        - name: agregacao
           type: string
           in: query
           enum: [ANO, MES]
@@ -2323,7 +2323,7 @@ definitions:
         type: array
         items:
           type: object
-      
+
   Conceituacao:
     type: object
     properties:
