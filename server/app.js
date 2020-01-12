@@ -58,17 +58,6 @@ app.get('/swagger.yaml', (req, res, next) => {
   res.send(swagger_config);
 });
 
-/*app.post('/login2', (req, res, next) =>{
-  console.log('dentro do login2');
-  passport.authenticate('local-login', passport.authenticate('local', { failureRedirect: '/login' }), (req,res)=>{
-    console.log('dentro', req, res);
-    //res.send(JSON.stringify(info)).status(200);
-    //next();
-  });
-});*/
-// console.log("**************  config swweguer" + JSON.stringify(config))
-
-
 acl.config({
   yml: true,
   baseUrl: 'api',
@@ -77,9 +66,6 @@ acl.config({
   decodedObjectName: 'user',
   roleSearchPath: 'user.Perfil.sigla'
 });
-
-
-
 
 SwaggerExpress.create(config, function (err, se) {
   if (err) {
@@ -126,16 +112,9 @@ SwaggerExpress.create(config, function (err, se) {
   app.use(express.static('node_modules/redoc/dist'));
 
 
+// Implementacao de cache de consulta
 
-
-
-  //app.use(express.static('api/swagger'));
-
-  //app.use('/', express.static(__dirname + '/doc', options));
   se.register(app);
-
-
-
 
 // path specified
 // looks for ac.json in the config folder

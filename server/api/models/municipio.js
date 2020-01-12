@@ -3,30 +3,29 @@ const config_param = require('../helpers/config')();
 const schema = process.env.SCHEMA || config_param.schema;
 
 module.exports = function(sequelize, DataTypes) {
-  var Aplicacao = sequelize.define('Aplicacao', {
+  var Municipio = sequelize.define('Municipio', {
     codigo: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        field: 'co_aplicacao'
+        field: 'co_ibge'
     },
-    sigla: {
-        type: DataTypes.STRING(5),
-        field: 'ds_sigla',
-        allowNull: false
-    },
-    descricao: {
-        type: DataTypes.STRING(255),
-        field: 'ds_aplicacao',
+    nome: {
+        type: DataTypes.STRING(100),
+        field: 'no_municipio',
         allowNull: false
     }
   },{
+    classMethods:{
+        associate:function(models){
+          Municipio.belongsTo(models.Uf, {foreignKey:'co_uf', as: 'UF'});
+        }
+    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
-    tableName: 'tb_aplicacao'
+    tableName: 'tb_municipio'
   });
 
-  return Aplicacao;
+  return Municipio;
 };

@@ -1,9 +1,8 @@
 const async = require('async');
 const pg = require('pg');
 const util = require('util');
+const cache = require('../helpers/cache')
 const indicador = require('./indicador');
-const NodeCache = require( "node-cache" );
-const cache = new NodeCache();
 const config_param = require('../helpers/config')();
 const json2csv = require('json2csv').parse
 const config_psql = {
@@ -22,7 +21,11 @@ pool.on('error', function (err, client) {
 });
 
 module.exports = {
-  getResultado: (req, res)=>{
+
+  getResultado: (req,res)=>{
+    cache.get(req,res,module.exports.getResultadoConsulta)
+  },
+  getResultadoConsulta: (req, res)=>{
     var param_consulta = montaParametros(req.swagger.params);
     module.exports.consultaResultado(param_consulta).then( (resultado) =>{
         switch (param_consulta.formato) {
@@ -30,7 +33,10 @@ module.exports = {
             res.json(resultado[0].rows);
             break;
           case 'CDA':
-              res.json(module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, param_consulta, resultado[1]));
+              res.json(cache.set(
+                req, res,
+                module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, param_consulta, resultado[1])
+              ));
               break;
           case 'JSON':
             let rows = resultado[0].rows
@@ -45,7 +51,7 @@ module.exports = {
                 //Field 1 é onde traz o nome do indicador no tipo BR
                 for (let i = 0; i < rows.length; i++) {
                   arr.push({
-                    Ano: rows[i].ano,
+                    ano: rows[i].ano,
                     valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
                   })
                 }
@@ -84,12 +90,13 @@ module.exports = {
               download[namePadrao] = arr;
             });
 
-            res.set('Content-Type:text/plain; charset=ISO-8859-15');
-            res.status(200).send(download);
+            //res.set('Content-Type:text/plain; charset=ISO-8859-15');
+            res.header("Content-Type", "application/json; charset=ISO-8859-15");
+            //console.log('RES headers =>', res.getHeaders())
+            res.send(cache.set(req, res, download));
 
             break;
           case 'CSV':
-
             switch (tipo) {
               case'BR':
               //Field 1 é onde traz o nome do indicador no tipo BR
@@ -135,11 +142,16 @@ module.exports = {
                   break;
             }
               res.set('Content-Type', 'text/csv');
-              res.status(200).send(json2csv(download));
+              res.status(200).send(cache.set(req,res,json2csv(download)));
 
               break;
           case 'TAB':
-              res.json(module.exports.formataJSONResult(resultado[0].rows, param_consulta, Object.keys(resultado[1])));
+              res.status(200).json(
+                cache.set(
+                  req, res,
+                  module.exports.formataJSONResult(resultado[0].rows, param_consulta, Object.keys(resultado[1]))
+                )
+              );
               break;
           default:
               res.status(500).send({mensagem: "Formato inválido"});
@@ -962,7 +974,7 @@ function associaCampos2(indicadores, varPeriodicidade, varGranularidade, param_c
 
 function getSeletorPeriodicidade(indicador, param_consulta){
   var seletorperiodicidade = indicador.periodicidade;
-  console.log('TEMPO==>', param_consulta, seletorperiodicidade)
+
   if(param_consulta.agregacao=='ANO'){
     seletorperiodicidade = 360;
   }else if (param_consulta.agregacao='MES' && seletorperiodicidade<=30){

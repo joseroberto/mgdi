@@ -629,6 +629,40 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/municipio:
+    x-swagger-router-controller: municipio
+    get:
+      description: Retorna a lista de municípios
+      summary: Lista os municipios
+      operationId: getMunicipio
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /api/uf:
+    x-swagger-router-controller: uf
+    get:
+      description: Retorna a lista de ufs
+      summary: Lista os municipios
+      operationId: getUf
+      tags:
+        - Cadastros Auxiliares
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/GetListResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/tag:
     x-swagger-router-controller: tag
     get:
@@ -2641,6 +2675,11 @@ definitions:
         type: array
         items:
           type: object
+  GetListResponse:
+    description: Objeto de retorno de lista
+    type: array
+    items:
+      type: object
   CategoriaAnalise:
     description: Objeto categoria de análise
     type: object
