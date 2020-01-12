@@ -436,7 +436,7 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
         this.indicadorService.update(this.filterFields(
           valor,
           ['codigo', 'titulo', 'tituloCompleto', 'diretrizNacional', 'descricao', 'PolaridadeCodigo', 'ativo',
-            'acumulativo', 'privado', 'universal', 'indice_referencia', 'classificacao', 'GranularidadeCodigo', 'CriterioAgregacaoCodigo',
+            'acumulativo', 'privado', 'universal', 'indice_referencia', 'referencia_consulta', 'classificacao', 'GranularidadeCodigo', 'CriterioAgregacaoCodigo',
             'Tags', 'PeriodicidadeAtualizacaoCodigo', 'PeriodicidadeAvaliacaoCodigo', 'PeriodicidadeMonitoramentoCodigo',
             'ParametroFonteCodigo', 'UnidadeCodigo', 'TipoConsultaCodigo', 'ClassificacaoIndicadorCodigo', 'Classificacao6sIndicadorCodigo',
             'UnidadeMedidaCodigo']
