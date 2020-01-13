@@ -25,6 +25,20 @@ module.exports = {
       where: {},
       order: ['titulo']
     };
+    // Trata-se o atributo
+    if(req.swagger.params.attributes.value){
+      console.log('Atributo especifico:', req.swagger.params.attributes.value)
+      attr.attributes = attr.attributes.filter((item)=>{
+        return (req.swagger.params.attributes.value.indexOf(item)>-1)
+      });
+    }
+    if(req.swagger.params.include.value){
+      console.log('Include especifico:', req.swagger.params.include.value)
+      attr.include = attr.include.filter((item)=>{
+        return (req.swagger.params.include.value.indexOf(item.as)>-1)
+      });
+      console.log('Apos:', attr.include)
+    }
     //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
     //console.log("PERFIL++>", perfil);

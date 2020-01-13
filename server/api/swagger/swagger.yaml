@@ -1153,7 +1153,18 @@ paths:
           in: query
           required: false
           type: number
-
+        - name: attributes
+          in: query
+          required: false
+          type: array
+          items:
+            type: string
+        - name: include
+          in: query
+          required: false
+          type: array
+          items:
+            type: string
         - name: tag
           in: query
           required: false
