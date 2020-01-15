@@ -14,6 +14,7 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * DEBUG - modo de depuração de querys \
   * HOST_CACHE - Servidor memcached \
   * TTL_CACHE - TTL dos objetos em segundos \
+  * PROTOCOLO = protocolo a ser usado (http ou https) \
   \
   Dependendo da escolha do tipo de esquema de validação: \
   \

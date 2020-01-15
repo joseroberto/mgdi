@@ -71,10 +71,11 @@ SwaggerExpress.create(config, function (err, se) {
   if (err) {
     throw err;
   }
+
   se.runner.swagger.host = process.env.HOST || config_param.host;
   se.runner.swagger.info.title = config_param.title;
   se.runner.swagger.info.description = config_param.description;
-
+  se.runner.swagger.schemes = [  process.env.PROTOCOLO || config_param.protocolo || 'http' ];
 
   app.use(se.runner.swaggerTools.swaggerUi());
 

@@ -79,7 +79,6 @@ module.exports = {
           }
         }else{
           if(req.swagger.params.tagcategoria.value){
-            console.log('tagcategoria==>', req.swagger.params.tagcategoria.value)
             attr.include.push({
               model: models.Tag, as: 'Tags',
               where:{ codigo_categoria: req.swagger.params.tagcategoria.value}
