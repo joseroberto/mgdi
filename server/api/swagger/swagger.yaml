@@ -1165,6 +1165,10 @@ paths:
           type: array
           items:
             type: string
+        - name: tagcategoria
+          in: query
+          required: false
+          type: number
         - name: tag
           in: query
           required: false

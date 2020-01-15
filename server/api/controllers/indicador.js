@@ -62,9 +62,31 @@ module.exports = {
     //} else {
         //BUG: Há um erro no sequelize para consultas com limit e mapeamentos n:n como o caso da Tags
         if(req.swagger.params.tag.value){
-            attr.include.push({ model: models.Tag, as: 'Tags', where:{ codigo: req.swagger.params.tag.value}});
+          if(req.swagger.params.tagcategoria.value){
+            attr.include.push({
+                model: models.Tag, as: 'Tags',
+                where:{ $and:[
+                  {codigo: req.swagger.params.tag.value},
+                  {codigo_categoria: req.swagger.params.tagcategoria.value }
+                ]
+                }
+            });
+          }else{
+            attr.include.push({
+              model: models.Tag, as: 'Tags',
+              where:{ codigo: req.swagger.params.tag.value}
+            });
+          }
         }else{
+          if(req.swagger.params.tagcategoria.value){
+            console.log('tagcategoria==>', req.swagger.params.tagcategoria.value)
+            attr.include.push({
+              model: models.Tag, as: 'Tags',
+              where:{ codigo_categoria: req.swagger.params.tagcategoria.value}
+            });
+          }else{
             attr.include.push({ model: models.Tag, as: 'Tags'});
+          }
         }
     //}
 
