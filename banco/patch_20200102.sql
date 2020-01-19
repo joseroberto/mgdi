@@ -17,6 +17,8 @@ alter table dbesusgestor.tb_resultado alter column co_anomes type int USING co_a
 
 ------Não é patch -> somente para armazenar a query de população de indicadores quantitativos
 
+select co_seq_indicador from dbesusgestor.tb_indicador where co_indicador='DSHG';
+
 WITH
 TEMPO AS (
 select distinct nu_ano as ano, co_anomes as anomes from dbesusgestor.tb_tempo where co_anomes between '201701' AND '202001' order by 1),

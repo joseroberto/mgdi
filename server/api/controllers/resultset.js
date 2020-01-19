@@ -478,10 +478,12 @@ function montaResult(indicadores, param_consulta){
           if(arrControle.indexOf(indicadores[key].codigo)==-1){
               for(key2 in indicadores[key].indicadores){
                 ans = ans.replace(new RegExp(`[${key2}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `(${key2})`);
-                per += key2 + '.' + varPeriodicidade + ',';
-                gran += key2 + '.' + varGranularidade + ',';
-                termos += `${key2}, `
-                arrControle.push(key2);
+                if(arrControle.indexOf(key2)==-1){
+                  per += key2 + '.' + varPeriodicidade + ',';
+                  gran += key2 + '.' + varGranularidade + ',';
+                  termos += `${key2}, `
+                  arrControle.push(key2);
+                }
               }
               ans += ` ${indicadores[key].codigo},`;
               operation += ans;
