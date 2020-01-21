@@ -27,7 +27,6 @@ module.exports = {
       order: ['titulo']
     };
     // Trata-se o atributo
-    gger.params)
     if(req.swagger.params.attributes.value){
       console.log('Atributo especifico:', req.swagger.params.attributes.value)
       attr.attributes = req.swagger.params.attributes.value.filter((item)=>{
