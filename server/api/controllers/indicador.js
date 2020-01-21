@@ -14,6 +14,7 @@ module.exports = {
       include: [ { model: models.Periodicidade, as: 'PeriodicidadeAtualizacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeAvaliacao' },
         { model: models.Periodicidade, as: 'PeriodicidadeMonitoramento' },
+        { model: models.Polaridade, as: 'Polaridade' },
         { model: models.Unidade, as: 'Unidade' },
         { model: models.UnidadeMedida, as: 'UnidadesMedidaSuplementar', through: {attributes: []} },
         { model: models.UnidadeMedida, as: 'UnidadeMedida' },
@@ -26,10 +27,11 @@ module.exports = {
       order: ['titulo']
     };
     // Trata-se o atributo
+    gger.params)
     if(req.swagger.params.attributes.value){
       console.log('Atributo especifico:', req.swagger.params.attributes.value)
-      attr.attributes = attr.attributes.filter((item)=>{
-        return (req.swagger.params.attributes.value.indexOf(item)>-1)
+      attr.attributes = req.swagger.params.attributes.value.filter((item)=>{
+        return (attr.attributes.indexOf(item)>-1)
       });
     }
     if(req.swagger.params.include.value){
@@ -37,7 +39,6 @@ module.exports = {
       attr.include = attr.include.filter((item)=>{
         return (req.swagger.params.include.value.indexOf(item.as)>-1)
       });
-      console.log('Apos:', attr.include)
     }
     //console.log("Usuario autenticado:",req.headers.authorization);
     // Testa autorizacao para forcar filtro
@@ -107,7 +108,6 @@ module.exports = {
         //console.log('Secretaria: ', req.swagger.params.secretaria.value);
         attr.where['UnidadeCodigo'] = req.swagger.params.secretaria.value;
     }
-    // console.log('attr', attr, 'codigos====>', req.swagger.params.codigos.value);
     models.Indicador.findAndCountAll(attr).then(function(resp) {
       //TODO: Provisoriamente enquanto o problema do limit na query não é resolvido
       if(req.swagger.params.limit.value){
