@@ -80,7 +80,7 @@ deploy:
       - chmod 644 ~/.ssh/known_hosts
   script:
       - echo 'Parando o servico' $DOCKER_NAME_DESENV_WEB
-      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_WEB}; docker rmi -f ${CONTAINER_FRONT_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_WEB}"
+      - ssh "${SSH_USER_DESENV}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_WEB}; docker rmi -f ${CONTAINER_FRONT_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_WEB}"
       - echo 'Parando o servico' $DOCKER_NAME_DESENV_API
-      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_API}; docker rmi -f ${CONTAINER_SERVER_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_API}"
+      - ssh "${SSH_USER_DESENV}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_API}; docker rmi -f ${CONTAINER_SERVER_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_API}"
       - echo 'Imagens atualizadas'
