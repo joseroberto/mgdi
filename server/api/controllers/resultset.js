@@ -215,7 +215,8 @@ module.exports = {
 
     // Acrescenta os dados da consulta
     var referencia = indicadores[Object.keys(indicadores)[0]];
-    switch (configparam_consulta_psql.tipo) {
+    //console.log(param_consulta);
+    switch (param_consulta.tipo) {
       case 'BR':
         tipoRegiao='br';
         break;

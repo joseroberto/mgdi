@@ -74,13 +74,13 @@ deploy:
       - eval $(ssh-agent -s)
       - mkdir -p ~/.ssh
       - chmod 700 ~/.ssh
-      - cp $SSH_PRIVATE_KEY_HOMOLOGA ~/.ssh/id_rsa
+      - cp $SSH_PRIVATE_KEY_DESENV ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
-      - ssh-keyscan $SSH_HOST_HOMOLOGA >> ~/.ssh/known_hosts
+      - ssh-keyscan $SSH_HOST_DESENV >> ~/.ssh/known_hosts
       - chmod 644 ~/.ssh/known_hosts
   script:
-      - echo 'Parando o servico ${DOCKER_NAME_HOMOLOGACAO_WEB}'
-      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_HOMOLOGA}" "docker-compose stop ${DOCKER_NAME_HOMOLOGACAO_WEB}; docker rmi -f ${CONTAINER_FRONT_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_HOMOLOGACAO_WEB}"
-      - echo 'Parando o servico ${DOCKER_NAME_HOMOLOGACAO_API}'
-      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_HOMOLOGA}" "docker-compose stop ${DOCKER_NAME_HOMOLOGACAO_API}; docker rmi -f ${CONTAINER_SERVER_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_HOMOLOGACAO_API}"
+      - echo 'Parando o servico' $DOCKER_NAME_DESENV_WEB
+      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_WEB}; docker rmi -f ${CONTAINER_FRONT_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_WEB}"
+      - echo 'Parando o servico' $DOCKER_NAME_DESENV_API
+      - ssh "${SSH_USER_HOMOLOGA}@${SSH_HOST_DESENV}" "docker-compose stop ${DOCKER_NAME_DESENV_API}; docker rmi -f ${CONTAINER_SERVER_RELEASE_IMAGE}; echo y|docker-compose up -d --no-deps --build ${DOCKER_NAME_DESENV_API}"
       - echo 'Imagens atualizadas'
