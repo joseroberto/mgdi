@@ -31,7 +31,7 @@ module.exports = {
             //console.log('userPerfil==>', userPerfil);
             if(!userPerfil || userPerfil.length==0){
               var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
-              return res.status(406).json({token: util.format('Bearer %s', token), user: userlogin});
+              return res.status(201).json({token: util.format('Bearer %s', token), user: userlogin});
             } else if (userPerfil[0].dataValues.SituacaoCodigo==0){
               var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
               return res.status(406).json({token: util.format('Bearer %s', token), user: userPerfil[0].dataValues});
