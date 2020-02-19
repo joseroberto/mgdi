@@ -20,6 +20,17 @@ module.exports = {
       res.json({users: lista});
     });
   },
+  getPorId: (req, res)=>{
+    models.User.findOne({
+      where: {codigo:req.swagger.params.codigo.value}
+    }).then(function(user) {
+      if(!user){
+        res.status(404).json({codret: 1010, message: "Não existe o usuário"});
+        return;
+      }
+      res.json(user)
+    })
+  },
   getPorLogin: async (login)=>{
     return models.User.findOne({
       where: {login:login}

@@ -153,10 +153,37 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/user/{codigo}:
+    x-swagger-router-controller: user
+    get:
+      description: Retorna um usuario
+      summary: Recupera um usuario consultando por Id
+      operationId: getPorId
+      tags:
+        - Infraestrutura
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            type: object
+        "404":
+          description: Erro
+          schema:
+            type: object
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /api/user:
     x-swagger-router-controller: user
     get:
-      description: Retorna a lista de usuários que utilizam o MGI - Módulo de Gestão de Indicadores
+      description: Retorna a lista de usuários
       summary: Lista de Usuários do MGI
       operationId: getUsers
       parameters:
@@ -166,8 +193,6 @@ paths:
           required: false
       tags:
         - Infraestrutura
-      security:
-        - Bearer: []
       responses:
         "200":
           description: Sucesso
