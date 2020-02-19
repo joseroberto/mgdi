@@ -26,7 +26,7 @@ web_app_build:
 web_app_registry:
     image: docker:git
     services:
-    - docker:dind
+    - docker:18-dind
     stage: web_app_registry
     tags:
       - gitlab-org
@@ -56,7 +56,7 @@ server_build:
 server_registry:
     image: docker:git
     services:
-    - docker:dind
+    - docker:18-dind
     stage: server_registry
     tags:
       - gitlab-org
