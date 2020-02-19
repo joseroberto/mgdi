@@ -35,28 +35,13 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * WSDL - Qual o endereço utilizado para consulta de usuário no SCPA. Por exemplo: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl \
   * SISTEMA - Qual o nome do sistema a ser utilizado para login."
 
-
-# Bundle APP files
-RUN mkdir -p /var/opt/mgi && \
-  mkdir /.pm2 && \
-  chgrp -R 0 /.pm2 && \
-  chmod -R g+rwX /.pm2
-
+WORKDIR /var/opt/mgi
 ADD . /var/opt/mgi
 WORKDIR /var/opt/mgi
 RUN   apk add --no-cache --virtual git && \
-  npm install &&  \
-  chgrp -R 0 /var/opt/mgi && \
-  chmod -R g+rwX /var/opt/mgi && \
-  mkdir /var/opt/server_log && \
-  chgrp -R 0 /var/opt/server_log && \
-  chmod -R g+rwX /var/opt/server_log && \
-  # touch /var/opt/server_log/access.log && \
-  # ln -sf /proc/self/fd/1 /var/opt/server_log/access.log && \
+  npm install  && \
   apk del git
 
 EXPOSE 8000
-USER 1001
-WORKDIR /var/opt/mgi
 
 CMD [ "pm2-runtime", "config/pm2-api.config.yaml"]
