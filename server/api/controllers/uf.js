@@ -3,7 +3,8 @@ const models  = require('../models');
 module.exports = {
   getUf: (req, res)=>{
     models.Uf.findAll({
-      where: { codigo: {$gt: 0, $lt: 90}}
+      where: { codigo: {$gt: 0, $lt: 90}},
+      order: ['descricao']
     }).then(function(lista) {
       res.json(lista);
     });
