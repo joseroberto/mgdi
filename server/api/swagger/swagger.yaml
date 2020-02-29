@@ -662,6 +662,11 @@ paths:
       operationId: getMunicipio
       tags:
         - Cadastros Auxiliares
+      parameters:
+        - name: uf
+          type: string
+          in: query
+          required: false
       responses:
         "200":
           description: Sucesso
