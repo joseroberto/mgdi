@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 /server/config/default*
-/server/package-lock.json
 #/client/src/environments/environment.*
+package-lock.json
 /banco/ensaio*
 *.sh
 .vscode/

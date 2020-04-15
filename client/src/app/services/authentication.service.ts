@@ -33,8 +33,10 @@ export class AuthenticationService extends REST implements CanActivate{
             user['picture'] = 'assets/img/avatars/male.png';
             console.log(user);
             localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('acl', JSON.stringify(resp.acl));
-            this.aclService.setRules(resp.acl, resp.user.Perfil.sigla )
+            if('acl' in resp){
+              localStorage.setItem('acl', JSON.stringify(resp.acl));
+              this.aclService.setRules(resp.acl, resp.user.Perfil.sigla )  //TODO: Validar para um perfil retornado ok, existe ainda a propriedade sigla
+            }
             //localStorage.setItem('currentUser', JSON.stringify(resp.user));
             return resp;
           }
