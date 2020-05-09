@@ -38,9 +38,11 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
 WORKDIR /var/opt/mgi
 ADD . /var/opt/mgi
 WORKDIR /var/opt/mgi
-RUN   apk add --no-cache --virtual git && \
-  npm install  && \
-  apk del git
+
+RUN   apk update && apk upgrade && \
+    apk add --no-cache bash git openssh python3 make && \
+    npm install  && \
+    apk del git
 
 EXPOSE 8000
 
