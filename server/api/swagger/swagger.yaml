@@ -38,6 +38,34 @@ securityDefinitions:
   name: Authorization
   in: header
 paths:
+  /changepassword:
+    x-swagger-router-controller: login
+    post:
+      summary: Troca senha
+      operationId: changePassword
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      description: |
+        Troca a senha do usuário corrente
+      parameters:
+        -
+         in: body
+         name: body
+         description: Informação de email/senha
+         required: true
+         schema:
+          $ref: '#/definitions/ChangePass'
+      responses:
+        '200':
+         description: Change Password Success
+         schema:
+          $ref: '#/definitions/Token'
+        '403':
+         description: Usuário/Senha Inválida.
+         schema:
+          $ref: '#/definitions/Error'
   /login:
     x-swagger-router-controller: login
     post:
@@ -2219,7 +2247,16 @@ definitions:
   GetUserMgiListResponse:
     description: Lista de Usuários do MGI
     type: object
-
+  ChangePass:
+    description: Troca de senha
+    type: object
+    properties:
+      current_password:
+        type: string
+      new_password:
+        type: string
+      conf_password:
+        type: string
   Programa:
     description: Programa
     type: object

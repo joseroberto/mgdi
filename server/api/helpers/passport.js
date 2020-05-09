@@ -38,7 +38,7 @@ module.exports = function(passport) {
     passport.use('local', new LocalStrategy(async (username, password, done) =>{
         console.log('validacao local', username);
         var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest()
-        var usuario = await user.getPorLoginSenha(username, password_hash);  //FIX: Falta validar a senha. Funcao habilitada somente para desenv.
+        var usuario = await user.getPorLoginSenha(username, password_hash);  
         if(usuario)
           return done(null, {
             login: username,

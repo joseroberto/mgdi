@@ -1,5 +1,6 @@
 const models  = require('../models');
 const perfil = require('./perfil');
+const crypto = require('crypto');
 const status = require('./status-aprovacao');
 const jwt    = require('jsonwebtoken');
 const config_param = require('../helpers/config')();
@@ -75,11 +76,35 @@ module.exports = {
       res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
     });
   },
-
   getPerfil: (req,res)=>{
     console.log(req.headers.authorization);
     //jwt.verify(token, config_param.secret);
     res.json(req.headers.authorization);
+  },
+  changePassword: (req,res)=>{
+    var current_pass = req.swagger.params.current_password.value;
+    var hash = crypto.createHash('sha256').update(current_pass, 'utf8').digest()
+    var new_password = req.swagger.params.new_password.value;
+    var conf_password = req.swagger.params.conf_password.value;
+
+    var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
+    var login = data.login;
+
+    if(new_password===conf_password){
+      models.User.findOne({
+        where: {login:login, senha: hash}
+      }).then(resp=>{
+        resp.senha = crypto.createHash('sha256').update(new_password, 'utf8').digest();
+        resp.save();
+        resp.json({codret: 0, mensagem: "Senha trocada com sucesso"});
+      }).catch(err=>{
+        console.log('Erro', err);
+        res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
+      });
+    }else{
+      res.json({codret: 1050, mensagem: "Senhas não conferem"});
+    }
+
   }
 }
 

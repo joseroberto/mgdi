@@ -12,7 +12,6 @@ require('dotenv').config();
 
 var db        = {};
 
-console.log('DATABASE==>', process.env.DATABASE)
 var sequelize = new Sequelize(process.env.DATABASE || config_param.database,
   process.env.USER_DB || config_param.user,
   process.env.PASSWORD_DB || config_param.password, {
