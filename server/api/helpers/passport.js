@@ -37,7 +37,8 @@ module.exports = function(passport) {
     // Valida o usuario na base local (username/password)
     passport.use('local', new LocalStrategy(async (username, password, done) =>{
         console.log('validacao local', username);
-        var usuario = await user.getPorLogin(username);  //FIX: Falta validar a senha. Funcao habilitada somente para desenv.
+        var password_hash = crypto.createHash('sha256').update(password, 'utf8').digest()
+        var usuario = await user.getPorLoginSenha(username, password_hash);  //FIX: Falta validar a senha. Funcao habilitada somente para desenv.
         if(usuario)
           return done(null, {
             login: username,
@@ -46,7 +47,7 @@ module.exports = function(passport) {
             email: usuario.email
           })
         else
-          return done('Usuário não encontrado.')
+          return done('Usuário/Senha inválida.')
 
     }));
 

@@ -59,6 +59,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.CHAR(1),
       allowNull: false,
       field: 'co_sexo'
+    },
+    senha: {
+      type: DataTypes.BLOB,
+      allowNull: true,
+      field: 'by_senha_hash'
     }
   },{
     classMethods: {

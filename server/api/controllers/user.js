@@ -36,6 +36,11 @@ module.exports = {
       where: {login:login}
     });
   },
+  getPorLoginSenha: (login, senha)=>{
+    return models.User.findOne({
+      where: {login:login, senha: senha}
+    });
+  },
   getPorLoginAplicacao: async (login, sigla_aplicacao)=>{
     return models.User.findAll({
       include: [ { model: models.Perfil,

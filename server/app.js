@@ -5,6 +5,7 @@ var express = require('express');
 var log4js = require("log4js");
 var config_param = require('./api/helpers/config')();
 var swagger_config = require('./api/helpers/swagger-yaml')();
+var compression = require('compression');
 var job = require('./api/helpers/job');
 var passport = require("passport");
 var bodyParser = require('body-parser');
@@ -12,13 +13,15 @@ var cors = require('cors');
 var _ = require('lodash');
 const acl = require('express-acl');
 
-
-
-
 var app = express();
+app.use(compression());
 var theAppLog = log4js.getLogger();
 
-var router = express.Router();
+require('dotenv').config();
+
+var port = process.env.PORT || config_param.port || 8000;
+var host = process.env.HOST || config_param.host;
+var protocolo = process.env.PROTOCOLO || config_param.protocolo || 'http';
 
 // Programa os jobs de execucao
 //job.cron();  //TODO: Checar a necessidade de programar jobs no servico web
@@ -52,7 +55,7 @@ app.get('/swagger.yaml', (req, res, next) => {
   //console.log('swagger', swagger_config);
   res.setHeader('content-type', 'application/json');
 
-  swagger_config.host = process.env.HOST || config_param.host;
+  swagger_config.host = host;
   swagger_config.info.title = config_param.title;
   swagger_config.info.description = config_param.description;
   res.send(swagger_config);
@@ -72,18 +75,17 @@ SwaggerExpress.create(config, function (err, se) {
     throw err;
   }
 
-  se.runner.swagger.host = process.env.HOST || config_param.host;
+  se.runner.swagger.host = host;
   se.runner.swagger.info.title = config_param.title;
   se.runner.swagger.info.description = config_param.description;
-  se.runner.swagger.schemes = [  process.env.PROTOCOLO || config_param.protocolo || 'http' ];
+  se.runner.swagger.schemes = [  protocolo ];
 
   app.use(se.runner.swaggerTools.swaggerUi());
 
 
 
 
-  var port = process.env.PORT || config_param.port || 8000;
-  var host = process.env.HOST || config_param.host || 8000;
+
   var options = {
     dotfiles: 'ignore',
     etag: true,
@@ -96,7 +98,7 @@ SwaggerExpress.create(config, function (err, se) {
       res.header('Cache-Control', 'public, max-age=1d');
     }
   };
-  theAppLog.info('Servidor REST %s', host);
+  theAppLog.info('Servidor REST (%s) %s', protocolo, host);
   theAppLog.info('Porta %s', port);
   theAppLog.info('Ambiente %s', process.env.NODE_ENV);
 

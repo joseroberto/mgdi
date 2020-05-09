@@ -1,9 +1,12 @@
 const Memcached = require('memcached')
 const config_param = require('./config')();
+
 const MAX_TTL = process.env.TTL_CACHE || 300;
 const config = process.env.HOST_CACHE || config_param.host_cache;
 const cache = new Memcached(config,
   {maxExpiration: MAX_TTL, maxValue: 100 * 1048576})  // 100Mb e 5 min
+
+require('dotenv').config();
 
 console.log('Servidor de cache ==>', config)
 function getUrlFromRequest(req) {
