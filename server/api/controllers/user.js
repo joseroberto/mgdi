@@ -82,24 +82,28 @@ module.exports = {
     res.json(req.headers.authorization);
   },
   changePassword: (req,res)=>{
-    var current_pass = req.swagger.params.current_password.value;
+    var current_pass = req.body.current_password;
     var hash = crypto.createHash('sha256').update(current_pass, 'utf8').digest()
-    var new_password = req.swagger.params.new_password.value;
-    var conf_password = req.swagger.params.conf_password.value;
+    var new_password = req.body.new_password;
+    var conf_password = req.body.conf_password;
 
     var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
     var login = data.login;
-
+    console.log(current_pass, hash)
     if(new_password===conf_password){
       models.User.findOne({
         where: {login:login, senha: hash}
       }).then(resp=>{
-        resp.senha = crypto.createHash('sha256').update(new_password, 'utf8').digest();
-        resp.save();
-        resp.json({codret: 0, mensagem: "Senha trocada com sucesso"});
+        if(resp){
+          resp.senha = crypto.createHash('sha256').update(new_password, 'utf8').digest();
+          resp.save();
+          res.json({codret: 0, mensagem: "Senha trocada com sucesso"});
+        }else{
+          return res.status(403).send('Usuário/Senha inválida.')
+        }
       }).catch(err=>{
         console.log('Erro', err);
-        res.status(500).json({codret: 1001, message: "Erro no cadastramento da solicitação de perfil"});
+        res.status(500).json({codret: 1001, message: "Erro na troca de senha"});
       });
     }else{
       res.json({codret: 1050, mensagem: "Senhas não conferem"});

@@ -96,6 +96,12 @@ module.exports = {
 //CHECK ACL ACEESS
 const checkACL = async function(req,cb){
 
+    // Testa se usuario quer somente trocar a senha
+    if(req.originalUrl==='/changepassword'){
+        cb()
+        return
+    }
+
     var options = acl.getConfig();
     const role = acl.findRoleFromRequest(
         req,

@@ -39,7 +39,7 @@ securityDefinitions:
   in: header
 paths:
   /changepassword:
-    x-swagger-router-controller: login
+    x-swagger-router-controller: user
     post:
       summary: Troca senha
       operationId: changePassword
