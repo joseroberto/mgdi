@@ -90,7 +90,11 @@ module.exports = {
     var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
     var login = data.login;
     console.log(current_pass, hash)
-    if(new_password===conf_password){
+    if(new_password!=conf_password){
+      res.status(500).json({codret: 1050, mensagem: "Senhas não conferem"});
+    }else if(new_password===current_pass){
+      res.status(500).json({codret: 1051, mensagem: "Senhas não pode ser igual à anterior"});
+    }else{
       models.User.findOne({
         where: {login:login, senha: hash}
       }).then(resp=>{
@@ -105,10 +109,7 @@ module.exports = {
         console.log('Erro', err);
         res.status(500).json({codret: 1001, message: "Erro na troca de senha"});
       });
-    }else{
-      res.json({codret: 1050, mensagem: "Senhas não conferem"});
     }
-
   }
 }
 
