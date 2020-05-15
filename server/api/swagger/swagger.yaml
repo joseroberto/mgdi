@@ -212,11 +212,15 @@ paths:
     x-swagger-router-controller: user
     get:
       description: Retorna a lista de usuários
-      summary: Lista de Usuários do MGI
+      summary: Lista de Usuários
       operationId: getUsers
       parameters:
         - name: situacao
           type: number
+          in: query
+          required: false
+        - name: aplicacao
+          type: string
           in: query
           required: false
       tags:

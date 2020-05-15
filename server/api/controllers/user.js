@@ -9,13 +9,17 @@ module.exports = {
 
   getUsers: (req, res)=>{
     var attr = {
+      attributes:["codigo", "nome", "email", "ramal", "cargo"],
       include: [ { model: models.Unidade, as: 'Unidade' },
-        { model: models.Perfil, as: 'Perfil' }
+        { model: models.Perfil, as: 'Perfil'}
       ],
       where:{}
     };
     if(req.swagger.params.situacao.value !== undefined ){
       attr.where = {SituacaoCodigo:req.swagger.params.situacao.value};
+    }
+    if(req.swagger.params.aplicacao.value !== undefined ){
+      attr.include[1].include=[{ model: models.Aplicacao, as: 'Aplicacao', where: {sigla:req.swagger.params.aplicacao.value} }];
     }
     models.User.findAll(attr).then(function(lista) {
       res.json({users: lista});
