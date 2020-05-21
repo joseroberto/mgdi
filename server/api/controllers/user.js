@@ -27,6 +27,7 @@ module.exports = {
   },
   getPorId: (req, res)=>{
     models.User.findOne({
+      attributes: {exclude: ['senha']},
       where: {codigo:req.swagger.params.codigo.value}
     }).then(function(user) {
       if(!user){
@@ -38,16 +39,19 @@ module.exports = {
   },
   getPorLogin: async (login)=>{
     return models.User.findOne({
+      attributes: {exclude: ['senha']},
       where: {login:login}
     });
   },
   getPorLoginSenha: (login, senha)=>{
     return models.User.findOne({
+      attributes: {exclude: ['senha']},
       where: {login:login, senha: senha}
     });
   },
   getPorLoginAplicacao: async (login, sigla_aplicacao)=>{
     return models.User.findAll({
+      attributes: {exclude: ['senha']},
       include: [ { model: models.Perfil, required: false, 
           as: 'Perfil',
           include: [{model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
@@ -118,7 +122,7 @@ module.exports = {
 }
 
 function changeSituacao(codigo, situacao){
-  return models.User.findAll({where: {codigo: codigo}}).map(resp=>{
+  return models.User.findAll({attributes: {exclude: ['senha']}, where: {codigo: codigo}}).map(resp=>{
       resp.SituacaoCodigo = situacao;
       resp.save();
   });
