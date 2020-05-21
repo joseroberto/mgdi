@@ -28,9 +28,14 @@ module.exports = {
             console.log('Login de usuario==>', req.body.username);
             // Checa se o usuário logado possui cadastro do MGI
             var userPerfil =  await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
-            //console.log('userPerfil==>', userPerfil);
+            console.log('userPerfil==>', userPerfil);
             if(!userPerfil || userPerfil.length==0){
               var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
+              var userdata = await user.getPorLogin(req.body.username)
+              if(user){
+                return res.status(201).json({token: util.format('Bearer %s', token), user: userdata});
+              }
+              
               return res.status(201).json({token: util.format('Bearer %s', token), user: userlogin});
             } else if (userPerfil[0].dataValues.SituacaoCodigo==0){
               var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
