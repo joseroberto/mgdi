@@ -48,7 +48,7 @@ module.exports = {
   },
   getPorLoginAplicacao: async (login, sigla_aplicacao)=>{
     return models.User.findAll({
-      include: [ { model: models.Perfil,
+      include: [ { model: models.Perfil, required: false, 
           as: 'Perfil',
           include: [{model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
          } ],
