@@ -30,11 +30,14 @@ module.exports = {
             var userPerfil =  await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
             //console.log('userPerfil==>', userPerfil);
             if(!userPerfil || userPerfil.length==0){
+              console.log('Usuario não tem perfil')
               var userdata = await user.getPorLogin(req.body.username)
               if(userdata){
+                console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
                 var token = jwt.sign(userdata, config_param.secret, { expiresIn: '7d' });
                 return res.status(201).json({token: util.format('Bearer %s', token), user: userdata});
               }
+              console.log('Usuario sem perfil e sem cadastro')
               var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
               return res.status(201).json({token: util.format('Bearer %s', token), user: userlogin});
             } else if (userPerfil[0].dataValues.SituacaoCodigo==0){
