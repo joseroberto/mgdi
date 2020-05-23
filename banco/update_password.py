@@ -3,11 +3,11 @@
 import hashlib
 import psycopg2
 
-db_conn = psycopg2.connect(host='dv.manatustecnologia.com.br', port=5432, dbname='dbspo', user='pgdbadm', password='ga->9e8hFzvH4%q3')
+db_conn = psycopg2.connect(host='postgresql', port=5432, dbname='dbspo', user='pgdbadm', password='ga->9e8hFzvH4%q3')
 db_cursor = db_conn.cursor()
 update_cursor = db_conn.cursor()
 
-db_cursor.execute('select co_user, ds_cpf from dbesusgestor.tb_user_mgi');
+db_cursor.execute('select co_user, ds_cpf from dbesusgestor.tb_user_mgi where by_senha_hash is null');
 records = db_cursor.fetchall()
 
 for row in records:
