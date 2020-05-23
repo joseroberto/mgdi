@@ -32,6 +32,7 @@ module.exports = {
             if(!userPerfil || userPerfil.length==0){
               console.log('Usuario não tem perfil')
               var userdata = await user.getPorLogin(req.body.username)
+              console.log('userdata=>', userdata)
               if(userdata){
                 console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
                 var token = jwt.sign(userdata, config_param.secret, { expiresIn: '7d' });
