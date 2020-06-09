@@ -36,14 +36,14 @@ module.exports = {
           if (userdata) {
             console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
             var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: '7d' });
-            return res.status(201).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
+            return res.status(202).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
           }
           console.log('Usuario sem perfil e sem cadastro')
           var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
-          return res.status(201).json({ token: util.format('Bearer %s', token), user: userlogin });
+          return res.status(202).json({ token: util.format('Bearer %s', token), user: userlogin });
         } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
           var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-          return res.status(406).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
+          return res.status(201).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
         } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
           return res.status(403).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
         }
