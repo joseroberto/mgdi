@@ -82,6 +82,7 @@ module.exports = function (passport) {
 
           done(null, {
             login: login,
+            codigo: parseInt(result.respostaBuscaPerfilUsuario.usuario.id),
             cpf: result.respostaBuscaPerfilUsuario.usuario.cpf,
             nome: result.respostaBuscaPerfilUsuario.usuario.nome,
             email: result.respostaBuscaPerfilUsuario.usuario.email
