@@ -28,13 +28,16 @@ module.exports = {
         console.log('Login de usuario==>', req.body.username);
         // Checa se o usuário logado possui cadastro do MGI
         var userPerfil = await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
-        //console.log('userPerfil==>', userPerfil);
+        // console.log('userPerfil==>', userPerfil);
         if (!userPerfil || userPerfil.length == 0) {
           console.log('Usuario não tem perfil')
           var userdata = await user.getPorLogin(req.body.username)
-          //console.log('userdata=>', userdata)
+          // console.log('userdata=>', userdata)
           if (userdata) {
             console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
+            if (userdata.dataValues.SituacaoCodigo == 0) {
+              delete userdata.dataValues.PerfilCodigo
+            }
             var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: '7d' });
             return res.status(202).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
           }
@@ -42,6 +45,8 @@ module.exports = {
           var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
           return res.status(202).json({ token: util.format('Bearer %s', token), user: userlogin });
         } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
+          delete userPerfil[0].dataValues.Perfil
+          delete userPerfil[0].dataValues.PerfilCodigo
           var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
           return res.status(201).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
         } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
