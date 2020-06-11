@@ -48,9 +48,13 @@ module.exports = {
           delete userPerfil[0].dataValues.Perfil
           delete userPerfil[0].dataValues.PerfilCodigo
           var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-          return res.status(201).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
+          return res.status(202).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
         } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
-          return res.status(403).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
+          delete userPerfil[0].dataValues.Perfil
+          delete userPerfil[0].dataValues.PerfilCodigo
+          var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
+          return res.status(202).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
+          // return res.status(202).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
         }
 
         //get the ACL rules
@@ -58,7 +62,7 @@ module.exports = {
 
         // Loga o Usuario
         var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-        res.json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl: acl_rules });
+        res.status(201).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl: acl_rules });
       })(req, res);
 
     } catch (e) {
