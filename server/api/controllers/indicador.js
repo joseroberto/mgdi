@@ -50,7 +50,7 @@ module.exports = {
         });
     //}else if(perfil && perfil.Perfil.sigla!='ADM'){
     //  attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', required: true});
-    }else if(perfil && perfil.Perfil.sigla!='ADM'){
+    }else if(perfil && perfil.Perfil && perfil.Perfil.sigla!='ADM'){
       // console.log('Unidade restritiva', perfil.UnidadeCodigo);
       // attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', where:{codigo: perfil.UnidadeCodigo}});
     }else{
