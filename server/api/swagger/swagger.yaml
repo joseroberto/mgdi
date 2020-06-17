@@ -38,7 +38,7 @@ securityDefinitions:
   name: Authorization
   in: header
 paths:
-  /changepassword:
+  /api/changepassword:
     x-swagger-router-controller: user
     post:
       summary: Troca senha
