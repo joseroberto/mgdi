@@ -2230,13 +2230,11 @@ paths:
   /api/acl-rules:
     x-swagger-router-controller: acl
     get:
-      description: Retorna regras de acesso de controlle
-      summary: Retorna regras de acesso de controlle
+      description: Retorna regras de acesso de controle
+      summary: Retorna regras de acesso de controle
       operationId: getAclRules
       tags:
         - Cadastros Auxiliares
-      security:
-        - Bearer: []
       responses:
         "200":
           description: Sucesso
