@@ -11,9 +11,6 @@ stages:
 web_app_build:
     image: node:6
     stage: web_app_build
-    tags:
-      - gitlab-org
-      - geral
     script:
         - cd client
         - npm install -g @angular/cli@1.0.6
@@ -29,9 +26,6 @@ web_app_registry:
     services:
     - docker:18-dind
     stage: web_app_registry
-    tags:
-      - gitlab-org
-      - geral
     dependencies:
     - web_app_build
     script:
@@ -44,9 +38,6 @@ web_app_registry:
 server_build:
     image: node:7
     stage: server_build
-    tags:
-      - gitlab-org
-      - geral
     script:
         - cd server
         - npm install
@@ -59,9 +50,6 @@ server_registry:
     services:
     - docker:18-dind
     stage: server_registry
-    tags:
-      - gitlab-org
-      - geral
     dependencies:
     - server_build
     script:
@@ -74,9 +62,6 @@ server_registry:
 deploy:
   image: ubuntu:latest
   stage: deploy
-  tags:
-    - gitlab-org
-    - geral
   dependencies:
   - web_app_registry
   - server_registry
