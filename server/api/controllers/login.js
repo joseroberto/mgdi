@@ -28,7 +28,7 @@ module.exports = {
           console.log('Login de usuario==>', req.body.username);
           // Checa se o usuário logado possui cadastro do MGI
           var userPerfil = await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
-          //console.log('userPerfil==>', userPerfil);
+          // console.log('userPerfil==>', userPerfil);
           if (!userPerfil || userPerfil.length == 0) {
             console.log('Usuario não tem perfil')
             var userdata = await user.getPorLogin(req.body.username)

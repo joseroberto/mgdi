@@ -53,7 +53,7 @@ module.exports = {
                         return cb(new Error('Invalid token'));
                     }
 
-                    var userPerfil = await user.getPorLoginAplicacao(decoded.login, (decoded.aplicacao));
+                    var userPerfil = await user.getPorLoginAplicacao(decoded.login, (decoded.Perfil.Aplicacao.sigla));
                     console.log('UserPerfil==>', userPerfil);
 
                     //if(!userPerfil || !userPerfil[0] || userPerfil[0].dataValues.SituacaoCodigo != 1){
@@ -65,6 +65,7 @@ module.exports = {
 
                     // TODO: Fazer validação via campo do banco needs_perfil
                     if (decoded.Perfil.Aplicacao.sigla === 'MGP') {
+                        req.decoded = decoded
                         return cb()
                     } else {
                         checkACL(req, cb); // cb();
