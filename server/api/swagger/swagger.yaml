@@ -101,6 +101,35 @@ paths:
          description: Erro de infraestrutura.
          schema:
           $ref: '#/definitions/Error'
+  /refreshToken:
+    x-swagger-router-controller: user
+    post:
+      summary: Atualiza o token de validação do usuário
+      operationId: refreshToken
+      security:
+        - Bearer: []
+      tags:
+        - Infraestrutura
+      description: |
+        Permite ao usuário enviar o token de autenticação e receber um novo caso o primeiro seja válido.
+      responses:
+        '200':
+         description: Login Success
+         schema:
+          $ref: '#/definitions/Token'
+        '400':
+         description: Quando o usuário não é encontrado.
+         schema:
+          $ref: '#/definitions/Error'
+        '403':
+         description: >-
+          Quando usuário existe mas possui credenciais inválidas (bad credentials) OU se o usuário não puder logar
+         schema:
+          $ref: '#/definitions/Error'
+        '503':
+         description: Erro de infraestrutura.
+         schema:
+          $ref: '#/definitions/Error'
   /api/version:
     x-swagger-router-controller: login
     get:

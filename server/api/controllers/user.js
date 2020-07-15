@@ -120,7 +120,8 @@ module.exports = {
     }
   },
   refreshToken: (req, res) => {
-    
+    console.log("opa")
+    res.json({ola: "mundo"})
   }
 }
 
