@@ -118,6 +118,9 @@ module.exports = {
         res.status(500).json({codret: 1001, message: "Erro na troca de senha"});
       });
     }
+  },
+  refreshToken: (req, res) => {
+    
   }
 }
 
