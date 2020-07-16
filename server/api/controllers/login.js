@@ -36,24 +36,27 @@ module.exports = {
             if (userdata) {
               console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
               var token = jwt.sign(userdata.dataValues, config_param.secret, {
-                expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-                  ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-                  : '7d'
+                expiresIn: '7d'
+                // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+                //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+                //   : '7d'
               });
               return res.status(201).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
             }
             console.log('Usuario sem perfil e sem cadastro')
             var token = jwt.sign(userlogin, config_param.secret, {
-              expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-                ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-                : '7d'
+              expiresIn: '7d'
+              // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+              //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+              //   : '7d'
             });
             return res.status(201).json({ token: util.format('Bearer %s', token), user: userlogin });
           } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
             var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
-              expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-                ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-                : '7d'
+              expiresIn: '7d'
+              // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+              //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+              //   : '7d'
             });
             return res.status(406).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
           } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
@@ -65,9 +68,10 @@ module.exports = {
 
           // Loga o Usuario
           var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
-            expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-              ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-              : '7d'
+            expiresIn: '7d'
+            // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+            //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+            //   : '7d'
           });
           res.json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl: acl_rules });
         })(req, res);
@@ -80,9 +84,10 @@ module.exports = {
         };
         console.log('Usuario fake:', temp); //TODO: Retirar isso
         var token = jwt.sign(temp, config_param.secret, {
-          expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-            ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-            : '7d'
+          expiresIn: '7d'
+          // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+          //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+          //   : '7d'
         });
         res.json({ token: util.format('Bearer %s', token), user: temp });
       }
