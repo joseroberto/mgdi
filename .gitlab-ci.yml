@@ -11,6 +11,8 @@ stages:
 web_app_build:
     image: node:6
     stage: web_app_build
+    only:
+        - master
     script:
         - cd client
         - npm install -g @angular/cli@1.0.6
@@ -23,6 +25,8 @@ web_app_build:
 
 web_app_registry:
     image: docker:git
+    only:
+        - master
     services:
     - docker:18-dind
     stage: web_app_registry
@@ -37,6 +41,8 @@ web_app_registry:
 
 server_build:
     image: node:7
+    only:
+        - master
     stage: server_build
     script:
         - cd server
@@ -47,6 +53,8 @@ server_build:
 
 server_registry:
     image: docker:git
+    only:
+        - master
     services:
     - docker:18-dind
     stage: server_registry
@@ -62,6 +70,8 @@ server_registry:
 deploy:
   image: ubuntu:latest
   stage: deploy
+  only:
+        - master
   dependencies:
   - web_app_registry
   - server_registry
