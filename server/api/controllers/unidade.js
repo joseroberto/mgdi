@@ -54,7 +54,7 @@ module.exports = {
     // Testa autorizacao para forcar filtro
     if (!req.headers.authorization){
         attr.include[0].where['privado'] = false;
-    }else if(perfil && perfil.Perfil.sigla!='ADM'){
+    }else if(perfil && perfil.Perfil && perfil.Perfil.sigla!='ADM'){
       console.log('Unidade restritiva', perfil.UnidadeCodigo);
       attr.include[0].include = [];
       //attr.include[0].include.push({ model: models.Unidade , as: 'ResponsavelGerencial', attributes:[], where:{codigo: perfil.UnidadeCodigo}});

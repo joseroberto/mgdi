@@ -14,57 +14,99 @@ module.exports = {
   authenticate: (req, res) => {
     var log = log4js.getLogger();
     try {
+      if (!config_param.bypass) {
+        console.log('Fazendo autenticacao ', req.body.username);
+        // Habilitando log-in de usuários para teste em desenvolvimento
+        let schema = process.env.SCHEMA_LOGIN
+        let devUsers = [
+          "gesest",
+          "gesplan",
+          "admin",
+          "comum1",
+          "comum3",
+          "comum2",
+          "visualizador",
+          "supervisor"
+        ]
+        if (process.env.ENVIRONMENT === 'development' && devUsers.includes(req.body.username)) {
+          schema = 'local'
+        }
 
-      console.log('Fazendo autenticacao ', req.body.username);
-      passport.authenticate(process.env.SCHEMA_LOGIN, async (err, userlogin, info) => {
-        console.log('retornos', process.env.SCHEMA_LOGIN, info, userlogin, err);
-        if (err) {
-          return res.status(403).send({ message: err });
-        }
-        if (info) {
-          return res.status(500).send(info);
-        }
-        userlogin['login'] = req.body.username;
-        console.log('Login de usuario==>', req.body.username);
-        // Checa se o usuário logado possui cadastro do MGI
-        var userPerfil = await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
-        // console.log('userPerfil==>', userPerfil);
-        if (!userPerfil || userPerfil.length == 0) {
-          console.log('Usuario não tem perfil')
-          var userdata = await user.getPorLogin(req.body.username)
-          // console.log('userdata=>', userdata)
-          if (userdata) {
-            console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
-            if (userdata.dataValues.SituacaoCodigo == 0) {
-              delete userdata.dataValues.PerfilCodigo
-            }
-            var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: '7d' });
-            return res.status(202).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
+        passport.authenticate(schema, async (err, userlogin, info) => {
+          console.log('retornos', schema, info, userlogin, err);
+          if (err) {
+            return res.status(403).send({ message: err });
           }
-          console.log('Usuario sem perfil e sem cadastro')
-          var token = jwt.sign(userlogin, config_param.secret, { expiresIn: '7d' });
-          return res.status(202).json({ token: util.format('Bearer %s', token), user: userlogin });
-        } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
-          delete userPerfil[0].dataValues.Perfil
-          delete userPerfil[0].dataValues.PerfilCodigo
-          var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-          return res.status(202).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
-        } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
-          delete userPerfil[0].dataValues.Perfil
-          delete userPerfil[0].dataValues.PerfilCodigo
-          var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-          return res.status(202).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
-          // return res.status(202).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
-        }
+          if (info) {
+            return res.status(500).send(info);
+          }
+          userlogin['login'] = req.body.username;
+          console.log('Login de usuario==>', req.body.username);
+          // Checa se o usuário logado possui cadastro do MGI
+          var userPerfil = await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
+          // console.log('userPerfil==>', userPerfil);
+          if (!userPerfil || userPerfil.length == 0) {
+            console.log('Usuario não tem perfil')
+            var userdata = await user.getPorLogin(req.body.username)
+            //console.log('userdata=>', userdata)
+            if (userdata) {
+              console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
+              var token = jwt.sign(userdata.dataValues, config_param.secret, {
+                expiresIn: '7d'
+                // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+                //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+                //   : '7d'
+              });
+              return res.status(201).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
+            }
+            console.log('Usuario sem perfil e sem cadastro')
+            var token = jwt.sign(userlogin, config_param.secret, {
+              expiresIn: '7d'
+              // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+              //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+              //   : '7d'
+            });
+            return res.status(201).json({ token: util.format('Bearer %s', token), user: userlogin });
+          } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
+            var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
+              expiresIn: '7d'
+              // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+              //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+              //   : '7d'
+            });
+            return res.status(406).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues });
+          } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
+            return res.status(403).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
+          }
 
-        //get the ACL rules
+          //get the ACL rules
 
 
-        // Loga o Usuario
-        var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: '7d' });
-        res.status(201).json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl: acl_rules });
-      })(req, res);
-
+          // Loga o Usuario
+          var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
+            expiresIn: '7d'
+            // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+            //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+            //   : '7d'
+          });
+          res.json({ token: util.format('Bearer %s', token), user: userPerfil[0].dataValues, acl: acl_rules });
+        })(req, res);
+      } else {
+        var temp = {
+          cpf: '11111111',
+          nome: 'Usuário Fake',
+          email: 'teste@teste.com',
+          perfil: ''
+        };
+        console.log('Usuario fake:', temp); //TODO: Retirar isso
+        var token = jwt.sign(temp, config_param.secret, {
+          expiresIn: '7d'
+          // expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+          //   ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+          //   : '7d'
+        });
+        res.json({ token: util.format('Bearer %s', token), user: temp });
+      }
     } catch (e) {
       console.log(e);
       res.status(500).send(e);

@@ -2,6 +2,7 @@ const models = require('../models');
 const perfil = require('./perfil');
 const crypto = require('crypto');
 const status = require('./status-aprovacao');
+const util = require('util');
 const jwt = require('jsonwebtoken');
 const config_param = require('../helpers/config')();
 
@@ -54,15 +55,7 @@ module.exports = {
     });
   },
   getPorLoginAplicacao: async (login, sigla_aplicacao) => {
-    return models.User.findAll({
-      attributes: { exclude: ['senha'] },
-      include: [{
-        model: models.Perfil, required: false,
-        as: 'Perfil',
-        include: [{ model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
-      }],
-      where: { login: login }
-    });
+    return getPorLoginAplicacao(login, sigla_aplicacao)
   },
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
@@ -123,6 +116,16 @@ module.exports = {
         res.status(500).json({ codret: 1001, message: "Erro na troca de senha" });
       });
     }
+  },
+  refreshToken: (req, res) => {
+    getPorLoginAplicacao(req.decoded.login, req.decoded.Perfil.Aplicacao.sigla).then(userPerfil => {
+      var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
+        expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
+          ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
+          : '7d'
+      });
+      res.json({ token: util.format('Bearer %s', token) });
+    });
   }
 }
 
@@ -130,6 +133,18 @@ function changeSituacao(codigo, situacao) {
   return models.User.findAll({ attributes: { exclude: ['senha'] }, where: { codigo: codigo } }).map(resp => {
     resp.SituacaoCodigo = situacao;
     resp.save();
+  });
+}
+
+function getPorLoginAplicacao(login, sigla_aplicacao) {
+  return models.User.findAll({
+    attributes: { exclude: ['senha'] },
+    include: [{
+      model: models.Perfil, required: false,
+      as: 'Perfil',
+      include: [{ model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
+    }],
+    where: { login: login }
   });
 }
 
