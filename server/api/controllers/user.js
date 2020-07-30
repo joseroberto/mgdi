@@ -59,7 +59,7 @@ module.exports = {
   },
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
-    createPerfil(req.body).then((perfil) => {
+    createPerfil(req.body, res).then((perfil) => {
       res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso" });
     }).catch(err => {
       console.log('Erro', err);
@@ -159,6 +159,22 @@ async function createPerfil(entidade) {
     entidade['SituacaoCodigo'] = 1; // Aprovado
   }
 
-  //console.log('create', entidade);
-  return models.User.upsert(entidade);
+  // console.log('create', entidade);
+  if ('codigo' in entidade) {
+    if ('senha' in entidade) {
+      throw new Error('Erro no cadastramento da solicitação de perfil')
+    } else {
+      models.User.findOne({ where: { codigo: entidade.codigo } }).then(user => {
+        return user.update(entidade)
+      })
+    }
+  } else {
+    // Verifica se há o campo senha
+    if ('senha' in entidade) {
+      entidade.senha = crypto.createHash('sha256').update(entidade.senha, 'utf8').digest()
+      return models.User.create(entidade)
+    } else {
+      throw new Error('Erro no cadastramento da solicitação de perfil: a senha é obrigatória')
+    }
+  }
 }

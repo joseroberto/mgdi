@@ -77,7 +77,16 @@ module.exports = {
             }
         }
         else {
-            cb(new Error('No authorization token was found'));
+            // verificando se rota é a de criar usuário pela rota de complementação de usuário
+            if (
+                process.env.SCHEMA_LOGIN === 'local' &&
+                req.path === '/api/user' && req.method === 'POST' &&
+                !('codigo' in req.body)
+            ) {
+                return cb()
+            } else {
+                cb(new Error('No authorization token was found'));
+            }
         }
 
     },
