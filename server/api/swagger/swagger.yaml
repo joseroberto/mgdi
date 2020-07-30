@@ -2396,6 +2396,8 @@ definitions:
         type: [string, 'null']
       usuario_aprovacao:
         type: [number, 'null']
+      senha:
+        type: [string, 'null']
       PerfilCodigo:
         type: number
       SituacaoCodigo:

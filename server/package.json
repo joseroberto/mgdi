@@ -52,7 +52,7 @@
   },
   "scripts": {
     "start-dev": "pm2-runtime start config/pm2-api-dev.config.yaml",
-    "start": "pm2-runtime start config/pm2-api.config.yaml",
+    "start": "swagger project start",
     "test": "swagger project test"
   }
 }

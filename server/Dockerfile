@@ -15,6 +15,7 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * HOST_CACHE - Servidor memcached \
   * TTL_CACHE - TTL dos objetos em segundos \
   * PROTOCOLO = protocolo a ser usado (http ou https) \
+  * ENVIRONMENT = ambiente do projeto \
   \
   Dependendo da escolha do tipo de esquema de validação: \
   \
