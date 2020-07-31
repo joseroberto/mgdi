@@ -8,7 +8,11 @@ const security = require('../helpers/security');
 
 module.exports = {
   getUnidades: (req, res)=>{
-    models.Unidade.findAll({}).then(function(lista) {
+    models.Unidade.findAll({
+      order: [
+        ['sigla', 'ASC'],
+      ]
+    }).then(function(lista) {
       res.json({unidades: lista});
     });
   },
