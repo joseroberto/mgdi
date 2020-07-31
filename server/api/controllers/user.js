@@ -15,7 +15,11 @@ module.exports = {
         { model: models.Unidade, as: 'Unidade' },
         { model: models.Perfil, as: 'Perfil' }
       ],
-      where: {}
+      where: {},
+      order: [
+        ['nome', 'ASC'],
+      ]
+
     };
     if (req.swagger.params.situacao.value !== undefined) {
       attr.where = { SituacaoCodigo: req.swagger.params.situacao.value };

@@ -24,7 +24,7 @@ module.exports = {
             order: [ [ { model: models.Unidade, as: 'ancestors' }, 'nu_nivel', 'DESC' ] ] }
       ],
       where: {},
-      order: ['titulo']
+      order: ['codigo','ASC']
     };
     // Trata-se o atributo
     if(req.swagger.params.attributes.value){
