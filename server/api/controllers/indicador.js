@@ -157,6 +157,7 @@ module.exports = {
     });
   },
   getIndicador: (req,res)=>{
+    console.log('Entrou getIndicador')
     var perfil = security.getPerfil(req);
     var attr = { include: [ { model: models.Tag, as: 'Tags' },
         { model: models.Indicador, as: 'IndicadoresRelacionados' },
@@ -192,7 +193,7 @@ module.exports = {
     //    }
     //  );
    //}else
-   if(perfil && perfil.Perfil.sigla!='ADM'){
+   if(perfil && perfil.Perfil.sigla!='ADM' && perfil.Perfil.Aplicacao.sigla === 'MGI'){
       console.log('Unidade restritiva', perfil.UnidadeCodigo);
       attr.include.push({ model: models.Unidade , as: 'ResponsavelGerencial', where:{codigo: perfil.UnidadeCodigo},
             include: [ { model: models.Unidade, as: 'ancestors' } ],
