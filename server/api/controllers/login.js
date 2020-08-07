@@ -51,11 +51,33 @@ module.exports = {
             console.log('userdata=>', userdata)
             if (userdata) {
               console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
-              var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
+              var token = jwt.sign({
+                ...userdata.dataValues,
+                Perfil: {
+                  sigla: 'USR',
+                  titulo: 'Usuário',
+                  descricao:
+                    'Este assume papéis especiais de acompanhamento se estiverem atribuídos a: Meta; Entrega Intermediária; Atividades',
+                  Aplicacao: {
+                    sigla: req.body.aplicacao
+                  }
+                }
+              }, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
               return res.status(201).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
             }
             console.log('Usuario sem perfil e sem cadastro')
-            var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
+            var token = jwt.sign({
+              ...userdata.dataValues,
+              Perfil: {
+                sigla: 'USR',
+                titulo: 'Usuário',
+                descricao:
+                  'Este assume papéis especiais de acompanhamento se estiverem atribuídos a: Meta; Entrega Intermediária; Atividades',
+                Aplicacao: {
+                  sigla: req.body.aplicacao
+                }
+              }
+            }, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
             return res.status(201).json({ token: util.format('Bearer %s', token), user: userlogin });
           } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
             var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {

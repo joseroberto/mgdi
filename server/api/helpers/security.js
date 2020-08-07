@@ -52,8 +52,7 @@ module.exports = {
                     if (err) {
                         return cb(new Error('Invalid token'));
                     }
-
-                    var userPerfil = await user.getPorLoginAplicacao(decoded.login, (decoded.Perfil.Aplicacao.sigla));
+                    // var userPerfil = await user.getPorLoginAplicacao(decoded.login, (decoded.Perfil.Aplicacao.sigla));
                     // console.log('UserPerfil==>', userPerfil);
 
                     //if(!userPerfil || !userPerfil[0] || userPerfil[0].dataValues.SituacaoCodigo != 1){
@@ -61,10 +60,10 @@ module.exports = {
                     // }
                     // console.log("Token decodificado:", decoded);
                     //req.decoded = userPerfil[0].toJSON(); //decoded
-                    req.decoded = {};//FIX: Validar se o usuario esta carregado com um perfil ativo
 
                     // TODO: Fazer validação via campo do banco needs_perfil
-                    if (decoded.Perfil.Aplicacao.sigla === 'MGP') {
+                    // console.log("AAAAA: ", decoded)
+                    if (decoded.Perfil && decoded.Perfil.Aplicacao.sigla === 'MGP') {
                         req.decoded = decoded
                         return cb()
                     } else {

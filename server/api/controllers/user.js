@@ -123,12 +123,15 @@ module.exports = {
   },
   refreshToken: (req, res) => {
     getPorLoginAplicacao(req.decoded.login, req.decoded.Perfil.Aplicacao.sigla).then(userPerfil => {
-      var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
-        expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-          ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-          : '7d'
-      });
-      res.json({ token: util.format('Bearer %s', token) });
+      if (userPerfil.length > 0 && userPerfil[0]) {
+        var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, { expiresIn: req.decoded.Perfil.Aplicacao.sigla === 'MGP' ? '30m' : '7d' });
+        res.json({ token: util.format('Bearer %s', token) });
+      } else {
+        delete req.decoded.iat
+        delete req.decoded.exp
+        var token = jwt.sign(req.decoded, config_param.secret, { expiresIn: req.decoded.Perfil.Aplicacao.sigla === 'MGP' ? '30m' : '7d' });
+        res.json({ token: util.format('Bearer %s', token) });
+      }
     });
   }
 }
