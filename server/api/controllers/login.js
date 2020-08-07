@@ -48,22 +48,14 @@ module.exports = {
           if (!userPerfil || userPerfil.length == 0) {
             console.log('Usuario não tem perfil')
             var userdata = await user.getPorLogin(req.body.username)
-            //console.log('userdata=>', userdata)
+            console.log('userdata=>', userdata)
             if (userdata) {
               console.log('Usuario sem perfil no aplicativo mas com usuario cadastrado')
-              var token = jwt.sign(userdata.dataValues, config_param.secret, {
-                expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-                  ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-                  : '7d'
-              });
+              var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
               return res.status(201).json({ token: util.format('Bearer %s', token), user: userdata.dataValues });
             }
             console.log('Usuario sem perfil e sem cadastro')
-            var token = jwt.sign(userlogin, config_param.secret, {
-              expiresIn: userPerfil[0].Perfil.Aplicacao.timeout
-                ? `${userPerfil[0].Perfil.Aplicacao.timeout}m`
-                : '7d'
-            });
+            var token = jwt.sign(userdata.dataValues, config_param.secret, { expiresIn: req.body.aplicacao === 'MGP' ? '30m' : '7d' });
             return res.status(201).json({ token: util.format('Bearer %s', token), user: userlogin });
           } else if (userPerfil[0].dataValues.SituacaoCodigo == 0) {
             var token = jwt.sign(userPerfil[0].dataValues, config_param.secret, {
