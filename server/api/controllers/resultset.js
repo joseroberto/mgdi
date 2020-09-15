@@ -28,20 +28,21 @@ module.exports = {
   getResultadoConsulta: (req, res)=>{
     var param_consulta = montaParametros(req.swagger.params);
     module.exports.consultaResultado(param_consulta).then( (resultado) =>{
+      let rows = resultado[0].rows
+      let download = {};
+      let tipo = param_consulta.tipo;
+
         switch (param_consulta.formato) {
           case 'LIN':
-            res.json(resultado[0].rows);
+            res.json(rows);
             break;
           case 'CDA':
               res.json(cache.set(
                 req, res,
-                module.exports.formataCDAResult(resultado[0].rows, resultado[0].fields, param_consulta, resultado[1])
+                module.exports.formataCDAResult(rows, resultado[0].fields, param_consulta, resultado[1])
               ));
               break;
           case 'JSON':
-            let rows = resultado[0].rows
-            let download = {};
-            let tipo = param_consulta.tipo;
 
             req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao)=>{
               let arr = [];
@@ -97,54 +98,59 @@ module.exports = {
 
             break;
           case 'CSV':
-            switch (tipo) {
-              case'BR':
-              //Field 1 é onde traz o nome do indicador no tipo BR
-              for (let i = 0; i < rows.length; i++) {
-                download.push({
-                  Ano: rows[i].ano,
-                  valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
-                })
-              }
-              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
-
-              break;
-              case 'MN':
-              //Field 5 é onde traz o nome do indicador no tipo MN
-              for (let i = 0; i < rows.length; i++) {
-                download.push({
-                  Ano: rows[i].ano,
-                  Estado: rows[i].uf,
-                  Regiao: rows[i].regiao,
-                  Local: rows[i].local,
-                  Codigo: rows[i].codigogeo,
-                  valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
-                })
-              }
-              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
-              break;
-              case 'UF':
+            req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao)=>{
+              let arr = [];
+              let nameIndicador = namePadrao.toLowerCase();
+              switch (param_consulta.tipo) {
+                case'BR':
+                //Field 1 é onde traz o nome do indicador no tipo BR
                 for (let i = 0; i < rows.length; i++) {
-                  download.push({
+                  arr.push({
+                    Ano: rows[i].ano,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
+
+                break;
+                case 'MN':
+                //Field 5 é onde traz o nome do indicador no tipo MN
+                for (let i = 0; i < rows.length; i++) {
+                  arr.push({
                     Ano: rows[i].ano,
                     Estado: rows[i].uf,
                     Regiao: rows[i].regiao,
+                    Local: rows[i].local,
                     Codigo: rows[i].codigogeo,
                     valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
                   })
                 }
-              ////Field 4 é onde traz o nome do indicador no tipo UF
-              res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
-              break;
-              case 'RG':
-                  ////Field 4 é onde traz o nome do indicador no tipo RG
-                  res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
-                  break;
-            }
+                break;
+                case 'UF':
+                  for (let i = 0; i < rows.length; i++) {
+                    arr.push({
+                      Ano: rows[i].ano,
+                      Estado: rows[i].uf,
+                      Regiao: rows[i].regiao,
+                      Codigo: rows[i].codigogeo,
+                      valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                    })
+                  }
+                ////Field 4 é onde traz o nome do indicador no tipo UF
+                //res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                break;
+                case 'RG':
+                    ////Field 4 é onde traz o nome do indicador no tipo RG
+                    res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                    break;
+              }
+              res.setHeader('Content-disposition', `attachment; filename=indicador-${tipo}.csv`);
+              //download[namePadrao] = arr;
               res.set('Content-Type', 'text/csv');
-              res.status(200).send(cache.set(req,res,json2csv(download)));
+              //console.log('-->', arr)
+              res.status(200).send(cache.set(req,res,json2csv(arr)));
+            });
 
-              break;
+            break;
           case 'TAB':
               res.status(200).json(
                 cache.set(
