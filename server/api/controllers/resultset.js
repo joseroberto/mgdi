@@ -145,11 +145,11 @@ module.exports = {
                 res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
                 break;
             }
-            res.status(200).send(cache.set(req, res, json2csv(arr)));
+            res.setHeader('Content-Disposition', `attachment; filename*=${fileName}.csv`);
             //console.log('-->', arr)
             res.set('Content-Type', 'text/csv');
             //download[namePadrao] = arr;
-            res.setHeader('Content-Disposition', `attachment; filename*=${fileName}.csv`);
+            res.status(200).send(cache.set(req, res, json2csv(arr)));
           });
 
           break;
