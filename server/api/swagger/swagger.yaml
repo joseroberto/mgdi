@@ -1145,7 +1145,7 @@ paths:
           in: query
           required: false
           description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
-        - name: nomepadrao
+        - name: filename
           type: string
           in: query
           required: false

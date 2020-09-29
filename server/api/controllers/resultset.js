@@ -45,7 +45,6 @@ module.exports = {
           ));
           break;
         case 'JSON':
-
           req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao) => {
             let arr = [];
             let nameIndicador = namePadrao.toLowerCase();
@@ -89,7 +88,7 @@ module.exports = {
 
                 break;
             }
-            res.setHeader('Content-disposition', `attachment; filename=indicador-${tipo}.json`);
+            res.setHeader('Content-disposition', `attachment; filename="${fileName}"`);
             download[namePadrao] = arr;
           });
 
@@ -142,12 +141,13 @@ module.exports = {
                 break;
               case 'RG':
                 ////Field 4 é onde traz o nome do indicador no tipo RG
-                res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                //res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                //FIX: Ainda falta essa definição
                 break;
             }
-            res.setHeader('Content-Disposition', `attachment; filename*=${fileName}.csv`);
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}.csv"`);
             //console.log('-->', arr)
-            res.set('Content-Type', 'text/csv');
+            res.set('Content-Type', 'text/csv; charset=utf-8');
             //download[namePadrao] = arr;
             res.status(200).send(cache.set(req, res, json2csv(arr)));
           });
@@ -204,7 +204,7 @@ module.exports = {
 
   formataCSV: (rows, res) => {
     jsonexport(rows, function (err, csv) {
-      res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+      res.setHeader('Content-disposition', 'attachment; filename="data.csv"');
       res.set('Content-Type', 'text/csv');
       res.status(200).send(csv);
     });
@@ -279,14 +279,11 @@ module.exports = {
 }
 
 function formataNomeArquivo(param_consulta) {
-  let fileName
-  if (param_consulta.nomepadrao) {
-    fileName = param_consulta.nomepadrao
+  if (param_consulta.filename) {
+    return param_consulta.filename.toLowerCase()
   }
-  else {
-    fileName = param_consulta.codigos
-  }
-  return fileName
+
+  return `indicador-${param_consulta.tipo}.${param_consulta.formato}`.toLowerCase()
 }
 
 /*
