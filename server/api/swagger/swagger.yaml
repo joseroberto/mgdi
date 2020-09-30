@@ -1145,6 +1145,12 @@ paths:
           in: query
           required: false
           description: Filtro para data dos dados da consulta conforme periodicidade do indicador (ano, anomes e anomesdia ).
+        - name: filename
+          type: string
+          in: query
+          required: false
+          description: Nome do arquivo a ser baixado (por padão deverá ser o nome do indicador seguido do ano e região de referencia)
+          
 
       responses:
         "200":
