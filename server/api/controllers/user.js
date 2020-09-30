@@ -63,7 +63,7 @@ module.exports = {
   },
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
-    createPerfil(req.body, res).then((perfil) => {
+    createPerfil(req.body, req.decoded).then((perfil) => {
       res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso" });
     }).catch(err => {
       console.log('Erro', err);
@@ -155,9 +155,12 @@ function getPorLoginAplicacao(login, sigla_aplicacao) {
   });
 }
 
-async function createPerfil(entidade) {
+async function createPerfil(entidade, loggedUser) {
   var numPerfil = await models.User.count();
-  entidade['SituacaoCodigo'] = 0;
+  if (loggedUser && loggedUser.Perfil.sigla === 'ADP')
+    entidade['SituacaoCodigo'] = 1;
+  else
+    entidade['SituacaoCodigo'] = 0;
 
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {
