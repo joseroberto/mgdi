@@ -283,7 +283,7 @@ function formataNomeArquivo(param_consulta) {
     return param_consulta.filename.toLowerCase()
   }
 
-  return `indicador-${param_consulta.tipo}.${param_consulta.formato}`.toLowerCase()
+  return `${param_consulta.codigos}-${param_consulta.tipo}.${param_consulta.formato}`.toLowerCase()
 }
 
 /*
