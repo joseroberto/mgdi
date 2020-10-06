@@ -162,6 +162,9 @@ async function createPerfil(entidade, loggedUser) {
   else
     entidade['SituacaoCodigo'] = 0;
 
+  let perfil = await models.Perfil.findOne({ where: { sigla: entidade.PerfilSigla } })
+  entidade.PerfilCodigo = perfil.codigo
+
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {
     var vlPerfil = await perfil.getPerfilPorSigla('ADM');
