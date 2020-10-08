@@ -10,7 +10,7 @@ module.exports = {
 
   getUsers: (req, res) => {
     var attr = {
-      attributes: ["codigo", "nome", "email", "ramal", "cargo", "SituacaoCodigo"],
+      attributes: ["codigo", "nome", "email", "ramal", "cargo", "SituacaoCodigo", "cpf"],
       include: [
         { model: models.Unidade, as: 'Unidade' },
         { model: models.Perfil, as: 'Perfil' }
