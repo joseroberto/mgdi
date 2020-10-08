@@ -10,7 +10,7 @@ module.exports = {
 
   getUsers: (req, res) => {
     var attr = {
-      attributes: ["codigo", "nome", "email", "ramal", "cargo"],
+      attributes: ["codigo", "nome", "email", "ramal", "cargo", "SituacaoCodigo"],
       include: [
         { model: models.Unidade, as: 'Unidade' },
         { model: models.Perfil, as: 'Perfil' }
@@ -21,10 +21,11 @@ module.exports = {
       ]
 
     };
-    if (req.swagger.params.situacao.value !== undefined) {
-      attr.where = { SituacaoCodigo: req.swagger.params.situacao.value };
-    } else {
+
+    if (req.swagger.params.situacao.value === undefined) {
       attr.where = { SituacaoCodigo: 1 };
+    } else if (req.swagger.params.situacao.value !== -1) {
+      attr.where = { SituacaoCodigo: req.swagger.params.situacao.value };
     }
 
     if (req.swagger.params.aplicacao.value !== undefined) {
