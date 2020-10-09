@@ -65,7 +65,7 @@ module.exports = {
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
     createPerfil(req.body, req.decoded).then((perfil) => {
-      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso" });
+      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso", userId: perfil.codigo });
     }).catch(err => {
       console.log('Erro', err);
       res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
