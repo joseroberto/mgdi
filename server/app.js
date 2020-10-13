@@ -19,7 +19,7 @@ var theAppLog = log4js.getLogger();
 
 require('dotenv').config();
 
-var port = process.env.PORT || config_param.port || 8001;
+var port = process.env.PORT || config_param.port || 8000;
 var host = process.env.HOST || config_param.host;
 var protocolo = process.env.PROTOCOLO || config_param.protocolo || 'http';
 
