@@ -87,6 +87,14 @@ module.exports = {
       res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
     });
   },
+  inativaSolicitacao: (req, res) => {
+    changeSituacao(req.swagger.params.codigo.value, 3).then(item => {
+      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso inativada com sucesso" });
+    }).catch(err => {
+      console.log('Erro', err);
+      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
+    });
+  }, 
   getPerfil: (req, res) => {
     console.log(req.headers.authorization);
     //jwt.verify(token, config_param.secret);
