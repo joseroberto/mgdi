@@ -138,17 +138,21 @@ module.exports = {
                 ////Field 4 é onde traz o nome do indicador no tipo UF
                 //res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
                 break;
-                case 'RG':
-                    ////Field 4 é onde traz o nome do indicador no tipo RG
-                    res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
-                    break;
-              }
-              res.setHeader('Content-disposition', `attachment; filename=indicador-${tipo}.csv`);
-              //download[namePadrao] = arr;
-              res.set('Content-Type', 'text/csv');
-              //console.log('-->', arr)
-              res.status(200).send(cache.set(req,res,json2csv(arr)));
-            });
+              case 'RG':
+                ////Field 4 é onde traz o nome do indicador no tipo RG
+                //res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
+                //FIX: Ainda falta essa definição
+                break;
+            }
+            res.setHeader('Content-Disposition', `attachment; filename="${fileName}.csv"`);
+            //console.log('-->', arr)
+            res.set('Content-Type', 'text/csv; charset=utf-8');
+            //download[namePadrao] = arr;
+            if(arr && arr.length >0)
+              res.status(200).send(cache.set(req, res, json2csv(arr)));
+            else
+              res.status(200).send(cache.set(req, res, ""));
+          });
 
             break;
           case 'TAB':
