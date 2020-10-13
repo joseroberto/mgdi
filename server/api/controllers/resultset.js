@@ -149,7 +149,10 @@ module.exports = {
             //console.log('-->', arr)
             res.set('Content-Type', 'text/csv; charset=utf-8');
             //download[namePadrao] = arr;
-            res.status(200).send(cache.set(req, res, json2csv(arr)));
+            if(arr && arr.length >0)
+              res.status(200).send(cache.set(req, res, json2csv(arr)));
+            else
+              res.status(200).send(cache.set(req, res, ""));
           });
 
           break;
