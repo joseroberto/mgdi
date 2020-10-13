@@ -65,6 +65,7 @@ module.exports = {
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
     createPerfil(req.body, req.decoded).then((perfil) => {
+      console.log("A: ", perfil)
       res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso", userId: perfil.codigo });
     }).catch(err => {
       console.log('Erro', err);
@@ -94,7 +95,7 @@ module.exports = {
       console.log('Erro', err);
       res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
     });
-  }, 
+  },
   getPerfil: (req, res) => {
     console.log(req.headers.authorization);
     //jwt.verify(token, config_param.secret);
@@ -186,7 +187,7 @@ async function createPerfil(entidade, loggedUser) {
     if ('senha' in entidade) {
       throw new Error('Erro no cadastramento da solicitação de perfil')
     } else {
-      models.User.findOne({ where: { codigo: entidade.codigo } }).then(user => {
+      return models.User.findOne({ where: { codigo: entidade.codigo } }).then(user => {
         return user.update(entidade)
       })
     }
