@@ -191,6 +191,30 @@ paths:
           description: Erro
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /api/user/{codigo}/inativa:
+    x-swagger-router-controller: user
+    post:
+      description: Inativa o usuário
+      summary: Inativa o usuário
+      operationId: inativaSolicitacao
+      parameters:
+        - name: codigo
+          type: number
+          in: path
+          required: true
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      responses:
+        "200":
+          description: Sucesso
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Erro
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /api/user/perfil:
     x-swagger-router-controller: user
     get:

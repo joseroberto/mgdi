@@ -10,7 +10,7 @@ module.exports = {
 
   getUsers: (req, res) => {
     var attr = {
-      attributes: ["codigo", "nome", "email", "ramal", "cargo"],
+      attributes: ["codigo", "nome", "email", "ramal", "cargo", "SituacaoCodigo", "cpf"],
       include: [
         { model: models.Unidade, as: 'Unidade' },
         { model: models.Perfil, as: 'Perfil' }
@@ -21,10 +21,11 @@ module.exports = {
       ]
 
     };
-    if (req.swagger.params.situacao.value !== undefined) {
-      attr.where = { SituacaoCodigo: req.swagger.params.situacao.value };
-    } else {
+
+    if (req.swagger.params.situacao.value === undefined) {
       attr.where = { SituacaoCodigo: 1 };
+    } else if (req.swagger.params.situacao.value !== -1) {
+      attr.where = { SituacaoCodigo: req.swagger.params.situacao.value };
     }
 
     if (req.swagger.params.aplicacao.value !== undefined) {
@@ -63,8 +64,8 @@ module.exports = {
   },
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
-    createPerfil(req.body, res).then((perfil) => {
-      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso" });
+    createPerfil(req.body, req.decoded).then((perfil) => {
+      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso", userId: perfil.codigo });
     }).catch(err => {
       console.log('Erro', err);
       res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
@@ -86,6 +87,14 @@ module.exports = {
       res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
     });
   },
+  inativaSolicitacao: (req, res) => {
+    changeSituacao(req.swagger.params.codigo.value, 3).then(item => {
+      res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso inativada com sucesso" });
+    }).catch(err => {
+      console.log('Erro', err);
+      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
+    });
+  }, 
   getPerfil: (req, res) => {
     console.log(req.headers.authorization);
     //jwt.verify(token, config_param.secret);
@@ -155,9 +164,15 @@ function getPorLoginAplicacao(login, sigla_aplicacao) {
   });
 }
 
-async function createPerfil(entidade) {
+async function createPerfil(entidade, loggedUser) {
   var numPerfil = await models.User.count();
-  entidade['SituacaoCodigo'] = 0;
+  if (loggedUser && loggedUser.Perfil.sigla === 'ADP')
+    entidade['SituacaoCodigo'] = 1;
+  else
+    entidade['SituacaoCodigo'] = 0;
+
+  let perfil = await models.Perfil.findOne({ where: { sigla: entidade.PerfilSigla } })
+  entidade.PerfilCodigo = perfil.codigo
 
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {

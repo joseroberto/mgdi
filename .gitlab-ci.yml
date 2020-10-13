@@ -13,6 +13,7 @@ web_app_build:
     stage: web_app_build
     only:
         - master
+        - tags
     script:
         - cd client
         - npm install -g @angular/cli@1.0.6
@@ -27,6 +28,7 @@ web_app_registry:
     image: docker:git
     only:
         - master
+        - tags
     services:
     - docker:18-dind
     stage: web_app_registry
@@ -43,6 +45,7 @@ server_build:
     image: node:7
     only:
         - master
+        - tags
     stage: server_build
     script:
         - cd server
@@ -55,6 +58,7 @@ server_registry:
     image: docker:git
     only:
         - master
+        - tags
     services:
     - docker:18-dind
     stage: server_registry
@@ -72,6 +76,7 @@ deploy:
   stage: deploy
   only:
         - master
+        - tags
   dependencies:
   - web_app_registry
   - server_registry
