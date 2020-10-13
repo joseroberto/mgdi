@@ -22,33 +22,34 @@ pool.on('error', function (err, client) {
 
 module.exports = {
 
-  getResultado: (req,res)=>{
-    cache.get(req,res,module.exports.getResultadoConsulta)
+  getResultado: (req, res) => {
+    cache.get(req, res, module.exports.getResultadoConsulta)
   },
-  getResultadoConsulta: (req, res)=>{
+  getResultadoConsulta: (req, res) => {
     var param_consulta = montaParametros(req.swagger.params);
-    module.exports.consultaResultado(param_consulta).then( (resultado) =>{
+    var fileName = formataNomeArquivo(param_consulta)
+    // console.log("file naome => ",fileName)
+    module.exports.consultaResultado(param_consulta).then((resultado) => {
       let rows = resultado[0].rows
       let download = {};
       let tipo = param_consulta.tipo;
 
-        switch (param_consulta.formato) {
-          case 'LIN':
-            res.json(rows);
-            break;
-          case 'CDA':
-              res.json(cache.set(
-                req, res,
-                module.exports.formataCDAResult(rows, resultado[0].fields, param_consulta, resultado[1])
-              ));
-              break;
-          case 'JSON':
-
-            req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao)=>{
-              let arr = [];
-              let nameIndicador = namePadrao.toLowerCase();
-              switch (tipo) {
-                case'BR':
+      switch (param_consulta.formato) {
+        case 'LIN':
+          res.json(rows);
+          break;
+        case 'CDA':
+          res.json(cache.set(
+            req, res,
+            module.exports.formataCDAResult(rows, resultado[0].fields, param_consulta, resultado[1])
+          ));
+          break;
+        case 'JSON':
+          req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao) => {
+            let arr = [];
+            let nameIndicador = namePadrao.toLowerCase();
+            switch (tipo) {
+              case 'BR':
                 //Field 1 é onde traz o nome do indicador no tipo BR
                 for (let i = 0; i < rows.length; i++) {
                   arr.push({
@@ -57,20 +58,20 @@ module.exports = {
                   })
                 }
                 break;
-                case 'MN':
-                  for (let i = 0; i < rows.length; i++) {
-                    arr.push({
-                      Ano: rows[i].ano,
-                      Estado: rows[i].uf,
-                      Regiao: rows[i].regiao,
-                      Local: rows[i].local,
-                      Codigo: rows[i].codigogeo,
-                      valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
-                    })
-                  }
+              case 'MN':
+                for (let i = 0; i < rows.length; i++) {
+                  arr.push({
+                    Ano: rows[i].ano,
+                    Estado: rows[i].uf,
+                    Regiao: rows[i].regiao,
+                    Local: rows[i].local,
+                    Codigo: rows[i].codigogeo,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
                 //Field 5 é onde traz o nome do indicador no tipo MN
                 break;
-                case 'UF':
+              case 'UF':
                 ////Field 4 é onde traz o nome do indicador no tipo UF
                 for (let i = 0; i < rows.length; i++) {
                   arr.push({
@@ -82,27 +83,27 @@ module.exports = {
                   })
                 }
                 break;
-                case 'RG':
+              case 'RG':
                 ////Field 4 é onde traz o nome do indicador no tipo RG
 
                 break;
-              }
-              res.setHeader('Content-disposition', `attachment; filename=indicador-${tipo}.json`);
-              download[namePadrao] = arr;
-            });
+            }
+            res.setHeader('Content-disposition', `attachment; filename="${fileName}"`);
+            download[namePadrao] = arr;
+          });
 
-            //res.set('Content-Type:text/plain; charset=ISO-8859-15');
-            res.header("Content-Type", "application/json; charset=ISO-8859-15");
-            //console.log('RES headers =>', res.getHeaders())
-            res.send(cache.set(req, res, download));
+          //res.set('Content-Type:text/plain; charset=ISO-8859-15');
+          res.header("Content-Type", "application/json; charset=ISO-8859-15");
+          //console.log('RES headers =>', res.getHeaders())
+          res.send(cache.set(req, res, download));
 
-            break;
-          case 'CSV':
-            req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao)=>{
-              let arr = [];
-              let nameIndicador = namePadrao.toLowerCase();
-              switch (param_consulta.tipo) {
-                case'BR':
+          break;
+        case 'CSV':
+          req.swagger.params.codigos.originalValue.split(',').forEach((namePadrao) => {
+            let arr = [];
+            let nameIndicador = namePadrao.toLowerCase();
+            switch (param_consulta.tipo) {
+              case 'BR':
                 //Field 1 é onde traz o nome do indicador no tipo BR
                 for (let i = 0; i < rows.length; i++) {
                   arr.push({
@@ -112,7 +113,7 @@ module.exports = {
                 }
 
                 break;
-                case 'MN':
+              case 'MN':
                 //Field 5 é onde traz o nome do indicador no tipo MN
                 for (let i = 0; i < rows.length; i++) {
                   arr.push({
@@ -125,16 +126,16 @@ module.exports = {
                   })
                 }
                 break;
-                case 'UF':
-                  for (let i = 0; i < rows.length; i++) {
-                    arr.push({
-                      Ano: rows[i].ano,
-                      Estado: rows[i].uf,
-                      Regiao: rows[i].regiao,
-                      Codigo: rows[i].codigogeo,
-                      valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
-                    })
-                  }
+              case 'UF':
+                for (let i = 0; i < rows.length; i++) {
+                  arr.push({
+                    Ano: rows[i].ano,
+                    Estado: rows[i].uf,
+                    Regiao: rows[i].regiao,
+                    Codigo: rows[i].codigogeo,
+                    valorIndicador: parseFloat(rows[i][nameIndicador]).toFixed(2)
+                  })
+                }
                 ////Field 4 é onde traz o nome do indicador no tipo UF
                 //res.setHeader('Content-disposition', `attachment; filename=${titulo}-${tipo}.csv`);
                 break;
@@ -154,40 +155,40 @@ module.exports = {
               res.status(200).send(cache.set(req, res, ""));
           });
 
-            break;
-          case 'TAB':
-              res.status(200).json(
-                cache.set(
-                  req, res,
-                  module.exports.formataJSONResult(resultado[0].rows, param_consulta, Object.keys(resultado[1]))
-                )
-              );
-              break;
-          default:
-              res.status(500).send({mensagem: "Formato inválido"});
-        }
-      }, err =>{
-        console.log('Erro no resultset', err);
-        res.status(500).send(err);
+          break;
+        case 'TAB':
+          res.status(200).json(
+            cache.set(
+              req, res,
+              module.exports.formataJSONResult(resultado[0].rows, param_consulta, Object.keys(resultado[1]))
+            )
+          );
+          break;
+        default:
+          res.status(500).send({ mensagem: "Formato inválido" });
       }
+    }, err => {
+      console.log('Erro no resultset', err);
+      res.status(500).send(err);
+    }
     );
   },
-  consultaResultado: (param_consulta)=>{
-    return new Promise((resolve, reject)=>{
+  consultaResultado: (param_consulta) => {
+    return new Promise((resolve, reject) => {
       // Filtro por ano, uf, ibge, regiao,
-      convertCodigoIndicador(param_consulta).then(indicadores=>{
-        if(Object.keys(indicadores).length==0){
+      convertCodigoIndicador(param_consulta).then(indicadores => {
+        if (Object.keys(indicadores).length == 0) {
           console.log('Sem dados');
-          reject({codret: -1, mensagem: "Indicador não encontrado"});
+          reject({ codret: -1, mensagem: "Indicador não encontrado" });
           return;
         }
 
         var sql = montaQuery(indicadores, param_consulta);
         console.log('SQL+=>', sql);
-        pool.query(sql,null, (err, result)=>{
-          if(err) {
+        pool.query(sql, null, (err, result) => {
+          if (err) {
             console.error('error running query', err);
-            reject({mensagem:err});
+            reject({ mensagem: err });
             return;
           }
           resolve([result, indicadores]);
@@ -195,32 +196,32 @@ module.exports = {
         //TODO: Por enquanto...
         //reject({mensagem:'Sem dados'});
 
-      }, err=>{
+      }, err => {
         reject(err);
       });
     });
   },
-   /*
-    Formatador de saída para consultas CDA.
-   */
+  /*
+   Formatador de saída para consultas CDA.
+  */
 
-   formataCSV: (rows, res)=>{
-    jsonexport(rows,function(err, csv){
-      res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+  formataCSV: (rows, res) => {
+    jsonexport(rows, function (err, csv) {
+      res.setHeader('Content-disposition', 'attachment; filename="data.csv"');
       res.set('Content-Type', 'text/csv');
       res.status(200).send(csv);
     });
-   },
-   formataCDAResult: (result, fields, param_consulta, indicadores)=>{
-    var metadata=[];
-    var filtro={};
-    var tipoRegiao='';
+  },
+  formataCDAResult: (result, fields, param_consulta, indicadores) => {
+    var metadata = [];
+    var filtro = {};
+    var tipoRegiao = '';
 
-    indicadores['REGIAO']={titulo:'Região', descricao:'Região agregada', tipo:'geo'};
-    indicadores['LOCAL']={titulo:'Cidade', descricao:'Região desagregada', tipo:'geo'};
-    indicadores['UF']={titulo:'Estado', descricao:'Unidade Federativa', tipo:'geo'};
-    indicadores['CODIGOGEO']={titulo:'Município', descricao:'Código da unidade', tipo:'id'};
-    indicadores['ANO']={titulo:'Ano', descricao:'Ano da ocorrência', tipo:'id'};
+    indicadores['REGIAO'] = { titulo: 'Região', descricao: 'Região agregada', tipo: 'geo' };
+    indicadores['LOCAL'] = { titulo: 'Cidade', descricao: 'Região desagregada', tipo: 'geo' };
+    indicadores['UF'] = { titulo: 'Estado', descricao: 'Unidade Federativa', tipo: 'geo' };
+    indicadores['CODIGOGEO'] = { titulo: 'Município', descricao: 'Código da unidade', tipo: 'id' };
+    indicadores['ANO'] = { titulo: 'Ano', descricao: 'Ano da ocorrência', tipo: 'id' };
 
 
     // Acrescenta os dados da consulta
@@ -228,40 +229,40 @@ module.exports = {
     //console.log(param_consulta);
     switch (param_consulta.tipo) {
       case 'BR':
-        tipoRegiao='br';
+        tipoRegiao = 'br';
         break;
       case 'RG':
-        tipoRegiao='regiao';
+        tipoRegiao = 'regiao';
         break;
       case 'UF':
-        tipoRegiao='uf';
+        tipoRegiao = 'uf';
         break;
       case 'MN':
-        tipoRegiao='municipio';
+        tipoRegiao = 'municipio';
         break;
       case 'CN':
-        tipoRegiao='cnes';
+        tipoRegiao = 'cnes';
         break;
     }
 
     var numIndex = 0;
 
-    fields.forEach(item=>{
+    fields.forEach(item => {
       var key = item.name.toUpperCase();
       var meta = {
-          colType: item.dataTypeID == 23? "Numeric": "String",
-          colName: item.name,
-          colIndex: numIndex++,
-          titulo: indicadores[key].titulo,
-          resumo: indicadores[key].descricao,
-          tipo: indicadores[key].tipo
+        colType: item.dataTypeID == 23 ? "Numeric" : "String",
+        colName: item.name,
+        colIndex: numIndex++,
+        titulo: indicadores[key].titulo,
+        resumo: indicadores[key].descricao,
+        tipo: indicadores[key].tipo
       };
       metadata.push(meta);
     });
 
     return {
       resultset: result,
-      info: {tipoFiltro: param_consulta.filtro, tipoRegiao: param_consulta.tipo, codigoRegiao: param_consulta.valores_filtro},
+      info: { tipoFiltro: param_consulta.filtro, tipoRegiao: param_consulta.tipo, codigoRegiao: param_consulta.valores_filtro },
       metadata: metadata
     };
   },
@@ -269,24 +270,32 @@ module.exports = {
   /*
     Formatador de saída para consultas TABulares.
   */
-  formataJSONResult: (result, param_consulta, indicadores)=>{
+  formataJSONResult: (result, param_consulta, indicadores) => {
     var resultado = tabulaResultado(result, indicadores, param_consulta);
     return {
       rows: resultado.length,
       resultset: resultado,
       titulos: result.titulos,
-      info: { tipoFiltro: param_consulta.filtro, tipoRegiao: param_consulta.tipo, codigoRegiao: param_consulta.valores_filtro}
+      info: { tipoFiltro: param_consulta.filtro, tipoRegiao: param_consulta.tipo, codigoRegiao: param_consulta.valores_filtro }
     };
   }
+}
+
+function formataNomeArquivo(param_consulta) {
+  if (param_consulta.filename) {
+    return param_consulta.filename.toLowerCase()
+  }
+
+  return `indicador-${param_consulta.tipo}.${param_consulta.formato}`.toLowerCase()
 }
 
 /*
   Monta os uma saida de configuracao com o que e necessario
   para a consulta dinamica
 */
-function montaParametros(paramEntrada){
+function montaParametros(paramEntrada) {
   var ans = {};
-  Object.keys(paramEntrada).forEach(key=>{
+  Object.keys(paramEntrada).forEach(key => {
     ans[key] = paramEntrada[key].value;
   });
   return ans;
@@ -296,9 +305,9 @@ function montaParametros(paramEntrada){
   Converte o codigo alfanumerico do indicador em metadados
   necessarios para montagem dinamica da query de consulta.
 */
-async function  convertCodigoIndicador(param_consulta){
+async function convertCodigoIndicador(param_consulta) {
 
-  var arr={};
+  var arr = {};
   var granularidade = 0;
   var periodicidade = 0;
   var arrBusca = await indicador.getIndicadorPesquisaPorCodigo(param_consulta.codigos);
@@ -306,7 +315,7 @@ async function  convertCodigoIndicador(param_consulta){
   //console.log(arrBusca)
   //console.log(arr)
 
-  switch (param_consulta.tipo){
+  switch (param_consulta.tipo) {
     case 'BR':
       tipoGranularidade = 1;
       break;
@@ -326,31 +335,31 @@ async function  convertCodigoIndicador(param_consulta){
 
   return new Promise(async (resolve, reject) => {
 
-      if(!arrBusca){
-        reject('Parametro de consulta vazio');
-      }
-      try{
-        for (var i=0; i < arrBusca.length; i++){
-          var item = arrBusca[i];
-          arr[item.codigo]=getInfo(item, param_consulta, granularidade, periodicidade, tipoGranularidade);
-          granularidade = arr[item.codigo].granularidade;
-          periodicidade = arr[item.codigo].periodicidade;
-          if('indicadores_formula' in arr[item.codigo]){
-            var arritemFormula = await indicador.getIndicadorPesquisaPorCodigo(arr[item.codigo]['indicadores_formula']);
-            arr[item.codigo]['indicadores'] = {};
-            arritemFormula.forEach(itemFormula=>{
-              arr[item.codigo]['indicadores'][itemFormula.codigo] = getInfo(itemFormula, param_consulta, granularidade, periodicidade, tipoGranularidade);
-            });
-          }
-        }
-      }catch(err){
-        try{
-          reject(JSON.parse(err.message));
-        }catch(err2){
-          console.log('Erro', err);
-          reject({codret: 1001, message: "Erro na pesquisa dos resultados do indicador"});
+    if (!arrBusca) {
+      reject('Parametro de consulta vazio');
+    }
+    try {
+      for (var i = 0; i < arrBusca.length; i++) {
+        var item = arrBusca[i];
+        arr[item.codigo] = getInfo(item, param_consulta, granularidade, periodicidade, tipoGranularidade);
+        granularidade = arr[item.codigo].granularidade;
+        periodicidade = arr[item.codigo].periodicidade;
+        if ('indicadores_formula' in arr[item.codigo]) {
+          var arritemFormula = await indicador.getIndicadorPesquisaPorCodigo(arr[item.codigo]['indicadores_formula']);
+          arr[item.codigo]['indicadores'] = {};
+          arritemFormula.forEach(itemFormula => {
+            arr[item.codigo]['indicadores'][itemFormula.codigo] = getInfo(itemFormula, param_consulta, granularidade, periodicidade, tipoGranularidade);
+          });
         }
       }
+    } catch (err) {
+      try {
+        reject(JSON.parse(err.message));
+      } catch (err2) {
+        console.log('Erro', err);
+        reject({ codret: 1001, message: "Erro na pesquisa dos resultados do indicador" });
+      }
+    }
     resolve(arr);
   });
 }
@@ -365,80 +374,80 @@ async function  convertCodigoIndicador(param_consulta){
  * @param {peridicidade da consulta geral} periodicidade
  * @param {tipoGranularidade qual o tipo de agregacao selecionada na consulta} tipoGranularidade
  */
-function getInfo(item, param_consulta, granularidade, periodicidade, tipoGranularidade){
-    var ans=null;
-    var categoria = null;
+function getInfo(item, param_consulta, granularidade, periodicidade, tipoGranularidade) {
+  var ans = null;
+  var categoria = null;
 
-    ans = {
-      id: item.id,
+  ans = {
+    id: item.id,
 
-      codigo: item.codigo,
-      titulo: item.titulo,
-      descricao: item.descricao,
-      granularidade: item.Granularidade.codigo,
-      banco: item.BancoDados,
-      tipoConsulta: item.TipoConsulta.codigo,
-      sql: item.referencia_consulta,
-      criterioAgregacao: item.CriterioAgregacao.codigo,
-      periodicidade: item.PeriodicidadeAtualizacao.codigo,
-      ultima_atualizacao: item.ultima_atualizacao,
-      tipo: 'valor'
-    };
-    // Testa categoria de CategoriaAnalise
-    if('porcategoria' in param_consulta && param_consulta.porcategoria){
-      var categoriaSelecionada = item.CategoriasAnalise.find(item=> item.codigo==param_consulta.porcategoria);
-      if(categoriaSelecionada){
-        //console.log('Consulta por categoria', categoriaSelecionada.Itens);
-        ans['categoriaSelecionada']= categoriaSelecionada;
-        ans['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
-        if(!categoria)
-          categoria = ans['categoria'];
-      }else{
-        throw new Error(JSON.stringify({codret: 1016, message: 'Categoria de análise não associada ao indicador ou a um dos indicadores'}));
-      }
-      if(categoria && categoria!=ans[item.codigo]['categoria'])
-        throw new Error(JSON.stringify({codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes'}));
+    codigo: item.codigo,
+    titulo: item.titulo,
+    descricao: item.descricao,
+    granularidade: item.Granularidade.codigo,
+    banco: item.BancoDados,
+    tipoConsulta: item.TipoConsulta.codigo,
+    sql: item.referencia_consulta,
+    criterioAgregacao: item.CriterioAgregacao.codigo,
+    periodicidade: item.PeriodicidadeAtualizacao.codigo,
+    ultima_atualizacao: item.ultima_atualizacao,
+    tipo: 'valor'
+  };
+  // Testa categoria de CategoriaAnalise
+  if ('porcategoria' in param_consulta && param_consulta.porcategoria) {
+    var categoriaSelecionada = item.CategoriasAnalise.find(item => item.codigo == param_consulta.porcategoria);
+    if (categoriaSelecionada) {
+      //console.log('Consulta por categoria', categoriaSelecionada.Itens);
+      ans['categoriaSelecionada'] = categoriaSelecionada;
+      ans['categoria'] = getSubCategorias(categoriaSelecionada.Itens);
+      if (!categoria)
+        categoria = ans['categoria'];
+    } else {
+      throw new Error(JSON.stringify({ codret: 1016, message: 'Categoria de análise não associada ao indicador ou a um dos indicadores' }));
     }
-    if(ans.tipoConsulta==1){  // Formula
-      //TODO: Essa linha so funciona no node 8.11 em diante:
-      //ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
-      // Trocando temporariamente pelo codigo
-      var reg=/\[(.*?)\]/g;
-      var match;
-      ans['indicadores_formula'] =  [];
-      while(match = reg.exec(ans.sql)) {
-        ans['indicadores_formula'].push(match[1]);
-      }
+    if (categoria && categoria != ans[item.codigo]['categoria'])
+      throw new Error(JSON.stringify({ codret: 1015, message: 'Conjunto de indicadores com categorias de analise não homogeneas ou diferentes' }));
+  }
+  if (ans.tipoConsulta == 1) {  // Formula
+    //TODO: Essa linha so funciona no node 8.11 em diante:
+    //ans['indicadores_formula'] =  ans.sql.match(/(?<=\[).+?(?=\])/g);
+    // Trocando temporariamente pelo codigo
+    var reg = /\[(.*?)\]/g;
+    var match;
+    ans['indicadores_formula'] = [];
+    while (match = reg.exec(ans.sql)) {
+      ans['indicadores_formula'].push(match[1]);
     }
-    // Testa tipos de consulta
-    if(ans.tipoConsulta!=1 && ans.tipoConsulta!=2 && ans.tipoConsulta!=3){ // Tratar depois a formula
-      throw new Error(JSON.stringify({codret: 1010, message: `Tipo de consulta (${ans.tipoConsulta}) incompatível ou indicador sem informação`}));
-    }
-    // Testa tipos de periodicidade
-    if(ans.periodicidade!=30 && ans.periodicidade!=360){ // Tratar depois a periodicidade
-      throw new Error(JSON.stringify({codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida"}));
-    }
-    // Testa granularidade.  Se difere deve dar um erro
-    if(granularidade==0){
-      granularidade = ans.granularidade;
-    }
-    if(ans.granularidade!=granularidade){
-      throw new Error(JSON.stringify({codret: 1012, message: "Conjunto de indicadores com granularidade diferentes"}));
-    }
-    if(ans.granularidade<tipoGranularidade){
-      throw new Error(JSON.stringify({codret: 1013, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida`}));
-    }
-    if(ans.granularidade>tipoGranularidade && item.criterio_agregacao==0){
-      throw new Error(JSON.stringify({codret: 1014, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido`}));
-    }
-    // Testa periodicidade.  Se difere deve dar um erro
-    if(periodicidade==0){
-      periodicidade = ans.periodicidade;
-    }
-    if(ans.periodicidade!=periodicidade){
-      throw new Error(JSON.stringify({codret: 1015, message: 'Conjunto de indicadores com periodicidades diferentes'}));
-    }
-    return ans;
+  }
+  // Testa tipos de consulta
+  if (ans.tipoConsulta != 1 && ans.tipoConsulta != 2 && ans.tipoConsulta != 3) { // Tratar depois a formula
+    throw new Error(JSON.stringify({ codret: 1010, message: `Tipo de consulta (${ans.tipoConsulta}) incompatível ou indicador sem informação` }));
+  }
+  // Testa tipos de periodicidade
+  if (ans.periodicidade != 30 && ans.periodicidade != 360) { // Tratar depois a periodicidade
+    throw new Error(JSON.stringify({ codret: 1011, message: "Consulta o tipo de periodicidade do indicador ainda não foi desenvolvida" }));
+  }
+  // Testa granularidade.  Se difere deve dar um erro
+  if (granularidade == 0) {
+    granularidade = ans.granularidade;
+  }
+  if (ans.granularidade != granularidade) {
+    throw new Error(JSON.stringify({ codret: 1012, message: "Conjunto de indicadores com granularidade diferentes" }));
+  }
+  if (ans.granularidade < tipoGranularidade) {
+    throw new Error(JSON.stringify({ codret: 1013, message: `Indicador ${item.codigo} com granularidade menor que o tipo de consulta requerida` }));
+  }
+  if (ans.granularidade > tipoGranularidade && item.criterio_agregacao == 0) {
+    throw new Error(JSON.stringify({ codret: 1014, message: `Indicador ${item.codigo} com granularidade diferente do tipo de consulta e sem critério de agregação definido` }));
+  }
+  // Testa periodicidade.  Se difere deve dar um erro
+  if (periodicidade == 0) {
+    periodicidade = ans.periodicidade;
+  }
+  if (ans.periodicidade != periodicidade) {
+    throw new Error(JSON.stringify({ codret: 1015, message: 'Conjunto de indicadores com periodicidades diferentes' }));
+  }
+  return ans;
 }
 
 /**
@@ -449,25 +458,25 @@ function getInfo(item, param_consulta, granularidade, periodicidade, tipoGranula
  *
  * @param {itens de categorias} itens
  */
-function getSubCategorias(itens){
-  let ans=[];
+function getSubCategorias(itens) {
+  let ans = [];
 
-  itens.forEach(subcat=>{
-    if('descendents' in subcat && subcat.descendents.length>0){
+  itens.forEach(subcat => {
+    if ('descendents' in subcat && subcat.descendents.length > 0) {
       let temp = getSubCategorias(subcat['descendents']);
-      if(temp.length>0){
+      if (temp.length > 0) {
         ans = ans.concat(temp);
       }
-    }else{
+    } else {
       ans.push(subcat.codigo);
     }
   });
   return ans;
 }
 
-function montaResult(indicadores, param_consulta){
+function montaResult(indicadores, param_consulta) {
   var referencia = indicadores[Object.keys(indicadores)[0]];
-  var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia,param_consulta));
+  var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia, param_consulta));
   var varGranularidade = getGranularidade(referencia.granularidade);
   var arrControle = [];
   var operation = '';
@@ -476,50 +485,50 @@ function montaResult(indicadores, param_consulta){
 
   let termos = ''
   Object.keys(indicadores).forEach(key => {
-      switch(indicadores[key].tipoConsulta){
-        case 1: // Formulas
-          var ans = ' ' + indicadores[key].sql;
-          let aggConsultaComplementar = ' ' + indicadores[key].sql;
-          for(let indFormula of indicadores[key].indicadores_formula) {
-            aggConsultaComplementar = aggConsultaComplementar.replace(
-              new RegExp(`[${indFormula}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `SUM(${indFormula})`
-            );
+    switch (indicadores[key].tipoConsulta) {
+      case 1: // Formulas
+        var ans = ' ' + indicadores[key].sql;
+        let aggConsultaComplementar = ' ' + indicadores[key].sql;
+        for (let indFormula of indicadores[key].indicadores_formula) {
+          aggConsultaComplementar = aggConsultaComplementar.replace(
+            new RegExp(`[${indFormula}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `SUM(${indFormula})`
+          );
+        }
+        indicadores[key].formula_agg = aggConsultaComplementar
+        if (arrControle.indexOf(indicadores[key].codigo) == -1) {
+          for (key2 in indicadores[key].indicadores) {
+            ans = ans.replace(new RegExp(`[${key2}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `(${key2})`);
+            if (arrControle.indexOf(key2) == -1) {
+              per += key2 + '.' + varPeriodicidade + ',';
+              gran += key2 + '.' + varGranularidade + ',';
+              termos += `${key2}, `
+              arrControle.push(key2);
+            }
           }
-          indicadores[key].formula_agg = aggConsultaComplementar
-          if(arrControle.indexOf(indicadores[key].codigo)==-1){
-              for(key2 in indicadores[key].indicadores){
-                ans = ans.replace(new RegExp(`[${key2}]`.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'g'), `(${key2})`);
-                if(arrControle.indexOf(key2)==-1){
-                  per += key2 + '.' + varPeriodicidade + ',';
-                  gran += key2 + '.' + varGranularidade + ',';
-                  termos += `${key2}, `
-                  arrControle.push(key2);
-                }
-              }
-              ans += ` ${indicadores[key].codigo},`;
-              operation += ans;
-          }
-          break;
-        case 3: // Tb Resultado
-          operation +=` (${indicadores[key].codigo}) ${indicadores[key].codigo},`;
-          indicadores[key].formula_agg =
-            `${getCriterioAgregacao(indicadores[key].criterioAgregacao)}(${indicadores[key].codigo})`
-          if(arrControle.indexOf(indicadores[key].codigo)==-1){
-            per += indicadores[key].codigo + '.' + varPeriodicidade + ',';
-            gran += indicadores[key].codigo + '.' + varGranularidade + ',';
-            arrControle.push(indicadores[key].codigo);
-          }
-          break;
-      }
+          ans += ` ${indicadores[key].codigo},`;
+          operation += ans;
+        }
+        break;
+      case 3: // Tb Resultado
+        operation += ` (${indicadores[key].codigo}) ${indicadores[key].codigo},`;
+        indicadores[key].formula_agg =
+          `${getCriterioAgregacao(indicadores[key].criterioAgregacao)}(${indicadores[key].codigo})`
+        if (arrControle.indexOf(indicadores[key].codigo) == -1) {
+          per += indicadores[key].codigo + '.' + varPeriodicidade + ',';
+          gran += indicadores[key].codigo + '.' + varGranularidade + ',';
+          arrControle.push(indicadores[key].codigo);
+        }
+        break;
+    }
   });
 
-  per = per.substr(0, per.length-1);
-  gran = gran.substr(0, gran.length-1);
+  per = per.substr(0, per.length - 1);
+  gran = gran.substr(0, gran.length - 1);
   var ans = ` RESULT as (select ${operation} ${termos} coalesce(${per}) as ${varPeriodicidade} `;
-  if(param_consulta.tipo !='BR'){
+  if (param_consulta.tipo != 'BR') {
     ans += ` , coalesce(${gran}) as ${varGranularidade} `;
   }
-  ans+=` from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade, param_consulta)}) `;
+  ans += ` from ${associaCampos2(arrControle, varPeriodicidade, varGranularidade, param_consulta)}) `;
   return ans
 }
 
@@ -527,40 +536,40 @@ function montaResult(indicadores, param_consulta){
 /*
   Montador de query de consulta genérica.
 */
-function montaQuery(indicadores, param_consulta){
+function montaQuery(indicadores, param_consulta) {
   //console.log(indicadores)
-  var arr_control=[];
-  var sql_with='WITH ';
+  var arr_control = [];
+  var sql_with = 'WITH ';
 
 
-  (Object.keys(indicadores)).forEach(key=>{
-      // monta query conforme o tipo de consulta
-      switch (indicadores[key].tipoConsulta) {
-        case 1: // Formula
-          for(item in indicadores[key].indicadores){
-            if(arr_control.indexOf(item)==-1){
-              sql_with += `${item} AS ( ${ montaQueryValorIndicador(item, indicadores[key].indicadores[item], param_consulta)} ),`;
-              arr_control.push(item);
-            }
-          };
-
-          break;
-
-        case 2: // Query
-          if(arr_control.indexOf(key)==-1){
-            sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
-            arr_control.push(key);
+  (Object.keys(indicadores)).forEach(key => {
+    // monta query conforme o tipo de consulta
+    switch (indicadores[key].tipoConsulta) {
+      case 1: // Formula
+        for (item in indicadores[key].indicadores) {
+          if (arr_control.indexOf(item) == -1) {
+            sql_with += `${item} AS ( ${montaQueryValorIndicador(item, indicadores[key].indicadores[item], param_consulta)} ),`;
+            arr_control.push(item);
           }
-          break;
-        case 3: // Importação
-          if(arr_control.indexOf(key)==-1){
-            sql_with += `${key} AS ( ${ montaQueryValorIndicador(key, indicadores[key], param_consulta)} ),`;
-            arr_control.push(key);
-          }
-          break;
-      }
+        };
+
+        break;
+
+      case 2: // Query
+        if (arr_control.indexOf(key) == -1) {
+          sql_with += `${key} AS ( ${indicadores[key].sql} ),`;
+          arr_control.push(key);
+        }
+        break;
+      case 3: // Importação
+        if (arr_control.indexOf(key) == -1) {
+          sql_with += `${key} AS ( ${montaQueryValorIndicador(key, indicadores[key], param_consulta)} ),`;
+          arr_control.push(key);
+        }
+        break;
+    }
   });
-  sql_with = sql_with.substr(0,sql_with.length - 1);
+  sql_with = sql_with.substr(0, sql_with.length - 1);
   let ans = montaResult(indicadores, param_consulta)
 
   let query = `${sql_with}, ${ans} ${montaQueryComplemento(indicadores, param_consulta)}`
@@ -571,219 +580,219 @@ function montaQuery(indicadores, param_consulta){
 /**
  *  Monta complemento da query para o construtor
  */
-function montaQueryComplemento(indicadores, param_consulta){
-    var select = '';
-    var from = 'from ';
-    var groupby = '';
-    var orderby = '';
+function montaQueryComplemento(indicadores, param_consulta) {
+  var select = '';
+  var from = 'from ';
+  var groupby = '';
+  var orderby = '';
 
-    var indicadorAnterior = '';
-    var referencia = indicadores[Object.keys(indicadores)[0]];
-    var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia, param_consulta));
-    var alias = referencia.tipoConsulta==1?Object.keys(referencia.indicadores)[0]:Object.keys(indicadores)[0];
+  var indicadorAnterior = '';
+  var referencia = indicadores[Object.keys(indicadores)[0]];
+  var varPeriodicidade = getPeriodicidade(getSeletorPeriodicidade(referencia, param_consulta));
+  var alias = referencia.tipoConsulta == 1 ? Object.keys(referencia.indicadores)[0] : Object.keys(indicadores)[0];
 
-    //console.log('REFERENCIA==>',referencia,'ALIAS==>>',alias)
-    select += `${varPeriodicidade},`;
-    groupby += `${varPeriodicidade},`;
+  //console.log('REFERENCIA==>',referencia,'ALIAS==>>',alias)
+  select += `${varPeriodicidade},`;
+  groupby += `${varPeriodicidade},`;
 
-    switch (param_consulta.tipo) {
-      case 'RG':
-        // Testar o parametro
-        select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
-        from += `${schema}.tb_municipio mun
+  switch (param_consulta.tipo) {
+    case 'RG':
+      // Testar o parametro
+      select += `reg.ds_regiao as regiao, reg.co_regiao as codigogeo,`;
+      from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
-        groupby += `reg.ds_regiao, reg.co_regiao,`;
-        orderby += `reg.ds_regiao,`;
-        break;
-      case 'UF':
-        // Testar o parametro
-        select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo,`;
-        from += `${schema}.tb_municipio mun
+      groupby += `reg.ds_regiao, reg.co_regiao,`;
+      orderby += `reg.ds_regiao,`;
+      break;
+    case 'UF':
+      // Testar o parametro
+      select += `uf.no_uf as uf,reg.ds_regiao as regiao, uf.co_uf as codigogeo,`;
+      from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
-        groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
-        orderby += `uf.no_uf, reg.ds_regiao,`;
-        break;
-      case 'MN':
-        // Testar o parametro
-        select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
-        from += `${schema}.tb_municipio mun
+      groupby += `uf.no_uf,reg.ds_regiao, uf.co_uf,`;
+      orderby += `uf.no_uf, reg.ds_regiao,`;
+      break;
+    case 'MN':
+      // Testar o parametro
+      select += `uf.no_uf as uf,reg.ds_regiao as regiao, mun.no_municipio as local, mun.co_ibge as codigogeo,`;
+      from += `${schema}.tb_municipio mun
                       inner join ${schema}.tb_uf uf on uf.co_uf=mun.co_uf
                       inner join ${schema}.tb_regiao reg on reg.co_regiao=uf.co_regiao `;
-        groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
-        orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
-        break;
-    }
+      groupby += `uf.no_uf,reg.ds_regiao, mun.no_municipio, mun.co_ibge,`;
+      orderby += `uf.no_uf, reg.ds_regiao, mun.no_municipio,`;
+      break;
+  }
 
-    select += Object.values(indicadores).map(a =>
-      `${a.formula_agg} ${a.codigo} `
-    ).toString();
+  select += Object.values(indicadores).map(a =>
+    `${a.formula_agg} ${a.codigo} `
+  ).toString();
 
-    orderby += `${varPeriodicidade},`;
+  orderby += `${varPeriodicidade},`;
 
-    // Para o RESULT
-    if(param_consulta.tipo!='BR'){
-      from += 'INNER JOIN RESULT on RESULT.ibge=mun.co_ibge ';
-    }
-    else{
-      from += 'RESULT '
-    }
+  // Para o RESULT
+  if (param_consulta.tipo != 'BR') {
+    from += 'INNER JOIN RESULT on RESULT.ibge=mun.co_ibge ';
+  }
+  else {
+    from += 'RESULT '
+  }
 
-    /*var arr_control=[];
-    (Object.keys(indicadores)).forEach(key=>{
-        select += associaAgregacao(indicadores[key]);
-        if(!(referencia.granularidade==0 || config.tipo=='BR')){
-          //from += ` FULL OUTER JOIN ${key} `;
-          //from += ` INNER JOIN ${key} `;
-          // granularidade
-          switch (referencia.granularidade) {
-            case 3: //UF
-              //from += `ON ${key}.uf = uf.co_uf `;
-              from += associaCampos(indicadores[key], 'uf', 'uf.co_uf', varPeriodicidade, arr_control);
-              break;
-            case 4: //Municipio
-              //from += `ON ${key}.ibge = mun.co_ibge `;
-              from += associaCampos(indicadores[key], 'ibge', 'mun.co_ibge', varPeriodicidade, arr_control);
-              break;
-          }
-        }else if(indicadores[key].tipoConsulta!=1){
-          //from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
-          if(indicadorAnterior){
-            from += `INNER JOIN ${associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control)} `;
-            from += `ON ${indicadorAnterior}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
-          }else{
-            from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
-          }
+  /*var arr_control=[];
+  (Object.keys(indicadores)).forEach(key=>{
+      select += associaAgregacao(indicadores[key]);
+      if(!(referencia.granularidade==0 || config.tipo=='BR')){
+        //from += ` FULL OUTER JOIN ${key} `;
+        //from += ` INNER JOIN ${key} `;
+        // granularidade
+        switch (referencia.granularidade) {
+          case 3: //UF
+            //from += `ON ${key}.uf = uf.co_uf `;
+            from += associaCampos(indicadores[key], 'uf', 'uf.co_uf', varPeriodicidade, arr_control);
+            break;
+          case 4: //Municipio
+            //from += `ON ${key}.ibge = mun.co_ibge `;
+            from += associaCampos(indicadores[key], 'ibge', 'mun.co_ibge', varPeriodicidade, arr_control);
+            break;
+        }
+      }else if(indicadores[key].tipoConsulta!=1){
+        //from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
+        if(indicadorAnterior){
+          from += `INNER JOIN ${associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control)} `;
+          from += `ON ${indicadorAnterior}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
         }else{
           from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
         }
+      }else{
+        from += associaCampos(indicadores[key], null, null, varPeriodicidade, arr_control);
+      }
 
-        // periodicidade
-        if(indicadorAnterior && indicadores[key].tipoConsulta!=1){
-          from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
-        }
+      // periodicidade
+      if(indicadorAnterior && indicadores[key].tipoConsulta!=1){
+        from += `AND ${key}.${varPeriodicidade} = ${indicadorAnterior}.${varPeriodicidade} `
+      }
 
-        indicadorAnterior=key;
+      indicadorAnterior=key;
 
-    });*/
+  });*/
 
-    // Categoria de CategoriaAnalise
-    if('categoria' in referencia && referencia.categoria){
-      select += `itemcat.co_seq_categoria_analise_item as itemcategoria, itemcat.ds_titulo as descricaocategoria,`;
-      from += ` inner join ${schema}.tb_categoria_analise_item itemcat on ${indicadorAnterior}.codigo_itemcategoria=co_seq_categoria_analise_item `;
-      groupby += `itemcat.ds_titulo, itemcat.co_seq_categoria_analise_item,`;
-      orderby += `itemcat.co_seq_categoria_analise_item,`;
-    }
+  // Categoria de CategoriaAnalise
+  if ('categoria' in referencia && referencia.categoria) {
+    select += `itemcat.co_seq_categoria_analise_item as itemcategoria, itemcat.ds_titulo as descricaocategoria,`;
+    from += ` inner join ${schema}.tb_categoria_analise_item itemcat on ${indicadorAnterior}.codigo_itemcategoria=co_seq_categoria_analise_item `;
+    groupby += `itemcat.ds_titulo, itemcat.co_seq_categoria_analise_item,`;
+    orderby += `itemcat.co_seq_categoria_analise_item,`;
+  }
 
-    // Filtro por uf, ibge, regiao,
-    var where = `where ${varPeriodicidade}>0`;
-    switch (param_consulta.filtro) {
-      case 'UF':
-        if(param_consulta.valores_filtro){
-          where = where + ' AND uf.co_uf IN ('+ param_consulta.valores_filtro+')';
-        }
-        break;
-      case 'REG':
-        if(param_consulta.valores_filtro){
-          where = where + ' AND mun.co_regiao IN (' + param_consulta.valores_filtro+')';
-        }
-        break;
-      case 'MUN':
-        if(param_consulta.valores_filtro){
-          where = where + ' AND mun.co_ibge IN (' + param_consulta.valores_filtro+')';
-          codigoRegiao = param_consulta.valores_filtro;
-        }
-        break;
-      case 'MET':
-      case 'CID':
-      case 'CCL':
-      case 'FRT':
-      case 'QUA':
-      case 'SA':
-      case 'AL':
-      case 'RIB':
-      case 'QSU':
-        if(param_consulta.valores_filtro){
-          filtro = ' AND agr.co_agrupamento IN (' + param_consulta.valores_filtro+')';
-        }else{
-          filtro = '';
-        }
-        where = where +  ` AND mun.co_ibge IN ( select co_ibge from ${schema}.tb_municipio_agrupamento mua
+  // Filtro por uf, ibge, regiao,
+  var where = `where ${varPeriodicidade}>0`;
+  switch (param_consulta.filtro) {
+    case 'UF':
+      if (param_consulta.valores_filtro) {
+        where = where + ' AND uf.co_uf IN (' + param_consulta.valores_filtro + ')';
+      }
+      break;
+    case 'REG':
+      if (param_consulta.valores_filtro) {
+        where = where + ' AND mun.co_regiao IN (' + param_consulta.valores_filtro + ')';
+      }
+      break;
+    case 'MUN':
+      if (param_consulta.valores_filtro) {
+        where = where + ' AND mun.co_ibge IN (' + param_consulta.valores_filtro + ')';
+        codigoRegiao = param_consulta.valores_filtro;
+      }
+      break;
+    case 'MET':
+    case 'CID':
+    case 'CCL':
+    case 'FRT':
+    case 'QUA':
+    case 'SA':
+    case 'AL':
+    case 'RIB':
+    case 'QSU':
+      if (param_consulta.valores_filtro) {
+        filtro = ' AND agr.co_agrupamento IN (' + param_consulta.valores_filtro + ')';
+      } else {
+        filtro = '';
+      }
+      where = where + ` AND mun.co_ibge IN ( select co_ibge from ${schema}.tb_municipio_agrupamento mua
           inner join ${schema}.tb_agrupamento agr on mua.co_agrupamento = agr.co_agrupamento
           inner join ${schema}.tb_categoria cat on cat.co_categoria = agr.co_categoria
           where cat.ds_sigla = '${param_consulta.filtro}' ${filtro})`
-        break;
+      break;
 
-    }
+  }
 
-    if(referencia.criterioAgregacao==0){
-      groupby='';
-    }
+  if (referencia.criterioAgregacao == 0) {
+    groupby = '';
+  }
 
-    if(select){
-      select = 'select ' + select.substr(0,select.length - 1); // Retira a ultima virgula
-    }
+  if (select) {
+    select = 'select ' + select.substr(0, select.length - 1); // Retira a ultima virgula
+  }
 
-    if(orderby){
-      orderby = 'order by ' + orderby.substr(0,orderby.length - 1); // Retira a ultima virgula
-    }
+  if (orderby) {
+    orderby = 'order by ' + orderby.substr(0, orderby.length - 1); // Retira a ultima virgula
+  }
 
-    if(groupby){
-      groupby = 'group by ' + groupby.substr(0,groupby.length - 1); // Retira a ultima virgula
-    }
+  if (groupby) {
+    groupby = 'group by ' + groupby.substr(0, groupby.length - 1); // Retira a ultima virgula
+  }
 
-    //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
+  //console.log(`${select} ${from} ${where} ${groupby} order by ${orderby};`);
 
-    var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
+  var query = `${select} ${from} ${where} ${groupby} ${orderby}`;
 
-    return query;
+  return query;
 }
 
 /**
  * Monta a parte associativa das querys
  */
-function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, control){
-    var ans = '';
-    //let connector = 'INNER JOIN';
-    let connector = 'FULL OUTER JOIN';
-    if(indicador.tipoConsulta==1){ // Formula
-      var key_ant = '';
-      for(key in indicador.indicadores){
-        if(control.indexOf(key)==-1){
-            if(campo && campo_associacao){
-              ans += `${connector} ${key} `
-              ans += `ON ${key}.${campo}=${campo_associacao} `;
-              if(key_ant){
-                ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
-              }
-            }else{
-              if(key_ant){
-                ans += `${connector} ${key} `;
-                ans += `ON ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
-              }else{
-                ans += `${key} `
-              }
-            }
-            control.push(key);
+function associaCampos(indicador, campo, campo_associacao, varPeriodicidade, control) {
+  var ans = '';
+  //let connector = 'INNER JOIN';
+  let connector = 'FULL OUTER JOIN';
+  if (indicador.tipoConsulta == 1) { // Formula
+    var key_ant = '';
+    for (key in indicador.indicadores) {
+      if (control.indexOf(key) == -1) {
+        if (campo && campo_associacao) {
+          ans += `${connector} ${key} `
+          ans += `ON ${key}.${campo}=${campo_associacao} `;
+          if (key_ant) {
+            ans += `and ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+          }
+        } else {
+          if (key_ant) {
+            ans += `${connector} ${key} `;
+            ans += `ON ${key_ant}.${varPeriodicidade}=${key}.${varPeriodicidade} `;
+          } else {
+            ans += `${key} `
+          }
         }
-        key_ant=key;
+        control.push(key);
+      }
+      key_ant = key;
 
-      }
-    }else{
-      if(control.indexOf(indicador.codigo)>-1) return '';
-      if(campo && campo_associacao){
-        ans += `${connector} ${indicador.codigo} `
-        ans += `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
-      }else{
-        ans += `${indicador.codigo} `
-      }
-      control.push(indicador.codigo);
     }
-    return ans;
+  } else {
+    if (control.indexOf(indicador.codigo) > -1) return '';
+    if (campo && campo_associacao) {
+      ans += `${connector} ${indicador.codigo} `
+      ans += `ON ${indicador.codigo}.${campo} = ${campo_associacao} `;
+    } else {
+      ans += `${indicador.codigo} `
+    }
+    control.push(indicador.codigo);
+  }
+  return ans;
 }
 
-function montaQueryValorIndicador(codigo, indicador, param_consulta){
+function montaQueryValorIndicador(codigo, indicador, param_consulta) {
   var sql_select = 'select ';
   var sql_where = `co_seq_indicador=${indicador.id}`;
   var sql_group = 'group by ';
@@ -792,19 +801,19 @@ function montaQueryValorIndicador(codigo, indicador, param_consulta){
 
   sql_select += ` ${criterio_agregacao}(nu_valor) as ${codigo}`;
 
-  if(!(indicador.granularidade==0 || param_consulta.tipo=='BR')){
+  if (!(indicador.granularidade == 0 || param_consulta.tipo == 'BR')) {
     switch (indicador.granularidade) {
       case 3:  // UF
         sql_select += ', co_uf  as uf';
-        sql_group += (indicador.criterioAgregacao!=0 ? 'co_uf,':'');
+        sql_group += (indicador.criterioAgregacao != 0 ? 'co_uf,' : '');
         break;
       case 4:  // Municipio
         sql_select += ', co_ibge  as ibge';
-        sql_group += (indicador.criterioAgregacao!=0 ? 'co_ibge,':'');
+        sql_group += (indicador.criterioAgregacao != 0 ? 'co_ibge,' : '');
         break;
       case 5:  // CNES
         sql_select += ', co_cnes';
-        sql_group += (indicador.criterioAgregacao!=0? 'co_cnes,':'');
+        sql_group += (indicador.criterioAgregacao != 0 ? 'co_cnes,' : '');
         break;
     }
   }
@@ -812,47 +821,47 @@ function montaQueryValorIndicador(codigo, indicador, param_consulta){
   switch (getSeletorPeriodicidade(indicador, param_consulta)) {
     case 360:
       sql_select += ', co_ano  as ano';
-      nome_campo_periodo='co_ano';
-      sql_group += (indicador.criterioAgregacao!=0? 'co_ano,':'');
+      nome_campo_periodo = 'co_ano';
+      sql_group += (indicador.criterioAgregacao != 0 ? 'co_ano,' : '');
       break;
     case 30:
       sql_select += ', co_anomes  as anomes';
-      nome_campo_periodo='co_anomes';
-      sql_group += (indicador.criterioAgregacao!=0? 'co_anomes,':'');
+      nome_campo_periodo = 'co_anomes';
+      sql_group += (indicador.criterioAgregacao != 0 ? 'co_anomes,' : '');
       break;
     case 1:
       sql_select += ', co_anomesdia  as anomesdia';
-      nome_campo_periodo='co_anomesdia';
-      sql_group += (indicador.criterioAgregacao!=0? 'co_anomesdia,':'');
+      nome_campo_periodo = 'co_anomesdia';
+      sql_group += (indicador.criterioAgregacao != 0 ? 'co_anomesdia,' : '');
       break;
     default:
   }
 
-  if(indicador.categoria){
+  if (indicador.categoria) {
     sql_select += ', co_seq_categoria_analise_item as codigo_itemcategoria';
-    sql_where+=` AND co_seq_categoria_analise_item in (${indicador.categoria})`;
-    sql_group+='co_seq_categoria_analise_item,';
-  }else{
-    sql_where+=' AND co_seq_categoria_analise_item is null ';
+    sql_where += ` AND co_seq_categoria_analise_item in (${indicador.categoria})`;
+    sql_group += 'co_seq_categoria_analise_item,';
+  } else {
+    sql_where += ' AND co_seq_categoria_analise_item is null ';
   }
 
   // Filtro de ano, anomes ou anomesdia
-  if(param_consulta.data){
+  if (param_consulta.data) {
     var filtroData = '';
-    if(param_consulta.data<0)
-      filtroData= `select distinct ${nome_campo_periodo} from ${schema}.${config_param.tabela_indicadores}
+    if (param_consulta.data < 0)
+      filtroData = `select distinct ${nome_campo_periodo} from ${schema}.${config_param.tabela_indicadores}
         where co_seq_indicador in (${indicador.id})
-        order by 1 desc limit ${(-1)*param_consulta.data}`
-        //${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}
+        order by 1 desc limit ${(-1) * param_consulta.data}`
+    //${Object.keys(indicadores).map(a=>indicadores[a].id).toString()}
     else
-      filtroData=`${param_consulta.data}`;
+      filtroData = `${param_consulta.data}`;
     sql_where += `AND ${nome_campo_periodo} in (${filtroData})`;
   }
 
-  if(indicador.criterioAgregacao==0){
-    sql_group='';
-  }else{
-    sql_group = sql_group.substr(0,sql_group.length - 1);
+  if (indicador.criterioAgregacao == 0) {
+    sql_group = '';
+  } else {
+    sql_group = sql_group.substr(0, sql_group.length - 1);
   }
 
   return `${sql_select} from ${schema}.${config_param.tabela_indicadores}
@@ -869,9 +878,9 @@ function montaQueryValorIndicador(codigo, indicador, param_consulta){
 
   Premissa: Dados organizados em Ano e por municipio
 */
-function tabulaResultado(result, indicadores, param_consulta){
+function tabulaResultado(result, indicadores, param_consulta) {
   //TODO: Tornar dinamica a temporalidade
-  var retorno=[];
+  var retorno = [];
   var itemTratado = {};
   var field = '';
 
@@ -892,22 +901,22 @@ function tabulaResultado(result, indicadores, param_consulta){
       break;
   }
   itemTratado[field] = null;
-  result.forEach(item =>{
-    if(itemTratado[field]!=item[field]){
+  result.forEach(item => {
+    if (itemTratado[field] != item[field]) {
       //console.log('Trocando ident', item[field]);
       itemTratado = {};
       retorno.push(itemTratado);
       itemTratado[field] = item[field];
       // Complementa cos campos que não sejam nem ano nem um valor de indicador
-      Object.keys(item).forEach(key=>{
-        if(key!='ano' && indicadores.indexOf(key.toUpperCase())==-1){
+      Object.keys(item).forEach(key => {
+        if (key != 'ano' && indicadores.indexOf(key.toUpperCase()) == -1) {
           itemTratado[key] = item[key];
         }
       });
     }
     var obj = {};
-    itemTratado['periodo']={};
-    indicadores.forEach((key)=>{
+    itemTratado['periodo'] = {};
+    indicadores.forEach((key) => {
       obj[key.toLowerCase()] = +item[key.toLowerCase()];
     });
 
@@ -920,7 +929,7 @@ function tabulaResultado(result, indicadores, param_consulta){
 
 /// Funcoes acessorias
 
-function getPeriodicidade(value){
+function getPeriodicidade(value) {
   var varPeriodicidade = value;
   switch (value) {
     case 360:
@@ -937,7 +946,7 @@ function getPeriodicidade(value){
   return varPeriodicidade;
 }
 
-function getCriterioAgregacao(value){
+function getCriterioAgregacao(value) {
   var operacao = '';
   switch (value) {
     case 0: // Sem agregacao
@@ -959,8 +968,8 @@ function getCriterioAgregacao(value){
   return operacao;
 }
 
-function getGranularidade(value){
-  var varGranularidade='';
+function getGranularidade(value) {
+  var varGranularidade = '';
   switch (value) {
     case 3: //UF
       varGranularidade = 'ibge';
@@ -972,25 +981,25 @@ function getGranularidade(value){
   return varGranularidade;
 }
 
-function associaCampos2(indicadores, varPeriodicidade, varGranularidade, param_consulta){
-  var ans=indicadores.shift();
+function associaCampos2(indicadores, varPeriodicidade, varGranularidade, param_consulta) {
+  var ans = indicadores.shift();
   var item_anterior = ans;
-  indicadores.forEach(item=>{
-      ans+=` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
-      if(param_consulta.tipo!='BR'){
-        ans+= ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
-      }
-      item_anterior = item ;
+  indicadores.forEach(item => {
+    ans += ` FULL OUTER JOIN ${item} ON ${item_anterior}.${varPeriodicidade}=${item}.${varPeriodicidade} `
+    if (param_consulta.tipo != 'BR') {
+      ans += ` AND ${item_anterior}.${varGranularidade}=${item}.${varGranularidade} `;
+    }
+    item_anterior = item;
   });
   return ans;
 }
 
-function getSeletorPeriodicidade(indicador, param_consulta){
+function getSeletorPeriodicidade(indicador, param_consulta) {
   var seletorperiodicidade = indicador.periodicidade;
 
-  if(param_consulta.agregacao=='ANO'){
+  if (param_consulta.agregacao == 'ANO') {
     seletorperiodicidade = 360;
-  }else if (param_consulta.agregacao='MES' && seletorperiodicidade<=30){
+  } else if (param_consulta.agregacao = 'MES' && seletorperiodicidade <= 30) {
     seletorperiodicidade = 30;
   }  //FIX: Implementar para os outros periodos de tempo.
   return seletorperiodicidade;
