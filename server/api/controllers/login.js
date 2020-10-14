@@ -88,6 +88,8 @@ module.exports = {
             return res.status(406).json({ message: 'Usuário em análise. Por favor entre em contato com o administrador do sistema ou tente novamente mais tarde.' });
           } else if (userPerfil[0].dataValues.SituacaoCodigo == 2) {
             return res.status(403).send({ message: 'Usuário rejeitado pelo ADMINISTRADOR' });
+          } else if (userPerfil[0].dataValues.SituacaoCodigo == 3) {
+            return res.status(403).send({ message: 'Usuário inexistente.' });
           }
 
           //get the ACL rules
