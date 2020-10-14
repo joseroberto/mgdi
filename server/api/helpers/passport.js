@@ -36,7 +36,7 @@ module.exports = function (passport) {
   // =========================================================================
   // Valida o usuario na base local (username/password)
   passport.use('local', new LocalStrategy(async (username, password, done) => {
-    console.log('validacao local', username);
+    console.log('validacao local===>', username, password);
 
     let usuario;
     if (config_param.bypass) {
@@ -45,7 +45,7 @@ module.exports = function (passport) {
       let password_hash = crypto.createHash('sha256').update(password, 'utf8').digest()
       usuario = await user.getPorLoginSenha(username, password_hash);
     }
-
+    console.log('usuario buscado no banco===>', usuario);
     if (usuario)
       return done(null, {
         login: username,

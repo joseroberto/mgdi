@@ -108,7 +108,7 @@ module.exports = {
 
     var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
     var login = data.login;
-    console.log(current_pass, hash)
+    console.log('=====>', current_pass, hash)
     if (new_password != conf_password) {
       res.status(500).json({ codret: 1050, mensagem: "Senhas não conferem" });
     } else if (new_password === current_pass) {
