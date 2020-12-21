@@ -306,10 +306,6 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/SuccessResponse"
-        default:
-          description: Erro
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /api/perfil:
     x-swagger-router-controller: perfil
     get:

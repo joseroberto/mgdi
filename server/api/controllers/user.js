@@ -65,11 +65,11 @@ module.exports = {
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
     createPerfil(req.body, req.decoded).then((perfil) => {
-      console.log("A: ", perfil)
+      console.log("Perfil: ", perfil)
       res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso", userId: perfil.codigo });
     }).catch(err => {
       console.log('Erro', err);
-      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
+      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil", error: err.message });
     });
   },
   aprovaSolicitacao: (req, res) => {
@@ -195,7 +195,15 @@ async function createPerfil(entidade, loggedUser) {
     // Verifica se há o campo senha
     if ('senha' in entidade) {
       entidade.senha = crypto.createHash('sha256').update(entidade.senha, 'utf8').digest()
-      return models.User.create(entidade)
+      return models.User.create(entidade).catch(err => {
+        console.log("AAAA: ", err.errors)
+        if (err.errors[0].type === 'unique violation') {
+          if (err.errors[0].path === 'ds_cpf')
+            throw new Error('Este CPF já existe.')
+          if (err.errors[0].path === 'ds_email')
+            throw new Error('Este E-mail já existe.')
+        }
+      })
     } else {
       throw new Error('Erro no cadastramento da solicitação de perfil: a senha é obrigatória')
     }
