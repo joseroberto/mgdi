@@ -197,7 +197,7 @@ async function createPerfil(entidade, loggedUser) {
       entidade.senha = crypto.createHash('sha256').update(entidade.senha, 'utf8').digest()
       return models.User.create(entidade).catch(err => {
         console.log("AAAA: ", err.errors)
-        if (err.errors[0].type === 'unique violation') {
+        if (err.errors && err.errors[0].type === 'unique violation') {
           if (err.errors[0].path === 'ds_cpf')
             throw new Error('Este CPF já existe.')
           if (err.errors[0].path === 'ds_email')
