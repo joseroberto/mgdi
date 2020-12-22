@@ -174,6 +174,8 @@ async function createPerfil(entidade, loggedUser) {
 
   let perfil = await models.Perfil.findOne({ where: { sigla: entidade.PerfilSigla } })
   entidade.PerfilCodigo = perfil.codigo
+  
+  entidade.UnidadeCodigo = entidade.Unidade.codigo
 
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {
@@ -194,6 +196,7 @@ async function createPerfil(entidade, loggedUser) {
   } else {
     // Verifica se há o campo senha
     if ('senha' in entidade) {
+      console.log("ENTIDADE: ", entidade)
       entidade.senha = crypto.createHash('sha256').update(entidade.senha, 'utf8').digest()
       return models.User.create(entidade).catch(err => {
         console.log("AAAA: ", err.errors)
