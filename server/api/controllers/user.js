@@ -174,8 +174,9 @@ async function createPerfil(entidade, loggedUser) {
 
   let perfil = await models.Perfil.findOne({ where: { sigla: entidade.PerfilSigla } })
   entidade.PerfilCodigo = perfil.codigo
-  
-  entidade.UnidadeCodigo = entidade.Unidade.codigo
+
+  if (entidade.Unidade && entidade.Unidade.codigo)
+    entidade.UnidadeCodigo = entidade.Unidade.codigo
 
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {
