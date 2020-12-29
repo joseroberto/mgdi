@@ -5,5 +5,6 @@ export const environment = {
   aplicacao: "APP", // codigo da aplicacao SIGIN
   urlNewUser: "http://",
   urlForgetPassword: "http://",
-  urlAuth: "URL_AUTH"
+  urlAuth: "URL_AUTH",
+  CONTEXT: "/mgdi"
 };

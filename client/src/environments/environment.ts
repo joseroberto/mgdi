@@ -9,5 +9,6 @@ export const environment = {
   API_URL: "/api",
   aplicacao: 'MGI', // codigo da aplicacao MGI
   urlNewUser: "",
-  urlForgetPassword: ""
+  urlForgetPassword: "",
+  CONTEXT: "/mgdi"
 };

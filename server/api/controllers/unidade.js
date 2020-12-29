@@ -8,7 +8,11 @@ const security = require('../helpers/security');
 
 module.exports = {
   getUnidades: (req, res)=>{
-    models.Unidade.findAll({}).then(function(lista) {
+    models.Unidade.findAll({
+      order: [
+        ['sigla', 'ASC'],
+      ]
+    }).then(function(lista) {
       res.json({unidades: lista});
     });
   },
@@ -54,7 +58,7 @@ module.exports = {
     // Testa autorizacao para forcar filtro
     if (!req.headers.authorization){
         attr.include[0].where['privado'] = false;
-    }else if(perfil && perfil.Perfil.sigla!='ADM'){
+    }else if(perfil && perfil.Perfil && perfil.Perfil.sigla!='ADM'){
       console.log('Unidade restritiva', perfil.UnidadeCodigo);
       attr.include[0].include = [];
       //attr.include[0].include.push({ model: models.Unidade , as: 'ResponsavelGerencial', attributes:[], where:{codigo: perfil.UnidadeCodigo}});

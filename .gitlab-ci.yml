@@ -1,6 +1,7 @@
 variables:
     CONTAINER_SERVER_RELEASE_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/mgdi-api
     CONTAINER_FRONT_RELEASE_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/mgdi-web
+    DOCKER_API_VERSION: "1.39"
 stages:
     - web_app_build
     - web_app_registry
@@ -10,9 +11,9 @@ stages:
 web_app_build:
     image: node:6
     stage: web_app_build
-    tags:
-      - gitlab-org
-      - geral
+    only:
+        - master
+        - tags
     script:
         - cd client
         - npm install -g @angular/cli@1.0.6
@@ -25,12 +26,12 @@ web_app_build:
 
 web_app_registry:
     image: docker:git
+    only:
+        - master
+        - tags
     services:
     - docker:18-dind
     stage: web_app_registry
-    tags:
-      - gitlab-org
-      - geral
     dependencies:
     - web_app_build
     script:
@@ -42,10 +43,10 @@ web_app_registry:
 
 server_build:
     image: node:7
+    only:
+        - master
+        - tags
     stage: server_build
-    tags:
-      - gitlab-org
-      - geral
     script:
         - cd server
         - npm install
@@ -55,12 +56,12 @@ server_build:
 
 server_registry:
     image: docker:git
+    only:
+        - master
+        - tags
     services:
     - docker:18-dind
     stage: server_registry
-    tags:
-      - gitlab-org
-      - geral
     dependencies:
     - server_build
     script:
@@ -73,9 +74,9 @@ server_registry:
 deploy:
   image: ubuntu:latest
   stage: deploy
-  tags:
-    - gitlab-org
-    - geral
+  only:
+        - master
+        - tags
   dependencies:
   - web_app_registry
   - server_registry

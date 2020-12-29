@@ -29,7 +29,7 @@ var protocolo = process.env.PROTOCOLO || config_param.protocolo || 'http';
 app.use(cors());
 
 //inject log middleware
-var log = require('./api/helpers/log')(app);
+//var log = require('./api/helpers/log')(app);
 
 
 var config = {
