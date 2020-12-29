@@ -2356,9 +2356,9 @@ definitions:
       email:
         type: string
       ramal:
-        type: string
+        type: [string, 'null']
       celular:
-        type: string
+        type: [string, 'null']
       cargo:
         type: string
       data_aprovacao:
