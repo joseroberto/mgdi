@@ -131,6 +131,30 @@ module.exports = {
       });
     }
   },
+  resetPassword: (req, res) => {
+    // var hash = crypto.createHash('sha256').update(current_pass, 'utf8').digest()
+    var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
+
+    if (data.Perfil.sigla !== 'ADP')
+      return res.status(401).json({ codret: 1050, mensagem: "Você não tem permissão para esta ação" });
+
+    models.User.findOne({
+      where: { codigo: req.body.userId }
+    }).then(user => {
+      console.log("A: ", user)
+      if (user) {
+        user.senha = crypto.createHash('sha256').update(`nova${user.cpf.substring(0, 5)}`, 'utf8').digest();
+        user.save();
+        res.json({ codret: 0, mensagem: "Senha trocada com sucesso" });
+      } else {
+        return res.status(403).send('Este usuário não existe.')
+      }
+    }).catch(err => {
+      console.log('Erro', err);
+      res.status(500).json({ codret: 1001, message: "Erro na troca de senha" });
+    });
+
+  },
   refreshToken: (req, res) => {
     getPorLoginAplicacao(req.decoded.login, req.decoded.Perfil.Aplicacao.sigla).then(userPerfil => {
       if (userPerfil.length > 0 && userPerfil[0]) {
