@@ -111,6 +111,11 @@ editaIndicador(codigo:string){
 
 detailsFormat(d) {
     let tags:string='';
+    let cod:number=0;
+
+    if(d.Unidade!=null){
+      cod = d.Unidade.codigo;
+    }
 
     if(d.Tags.length){
       tags += '<tr><td>Marcador(es):</td><td colspan="5">';
@@ -121,7 +126,7 @@ detailsFormat(d) {
     }
 
 
-    let remove = this.acl.getPermission('indicador','DELETE',d.Unidade.codigo);
+    let remove = this.acl.getPermission('indicador','DELETE',cod);
     let removeStr = '';
     if(remove){
       removeStr = `<button class='btn btn-xs btn-danger pull-right' style='margin-left:5px'
@@ -129,7 +134,7 @@ detailsFormat(d) {
                     <i class="fa fa-times "></i>&nbsp;Apaga
                   </button>`
     }
-    let edit = this.acl.getPermission('indicador','PUT', d.Unidade.codigo)
+    let edit = this.acl.getPermission('indicador','PUT', cod)
     let editStr = '';
     if(edit){
       editStr = ` <button class='btn btn-xs btn-info pull-right'
