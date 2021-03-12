@@ -10,7 +10,7 @@ module.exports = {
 
   getUsers: (req, res) => {
     var attr = {
-      attributes: ["codigo", "nome", "email", "ramal", "cargo", "SituacaoCodigo", "cpf"],
+      attributes: ["codigo", "nome", "email", "celular", "ramal", "sexo", "cargo", "SituacaoCodigo", "cpf"],
       include: [
         { model: models.Unidade, as: 'Unidade' },
         { model: models.Perfil, as: 'Perfil' }
@@ -65,11 +65,11 @@ module.exports = {
   createSolicitacao: (req, res) => {
     console.log('Solicitacao de perfil');
     createPerfil(req.body, req.decoded).then((perfil) => {
-      console.log("A: ", perfil)
+      console.log("Perfil: ", perfil)
       res.json({ codret: 0, mensagem: "Solicitação de perfil de acesso cadastrado com sucesso", userId: perfil.codigo });
     }).catch(err => {
       console.log('Erro', err);
-      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil" });
+      res.status(500).json({ codret: 1001, message: "Erro no cadastramento da solicitação de perfil", error: err.message });
     });
   },
   aprovaSolicitacao: (req, res) => {
@@ -131,6 +131,30 @@ module.exports = {
       });
     }
   },
+  resetPassword: (req, res) => {
+    // var hash = crypto.createHash('sha256').update(current_pass, 'utf8').digest()
+    var data = jwt.verify(req.headers.authorization.split(' ')[1], config_param.secret);
+
+    if (data.Perfil.sigla !== 'ADP')
+      return res.status(401).json({ codret: 1050, mensagem: "Você não tem permissão para esta ação" });
+
+    models.User.findOne({
+      where: { codigo: req.body.userId }
+    }).then(user => {
+      console.log("A: ", user)
+      if (user) {
+        user.senha = crypto.createHash('sha256').update(`nova${user.cpf.substring(0, 5)}`, 'utf8').digest();
+        user.save();
+        res.json({ codret: 0, mensagem: "Senha trocada com sucesso" });
+      } else {
+        return res.status(403).send('Este usuário não existe.')
+      }
+    }).catch(err => {
+      console.log('Erro', err);
+      res.status(500).json({ codret: 1001, message: "Erro na troca de senha" });
+    });
+
+  },
   refreshToken: (req, res) => {
     getPorLoginAplicacao(req.decoded.login, req.decoded.Perfil.Aplicacao.sigla).then(userPerfil => {
       if (userPerfil.length > 0 && userPerfil[0]) {
@@ -175,6 +199,9 @@ async function createPerfil(entidade, loggedUser) {
   let perfil = await models.Perfil.findOne({ where: { sigla: entidade.PerfilSigla } })
   entidade.PerfilCodigo = perfil.codigo
 
+  if (entidade.Unidade && entidade.Unidade.codigo)
+    entidade.UnidadeCodigo = entidade.Unidade.codigo
+
   // Checa se nao tem perfil cadastrado e coloca o primeiro como ADM
   if (numPerfil == 0) {
     var vlPerfil = await perfil.getPerfilPorSigla('ADM');
@@ -194,8 +221,17 @@ async function createPerfil(entidade, loggedUser) {
   } else {
     // Verifica se há o campo senha
     if ('senha' in entidade) {
+      console.log("ENTIDADE: ", entidade)
       entidade.senha = crypto.createHash('sha256').update(entidade.senha, 'utf8').digest()
-      return models.User.create(entidade)
+      return models.User.create(entidade).catch(err => {
+        console.log("AAAA: ", err.errors)
+        if (err.errors && err.errors[0].type === 'unique violation') {
+          if (err.errors[0].path === 'ds_cpf')
+            throw new Error('Este CPF já existe.')
+          if (err.errors[0].path === 'ds_email')
+            throw new Error('Este E-mail já existe.')
+        }
+      })
     } else {
       throw new Error('Erro no cadastramento da solicitação de perfil: a senha é obrigatória')
     }

@@ -66,6 +66,34 @@ paths:
          description: Usuário/Senha Inválida.
          schema:
           $ref: '#/definitions/Error'
+  /api/resetpassword:
+    x-swagger-router-controller: user
+    post:
+      summary: Resetar senha
+      operationId: resetPassword
+      tags:
+        - Infraestrutura
+      security:
+        - Bearer: []
+      description: |
+        Reseta a senha do usuário em questão para o padrão inicial do sistema
+      parameters:
+        -
+         in: body
+         name: body
+         description: Informação de email/senha
+         required: true
+         schema:
+          $ref: '#/definitions/ResetPass'
+      responses:
+        '200':
+         description: Change Password Success
+         schema:
+          $ref: '#/definitions/Token'
+        '403':
+         description: Usuário/Senha Inválida.
+         schema:
+          $ref: '#/definitions/Error'
   /login:
     x-swagger-router-controller: login
     post:
@@ -306,10 +334,6 @@ paths:
           description: Sucesso
           schema:
             $ref: "#/definitions/SuccessResponse"
-        default:
-          description: Erro
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /api/perfil:
     x-swagger-router-controller: perfil
     get:
@@ -2305,6 +2329,12 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 definitions:
+  ResetPass:
+    description: Reseta a senha
+    type: object
+    properties:
+      userId:
+        type: integer
   GetUserMgiListResponse:
     description: Lista de Usuários do MGI
     type: object
@@ -2417,9 +2447,9 @@ definitions:
       email:
         type: string
       ramal:
-        type: string
+        type: [string, 'null']
       celular:
-        type: string
+        type: [string, 'null']
       cargo:
         type: string
       data_aprovacao:
