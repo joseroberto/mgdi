@@ -58,7 +58,6 @@ export class AclService extends REST {
       return access;
 
     //check if in $area, if it is, check permission for it
-    console.log("AHAHAHAHHAHA: ", this.userUnidadesPath)
     if (unidadeCod) {
       if (this.userUnidadesPath && this.userUnidadesPath.includes(unidadeCod)) {
         //make
