@@ -2,8 +2,7 @@ variables:
     CONTAINER_SERVER_RELEASE_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/mgdi-api
     CONTAINER_FRONT_RELEASE_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/mgdi-web
 stages:
-    - web_app_registry
-    - server_registry
+    - build_registry
 
 web_app_registry:
     image: docker:git
@@ -12,7 +11,7 @@ web_app_registry:
     only:
         - master
         - tags
-    stage: web_app_registry
+    stage: build_registry
     script:
         - cd client
         - docker build -t $CONTAINER_FRONT_RELEASE_IMAGE .
@@ -27,7 +26,7 @@ server_registry:
     only:
         - master
         - tags
-    stage: server_registry
+    stage: build_registry
     script:
         - cd server
         - echo $CONTAINER_SERVER_RELEASE_IMAGE
