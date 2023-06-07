@@ -4,22 +4,21 @@ variables:
     DOCKER_API_VERSION: "1.39"
 stages:
     - web_app_registry
-    - server_build
     - server_registry
     - deploy
+tags:
+    - docker
 
 web_app_registry:
     image: docker:git
-    tags:
-        - docker
     only:
         - master
         - tags
     services:
-    - docker:18-dind
+        - docker:18-dind
     stage: web_app_registry
     dependencies:
-    - web_app_build
+        - web_app_build
     script:
         - cd client
         - docker build -t $CONTAINER_FRONT_RELEASE_IMAGE .
@@ -29,8 +28,6 @@ web_app_registry:
 
 server_registry:
     image: docker:git
-    tags:
-        - docker
     only:
         - master
         - tags
@@ -38,7 +35,7 @@ server_registry:
     - docker:18-dind
     stage: server_registry
     dependencies:
-    - server_build
+        - server_build
     script:
         - cd server
         - echo $CONTAINER_SERVER_RELEASE_IMAGE
@@ -49,8 +46,6 @@ server_registry:
 deploy:
   image: ubuntu:latest
   stage: deploy
-  tags:
-        - docker
   only:
         - master
         - tags
