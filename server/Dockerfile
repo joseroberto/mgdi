@@ -1,4 +1,4 @@
-FROM keymetrics/pm2:8-alpine
+FROM keymetrics/pm2:8-alpine as production
 
 LABEL maintainer="joserobertovasconcelos@gmail.com" \
   description="Esta imagem exige os seguintes parâmetros: \
