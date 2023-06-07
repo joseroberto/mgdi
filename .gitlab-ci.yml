@@ -5,16 +5,14 @@ variables:
 stages:
     - web_app_registry
     - server_registry
-tags:
-    - docker
 
 web_app_registry:
     image: docker:git
+    tags:
+        - docker
     only:
         - master
         - tags
-    services:
-        - docker:18-dind
     stage: web_app_registry
     script:
         - cd client
@@ -25,11 +23,11 @@ web_app_registry:
 
 server_registry:
     image: docker:git
+    tags:
+        - docker
     only:
         - master
         - tags
-    services:
-        - docker:18-dind
     stage: server_registry
     script:
         - cd server
