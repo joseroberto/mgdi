@@ -48,5 +48,4 @@ RUN   apk update && apk upgrade && \
 
 EXPOSE 8000
 
-#CMD [ "pm2-runtime", "config/pm2-api.config.yaml"]
-CMD cd /var/opt/mgdi && pm2-runtime config/pm2-api.config.yaml
+CMD [ "pm2-runtime", "config/pm2-api.config.yaml"]
