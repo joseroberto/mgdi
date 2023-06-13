@@ -36,9 +36,10 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * WSDL - Qual o endereço utilizado para consulta de usuário no SCPA. Por exemplo: http://aplicacao-homologacao.saude.gov.br/datasus-scpa-ws/ScpaServiceImpl?wsdl \
   * SISTEMA - Qual o nome do sistema a ser utilizado para login."
 
-WORKDIR /var/opt/mgi
-ADD . /var/opt/mgi
-WORKDIR /var/opt/mgi
+WORKDIR /var/opt/mgdi
+ADD . /var/opt/mgdi
+
+WORKDIR /var/opt/mgdi
 
 RUN   apk update && apk upgrade && \
     apk add --no-cache bash git openssh python3 make && \
