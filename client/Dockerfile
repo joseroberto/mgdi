@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run build:prod --quiet --no-progress
+RUN npm run build:docker --quiet --no-progress
 
 FROM nginx:stable-alpine as production
 
@@ -15,7 +15,8 @@ COPY --from=build-stage /app/docker-config/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 5000
 
 ENV URL_REST "http://exemplo.com"
-ENV CONTEXT_REST "/api"
+ENV API_URL "/api"
+ENV CONTEXT "/"
 ENV URL_AUTH ""
 ENV APP "MGDI"
 
