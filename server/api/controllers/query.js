@@ -63,8 +63,10 @@ const config = {
   max: 10, // max number of clients in the pool
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
-//console.log('Config:', config);
-const schema = process.env.SCHEMA || config_param.schema_esusgestor;
+
+//console.log('Config query:', config);
+
+//const schema = process.env.SCHEMA || config_param.schema_esusgestor;
 
 const pool = new pg.Pool(config);
 

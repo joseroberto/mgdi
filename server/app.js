@@ -83,9 +83,6 @@ SwaggerExpress.create(config, function (err, se) {
   app.use(se.runner.swaggerTools.swaggerUi());
 
 
-
-
-
   var options = {
     dotfiles: 'ignore',
     etag: true,
