@@ -6,7 +6,7 @@ stages:
 
 web_app_registry:
     image: docker:23-dind
-    pull_policy: if-not-present
+#    pull_policy: if-not-present
     tags:
         - docker
     only:
@@ -22,7 +22,7 @@ web_app_registry:
 
 server_registry:
     image: docker:23-dind
-    pull_policy: if-not-present
+#    pull_policy: if-not-present
     tags:
         - docker
     only:
