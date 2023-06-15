@@ -6,6 +6,7 @@ stages:
 
 web_app_registry:
     image: docker:20.10.22
+    pull_policy: if-not-present
     tags:
         - docker
     only:
@@ -21,6 +22,7 @@ web_app_registry:
 
 server_registry:
     image: docker:20.10.22
+    pull_policy: if-not-present
     tags:
         - docker
     only:
