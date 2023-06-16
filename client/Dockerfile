@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run build:docker --quiet --no-progress
+RUN npm run build:dev --quiet --no-progress
 
 FROM nginx:stable-alpine as production
 
@@ -14,12 +14,14 @@ COPY --from=build-stage /app/docker-config/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 5000
 
-ENV URL_REST "http://exemplo.com"
-ENV API_URL "/api"
-ENV CONTEXT "/"
-ENV URL_AUTH ""
-ENV APP "MGDI"
+#ENV URL_REST "http://exemplo.com"
+#ENV API_URL "/api"
+#ENV CONTEXT "/"
+#ENV URL_AUTH ""
+#ENV APP "MGDI"
 
-CMD printenv|while IFS='=' read -r name value ; do sed -i -e "s#$name#$value#g" /etc/nginx/html/main.bundle.js; done && nginx -g 'daemon off;'
+CMD nginx -g 'daemon off;'
+
+#CMD printenv|while IFS='=' read -r name value ; do sed -i -e "s#$name#$value#g" /etc/nginx/html/main.bundle.js; done && nginx -g 'daemon off;'
 
 #CMD printenv|while IFS='=' read -r name value ; do sed -i -e "s#$name#$value#g" /etc/nginx/html/mgdi/main.bundle.js; done && nginx -g 'daemon off;'
