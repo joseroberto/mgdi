@@ -17,7 +17,7 @@ LABEL maintainer="joserobertovasconcelos@gmail.com" \
   * PROTOCOLO = protocolo a ser usado (http ou https) \
   * ENVIRONMENT = ambiente do projeto \
   \
-  Dependendo da escolha do tipo de esquema de validação: \
+##  Dependendo da escolha do tipo de esquema de validação: \
   \
   * SCHEMA_LOGIN - pode assumir os seguintes valores: ldap, scpa, local, windows. \
   \

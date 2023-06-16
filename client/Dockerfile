@@ -14,7 +14,7 @@ COPY --from=build-stage /app/docker-config/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 5000
 
-#ENV URL_REST "http://exemplo.com"
+#ENV URL_REST "http://exemplo.com.br"
 #ENV API_URL "/api"
 #ENV CONTEXT "/"
 #ENV URL_AUTH ""
