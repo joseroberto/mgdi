@@ -26,7 +26,8 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "dev": "environments/environment.ts",
+        "local": "environments/environment.ts",
+        "dev": "environments/environment.dev.ts",
         "prod": "environments/environment.prod.ts",
         "homolog": "environments/environment.homolog.ts",
         "docker": "environments/environment.docker.ts"

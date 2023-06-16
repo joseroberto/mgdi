@@ -103,7 +103,7 @@ objects:
     resources: {}
     runPolicy: Serial
     source:
-      contextDir: /mgdi
+      contextDir: /
       git:
         uri: "${SOURCE_REPOSITORY_URL}"
         ref: "${SOURCE_REPOSITORY_REF}"
