@@ -43,8 +43,7 @@ module.exports = function (passport) {
     if (config_param.bypass) {
       usuario = user.getPorLogin(username);
     } else {
-      console.log('checando senha');
-      let password_hash = crypto.createHash('sha256').update(password, 'utf8').digest()
+      let password_hash = crypto.createHash('sha256').update(username+password, 'utf8').digest()
       usuario = await user.getPorLoginSenha(username, password_hash);
     }
     console.log('usuario buscado no banco===>', usuario);

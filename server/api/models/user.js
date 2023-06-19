@@ -72,7 +72,7 @@ module.exports = function(sequelize, DataTypes) {
       timestamps: true,
       createdAt: 'dt_inclusao',
       updatedAt: 'dt_atualizacao',
-      tableName: 'tb_user_mgi'
+      tableName: 'tb_user'
     }
     );
 
