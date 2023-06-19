@@ -22,20 +22,20 @@ module.exports = function(sequelize, DataTypes) {
       field: 'co_tag_categoria'
     }
   },{
-    classMethods:{
-        associate:function(models){
-          Tag.belongsTo(models.TagCategoria, {foreignKey:'codigo_categoria', as: 'Categoria'});
-          Tag.belongsToMany(models.Indicador, {
-            as: 'Indicadores',
-            through: 'tb_indicador_tag',
-            foreignKey: 'co_tag',
-            otherKey: 'co_seq_indicador' });
-        }
-    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_tag'
   });
+
+  Tag.associate = function(models){
+    Tag.belongsTo(models.TagCategoria, {foreignKey:'codigo_categoria', as: 'Categoria'});
+    Tag.belongsToMany(models.Indicador, {
+      as: 'Indicadores',
+      through: 'tb_indicador_tag',
+      foreignKey: 'co_tag',
+      otherKey: 'co_seq_indicador' });
+  }
+
   return Tag;
 };

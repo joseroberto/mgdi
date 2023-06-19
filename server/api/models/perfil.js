@@ -38,17 +38,21 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods:{
         associate:function(models){
-          Perfil.belongsTo(models.Aplicacao,
-            {
-              as: 'Aplicacao',
-              foreignKey: { field: 'co_aplicacao', allowNull:false}
-            });
+          
     }},
     schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_perfil'
   });
+
+  Perfil.associate = function(models){
+    Perfil.belongsTo(models.Aplicacao,
+      {
+        as: 'Aplicacao',
+        foreignKey: 'co_aplicacao'
+      });
+  }
 
   return Perfil;
 };

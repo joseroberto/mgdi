@@ -23,22 +23,21 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
-    classMethods:{
-        associate:function(models){
-            CategoriaAnalise.hasMany(models.CategoriaAnaliseItem,
-              {
-                onDelete: 'cascade',
-                as: 'Itens',
-                foreignKey: 'co_categoria_analise'
-              }
-            );
-        }
-    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_categoria_analise'
   });
+
+  CategoriaAnalise.associate = function(models){
+    CategoriaAnalise.hasMany(models.CategoriaAnaliseItem,
+      {
+        onDelete: 'cascade',
+        as: 'Itens',
+        foreignKey: 'co_categoria_analise'
+      }
+    );
+  }
 
   return CategoriaAnalise;
 };

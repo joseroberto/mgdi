@@ -17,15 +17,15 @@ module.exports = function(sequelize, DataTypes) {
         field: 'ds_tag_categoria',
     }
   },{
-    classMethods:{
-        associate:function(models){
-            TagCategoria.hasMany(models.Tag,{as: 'Tags',foreignKey: 'codigo_categoria'});
-        }
-    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_tag_categoria'
   });
+
+  TagCategoria.associate = function(models){
+    TagCategoria.hasMany(models.Tag,{as: 'Tags',foreignKey: 'codigo_categoria'});
+  }
+
   return TagCategoria;
 };

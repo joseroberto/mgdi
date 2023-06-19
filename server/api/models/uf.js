@@ -21,16 +21,15 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
-    classMethods:{
-      associate:function(models){
-          Uf.hasMany(models.Municipio,{as: 'Municipios',foreignKey: 'co_uf'});
-      }
-    },
     schema: schema,
     timestamps: false,
     freezeTableName: true,
     tableName: 'tb_uf'
   });
+
+  Uf.associate = function(models){
+     Uf.hasMany(models.Municipio,{as: 'Municipios',foreignKey: 'co_uf'});
+  }
 
   return Uf;
 };

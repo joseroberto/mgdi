@@ -18,12 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     schema: schema,
     timestamps: false,
     freezeTableName: true,
-    tableName: 'tb_periodicidade',
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+    tableName: 'tb_periodicidade'
   });
   return Periodicidade;
 };

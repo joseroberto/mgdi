@@ -186,6 +186,8 @@ function getPorLoginAplicacao(login, sigla_aplicacao) {
       include: [{ model: models.Aplicacao, as: 'Aplicacao', where: { sigla: sigla_aplicacao } }]
     }],
     where: { login: login }
+  }).catch(err => {
+    console.log('Erro', err);
   });
 }
 

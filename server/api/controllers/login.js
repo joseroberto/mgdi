@@ -18,22 +18,22 @@ module.exports = {
         console.log('Fazendo autenticacao ', req.body.username);
         // Habilitando log-in de usuários para teste em desenvolvimento
         let schema = process.env.SCHEMA_LOGIN
-        let devUsers = [
-          "gesest",
-          "gesplan",
-          "admin",
-          "comum1",
-          "comum3",
-          "comum2",
-          "visualizador",
-          "supervisor"
-        ]
-        if (process.env.ENVIRONMENT === 'development' && devUsers.includes(req.body.username)) {
-          schema = 'local'
-        }
+        // let devUsers = [
+        //   "gesest",
+        //   "gesplan",
+        //   "admin",
+        //   "comum1",
+        //   "comum3",
+        //   "comum2",
+        //   "visualizador",
+        //   "supervisor"
+        // ]
+        // if (process.env.ENVIRONMENT === 'development' && devUsers.includes(req.body.username)) {
+        //   schema = 'local'
+        // }
 
         passport.authenticate(schema, async (err, userlogin, info) => {
-          console.log('retornos', schema, info, userlogin, err);
+          //console.log('retornos', schema, info, userlogin, err);
           if (err) {
             return res.status(403).send({ message: err });
           }
@@ -44,7 +44,7 @@ module.exports = {
           console.log('Login de usuario==>', req.body.username);
           // Checa se o usuário logado possui cadastro do MGI
           var userPerfil = await user.getPorLoginAplicacao(req.body.username, req.body.aplicacao);
-          // console.log('userPerfil==>', userPerfil);
+          console.log('+++++++++++++++++++++++++ userPerfil==>', userPerfil);
           if (!userPerfil || userPerfil.length == 0) {
             console.log('Usuario não tem perfil')
             var userdata = await user.getPorLogin(req.body.username)

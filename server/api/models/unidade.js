@@ -55,14 +55,6 @@ module.exports = function(sequelize, DataTypes) {
 
     //},
   },{
-    classMethods: {
-      associate: function(models) {
-        Unidade.hasMany(models.Indicador,{
-          as: 'IndicadoresRelacionados',
-          foreignKey: {field: 'co_unidade',allowNull: false}
-        });
-      }
-    },
     hierarchy: {
       foreignKey: 'unidade_pai',
       levelFieldName: 'nu_nivel',
@@ -76,5 +68,13 @@ module.exports = function(sequelize, DataTypes) {
     freezeTableName: true,
     tableName: 'tb_unidade'
   });
+
+  Unidade.associate = function(models) {
+    Unidade.hasMany(models.Indicador,{
+      as: 'IndicadoresRelacionados',
+      foreignKey: 'co_unidade'
+    });
+  }
+
   return Unidade;
 };

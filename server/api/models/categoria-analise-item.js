@@ -17,13 +17,6 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
     }
   },{
-      classMethods:{
-        associate:function(models){
-            CategoriaAnaliseItem.belongsTo(models.CategoriaAnalise, {
-              foreignKey: { field: 'co_categoria_analise', allowNull:false, as: 'CategoriaPai'}
-            });
-        }
-    },
     hierarchy: {
       foreignKey: { field:'co_categoria_analise_item_pai', as: 'CategoriaPai'},
       levelFieldName: 'nu_nivel',
@@ -38,5 +31,10 @@ module.exports = function(sequelize, DataTypes) {
     tableName: 'tb_categoria_analise_item'
   });
 
+  CategoriaAnaliseItem.associate = function(models){
+    CategoriaAnaliseItem.belongsTo(models.CategoriaAnalise, {
+      foreignKey: { field: 'co_categoria_analise', allowNull:false, as: 'CategoriaPai'}
+    });
+  }
   return CategoriaAnaliseItem;
 };

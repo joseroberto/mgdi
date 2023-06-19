@@ -39,13 +39,16 @@ module.exports = function (passport) {
     console.log('validacao local===>', username, password);
 
     let usuario;
+    console.log('passprt/local');
     if (config_param.bypass) {
       usuario = user.getPorLogin(username);
     } else {
+      console.log('checando senha');
       let password_hash = crypto.createHash('sha256').update(password, 'utf8').digest()
       usuario = await user.getPorLoginSenha(username, password_hash);
     }
     console.log('usuario buscado no banco===>', usuario);
+    console.log('------------------------------');
     if (usuario)
       return done(null, {
         login: username,
