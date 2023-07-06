@@ -51,7 +51,7 @@
                      [closeOnClickOutside]="true">
                           Identificação do indicador em forma de código (dado pelo usuário). Até 10 caracteres.
                   </popover-content>
-                  <label class="col-md-2 control-label">Código <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="codigo"></i></label>
+                  <label class="col-md-2 control-label">Código (*) <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="codigo"></i></label>
                   <div class="col-md-2">
                     <input id="codigo_edit" class="form-control"
                       placeholder="Código" type="text" maxlength="10" [ngModel]="indicador.codigo" name="codigo_edit" #codigoedit
@@ -65,7 +65,7 @@
                      [closeOnClickOutside]="true">
                           Identificação do indicador dado pelo usuário. É necessário que se tenha um título com o mínimo possível de tamanho já que ele será utilizado em títulos de gráficos, planilhas e afins. Limite de 200 caracteres.
                   </popover-content>
-                  <label class="col-md-2 control-label">Título <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
+                  <label class="col-md-2 control-label">Título (*) <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="titulo"></i></label>
                   <div class="col-md-5">
                     <input id="titulo" class="form-control"
                       placeholder="Título resumido do indicador" type="text" [ngModel]="indicador.titulo" name="titulo" required maxlength="200">
@@ -112,29 +112,12 @@
                 <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Informações</legend>
                   <div class="form-group">
-                    <popover-content #tituloCompleto
-                                     title="Título completo"
-                                     [closeOnClickOutside]="true">
-                        Informe o título completo do indicador
-                    </popover-content>
-                    <label class="col-md-2 control-label">Título completo
-                      <i class="fa fa-question-circle" popoverPlacement="auto"
-                      popoverOnHover="true" [popover]="tituloCompleto"></i></label>
-                    <div class="col-md-10">
-                      <input type="text" id="tituloCompleto" name="tituloCompleto"
-                      [ngModel]="indicador.tituloCompleto"
-                      class="form-control"
-                      placeholder="Título completo do indicador">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
                     <popover-content #descricao
                                      title="Descrição"
                                      [closeOnClickOutside]="true">
                         Selecione descrição do indicador. Limite máximo em 255 caracteres.
                     </popover-content>
-                    <label class="col-md-2 control-label">Descrição <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="descricao"></i></label>
+                    <label class="col-md-2 control-label">Descrição (*) <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="descricao"></i></label>
                     <div class="col-md-10">
                       <input type="text" id="descricao" name="descricao" maxlength="255"
                       [ngModel]="indicador.descricao"
@@ -179,7 +162,7 @@
                         exemplos o Índice Gini de distribuição de renda e o PIB per capita.</li>
                       </ul>
                     </popover-content>
-                     <label class="col-md-2 control-label" for="ClassificacaoIndicadorCodigo" >Classificação
+                     <label class="col-md-2 control-label" for="ClassificacaoIndicadorCodigo" >Classificação (*)
                        <i class="fa fa-question-circle" popoverPlacement="right" popoverOnHover="true" [popover]="classificacao"></i></label>
                      <div class="col-md-2">
                        <select class="form-control" id="ClassificacaoIndicadorCodigo" name="ClassificacaoIndicadorCodigo"
@@ -188,28 +171,7 @@
                        </select>
                      </div>
 
-                      <label class="col-md-2 control-label" for="Classificacao6sIndicadorCodigo" >Classificação 6Es
-                        <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="classificacao6s"></i></label>
-                      <div class="col-md-2">
-                        <popover-content #classificacao6s
-                                         title="Classificação 6s"
-                                         [closeOnClickOutside]="true">
-                          Fonte: <b>Guia Referencial para Medição de Desempenho na Administração Pública, Ministério do Planejamento,2010.</b>
-                          <ul>
-                          <li><b>Efetividade</b> são os impactos gerados pelos produtos/serviços, processos ou projetos. A efetividade está vinculada ao grau de satisfação ou ainda ao valor  gregado, a transformação produzida no contexto em geral.</li>
-                          <li><b>Eficácia</b> é a quantidade e qualidade de produtos e serviços entregues ao usuário (beneficiário direto dos produtos e serviços da organização). Por exemplo, se, na mesma campanha citada, a meta de vacinação é imunizar 100.000 crianças e este número foi alcançado ou superado, a campanha foi eficaz.</li>
-                          <li><b>Eficiência</b> é a relação entre os produtos/serviços gerados (outputs) com os insumos utilizados, relacionando o que foi entregue e o que foi consumido de recursos, usualmente sob a forma de custos ou produtividade. Por exemplo: uma campanha de vacinação é mais eficiente quanto menor for o custo, ou seja, quanto menor for o custo da campanha, mantendo‐se os objetivos propostos.</li>
-                          <li><b>Execução</b> refere‐se à realização dos processos, projetos e planos de ação conforme estabelecidos.</li>
-                          <li><b>Excelência</b> é a conformidade a critérios e padrões de qualidade/excelência para a realização dos processos, atividades e projetos na busca da melhor execução e economicidade; sendo um elemento transversal. Indicadores e padrões de excelência podem ser encontrados no Instrumento de Avaliação da Gestão Pública (IAGP)</li>
-                          <li><b>Economicidade</b> está alinhada ao conceito de obtenção e uso de recursos com o menor ônus possível, dentro dos requisitos e da quantidade exigidas pelo input, gerindo adequadamente os recursos financeiros e físicos. Indicadores de economicidade podem ser encontrados nas unidades de suprimentos.</li>
-                          </ul>
-                        </popover-content>
-                        <select class="form-control" id="Classificacao6sIndicadorCodigo" name="Classificacao6sIndicadorCodigo"
-                        [ngModel]="indicador.Classificacao6sIndicadorCodigo" required>
-                          <option *ngFor="let itemClassificacao of colecaoClassificacao6s" [ngValue]="itemClassificacao.codigo">{{ itemClassificacao.descricao }}</option>
-                        </select>
-                      </div>
-                     <label class="col-md-2 control-label" for="UnidadeMedidaCodigo">Unidade de medida
+                     <label class="col-md-2 control-label" for="UnidadeMedidaCodigo">Unidade de medida (*)
                        <popover-content #unidade_medida
                                         title="Unidade de Medida Utilizada"
                                         [closeOnClickOutside]="true">
@@ -229,7 +191,7 @@
                                        [closeOnClickOutside]="true">
                           Escolha a menor granularidade dos dados do indicador. Esse valor serve para o retorno dos dados na menor granularidade possibilitando plotagem e processamento GEO.
                       </popover-content>
-                      <label class="col-md-2 control-label" for="GranularidadeCodigo">Estratificação
+                      <label class="col-md-2 control-label" for="GranularidadeCodigo">Estratificação (*)
                       <i class="fa fa-question-circle" popoverPlacement="left" popoverOnHover="true" [popover]="granularidade"></i></label>
                     </div>
                     <div class="col-md-2">
@@ -238,7 +200,7 @@
                       </select>
                     </div>
                     <div>
-                      <label class="col-md-2 control-label" for="PolaridadeCodigo">Polaridade
+                      <label class="col-md-2 control-label" for="PolaridadeCodigo">Polaridade (*)
                         <popover-content #polaridade
                                          title="Polaridade"
                                          [closeOnClickOutside]="true">
@@ -252,24 +214,24 @@
                         <option *ngFor="let itemPolaridade of colecaoPolaridades" [ngValue]="itemPolaridade.codigo">{{ itemPolaridade.descricao }}</option>
                       </select>
                     </div>
-
-                    <div class="form-group">
-                      <label class="col-md-2 control-label" for="uniSuples">Unidades de medida suplementar
-                        <popover-content #uniSuple
-                                         title="Unidades Suplementares"
-                                         [closeOnClickOutside]="true">
-                            Selecione as unidades de medida suplementar.
-                        </popover-content>
-                        <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="uniSuple"></i>
-                      </label>
-                      <div class="col-md-2">
-                        <select select2 multiple #uniSuples class="form-control uniSuples" name="uniSuple">
-                          <option [value]="uni.codigo" *ngFor="let uni of colecaoUnidadeMedida">{{ uni.descricao }}</option>
-                        </select>
-                      </div>
+                  </div>
+                  <div class="form-group">
+                    <popover-content #tituloCompleto
+                                     title="Título completo"
+                                     [closeOnClickOutside]="true">
+                        Informe o título completo do indicador
+                    </popover-content>
+                    <label class="col-md-2 control-label">Título completo
+                      <i class="fa fa-question-circle" popoverPlacement="auto"
+                      popoverOnHover="true" [popover]="tituloCompleto"></i></label>
+                    <div class="col-md-10">
+                      <textarea id="tituloCompleto" 
+                      name="tituloCompleto" 
+                      style="width:90%" 
+                      class="form-control"
+                      rows='3' 
+                      [ngModel]="indicador.tituloCompleto"></textarea>
                     </div>
-
-
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label" for="tags">Marcadores
@@ -310,23 +272,6 @@
                         </div>
                        </div>
                      </div>
-
-                  <div class="form-group">
-                      <popover-content #diretrizNacional
-                                       title="Diretriz Nacional"
-                                       [closeOnClickOutside]="true">
-                          Informe diretriz nacional para o indicador
-                      </popover-content>
-                      <label class="col-md-2 control-label">Diretriz Nacional
-                        <i class="fa fa-question-circle" popoverPlacement="auto"
-                        popoverOnHover="true" [popover]="diretrizNacional"></i></label>
-                      <div class="col-md-10">
-                        <input type="text" id="diretrizNacional" name="diretrizNacional"
-                        [ngModel]="indicador.diretrizNacional"
-                        class="form-control"
-                        placeholder="Diretriz nacional do indicador">
-                      </div>
-                    </div>
                 </fieldset>
                 <fieldset style="padding: 15px">
                   <popover-content #parametro_analise

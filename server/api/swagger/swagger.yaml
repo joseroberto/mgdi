@@ -2504,7 +2504,7 @@ definitions:
       ParametroFonteCodigo:
         type: [number, 'null']
       UnidadeCodigo:
-        type: string
+        type: number
       PolaridadeCodigo:
         type: number
         description: Polaridade da medida do indicador
