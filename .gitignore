@@ -3,6 +3,7 @@
 #/client/src/environments/environment.*
 package-lock.json
 /server/package-lock.json
+server/.env
 /banco/ensaio*
 *.sh
 .vscode/

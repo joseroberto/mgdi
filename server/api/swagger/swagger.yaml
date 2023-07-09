@@ -2505,6 +2505,7 @@ definitions:
         type: [number, 'null']
       UnidadeCodigo:
         type: number
+        description: Código da unidade de medida do indicador
       PolaridadeCodigo:
         type: number
         description: Polaridade da medida do indicador

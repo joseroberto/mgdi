@@ -24,7 +24,13 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   TagCategoria.associate = function(models){
-    TagCategoria.hasMany(models.Tag,{as: 'Tags',foreignKey: 'codigo_categoria'});
+    TagCategoria.hasMany(models.Tag, 
+      {
+        onDelete: 'cascade',
+        as: 'Tags',
+        foreignKey: 'co_tag_categoria'
+      }
+    );
   }
 
   return TagCategoria;

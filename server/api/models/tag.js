@@ -15,11 +15,6 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: false,
         field: 'ds_tag'
-    },
-    codigo_categoria: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      field: 'co_tag_categoria'
     }
   },{
     schema: schema,
@@ -29,7 +24,11 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Tag.associate = function(models){
-    Tag.belongsTo(models.TagCategoria, {foreignKey:'codigo_categoria', as: 'Categoria'});
+
+    Tag.belongsTo(models.TagCategoria, {
+      foreignKey:{ field: 'co_tag_categoria', allowNull:false, as: 'Categoria'}
+    });
+
     Tag.belongsToMany(models.Indicador, {
       as: 'Indicadores',
       through: 'tb_indicador_tag',

@@ -23,8 +23,8 @@ module.exports = {
       models.TagCategoria.create(req.body).then((tagcategoria)=> {
       var promises = [];
       req.body.Tags.forEach((item)=>{
-        //console.log('Item', item, tagcategoria);
-        item['CategoriaCodigo'] = tagcategoria.codigo;
+        console.log('Item', item, tagcategoria);
+        item['TagCategoriumCodigo'] = tagcategoria.codigo;
         promises.push(models.Tag.create(item));
       });
       Promise.all(promises).then(result=>{

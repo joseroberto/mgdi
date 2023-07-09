@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://mgdiapi-dev.demas.saude.gov',
+  url: 'http://localhost:8000',
   API_URL: "/api",
   aplicacao: "MGDI",
   urlNewUser: "",
