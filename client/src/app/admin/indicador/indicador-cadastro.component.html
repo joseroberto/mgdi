@@ -112,19 +112,36 @@
                 <fieldset style="padding: 15px">
                   <legend>&nbsp;&nbsp;Informações</legend>
                   <div class="form-group">
+                    <popover-content #tituloCompleto
+                                     title="Título Completo"
+                                     [closeOnClickOutside]="true">
+                                     Informe o título completo do indicador
+                    </popover-content>
+                    <label class="col-md-2 control-label">Título Completo <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="tituloCompleto"></i></label>
+                    <div class="col-md-10">
+                      <input type="text" id="tituloCompleto" name="tituloCompleto" maxlength="255"
+                      [ngModel]="indicador.tituloCompleto"
+                      class="form-control"
+                      placeholder="Título completo do indicador">
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <popover-content #descricao
                                      title="Descrição"
                                      [closeOnClickOutside]="true">
-                        Selecione descrição do indicador. Limite máximo em 255 caracteres.
+                                     Selecione descrição do indicador.
                     </popover-content>
-                    <label class="col-md-2 control-label">Descrição (*) <i class="fa fa-question-circle" popoverPlacement="auto" popoverOnHover="true" [popover]="descricao"></i></label>
+                    <label class="col-md-2 control-label">Descrição (*)
+                      <i class="fa fa-question-circle" popoverPlacement="auto"
+                      popoverOnHover="true" [popover]="descricao"></i></label>
                     <div class="col-md-10">
-                      <input type="text" id="descricao" name="descricao" maxlength="255"
-                      [ngModel]="indicador.descricao"
+                      <textarea id="descricao" 
+                      name="descricao" 
+                      style="width:90%" 
                       class="form-control"
                       placeholder="Descrição do indicador"
-                      data-bv-notempty="true"
-                      data-bv-notempty-message="A descrição do indicador é obrigatória">
+                      rows='3' 
+                      [ngModel]="indicador.descricao"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -136,7 +153,7 @@
                       <ul>
                         <li><b>Insumo (antes)</b>: são indicadores que têm relação direta com os recursos
                         a serem alocados, ou seja, com a disponibilidade dos recursos humanos,
-                        materiais, fi nanceiros e outros a serem utilizados pelas ações de governo.
+                        materiais, financeiros e outros a serem utilizados pelas ações de governo.
                         São exemplos médicos/mil habitantes e gasto per capita com educação;</li>
 
                         <li><b>Processo (durante)</b>: são medidas que traduzem o esforço empreendido na
@@ -213,24 +230,6 @@
                       <select class="form-control" id="PolaridadeCodigo" name="PolaridadeCodigo" [ngModel]="indicador.PolaridadeCodigo" required>
                         <option *ngFor="let itemPolaridade of colecaoPolaridades" [ngValue]="itemPolaridade.codigo">{{ itemPolaridade.descricao }}</option>
                       </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <popover-content #tituloCompleto
-                                     title="Título completo"
-                                     [closeOnClickOutside]="true">
-                        Informe o título completo do indicador
-                    </popover-content>
-                    <label class="col-md-2 control-label">Título completo
-                      <i class="fa fa-question-circle" popoverPlacement="auto"
-                      popoverOnHover="true" [popover]="tituloCompleto"></i></label>
-                    <div class="col-md-10">
-                      <textarea id="tituloCompleto" 
-                      name="tituloCompleto" 
-                      style="width:90%" 
-                      class="form-control"
-                      rows='3' 
-                      [ngModel]="indicador.tituloCompleto"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
