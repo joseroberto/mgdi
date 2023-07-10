@@ -208,6 +208,7 @@ module.exports = {
     }
 
     models.Indicador.findAll(attr).then((indicador)=> {
+      console.log('INDICADOR BUSCADO=>', indicador)
       if(indicador && indicador.length>0){
         if (!req.headers.authorization && indicador[0].privado){
           res.status(403).json({codret: 1050, message: 'Indicador com atributo privado'});

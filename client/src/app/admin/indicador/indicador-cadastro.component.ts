@@ -428,6 +428,8 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
 
   private onSubmit(form){
     let valor: Indicador = Object.assign(this.indicador, form.value);
+    valor['UnidadeCodigo'] = +valor['UnidadeCodigo'] // Convertendo o valor desse campo para inteiro.  Não encontrei no codigo onde poderia fazer isso.
+
     $(':input[type="submit"]').prop('disabled', false);
     //console.log('valor==>', valor);
     if(form.valid && this.validacaoAdicional(valor)){
@@ -440,15 +442,18 @@ export class IndicadorCadastroComponent implements OnInit, OnDestroy, AfterViewI
             'Tags', 'PeriodicidadeAtualizacaoCodigo', 'PeriodicidadeAvaliacaoCodigo', 'PeriodicidadeMonitoramentoCodigo',
             'ParametroFonteCodigo', 'UnidadeCodigo', 'TipoConsultaCodigo', 'ClassificacaoIndicadorCodigo', 'Classificacao6sIndicadorCodigo',
             'UnidadeMedidaCodigo']
-            )).subscribe(resp=>{
-          if(resp.codret==0){
-            this.util.msgSucessoEdicao(resp.mensagem);
-          }else{
-            this.util.msgErro(resp.mensagem);
-          }
-        }, err=>{
-          this.util.msgErro(JSON.parse(err._body).message);
-        });
+            )).subscribe(
+              resp=>{
+                if(resp.codret==0){
+                  this.util.msgSucessoEdicao(resp.mensagem);
+                }else{
+                  this.util.msgErro(resp.mensagem);
+                }
+              }, 
+              err=>{
+                this.util.msgErro(JSON.parse(err._body).message);
+              }
+            );
       }else{
         // Inclui um novo
         if(form.value.codigo_edit)

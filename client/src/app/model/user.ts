@@ -15,7 +15,7 @@ export class User{
   Perfil: Perfil;
   Situacao: StatusAprovacao;
   PerfilCodigo: number;
-  SituacaoCodigo: number;
+  //SituacaoCodigo: number;
   UnidadeCodigo: number;
 
   constructor(){
